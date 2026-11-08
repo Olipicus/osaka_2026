@@ -143,7 +143,7 @@
 
 <header>
   <div>
-    <h1>🇯🇵 Osaka Trip Planner — 28 พ.ย. – 5 ธ.ค. 2026</h1>
+    <h1>🇯🇵 Osaka Trip Planner — 28 พ.ย. – 6 ธ.ค. 2026</h1>
     <div class="sub">ผู้ใหญ่ 2 + เด็ก 5 ขวบ · Thai AirAsia X XJ614/XJ615 · ทุกอย่างเชื่อมโยงกัน: เปลี่ยนโรงแรม/ย้ายวัน = เส้นทาง + งบ + การแจ้งเตือนอัปเดตทันที</div>
   </div>
   <div class="tools">
@@ -287,8 +287,8 @@
 /* ================= ข้อมูลกลาง (source of truth) ================= */
 const RATE_DEFAULT = 0.22;
 const START = new Date(2026, 10, 28); // 28 พ.ย. 2026 (วันถึง KIX)
-const N_DAYS = 8;
-const N_NIGHTS = 7;
+const N_DAYS = 9;    // 28 พ.ย. – 6 ธ.ค. 2026 (เที่ยวบินใหม่: ถึง 18:15 / กลับบิน 10:30)
+const N_NIGHTS = 8;
 const DAYS_TH = ['อาทิตย์','จันทร์','อังคาร','พุธ','พฤหัส','ศุกร์','เสาร์'];
 const MONTHS_TH = ['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
 
@@ -319,8 +319,10 @@ const HOTELS = [
     note:'ตึก 32 ชั้นหันหน้าเข้าสถานี UC · ห้อง bunk bed ได้ถึง 6 ท่าน · ออนเซ็น S-PARK ชั้น 31 (ค่าใช้เพิ่ม) · เดิน ~7 นาทีถึง USJ · ราคาประมาณ' },
   { id:'park_front', name:'Park Front Hotel at USJ ⭐ใกล้ประตูที่สุด', area:'bay', price:42000, lat:34.6674, lng:135.4319, walkHub:8,
     note:'โรงแรม official USJ อยู่หน้าประตูสวนสนุกเลย (เดิน ~2 นาที) · ห้องครอบครัว/ชั้นเด็ก ของเล่น+ชุดนอนเด็ก · แพงสุดในย่าน — เหมาะถ้างบถึง' },
-  { id:'kixarea', name:'โรงแรมแถว KIX / Rinku Town (ใกล้สนามบิน)', area:'kix', price:14000, lat:34.3990, lng:135.2660, walkHub:0,
-    note:'เหมาะกับคืนก่อนขึ้นเครื่อง · ติด Rinku Premium Outlets · แต่เข้าเมืองไกล (+~50 นาที/วัน)' },
+  { id:'omo_kix', name:'OMO Kansai Airport (Hoshino) ⭐ติดสถานี Rinku', area:'kix', price:22000, lat:34.3990, lng:135.2677, walkHub:0,
+    note:'คืนก่อนบิน (5 ธ.ค.) · เดิน 1 นาทีจาก Rinku Town Stn (ทางออก 5) · เดิน ~12 นาทีถึง Rinku Outlets · มีรถรับส่ง KIX ช่วงเช้าฟรี · ราคาประมาณ เช็คจริง' },
+  { id:'hennna_kix', name:'Henn na Resort & Spa Kansai Airport ⭐ออนเซ็นก่อนบิน', area:'kix', price:18000, lat:34.3975, lng:135.2810, walkHub:0,
+    note:'คืนก่อนบิน (5 ธ.ค.) · ออนเซ็นธรรมชาติ "Senshu no Yu" แขกพักเข้าฟรี · เดิน ~15 นาทีถึง Rinku Outlets · มีรถรับส่ง KIX · ราคาประมาณ เช็คจริง' },
 ];
 
 /* โรงแรมทั้งหมด = ตัวในระบบ + ที่ผู้ใช้เพิ่มเอง (ใช้แทน HOTELS.find ทุกจุด) */
@@ -518,6 +520,7 @@ const LINKS = {
   'todaiji|nakatanidou':      { mode:'walk',  min:15 },
   'minoo_station|minoo_falls':{ mode:'walk',  min:45, note:'เทรลใต้ใบเมเปิล' },
   'minoo_falls|umeda':        { mode:'train', min:40, fare:380, via:['minoo_stn','yamanowaka','sakurai','motosumiyoshi','shibatsuji','ishibashi','hotarugaike','mukonosho','juso','nakatsu','umeda_stn'], lineName:'Hankyu Minoo + Takarazuka Line' },
+  'minoo_falls|rinku':        { mode:'train', min:95, fare:1330, via:['minoo_stn','yamanowaka','sakurai','motosumiyoshi','shibatsuji','ishibashi','hotarugaike','mukonosho','juso','nakatsu','umeda_stn','hommachi','shinsaibashi','yotsubashi','namba','tengachaya','kishinosato','sakai','hagoromo','kishiwada','tannowa','misakikoen','izumisano','rinku_town'], lineName:'Hankyu + Metro + Nankai (เปลี่ยนขบวนที่ Namba)' },
   'umeda|dotonbori':          { mode:'train', min:12, fare:190, via:['umeda_stn','yodoyabashi','hommachi','shinsaibashi','yotsubashi','namba'], lineName:'Metro Midosuji Line' },
   'osaka_castle|miraiza':     { mode:'walk',  min:6 },
   'miraiza|nishinomaru':      { mode:'walk',  min:8 },
@@ -618,7 +621,7 @@ const DEFAULT_STATE = () => ({
   bayOn: true,             // พักแถว Universal City คืนที่ 3–4 (โหมด 3 โซน — ใช้ได้เฉพาะ kyotoWhen 'first')
   kobePlan: 'castle',      // วันศุกร์ 4 ธ.ค.: 'castle' = Osaka Castle (แผนที่เลือก) · 'kobe' = สลับกลับไป Kobe
   hotelGlobal: 'monterey',
-  nights: ['ranzan','ranzan','kintetsu_uc','kintetsu_uc','monterey','monterey','monterey'],
+  nights: ['ranzan','ranzan','kintetsu_uc','kintetsu_uc','monterey','monterey','monterey','omo_kix'],
   assign: {},              // activityId -> day index (override)
   kyoto: 'A',              // A = Arashiyama, B = Higashiyama
   steak: 'steakland',      // steakland | mouriya
@@ -652,6 +655,8 @@ function loadState() {
       Object.assign(s, saved);
     }
   } catch (e) {}
+  // เซฟเดิมสมัย 7 คืน (ก่อนเที่ยวบินกลับเลื่อนเป็น 6 ธ.ค.): เติมคืนที่ 8 = นอนแถวสนามบินอัตโนมัติ
+  while (Array.isArray(s.nights) && s.nights.length < N_NIGHTS) s.nights.push('omo_kix');
   s.customHotels = Array.isArray(s.customHotels) ? s.customHotels : [];
   // กัน id โรงแรมที่หายไป (เช่น ลบในอีกแท็บ) — คืนค่าเริ่มต้นตามโซนคืนนั้น
   const def = DEFAULT_STATE().nights;
@@ -671,9 +676,9 @@ function S(place, title, time, ticket, note) {
 /* ticket = {a: adult yen, c: child yen, label} หรือ null = ฟรี */
 
 const ACTIVITIES = [
-  A('flight_in', '🛬', 'เที่ยวบิน XJ614 ถึง KIX', [S('kix', 'ถึง KIX 16:00 (เวลาญี่ปุ่น)', '16:00', null, 'DMK 08:15 → KIX 16:00 · immigration ~1 ชม.')], { movable:false, fixedDay:0, startsAt:'kix' }),
-  A('checkin_d1', '🧳', 'เข้าที่พัก — เช็คอิน + ฝากกระเป๋า', [S('hotel_base', 'เช็คอิน / ฝากกระเป๋า ก่อนออกมาเที่ยว', '18:15', null, 'แวะเข้าที่พักก่อน: วางกระเป๋า ล้างหน้า เปลี่ยนเสื้อ แล้วค่อยออกมาหาอาหารเย็นใกล้ ๆ · ถึงก่อนเวลาเช็คอินมาตรฐาน (15:00 ผ่านไปแล้ว) เข้าห้องได้ทันที')], { movable:false, fixedDay:0 }),
-  A('dotonbori_d1', '🍢', 'เดินเล่น Dotonbori + อาหารเย็นมื้อแรก', [S('dotonbori', 'Dotonbori', '19:00–20:30', null, 'แกงกะหรี่/ราเม็ง/ทาโกะยากิ — ร้านเด็กกินง่าย · เดินชิล ๆ ไม่รีบ แล้วกลับมาพักเร็วเพราะเด็กเหนื่อยจากเที่ยวบินเช้า')], { movable:false, fixedDay:0, tags:['dotonbori'] }),
+  A('flight_in', '🛬', 'เที่ยวบิน XJ614 ถึง KIX', [S('kix', 'ถึง KIX 18:15 (เวลาญี่ปุ่น)', '18:15', null, 'DMK 10:40 → KIX 18:15 · immigration ~1 ชม. → ออกจากสนามบิน ~19:15')], { movable:false, fixedDay:0, startsAt:'kix' }),
+  A('checkin_d1', '🧳', 'เข้าที่พัก — เช็คอิน + ฝากกระเป๋า', [S('hotel_base', 'เช็คอิน / ฝากกระเป๋า ก่อนออกมาเที่ยว', '20:00', null, 'บินถึง KIX 18:15 → ออกจากสนามบิน ~19:15 → ถึงโรงแรม Namba ~20:00 · ผ่านเวลาเช็คอินมาตรฐาน (15:00) แล้ว เข้าห้องได้ทันที · วางกระเป๋า ล้างหน้า แล้วออกมาหาอาหารเย็นใกล้ ๆ')], { movable:false, fixedDay:0 }),
+  A('dotonbori_d1', '🍢', 'เดินเล่น Dotonbori + อาหารเย็นมื้อแรก', [S('dotonbori', 'Dotonbori', '20:30–22:00', null, 'แกงกะหรี่/ราเม็ง/ทาโกะยากิ — ร้านเด็กกินง่าย · เดินชิล ๆ ไม่รีบ แล้วกลับมาพักเร็วเพราะเด็กเหนื่อยจากเที่ยวบินบ่าย')], { movable:false, fixedDay:0, tags:['dotonbori'] }),
 
   A('kuromon', '🐟', 'ข้าวเช้าตลาด Kuromon Ichiba', [S('kuromon', 'ตลาด Kuromon', '08:00–09:30', null, 'ปลาดิบ ทามาโกะยากิ ผลไม้ — ตื่นเช้า (jet lag) ถือเป็นโบนัส')]),
   A('kaiyukan', '🐋', 'Kaiyukan Aquarium', [S('osakako', 'Kaiyukan', '10:00–12:30', {a:2700, c:700, label:'ผู้ใหญ่ ~¥2,700 · เด็ก 4–6 ~¥700'}, 'ฉลามวาฬยักษ์ — เด็กเพลิน 2 ชม. · ถึงก่อน 10:00 เลี่ยงคนวันอาทิตย์')]),
@@ -707,14 +712,14 @@ const ACTIVITIES = [
   A('umeda_shop', '🛍️', 'ช้อปของฝาก Umeda', [S('umeda', 'Don Quijote + drugstore + Daimaru B1', '14:30', null, 'ขนมชั้นใต้ดินห้าง Daimaru')]),
   A('illumination', '✨', 'ค่ำมื้ออำลา Dotonbori + Midosuji Illumination', [S('dotonbori', 'ถนน Midosuji — ไฟประดับยาว 4 กม.', '18:00', null, 'ฟรี · ช่วง พ.ย.–ธ.ค.'), ], { tags:['dotonbori'] }),
 
-  A('rinku', '🛍️', 'แวะ Rinku Premium Outlets', [S('rinku', 'Rinku Outlets (เปิด 10:00)', '11:00', null, 'ฝากกระเป๋าล็อกเกอร์ KIX แล้วนั่งรถไฟ 1 สถานี')], { movable:false, fixedDay:7 }),
-  A('flight_out', '🛫', 'เช็คอิน KIX + บินกลับ XJ615', [S('kix', 'เช็คอิน 14:15 (ก่อนบิน 3 ชม.) → บิน 17:15', '13:30', null, 'ถึง DMK 21:45')], { movable:false, fixedDay:7, endsAt:true }),
+  A('rinku', '🛍️', 'ค่ำ: รับกระเป๋า → Nankai ไป Rinku Outlets', [S('rinku', 'Rinku Premium Outlets + มื้อค่ำสุดท้าย', '16:30', null, 'กลับมารับกระเป๋าที่โรงแรม Namba → Nankai ตรง Rinku Town ~40 นาที (¥760) → เช็คอินโรงแรมแถวสนามบิน แล้วเดินช้อป — OMO อยู่ติดสถานี (เดินไป outlets ~12 นาที) · ร้านเปิดถึง ~20:00')], { movable:false, fixedDay:7 }),
+  A('flight_out', '🛫', 'เช็คอิน KIX + บินกลับ XJ615', [S('kix', 'เช็คอิน 07:30 (เปิด 3 ชม.ก่อนบิน) → บิน 10:30', '07:15', null, 'ออกจากโรงแรม Rinku ~06:45 · JR/Nankai 1 สถานี 5 นาทีถึง KIX ~07:00 · ถึง DMK 15:05')], { movable:false, fixedDay:8, endsAt:true }),
 ];
 
 function activityStops(act) {
   if (act.id === 'checkin_d1' && state.kyotoWhen === 'first') {
-    return [S('hotel_base', 'เช็คอินโรงแรม Kyoto (Arashiyama) + วางกระเป๋า', '19:15', null,
-      'JR Haruka จาก KIX ถึง Kyoto ~80 นาที ต่อ JR Sagano Line อีก 2 สถานีถึง Saga-Arashiyama · วันแรกเดินทางยาว เก็บของเสร็จหาอาหารเย็นริมแม่น้ำแถวโรงแรม แล้วพักเร็ว — พรุ่งนี้เที่ยว Kyoto เต็มวัน')];
+    return [S('hotel_base', 'เช็คอินโรงแรม Kyoto (Arashiyama) + วางกระเป๋า', '21:45', null,
+      'บินถึง KIX 18:15 → Haruka ~19:45 ถึง Kyoto ~21:05 ต่อ JR Sagano Line 2 สถานีถึง Saga-Arashiyama ~21:30 · ⚠️ แจ้งโรงแรมล่วงหน้าว่าเช็คอินดึก · ร้านแถวนี้ปิด ~21:00 — ซื้ออาหารเย็น/ของจำเป็นไว้ตั้งแต่สนามบินหรือ Kyoto Stn')];
   }
   if (act.id === 'train_to_kyoto' && state.kyotoWhen === 'first') {
     return state.bayOn
@@ -765,11 +770,12 @@ function effectiveDay(act) {
 }
 /* default days — จัดวันใหม่อัตโนมัติตามโหมดพัก Kyoto (first: คืน 1–2 / mid: คืน 3–4) */
 const DAY_MAPS = {
-  mid:   { kuromon:1, kaiyukan:1, tempozan:1, dotonbori_ev:1, usj:2, kyoto_day:3, kyoto_day2:4, minoo_day:4, nara_day:5, kobe_day:6, osaka_castle_day:6, umeda_shop:6, illumination:6 },
-  first: { kuromon:5, kaiyukan:4, tempozan:4, dotonbori_ev:2, usj:3, kyoto_day:1, kyoto_day2:2, nara_day:5, kobe_day:6, osaka_castle_day:6, umeda_shop:6, illumination:6 },
+  mid:   { kuromon:1, kaiyukan:1, tempozan:1, dotonbori_ev:1, usj:2, kyoto_day:3, kyoto_day2:4, minoo_day:7, nara_day:5, kobe_day:6, osaka_castle_day:6, umeda_shop:6, illumination:6 },
+  first: { kuromon:5, kaiyukan:4, tempozan:4, dotonbori_ev:2, usj:3, kyoto_day:1, kyoto_day2:2, minoo_day:7, nara_day:5, kobe_day:6, osaka_castle_day:6, umeda_shop:6, illumination:6 },
   // Kuromon ย้ายมาเช้าวัน Nara (พฤ.) ทั้งสองโหมด — วันพุธเบา ๆ เหลือแค่ Kaiyukan+Tempozan
   // first + พัก UC คืน 3–4 (3 โซน): ค่ำ Dotonbori ย้ายมาค่ำวันย้ายเข้า Namba
-  first_bay: { kuromon:5, kaiyukan:4, tempozan:4, dotonbori_ev:4, usj:3, kyoto_day:1, kyoto_day2:2, nara_day:5, kobe_day:6, osaka_castle_day:6, umeda_shop:6, illumination:6 },
+  // วันเสาร์ 5 ธ.ค. (วันที่ 8) = วันว่างก่อนบินกลับ: Minoo เช้า → บ่ายย้ายไปนอนแถวสนามบิน + Rinku Outlets
+  first_bay: { kuromon:5, kaiyukan:4, tempozan:4, dotonbori_ev:4, usj:3, kyoto_day:1, kyoto_day2:2, minoo_day:7, nara_day:5, kobe_day:6, osaka_castle_day:6, umeda_shop:6, illumination:6 },
 };
 function applyModeDefaults() {
   const bay = state.kyotoWhen === 'first' && !!state.bayOn;
@@ -795,8 +801,8 @@ ACTIVITIES.forEach(a => { if (a.defaultDay === undefined || a.defaultDay === nul
 function dayActivities(i) {
   return ACTIVITIES
     .filter(a => !(a.id === 'rinku' && !state.rinku))
-    // โหมด Kyoto คืนแรก: ค่ำวันแรกอยู่ Arashiyama (ไม่มี Dotonbori) และไม่มีวันว่างให้ Minoo
-    .filter(a => !(state.kyotoWhen === 'first' && (a.id === 'minoo_day' || a.id === 'dotonbori_d1')))
+    // โหมด Kyoto คืนแรก: ค่ำวันแรกอยู่ Arashiyama (ไม่มี Dotonbori) — Minoo ย้ายไปวันเสาร์ 5 ธ.ค. (วันก่อนบินกลับ)
+    .filter(a => !(state.kyotoWhen === 'first' && a.id === 'dotonbori_d1'))
     // กิจกรรมย้าย UC → Namba มีเฉพาะโหมด 3 โซน (Kyoto คืนแรก + UC คืน 3–4)
     .filter(a => !(a.id === 'train_to_namba' && !(state.kyotoWhen === 'first' && state.bayOn)))
     // วันศุกร์ 4 ธ.ค.: เลือกได้ระหว่างแผนหลัก Kobe / แผนสำรอง Osaka Castle
@@ -852,6 +858,7 @@ function startHotelOfDay(i) { return hotelOfNight(Math.max(i - 1, 0)); }
 function endHotelOfDay(i) { return hotelOfNight(Math.min(i, N_NIGHTS - 1)); }
 /* คืนไหนอยู่โซนไหน: first = คืน 1–2 Kyoto, คืน 3–4 UC (ถ้าเปิด bayOn), ที่เหลือ Namba · mid = คืน 3–4 Kyoto */
 function zoneOfNight(n) {
+  if (n === N_NIGHTS - 1) return 'kix';   // คืนสุดท้าย (5 ธ.ค.) นอนแถวสนามบิน — บินกลับ 10:30 เช้าวันที่ 6 ธ.ค.
   if (state.kyotoWhen === 'first') {
     if (n <= 1) return 'kyoto';
     if (state.bayOn && (n === 2 || n === 3)) return 'bay';
@@ -872,6 +879,10 @@ function hotelToHotel(a, b) {
     return { min:45, fare:1110, note:'JR Kyoto Line สายด่วนพิเศษ' };
   }
   if (bayA !== bayB) return { min:35, fare:570, note:'JR Sakurajima + Loop + Metro (หรือแท็กซี่ ~15 นาที)' };
+  if ((a.area === 'kix') !== (b.area === 'kix')) {
+    if (bayA || bayB) return { min:70, fare:1390, note:'JR Loop + Kansai-Airport Rapid' };
+    return { min:40, fare:760, note:'Nankai Namba ↔ Rinku Town' };
+  }
   if (a.area !== b.area) return { min:55, fare:1490, note:'Rapi:t/JR เข้า-ออกเมือง' };
   if (a.area === 'kix' && b.area === 'kix') return { min:15, note:'อยู่ย่านเดียวกัน (แถวสนามบิน)' };
   const d = distM(a, b);
@@ -974,7 +985,7 @@ function computeBudget() {
 function computeWarnings() {
   const w = [];
   if (state.shift !== 0) {
-    w.push({ lv:'error', t:`เที่ยวบินที่จองไว้คือ XJ614 วันเสาร์ 28 พ.ย. และ XJ615 วันเสาร์ 5 ธ.ค. — การเลื่อนทริป ${state.shift > 0 ? '+' : ''}${state.shift} วัน ต้องเปลี่ยนเที่ยวบิน (มีค่าธรรมเนียม AirAsia)` });
+    w.push({ lv:'error', t:`เที่ยวบินที่จองไว้คือ XJ614 วันเสาร์ 28 พ.ย. และ XJ615 วันอาทิตย์ 6 ธ.ค. — การเลื่อนทริป ${state.shift > 0 ? '+' : ''}${state.shift} วัน ต้องเปลี่ยนเที่ยวบิน (มีค่าธรรมเนียม AirAsia)` });
   }
   for (let d = 0; d < N_DAYS; d++) {
     const date = dayDate(d), wd = date.getDay();
@@ -991,17 +1002,17 @@ function computeWarnings() {
       w.push({ lv:'warn', t:`วัน${fmtDate(date)}: Kyoto ช่วงใบไม้แดงวันเสาร์-อาทิตย์คนล้น — ออกเช้ามาก ๆ หรือเปลี่ยนเป็นวันธรรมดา` });
     }
     if (d === 0 && acts.some(a => a.heavy)) {
-      w.push({ lv:'warn', t:`วัน${fmtDate(date)}: ถึงโอซาก้า 16:00 น. ไม่ควรใส่กิจกรรมเต็มวัน (${acts.filter(a=>a.heavy).map(a=>a.emoji + a.title).join(', ')})` });
+      w.push({ lv:'warn', t:`วัน${fmtDate(date)}: บินถึง KIX 18:15 น. ไม่ควรใส่กิจกรรมเต็มวัน (${acts.filter(a=>a.heavy).map(a=>a.emoji + a.title).join(', ')})` });
     }
     if (acts.filter(a => a.heavy).length >= 2) {
       w.push({ lv:'warn', t:`วัน${fmtDate(date)}: มีกิจกรรมหลัก 2 อย่างในวันเดียว — เด็ก 5 ขวบอาจเหนื่อยมาก ถ้าเหนื่อยให้ย้าย/ตัดหนึ่งออก` });
     }
     if (d === N_DAYS - 1 && acts.some(a => a.heavy)) {
-      w.push({ lv:'warn', t:`วัน${fmtDate(date)}: วันกลับต้องถึง KIX ก่อน 17:15 บิน — กิจกรรมเต็มวันเสี่ยงพลาดเครื่อง` });
+      w.push({ lv:'warn', t:`วัน${fmtDate(date)}: วันกลับบินเช้า 10:30 (ออกจากที่พักก่อน ~07:00) — กิจกรรมเต็มวันเสี่ยงพลาดเครื่อง` });
     }
   }
   if (state.kyotoWhen === 'first') {
-    w.push({ lv:'info', t:'โหมด Kyoto คืนแรก: วันแรกถึงที่พัก Kyoto ~19:15 (Haruka จาก KIX ~80 นาที ¥3,640/ผู้ใหญ่) — วันแรกพักหนัก ๆ · กิจกรรม Minoo ถูกตัดออกเพราะไม่มีวันว่าง (สลับกลับโหมด "คืนที่ 3–4" ในแผงโรงแรมได้)' });
+    w.push({ lv:'info', t:'โหมด Kyoto คืนแรก: บินถึง KIX 18:15 → Haruka รอบ ~19:45 → ถึงที่พัก Arashiyama ~21:45 — แจ้งโรงแรมเรื่อง late check-in + ซื้ออาหารเย็นไว้ตั้งแต่สนามบิน (ร้านแถวนั้นปิด ~21:00)' });
   }
   if (state.kyotoWhen === 'first' && state.bayOn) {
     w.push({ lv:'info', t:'โหมด 3 โซน: คืน 3–4 แถว Universal City — เช้าวัน USJ เดิน ~5–10 นาทีถึงประตู + ค่ำวัน Kaiyukan ย้ายเข้า Namba (~35 นาที) เดิน Dotonbori ต่อ · ย่าน UC เงียบกว่า Namba ตอนกลางคืน และห้องครอบครัวหมดไว — ควรจองโรงแรม UC เร็ว' });
@@ -1016,9 +1027,9 @@ function computeWarnings() {
   if (state.express) {
     w.push({ lv:'info', t:'Express Pass เปิดขายเป็นรอบกลางเดือนและหมดภายในชั่วโมง — ติดตามซื้อตั้งแต่ ก.ย.–ต.ค. 2569 (บางเวอร์ชันต้องสูง ≥107 ซม. ถึงใช้ประโยชน์ครบ)' });
   }
-  const kixNights = state.nights.filter(h => h === 'kixarea').length;
+  const kixNights = state.nights.filter(hid => getHotel(hid)?.area === 'kix').length;
   if (kixNights > 0 && kixNights < N_NIGHTS) {
-    w.push({ lv:'info', t:`พักแถวสนามบิน ${kixNights} คืน: ประหยัดค่าห้อง แต่วันที่เที่ยวในเมืองเสียเวลาเดินทางเพิ่ม ~50 นาที/วัน (ดูเส้นทางที่เปลี่ยนในแต่ละวัน)` });
+    w.push({ lv:'info', t:`พักแถวสนามบิน ${kixNights} คืน (คืนก่อนบิน): เช้าวันบินออกจาก Rinku Town 1 สถานีถึง KIX สบาย ๆ · แถวนี้ติด Rinku Outlets — บ่ายก่อนบินเที่ยวช้อปได้เลย` });
   }
   for (let sd = 1; sd <= N_NIGHTS - 1; sd++) {
     if (state.nights[sd] !== state.nights[sd - 1]) {
@@ -1230,7 +1241,7 @@ function renderDayDetail() {
   }
   html += `<div class="tl">`;
   // จุดเริ่มต้นของวัน
-  if (d === 0) html += blockHtml('🛬', 'เริ่มวันที่สนามบิน KIX', 'เที่ยวบิน XJ614 ถึง 16:00 (เวลาญี่ปุ่น)');
+  if (d === 0) html += blockHtml('🛬', 'เริ่มวันที่สนามบิน KIX', 'เที่ยวบิน XJ614 ถึง 18:15 (เวลาญี่ปุ่น)');
   else html += blockHtml('🏨', 'เริ่มวันจากโรงแรม', `${seg.startH.name} · ${yen(seg.startH.price)}/คืน`);
   let n = 0, lastPlace = null;
   seg.items.forEach(it => {
@@ -1260,7 +1271,7 @@ function renderDayDetail() {
     } else if (lastPlace === 'hotel_base' || lastPlace === 'hotel_kyoto' || lastPlace === 'hotel_tail') {
       html += blockHtml('🏨', 'เข้าพักแล้ว — จบวันที่ตัวโรงแรม',
         state.kyotoWhen === 'first' && d === 0
-          ? 'วันแรกเดินทางยาว (บินเช้า + รถไฟ ~2 ชม.) — หาอาหารเย็นแถวโรงแรมริมแม่น้ำ เก็บตัวเร็ว เด็กได้นอนเต็มตา พรุ่งนี้เที่ยว Kyoto เต็มวัน'
+          ? 'วันแรกเดินทางยาว (บินบ่าย + รถไฟ ~2 ชม.) — ซื้ออาหารเย็นไว้ตั้งแต่สนามบิน (ร้านแถวนี้ปิด ~21:00) เข้านอนเร็ว เด็กได้นอนเต็มตา พรุ่งนี้เที่ยว Kyoto เต็มวัน'
           : `อยู่ที่ ${seg.endH.name} ต่อคืนนี้`);
     } else {
       html += blockHtml('🏨', 'กลับเข้าพัก', `${seg.endH.name} · ${yen(seg.endH.price)}/คืน`);
@@ -1268,7 +1279,7 @@ function renderDayDetail() {
   } else if (lastAct.endBlock) {
     html += blockHtml(lastAct.endBlock.icon, lastAct.endBlock.title, lastAct.endBlock.sub);
   } else {
-    html += blockHtml('🛫', 'จบวันที่สนามบิน KIX', 'เช็คอิน 14:15 · บิน XJ615 17:15 → ถึง DMK 21:45');
+    html += blockHtml('🛫', 'จบวันที่สนามบิน KIX', 'เช็คอิน 07:30 · บิน XJ615 10:30 → ถึง DMK 15:05');
   }
   const bp = backupPlanFor(d);
   if (bp) html += `<details class="backupplan"><summary>🎴 แผนสำรอง — ${bp.t}</summary><ul>${bp.items.map(x => `<li>${x}</li>`).join('')}</ul></details>`;
@@ -1317,7 +1328,8 @@ function backupPlanFor(d) {
     3: { t:'วัน USJ — ฝนตก / อยากเปลี่ยน', items:['🌧️ ฝนปรอยยังคุ้ม: โซนในร่มเยอะ (Minion Park, ครึ่งในของ Nintendo World) — พกร่มซื้อหน้าประตู','🔄 ฝนหนักทั้งวัน: กด "ย้ายกิจกรรม" สลับ USJ กับ Kaiyukan (วันพุธ) — Kaiyukan ในร่มทั้งหมด · ระวังราคาตั๋ว USJ ต่างวัน','🧒 ทางเลือกในร่มแทน: <b>Kids Plaza Osaka</b> — พิพิธภัณฑ์เด็กเล่นสนุกทั้งวัน ใกล้สถานี Ogimachi · ~¥1,450/ผู้ใหญ่ เด็ก ม.ต้นลงมาฟรี'] },
     4: { t:'วัน Kaiyukan + ย้ายโรงแรม', items:['วันนี้ในร่มเกือบทั้งวันอยู่แล้ว — ฝนไม่ใช่ปัญหา','🎡 ชิงช้าสวรรค์หยุดถ้าลม/ฝนแรง: เพิ่มเวลาที่ Legoland (มีโรงหนัง 4D) หรือล่องเรือ Santa Maria รอบอ่าว ~45 นาที (~¥1,800/ผู้ใหญ่)','🚕 ถ้าเด็กหมดแรงก่อนย้ายโรงแรม: แท็กซี่ตรง UC → Namba ~15 นาที ~¥3,000 คุ้มกว่าแบกกระเป๋าขึ้นรถไฟ'] },
     5: { t:'วัน Nara — ฝนตก', items:['ตลาด Kuromon มีหลังคา เดินกินได้แม้ฝนปรอย','🏛️ <b>Nara National Museum</b> — ในร่ม ใกล้ปาก Nara Park · ~¥700/ผู้ใหญ่ เด็กฟรี · กวางยังเจอตอนเดินทางอยู่ดี','🌧️ ฝนหนักมาก: ย้าย Nara ไปวันศุกร์ (กดย้ายกิจกรรม) แล้ววันนี้ไป <b>Osaka Museum of Housing and Living</b> — เมืองโอซาก้ายุคเอโดะจำลองเท่าจริง เดินในร่ม ~¥600 หรือ Kids Plaza ข้าง ๆ (แต่วันศุกร์จะชนกับ Kobe/Castle — คิดดี ๆ: กวางไม่กลัวฝน)'] },
-    7: { t:'วันกลับ', items:['ฝนไม่กระทบ — Rinku Outlets เดินในอาคารได้ทั้งวัน','⏱️ เผื่อเวลา: ถึง KIX ไม่ช้ากว่า 14:15 (บิน 17:15)'] },
+    7: { t:'วัน Minoo + ย้ายไปนอนแถวสนามบิน', items:['🌧️ ฝนตกที่ Minoo: สลับเป็น Kids Plaza Osaka หรือช้อปในร่มแถว Umeda แล้วไป Rinku ตามแผนบ่าย','🛍️ Rinku Outlets ส่วนใหญ่มีหลังคา — ฝนปรอยเดินได้','😴 เด็กเหนื่อย: ตัด Minoo (✂️) เหลือวันชิล ๆ ช้อป Rinku ก่อนขึ้นเครื่อง'] },
+    8: { t:'วันกลับ', items:['ฝนไม่กระทบ — ออกจากโรงแรมแถวสนามบิน ~06:45 · JR/Nankai 1 สถานีถึง KIX','⏱️ เคาน์เตอร์เปิด 07:30 (3 ชม.ก่อนบิน 10:30) — ถึงก่อน 07:15 สบาย ๆ'] },
   };
   if (d === 6) {
     return state.kobePlan === 'castle'
@@ -1379,11 +1391,11 @@ function renderHotels() {
   const nightsCost = state.nights.reduce((s, hid) => s + (getHotel(hid)?.price || 0), 0);
   const kyotoHotel = getHotel(state.nights[kyotoNights()[0]]);
   const zoneLine = state.kyotoWhen === 'mid'
-    ? '💡 คืนที่ 3–4 นอนโซน Arashiyama (Kyoto) — เส้นทางวันที่ 3–5 คำนวณจากโรงแรมนี้'
+    ? '💡 คืนที่ 3–4 นอนโซน Arashiyama (Kyoto) · คืนที่ 8 นอนแถวสนามบิน (Rinku) — เช้าวันบินสบาย'
     : bayActive
-      ? '💡 คืน 1–2 Kyoto · คืน 3–4 Universal City (USJ เดินถึง + Kaiyukan รถไฟ 25 นาที) · คืน 5–7 Namba'
-      : '💡 คืนที่ 1–2 นอนโซน Arashiyama (Kyoto) — เส้นทางวันที่ 1–3 คำนวณจากโรงแรมนี้';
-  $('hotelSummary').innerHTML = `รวมที่พัก 7 คืน = <b>${yen(nightsCost)}</b> (${thb(nightsCost)})<br><span style="color:#94a3b8">${kyotoHotel?.note || ''}</span><br>${zoneLine}`;
+      ? '💡 คืน 1–2 Kyoto · คืน 3–4 Universal City (USJ เดินถึง) · คืน 5–7 Namba · คืน 8 แถวสนามบิน (Rinku — ติด Rinku Outlets)'
+      : '💡 คืนที่ 1–2 นอนโซน Arashiyama (Kyoto) · คืนที่ 8 นอนแถวสนามบิน (Rinku)';
+  $('hotelSummary').innerHTML = `รวมที่พัก ${N_NIGHTS} คืน = <b>${yen(nightsCost)}</b> (${thb(nightsCost)})<br><span style="color:#94a3b8">${kyotoHotel?.note || ''}</span><br>${zoneLine}`;
 }
 
 function renderOptions() {
@@ -1412,7 +1424,7 @@ function renderOptions() {
     <label class="radio-line"><input type="radio" name="tempozan" value="ferris" ${state.tempozan === 'ferris' ? 'checked' : ''}> ชิงช้าสวรรค์ Tempozan <span class="price">~¥2,500</span></label>
     <div style="height:6px"></div>
     <label class="radio-line"><input type="checkbox" id="optExpress" ${state.express ? 'checked' : ''}> ซื้อ Express Pass USJ <span class="price">+~¥48,600 (การันตีเข้า Nintendo World)</span></label>
-    <label class="radio-line"><input type="checkbox" id="optRinku" ${state.rinku ? 'checked' : ''}> แวะ Rinku Outlets วันกลับ <span class="price">ฟรี (ค่ารถ ~¥360/2 คน)</span></label>
+    <label class="radio-line"><input type="checkbox" id="optRinku" ${state.rinku ? 'checked' : ''}> แวะ Rinku Outlets ค่ำก่อนกลับ <span class="price">ติดโรงแรมแถวสนามบิน — เดินถึง</span></label>
     <div class="row" style="margin-top:8px">
       <label style="margin:0">ค่าอาหาร/วัน:</label>
       <input type="number" id="foodInput" value="${state.foodPerDay}" step="500" style="width:90px"> ¥
@@ -1434,17 +1446,17 @@ function renderOptions() {
   el.querySelectorAll('[name=steak]').forEach(r => r.addEventListener('change', e => { state.steak = e.target.value; impact(`🥩 ร้าน steak: ${e.target.value === 'steakland' ? 'Steak Land (คุ้มสุด)' : 'Mouriya (พรีเมียม, จองล่วงหน้า)'}`); saveState(); updateAll(true); }));
   el.querySelectorAll('[name=tempozan]').forEach(r => r.addEventListener('change', e => { state.tempozan = e.target.value; impact(`🎡 บ่ายแถว Tempozan: ${e.target.value === 'legoland' ? 'Legoland' : 'ชิงช้าสวรรค์'}`); saveState(); updateAll(true); }));
   $('optExpress').addEventListener('change', e => { state.express = e.target.checked; impact(state.express ? '🎟️ เพิ่ม Express Pass USJ (+~¥48,600)' : '🎟️ ยกเลิก Express Pass'); saveState(); updateAll(true); });
-  $('optRinku').addEventListener('change', e => { state.rinku = e.target.checked; impact(state.rinku ? '🛍️ เพิ่มแวะ Rinku Outlets วันกลับ' : 'ยกเลิก Rinku Outlets'); saveState(); updateAll(true); });
+  $('optRinku').addEventListener('change', e => { state.rinku = e.target.checked; impact(state.rinku ? '🛍️ เพิ่มแวะ Rinku Outlets ค่ำก่อนกลับ (5 ธ.ค.)' : 'ยกเลิก Rinku Outlets'); saveState(); updateAll(true); });
   $('foodInput').addEventListener('change', e => { state.foodPerDay = Math.max(0, +e.target.value || 0); impact(`🍱 งบอาหาร ${yen(state.foodPerDay)}/วัน`); saveState(); updateAll(true); });
 }
 
 function renderBudget() {
   const b = computeBudget();
   const rows = [
-    ['🏨 ที่พัก 7 คืน', b.lodging],
+    ['🏨 ที่พัก 8 คืน', b.lodging],
     ['🎫 ตั๋วกิจกรรม', b.attractions],
     ['🚆 ค่าเดินทาง (2 ผู้ใหญ่, เด็กฟรี)', b.transport],
-    ['🍱 อาหาร 8 วัน', b.food],
+    ['🍱 อาหาร 9 วัน', b.food],
   ];
   let html = rows.map(([k, v]) => `<div class="budget-row"><span>${k}</span><span class="val">${yen(v)} · ${thb(v)}</span></div>`).join('');
   html += `<div class="budget-total"><span>รวมทั้งทริป</span><span><b>${yen(b.total)}</b><br><span class="thb">≈ ${thb(b.total)}</span></span></div>`;
@@ -1532,15 +1544,16 @@ function switchKyotoWhen(mode) {
   if (mode === 'mid') state.bayOn = false;      // โหมดกลางทริปไม่มีช่วงคืนให้จัดโซน UC
   if (mode === 'first') state.bayOn = true;     // กลับมาโหมดคืนแรก = เปิดโซน UC ตามค่าเริ่มต้น (ปิดเองได้)
   const bayId = defaultBayHotelId();
+  const kixId = (all.find(h => h.area === 'kix') || HOTELS[0]).id;
   state.nights = (mode === 'first')
-    ? (state.bayOn ? [kyotoId, kyotoId, bayId, bayId, osakaId, osakaId, osakaId]
-                   : [kyotoId, kyotoId, osakaId, osakaId, osakaId, osakaId, osakaId])
-    : [osakaId, osakaId, kyotoId, kyotoId, osakaId, osakaId, osakaId];
+    ? (state.bayOn ? [kyotoId, kyotoId, bayId, bayId, osakaId, osakaId, osakaId, kixId]
+                   : [kyotoId, kyotoId, osakaId, osakaId, osakaId, osakaId, osakaId, kixId])
+    : [osakaId, osakaId, kyotoId, kyotoId, osakaId, osakaId, osakaId, kixId];
   state.assign = {};
   applyModeDefaults();
   impact(mode === 'first'
-    ? `🔄 สลับเป็นพัก Kyoto คืนที่ 1–2${state.bayOn ? ' + Universal City คืนที่ 3–4 (3 โซน)' : ''}: วันแรก KIX → Kyoto ตรง (Haruka ~80 นาที) · Kyoto เต็มวันที่ 2 + เช้าวันที่ 3 · ย้ายเข้า${state.bayOn ? ' UC' : ' Osaka'}บ่ายวันที่ 3 · USJ วันที่ 4 · Kaiyukan วันที่ 5${state.bayOn ? ' แล้วย้ายเข้า Namba ค่ำ Dotonbori' : ''} · Nara วันที่ 6 · Kobe วันที่ 7 · Minoo ถูกตัดชั่วคราว`
-    : '🔄 กลับเป็นพัก Kyoto คืนที่ 3–4 (2 โซน — ปิดโซน UC เพราะไม่มีช่วงคืนให้จัด): Osaka ก่อน · USJ วันที่ 3 → Kyoto ค่ำวันที่ 3 · Kyoto วันที่ 4–5 + Minoo วันที่ 5 · Nara วันที่ 6 · Kobe วันที่ 7');
+    ? `🔄 สลับเป็นพัก Kyoto คืนที่ 1–2${state.bayOn ? ' + Universal City คืนที่ 3–4 (3 โซน)' : ''}: วันแรก KIX → Kyoto ตรง (Haruka ~80 นาที) · Kyoto เต็มวันที่ 2 + เช้าวันที่ 3 · ย้ายเข้า${state.bayOn ? ' UC' : ' Osaka'}บ่ายวันที่ 3 · USJ วันที่ 4 · Kaiyukan วันที่ 5${state.bayOn ? ' แล้วย้ายเข้า Namba ค่ำ Dotonbori' : ''} · Nara วันที่ 6 · Kobe/Castle วันที่ 7 · เสาร์วันที่ 8 Minoo + ค่ำย้ายไปนอนแถวสนามบิน (Rinku)`
+    : '🔄 กลับเป็นพัก Kyoto คืนที่ 3–4 (2 โซน — ปิดโซน UC เพราะไม่มีช่วงคืนให้จัด): Osaka ก่อน · USJ วันที่ 3 → Kyoto ค่ำวันที่ 3 · Kyoto วันที่ 4–5 · Nara วันที่ 6 · Kobe/Castle วันที่ 7 · เสาร์วันที่ 8 Minoo + นอนแถวสนามบิน (บินกลับเช้าวันอาทิตย์)');
   saveState(); updateAll(true);
 }
 function deleteCustomHotel(hid) {
