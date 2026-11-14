@@ -303,8 +303,12 @@ const HOTELS = [
     note:'อยู่บนสถานี Nankai Namba โดยตรง — วันถึง/วันกลับสบายสุด ไม่ต้องแบกกระเป๋าเดิน' },
   { id:'budget', name:'ห้องคู่ + เด็กนอนฟรี (Karaksa / Toyoko Inn ย่าน Namba)', area:'namba', price:15000, lat:34.6655, lng:135.5045, walkHub:6,
     note:'กฎ co-sleeping: เด็กเล็กนอนกับผู้ใหญ่ฟรี — ประหยัดสุด แต่ต้องยืนยันกับโรงแรมก่อนจอง' },
-  { id:'vischio', name:'Hotel Vischio Kyoto by GRANVIA ⭐ติด Kyoto Stn', area:'kyoto', price:30000, lat:34.9820, lng:135.7600, walkHub:0,
-    note:'คืน 1–2 (28–30 พ.ย.) · เดิน 2 นาทีจาก Kyoto Stn ทางออก Hachijo — ลง Haruka แล้วเดินถึงห้อง (รับวันถึงดึก 21:00 ได้ดี) · ห้อง Triple 3 เตียง · อ่างน้ำใหญ่+ซาวน่า · ราคาประมาณ เช็คจริง' },
+  { id:'citadines', name:'Citadines Namba Osaka ✅จองแล้ว 2–5 ธ.ค.', area:'namba', price:22000, lat:34.6632, lng:135.5022, walkHub:7,
+    note:'คืน 5–7 · เซอร์วิสอพาร์ตเมนต์ (ครัว+เครื่องซักผ้า) ย่าน Nipponbashi · เดิน ~6 นาทีถึงสถานี Nippombashi (Kintetsu/Sakaisuji) · ตลาด Kuromon ~6 นาที · Nankai Namba ~7 นาที · Dotonbori ~12 นาที' },
+  { id:'grandwest', name:'The GrandWest Arashiyama (ทางเลือกโซน Arashiyama)', area:'kyoto', price:30000, lat:35.0150, lng:135.6812, walkHub:10,
+    note:'บูติค 10 ห้อง ห้องรับได้ถึง 5 คน กว้างแบบวิลล่า (คะแนน 9/10) · เดิน 5 นาทีจากสถานี Hankyu Arashiyama · ~10 นาทีจาก JR Saga-Arashiyama · ป่าไผ่/วัด Tenryu-ji 10–15 นาที · ⚠️ ร้านแถวนั้นปิด ~21:00 + หน้างานรับถึง ~22:00 (โรงแรมเดิมก่อนกลับมาใช้ Vischio 14 พ.ย.)' },
+  { id:'vischio', name:'Hotel Vischio Kyoto by GRANVIA ✅จองแล้ว 28–30 พ.ย.', area:'kyoto', price:30000, lat:34.9820, lng:135.7600, walkHub:0,
+    note:'คืน 1–2 · ตรงข้าม Kyoto Stn ทางออก Hachijo เดิน 2 นาที · ห้อง Triple 26 ม². 3 เตียง · อ่างน้ำใหญ่+ซาวน่า · front 24 ชม. — Day 1 ถึงดึก 21:15 เดินถึงห้องเลย · Day 3 ขึ้น JR Sagano ชานชาลา 30–33 ไป Arashiyama + ฝากกระเป๋าวันย้าย' },
   { id:'ranzan', name:'Kyoto Arashiyama Ranzan Hotel (ทางเลือกโซนธรรมชาติ)', area:'kyoto', price:32000, lat:35.0085, lng:135.6723, walkHub:0,
     note:'Kyoto คืนที่ 3–4 · ริมแม่น้ำ Katsura ใกล้สะพาน Togetsukyo · กว้าง เหมาะครอบครัว · มีออนเซ็น · เดินป่าไผ่ได้เลย' },
   { id:'kadensho', name:'Kadensho, Arashiyama Onsen (Kyoritsu Resort)', area:'kyoto', price:40000, lat:35.0066, lng:135.6715, walkHub:0,
@@ -313,16 +317,16 @@ const HOTELS = [
     note:'Kyoto คืนที่ 3–4 · เรียวกังดั้งเดิมกลาง Arashiyama · ห้องทาทามิ+ฟุต้น นอน 3 คนสบายโดยไม่ต้องหา triple room' },
   { id:'kintetsu_uc', name:'Hotel Kintetsu Universal City ⭐ติดสถานี UC', area:'bay', price:26000, lat:34.6666, lng:135.4290, walkHub:1,
     note:'อยู่ในอาคาร Universal CityWalk ต่อจากสถานี JR Universal-City · เดิน ~5 นาทีถึงประตู USJ · โรงแรมพันธมิตรทางการ USJ · ราคาประมาณ ต้องเช็คจริง' },
-  { id:'universal_port', name:'Hotel Universal Port ⭐คุ้ม + ห้องครอบครัว', area:'bay', price:22000, lat:34.6622, lng:135.4322, walkHub:10,
-    note:'ห้องครอบครัวรับ 4 ท่าน · เดิน ~10 นาทีถึง USJ ผ่าน CityWalk · มีห้องธีมเด็กช่วง event · พันธมิตร USJ' },
+  { id:'universal_port', name:'Hotel Universal Port ✅จองแล้ว 30 พ.ย.–2 ธ.ค.', area:'bay', price:22000, lat:34.6622, lng:135.4322, walkHub:10,
+    note:'คืน 3–4 · ห้องครอบครัวรับ 4 ท่าน + ห้องธีมเด็กช่วง event · เดิน ~10 นาทีจากสถานี UC / ~7–10 นาทีถึงประตู USJ · พันธมิตรทางการ USJ' },
   { id:'singulari', name:'The Singulari Hotel & SkySpa at USJ ⭐คุ้ม + ออนเซ็นดาดฟ้า', area:'bay', price:20000, lat:34.6685, lng:135.4295, walkHub:2,
     note:'ต่อจากสถานี UC ด้วยสะพานเดิน · SkySpa ออนเซ็นชั้นสูง · โรงแรม official USJ ราคาเข้าถึงง่ายที่สุดในย่าน' },
   { id:'keihan_tower', name:'Hotel Keihan Universal Tower ⭐ห้อง bunk เด็กชอบ', area:'bay', price:27000, lat:34.6703, lng:135.4300, walkHub:5,
     note:'ตึก 32 ชั้นหันหน้าเข้าสถานี UC · ห้อง bunk bed ได้ถึง 6 ท่าน · ออนเซ็น S-PARK ชั้น 31 (ค่าใช้เพิ่ม) · เดิน ~7 นาทีถึง USJ · ราคาประมาณ' },
   { id:'park_front', name:'Park Front Hotel at USJ ⭐ใกล้ประตูที่สุด', area:'bay', price:42000, lat:34.6674, lng:135.4319, walkHub:8,
     note:'โรงแรม official USJ อยู่หน้าประตูสวนสนุกเลย (เดิน ~2 นาที) · ห้องครอบครัว/ชั้นเด็ก ของเล่น+ชุดนอนเด็ก · แพงสุดในย่าน — เหมาะถ้างบถึง' },
-  { id:'omo_kix', name:'OMO Kansai Airport (Hoshino) ⭐ติดสถานี Rinku', area:'kix', price:22000, lat:34.3990, lng:135.2677, walkHub:0,
-    note:'คืนก่อนบิน (5 ธ.ค.) · เดิน 1 นาทีจาก Rinku Town Stn (ทางออก 5) · เดิน ~12 นาทีถึง Rinku Outlets · มีรถรับส่ง KIX ช่วงเช้าฟรี · ราคาประมาณ เช็คจริง' },
+  { id:'omo_kix', name:'OMO Kansai Airport (Hoshino) ✅จองแล้ว 5 ธ.ค.', area:'kix', price:22000, lat:34.3990, lng:135.2677, walkHub:0,
+    note:'คืนก่อนบิน (5 ธ.ค.) · เดิน 1 นาทีจาก Rinku Town Stn (ทางออก 5) · เดิน ~12 นาทีถึง Rinku Outlets · มีรถรับส่ง KIX ช่วงเช้าฟรี' },
   { id:'hennna_kix', name:'Henn na Resort & Spa Kansai Airport ⭐ออนเซ็นก่อนบิน', area:'kix', price:18000, lat:34.3975, lng:135.2810, walkHub:0,
     note:'คืนก่อนบิน (5 ธ.ค.) · ออนเซ็นธรรมชาติ "Senshu no Yu" แขกพักเข้าฟรี · เดิน ~15 นาทีถึง Rinku Outlets · มีรถรับส่ง KIX · ราคาประมาณ เช็คจริง' },
 ];
@@ -335,6 +339,8 @@ const P = {
   kix:            { name:'สนามบิน Kansai (KIX)', lat:34.4347, lng:135.2441 },
   dotonbori:      { name:'Dotonbori / Glico Bridge', lat:34.6687, lng:135.5017 },
   ginkakuji:      { name:'Ginkakuji + Philosopher\'s Path', lat:35.0270, lng:135.7968 },
+  kinkakuji:      { name:'วัด Kinkaku-ji (วัดทอง)', lat:35.0394, lng:135.7292 },
+  torokko:        { name:'รถไฟ Torokko — สถานี Torokko-Saga', lat:35.0168, lng:135.6715 },
   kuromon:        { name:'ตลาดปลา Kuromon Ichiba', lat:34.6669, lng:135.5062 },
   usj:            { name:'Universal Studios Japan', lat:34.6654, lng:135.4323 },
   osakako:        { name:'Kaiyukan Aquarium', lat:34.6553, lng:135.4292 },
@@ -342,6 +348,7 @@ const P = {
   ferris:         { name:'Tempozan Ferris Wheel', lat:34.6573, lng:135.4278 },
   arashiyama:     { name:'ป่าไผ่ Arashiyama', lat:35.0170, lng:135.6712 },
   togetsukyo:     { name:'สะพาน Togetsukyo', lat:35.0093, lng:135.6716 },
+  yakatabune:     { name:'Yakatabune Arashiyama (ท่าเรือเหนือ ติด Tenryu-ji)', lat:35.0166, lng:135.6706 },
   monkey:         { name:'Iwatayama Monkey Park', lat:35.0112, lng:135.6678 },
   tofukuji:       { name:'วัด Tofuku-ji', lat:34.9781, lng:135.7717 },
   kiyomizu:       { name:'วัด Kiyomizu-dera', lat:34.9949, lng:135.7850 },
@@ -373,6 +380,7 @@ const PLACES_INFO = {
   arashiyama:     { wiki:'Arashiyama', desc:'ย่านธรรมชาติทางตะวันตกของเกียวโต — หุบเขาใบไม้แดง, ป่าไผ่, แม่น้ำ Katsura และวัด UNESCO อยู่ด้วยกันแถวนี้', bullets:['ป่าไผ่ Arashiyama — เดินใต้ต้นไผ่สูงหลายสิบเมตร เสียงลมพัดผ่านไผ่ได้รับเลือกเป็น "เสียงแห่งญี่ปุ่น" 100 อันดับ','วัด Tenryu-ji (UNESCO) สวนสวยที่สุดแห่งหนึ่งของญี่ปุ่น สู้ราคาค่าเข้า ~¥500 คุ้ม','ถนนเซงคุจิ (เมนทสุจิ) — ขนมโมจิ, ไอศกรีมมัทฉะ, ร้านคราฟต์ระหว่างทาง','ต้น ธ.ค. คือช่วงท้ายพีคใบไม้แดง — เข้าเช้าแดด 8:00–10:00 คนน้อยสุด'] },
   togetsukyo:     { wiki:'Togetsukyo Bridge', desc:'สะพานไม้ข้ามแม่น้ำ Katsura ยาว 155 ม. อายุ 90 ปี — จุดถ่ายรูปอันดับ 1 ของ Arashiyama', bullets:['ชื่อแปลว่า "สะพานพระจันทร์ข้ามฟ้า" ตามพระราชดำริของจักรพรรดิ','ต้นไม้ทั้งสองฝั่งเปลี่ยนสีแดง-เหลืองพร้อมกันช่วงปลาย พ.ย.–ต้น ธ.ค.','มีเรือพายให้เช่า (เด็ก 5 ขวบนั่งได้) และรถกระบะกระต่ายลากเที่ยว'] },
   monkey:         { wiki:'Iwatayama Monkey Park', desc:'สวนลิงภูเขาญี่ปุ่น ~120 ตัว อยู่อย่างอิสระบนภูเขา Iwata สูง 160 ม.', bullets:['เดินเทรลขึ้น ~20–30 นาที (ทางชัน เตรียมน้ำ) — เด็กวัย 5 ขวบไหวแต่ต้องพักเป็นช่วง','ปลายทางเลี้ยงลิงจากในกรงกระจก — ปลอดภัยกับเด็ก','วิวยอดเขามองเห็นตัวเมืองเกียวโตทั้งเมือง + ใบไม้แดงเต็มลาด'] },
+  yakatabune:     { desc:'เรือเรือนไม้ (屋形船) ล่องแม่น้ำ Katsura รอบสะพาน Togetsukyo ~60 นาที พร้อมอาหารบนเรือ (ตัดออกจากแผนหลักแล้ว 14 พ.ย. — ไม่ได้อยู่ Arashiyama ตอนเที่ยง)', bullets:['เรือเหมา (2–3 คนได้) + อาหาร: sukiyaki / shabu / เบนโตะเกียวโต ~¥5,500–9,000/คน — จองล่วงหน้า 3–4 วันทาง Veltra / Klook / Tabione (เรือ Arashiyama Tsusen) หรือร้าน松尾川よし โทร 075-391-6755','ขึ้นที่ท่าเรือเหนือ (Susukinobaba ติดวัด Tenryu-ji — เดินจาก JR Saga-Arashiyama ~10 นาที)','เรือมีโซนอบอุ่น + ฟืน เดินทางทั้งปี · พายุ/น้ำหลากยกเลิก · ช่วง koyo วันหยุดคิวแน่น — จองเร็ว','สำรองถ้าจองไม่ทัน: เรือแชร์ชมวิว 30 นาที ¥1,800/¥900 ไม่ต้องจอง (9:00–15:30) หรือกินมื้อกลางวันริม Togetsukyo ตามปกติ'] },
   tofukuji:       { wiki:'Tofuku-ji', desc:'วัดสาย Zen อายุ ~600 ปี — "จุดชมใบไม้แดงอันดับ 1 ของเกียวโต"', bullets:['สะพานไม้ Tsutenkyo โค้งยาว 100 ม. ทอดผ่านลำธารใบเมเปิล ~2,000 ต้น — มุมที่เห็นในโปสการ์ด','สวนหิน+มอสส์ทางเหนือออกแบบโดยปรมาจารย์ Mirei Shigemori','ตอนพีค (กลาง–ปลาย พ.ย.) อาจรอเข้านาน 30–60 นาที — ต้น ธ.ค. คนเริ่มเบา ใบยังสวย'] },
   kiyomizu:       { wiki:'Kiyomizu-dera', desc:'วัด UNESCO บนเนิน Higashiyama อายุ ~1,250 ปี — ชื่อแปลว่า "น้ำบริสุทธิ์"', bullets:['เวทีไม้ Kiyomizu (Butai) ยื่นออกจากผาสูง 13 ม. สร้างโดยไม่ใช้ตะปูแม้แต่ตัวเดียว','น้ำศักดิ์สิทธิ์ Otowa 3 สาย (สุขภาพ/ความรัก/การศึกษา) — จิบ 1 สายพอ','ลงมาเดินถนน Ninenzaka/Sannenzaka ก้อนหินโบราณ ร้านขนม yatsuhashi ลองชิมสารพัดรส — เด็กชอบขนมถั่ว','เปิด special viewing ช่วงใบไม้แดง เย็นมี light-up (เช็คครั้งนั้นก่อน)'] },
   gion:           { wiki:'Gion', desc:'ย่านเกย์ชาสุดคลาสสิกของเกียวโต — บ้านไม้ Machiya เรียงราย 2 ฝั่งถนน Hanamikoji', bullets:['โอคากิมัจิ — โชว์วัฒนธรรมเกย์ชาฟรี (ช่วง พ.ย.–มิ.ย.)','ตรอกเล็ก Ishibei-koji สวยแบบโพสการ์ด','เย็นอาจเจอมาอิโกะเดินไปทำงาน (~18:00–19:00) — ถ่ายรูปแต่ไกล เคารพกันหน่อยนะ','ศาลเจ้า Yasaka ปลายถนน — ฟรี เดินเล่นเย็นสบาย'] },
@@ -387,6 +395,8 @@ const PLACES_INFO = {
   umeda:          { wiki:'Umeda', desc:'ย่านธุรกิจ+ช้อปปิ้งใหญ่สุดของโอซาก้า — สถานีรถไฟ Osaka/Umeda เป็นหนึ่งในสถานีที่คนใช้มากที่สุดในโลก', bullets:['ห้าง Daimaru ชั้น B1 "Depachika" — ขนม/อาหารฝีมือเชฟระดับประเทศ ซื้อของฝากที่นี่แหละคุ้มสุด','Don Quijote (สาขาใหญ่) ของฝากราคาถูก + drugstore ซันโด้ ป้ายแดง','HEP FIVE ชิงช้าสวรรค์สีแดงบนหลังคาห้าง (ถ้ามีเวลาเหลือ)'] },
   rinku:          { wiki:'Rinku Town', desc:'เมืองเอาต์เล็ตริมทะเล ตรงข้ามสนามบิน KIX — 1 สถานีจากผู้โดยสาร', bullets:['Rinku Premium Outlets ~250 ร้าน แบรนด์ราคาพิเศษ','ประภาคาร Rinku Gate Tower สูง 256 ม. สูงที่สุดในญี่ปุ่น (ในนั้นมีโรงแรมด้วย)','เดินชมเครื่องบินลง-ขึ้นขนานชายหาดได้ทั้งวัน'] },
   ginkakuji:      { wiki:'Ginkaku-ji', desc:'"วัดเงิน" สร้าง 1482 โดยโชกุนอาชิกางะ โยชิมาซะ — ต้นแบบความงามแบบ wabi-sabi', bullets:['สวนหินกรวด Ginshadan (ทะเลเงิน) + กองทรายเงิน Kogetsudai สวยแบบมินิมอล','เดินเส้นทางวนรอบสวน มองเห็นต้นไม้เปลี่ยนสีเต็มลาดเขา','ต่อด้วย **Philosopher\'s Path** — ทางเดินเลียบคลอง 1.5–1.8 กม. ใต้ต้นเมเปิล/ซากุระ (ฟรี เด็กเดินสบาย)','ถ้าอยากลุยกว่านี้: รถไฟ Eizan ขึ้นเขา Kurama–Kibune (เดินเทรล ~90 นาที ระหว่างวัด2แห่ง)'] },
+  kinkakuji:      { wiki:'Kinkaku-ji', desc:'"วัดทอง" — เจดีย์ 3 ชั้น 2 ชั้นบนหุ้มแผ่นทองคำแท้ ตั้งกลางสระ Kyoko-chi (สร้าง 1397 · ซ่อมใหม่ 1955)', bullets:['ชั้นบนหุ้มทองคำรวม ~20 กก. — สะท้อนแสงบนสระสวยสุดช่วงบ่ายแดดเอียง','เดินรอบสวนตามเส้นทางกำหนด ~45–60 นาที · มีจุดโยนเหรียญกุ๊กกิ๊กขวานส้ม','ปลาย พ.ย. ต้นเมเปิลรอบสระเริ่มแดง — ถ่ายเจดีย์ทอง+ใบแดงในเฟรมเดียว','จุดถ่ายหลักคนเยอะ — เดินถึงจุดหลังสุดก่อนแล้วย้อนมาถ่ายตอนออก'] },
+  torokko:        { wiki:'Sagano Scenic Railway', desc:'รถไฟเรโทร "Sagano Romantic Railway" วิ่ง 7.3 กม. ~25 นาที เลียบแม่น้ำ Hozugawa ระหว่าง Torokko-Saga ↔ Torokko-Kameoka — ที่นั่งระบุทั้งหมด', bullets:['ตั๋วล่วงหน้าขายที่เว็บทางการ 1 เดือนก่อนวันนั่ง เวลา 0:00 — ช่วง koyo หมดเร็วมาก · เหลือ当日券หน้างาน: Torokko-Saga เริ่มขาย ~08:35 (มาต่อคิว ~07:50 — จันทร์วันธรรมดาโอกาสสูง)','ผู้ใหญ่ ¥880 · เด็ก 6–11 ขวบ ¥440 · เด็กก่อนวัยประถม (5 ขวบ) ฟรีบนตัก','คู่กับเรือ Hozugawa พอดี: นั่งขบวน ~09:30 ขาขึ้นไป Kameoka แล้วล่องเรือขาลงกลับ Arashiyama รอบ ~11:30','ถ้า当日券หมด: สลับเป็นป่าไผ่เช้า 08:50 แล้ว JR ตรงไป Kameoka ขึ้นเรือรอบเดิม'] },
   osaka_castle:   { wiki:'Osaka Castle', desc:'ปราสาทสัญลักษณ์ของโอซาก้า สร้างปี 1583 โดยโชกุน Toyotomi Hideyoshi — หอคอย 8 ชั้นบนกำแพงหินยักษ์ กลางสวนใหญ่ตรงกลางเมือง', bullets:['ขึ้นหอคอยได้ถึงชั้น 8 — วิวเมืองโอซาก้า 360° (~¥600 · เด็ก ม.ต้นลงมาฟรี) ชั้นในเป็นพิพิธภัณฑ์ซามูไร (ในร่ม ฝนก็ได้)','รอบปราสาทคือจุดชมใบไม้แดงดังของโอซาก้า — Nishinomaru Garden มุมถ่ายปราสาทข้ามใบเมเปิลสวยสุด (~¥200)','กำแพงหินยักษ์ + ทางลาด Gokurakubashi โค้งยักษ์ — เด็กชอบวิ่งเล่น','Miraiza (อาคารโบราณหน้าปราสาท) มีร้านอาหาร/ของฝาก และให้เช่าชุดซามูไรถ่ายรูปกับปราสาท — จุดถ่ายรูปครอบครัวสุดฮิต','ที่จอดรถไฟใต้ดิน + สถานี Osakajokoen (JR) เดิน ~15 นาทีขึ้นเนิน — รถเข็นเด็กได้ (มีลิฟต์บางช่วง)'] },
 };
 
@@ -510,6 +520,7 @@ const LINKS = {
   'osakako|dotonbori':        { mode:'train', min:25, fare:260, via:['osakako_stn','bentencho','hommachi','shinsaibashi','yotsubashi','namba'], lineName:'Metro Chuo + Midosuji Line' },
   'arashiyama|togetsukyo':    { mode:'walk',  min:8 },
   'togetsukyo|monkey':        { mode:'walk',  min:15 },
+  'ginkakuji|yakatabune':     { mode:'train', min:75, fare:470, via:['kyoto_stn','umekoji','hanazono','enmachi','uzumasa','saga_arashiyama'], lineName:'บัส 17/100 กลับ Kyoto Stn + JR Sagano Line + เดิน ~10 นาที' },
   'tofukuji|kiyomizu':        { mode:'train', min:20, fare:220, via:['tofukuji_stn','shichijo','kiyomizu_gojo'], lineName:'Keihan Main Line' },
   'kiyomizu|gion':            { mode:'walk',  min:15 },
   'steakland|animal_kingdom': { mode:'train', min:25, fare:210, via:['sannomiya_stn','hanadokeimae','boeki_center','port_terminal','nakafuto','minatojima','keisan_kagaku'], lineName:'Port Liner' },
@@ -567,10 +578,13 @@ const HUB_NAMBA = {
 
 /* เวลา/ค่ารถจากโรงแรมโซน Kyoto (Arashiyama) · via = เส้นทางรถไฟจริงตามสถานี (จากโรงแรม → จุดหมาย) */
 const HUB_KYOTO = {
-  arashiyama:     { mode:'walk',  min:10 },
-  togetsukyo:     { mode:'walk',  min:10 },
-  monkey:         { mode:'walk',  min:18 },
-  ginkakuji:      { mode:'bus',   min:40, fare:230, lineName:'Kyoto City Bus 17/100' },
+  arashiyama:     { mode:'walk',  min:12 },
+  togetsukyo:     { mode:'walk',  min:15 },
+  monkey:         { mode:'walk',  min:20 },
+  yakatabune:     { mode:'walk',  min:14 },
+  ginkakuji:      { mode:'train', min:65, fare:470, via:['saga_arashiyama','umekoji','kyoto_stn'], lineName:'JR Sagano → Kyoto Stn + City Bus 17/100 (หรือแท็กซี่ตรง ~40 นาที ~¥5,500)' },
+  kinkakuji:      { mode:'train', min:70, fare:470, via:['saga_arashiyama','umekoji','kyoto_stn'], lineName:'JR Sagano → Kyoto Stn + City Bus 205/101 (หรือแท็กซี่ตรง ~35 นาที ~¥6,000)' },
+  torokko:        { mode:'walk',  min:10 },
   tofukuji:       { mode:'train', min:20, fare:150, via:['saga_arashiyama','umekoji','kyoto_stn','tofukuji_stn'], lineName:'JR Sagano + Nara Line' },
   kiyomizu:       { mode:'train', min:30, fare:330, via:['saga_arashiyama','umekoji','kyoto_stn','tofukuji_stn','shichijo','kiyomizu_gojo'], lineName:'JR + Keihan Main Line' },
   gion:           { mode:'train', min:25, fare:330, via:['saga_arashiyama','umekoji','kyoto_stn','tofukuji_stn','shichijo','gion_shijo'], lineName:'JR + Keihan Main Line' },
@@ -583,8 +597,8 @@ const HUB_KYOTO = {
   nakatanidou:    { mode:'train', min:50, fare:720, via:['saga_arashiyama','umekoji','kyoto_stn','tofukuji_stn','inari','nara_jr'], lineName:'JR Sagano + Nara Line' },
   minoo_station:  { mode:'train', min:60, fare:870, via:['katsura','ishibashi','shibatsuji','motosumiyoshi','sakurai','yamanowaka','minoo_stn'], lineName:'Randen ไป Katsura + Hankyu Minoo Line' },
   umeda:          { mode:'train', min:30, fare:580, via:['saga_arashiyama','umekoji','kyoto_stn','yamashina','takatsuki','settsu_tonda','ibaraki','higashi_yodogawa','shin_osaka','umeda_stn'], lineName:'JR Sagano + Kyoto Line' },
-  kix:            { mode:'train', min:80, fare:3640, via:['saga_arashiyama','umekoji','kyoto_stn','yamashina','takatsuki','settsu_tonda','ibaraki','higashi_yodogawa','shin_osaka','umeda_stn','fukushima_h','nishikujo','imamiya','shin_imamiya','tennoji','kumeda','hineno','izumisano','rinku_town','kix_stn'], lineName:'JR Haruka (ตรงถึงสนามบิน)' },
-  rinku:          { mode:'train', min:75, fare:3510, via:['saga_arashiyama','umekoji','kyoto_stn','yamashina','takatsuki','settsu_tonda','ibaraki','higashi_yodogawa','shin_osaka','umeda_stn','fukushima_h','nishikujo','imamiya','shin_imamiya','tennoji','kumeda','hineno','izumisano','rinku_town'], lineName:'JR Haruka' },
+  kix:            { mode:'train', min:95, fare:3880, via:['saga_arashiyama','umekoji','kyoto_stn','yamashina','takatsuki','settsu_tonda','ibaraki','higashi_yodogawa','shin_osaka','umeda_stn','fukushima_h','nishikujo','imamiya','shin_imamiya','tennoji','kumeda','hineno','izumisano','rinku_town','kix_stn'], lineName:'JR Haruka → Kyoto Stn ต่อ Sagano Line (+เดิน 10 นาที/แท็กซี่ 5 นาที)' },
+  rinku:          { mode:'train', min:90, fare:3750, via:['saga_arashiyama','umekoji','kyoto_stn','yamashina','takatsuki','settsu_tonda','ibaraki','higashi_yodogawa','shin_osaka','umeda_stn','fukushima_h','nishikujo','imamiya','shin_imamiya','tennoji','kumeda','hineno','izumisano','rinku_town'], lineName:'JR Haruka + Sagano Line' },
   dotonbori:      { mode:'train', min:60, fare:780, via:['saga_arashiyama','umekoji','kyoto_stn','yamashina','takatsuki','settsu_tonda','ibaraki','higashi_yodogawa','shin_osaka','umeda_stn','yodoyabashi','hommachi','shinsaibashi','yotsubashi','namba'], lineName:'JR + Metro Midosuji' },
   kuromon:        { mode:'train', min:60, fare:780, via:['saga_arashiyama','umekoji','kyoto_stn','yamashina','takatsuki','settsu_tonda','ibaraki','higashi_yodogawa','shin_osaka','umeda_stn','yodoyabashi','hommachi','shinsaibashi','yotsubashi','namba'], lineName:'JR + Metro Midosuji' },
   osaka_castle:   { mode:'train', min:75, fare:1090, via:['saga_arashiyama','umekoji','kyoto_stn','yamashina','takatsuki','settsu_tonda','ibaraki','higashi_yodogawa','shin_osaka','umeda_stn','temma','sakuranomiya','morinomiya','osakajokoen'], lineName:'JR Sagano + Kyoto + Osaka Loop' },
@@ -595,7 +609,10 @@ const HUB_KYOTO_STN = {
   arashiyama:     { mode:'train', min:20, fare:240, via:['kyoto_stn','umekoji','hanazono','enmachi','uzumasa','saga_arashiyama'], lineName:'JR Sagano Line (+ เดิน ~10 นาที)' },
   togetsukyo:     { mode:'train', min:28, fare:240, via:['kyoto_stn','umekoji','hanazono','enmachi','uzumasa','saga_arashiyama'], lineName:'JR Sagano Line (+ เดิน)' },
   monkey:         { mode:'train', min:35, fare:240, via:['kyoto_stn','umekoji','hanazono','enmachi','uzumasa','saga_arashiyama'], lineName:'JR Sagano Line (+ เดิน 18 นาที)' },
+  yakatabune:     { mode:'train', min:40, fare:240, via:['kyoto_stn','umekoji','hanazono','enmachi','uzumasa','saga_arashiyama'], lineName:'JR Sagano Line (+ เดิน ~10 นาที)' },
   ginkakuji:      { mode:'bus',   min:40, fare:230, lineName:'City Bus 17/100 หน้าสถานี (ชานชาลา D2)' },
+  kinkakuji:      { mode:'bus',   min:40, fare:230, lineName:'City Bus 205/101 จากสถานี ~40–45 นาที (แท็กซี่ ~25 นาที ~¥2,500)' },
+  torokko:        { mode:'train', min:25, fare:240, via:['kyoto_stn','umekoji','hanazono','enmachi','uzumasa','saga_arashiyama'], lineName:'JR Sagano Line (+ เดิน 5 นาทีถึง Torokko-Saga · ต่อคิว当日券 ~07:50 ก่อนเคาน์เตอร์เปิด ~08:35)' },
   tofukuji:       { mode:'train', min:10, fare:150, via:['kyoto_stn','tofukuji_stn'], lineName:'JR Nara Line' },
   kiyomizu:       { mode:'train', min:25, fare:330, via:['kyoto_stn','tofukuji_stn','shichijo','kiyomizu_gojo'], lineName:'JR + Keihan Main Line' },
   gion:           { mode:'train', min:20, fare:330, via:['kyoto_stn','tofukuji_stn','shichijo','gion_shijo'], lineName:'JR + Keihan Main Line' },
@@ -641,9 +658,9 @@ const DEFAULT_STATE = () => ({
   kyotoWhen: 'first',      // 'first' = คืน 1–2 พัก Kyoto (เปิดทริป) · 'mid' = คืน 3–4 (กลางทริป)
   bayOn: true,             // พักแถว Universal City คืนที่ 3–4 (โหมด 3 โซน — ใช้ได้เฉพาะ kyotoWhen 'first')
   kobePlan: 'castle',      // วันศุกร์ 4 ธ.ค.: 'castle' = Osaka Castle (แผนที่เลือก) · 'kobe' = สลับกลับไป Kobe
-  hotelGlobal: 'monterey',
-  nights: ['vischio','vischio','kintetsu_uc','kintetsu_uc','monterey','monterey','monterey','omo_kix'],
-  planV: 2,               // 2 = เปลี่ยนโรงแรมเกียวโตเป็น Vischio (ติดสถานี) + สลับวัดเงิน↔Arashiyama
+  hotelGlobal: 'citadines',
+  nights: ['vischio','vischio','universal_port','universal_port','citadines','citadines','citadines','omo_kix'],
+  planV: 4,               // 4 = จองที่พักจริงครบ 4 โรงแรม (14 พ.ย.): Vischio Kyoto (ติด Kyoto Stn) + Universal Port + Citadines + OMO
   assign: {},              // activityId -> day index (override)
   kyoto: 'A',              // A = Arashiyama, B = Higashiyama
   steak: 'steakland',      // steakland | mouriya
@@ -681,6 +698,10 @@ function loadState() {
   while (Array.isArray(s.nights) && s.nights.length < N_NIGHTS) s.nights.push('omo_kix');
   // เซฟเดิมก่อนเปลี่ยนโรงแรมเกียวโตเป็น Vischio (8 พ.ย.): ย้ายคืนที่ 1–2 ให้อัตโนมัติ (ครั้งเดียว)
   if (!s.planV) { s.nights[0] = 'vischio'; s.nights[1] = 'vischio'; s.planV = 2; }
+  // เซฟเดิมก่อนจองที่พักจริงครบ 4 โรงแรม (10 พ.ย.): ย้ายทุกโซนไปโรงแรมที่จอง (ครั้งเดียว)
+  if (s.planV === 2) { s.nights[0] = s.nights[1] = 'grandwest'; s.nights[2] = s.nights[3] = 'universal_port'; s.nights[4] = s.nights[5] = s.nights[6] = 'citadines'; s.planV = 3; }
+  // เซฟสมัยจอง GrandWest (10–13 พ.ย.): ย้ายคืน 1–2 กลับมา Vischio ตามแผนใหม่ (ครั้งเดียว)
+  if (s.planV === 3) { s.nights[0] = s.nights[1] = 'vischio'; s.planV = 4; }
   s.customHotels = Array.isArray(s.customHotels) ? s.customHotels : [];
   // กัน id โรงแรมที่หายไป (เช่น ลบในอีกแท็บ) — คืนค่าเริ่มต้นตามโซนคืนนั้น
   const def = DEFAULT_STATE().nights;
@@ -715,12 +736,15 @@ const ACTIVITIES = [
     endBlock: { icon:'🏨', title:'เข้าพัก Kyoto · คืนที่ 3–4', sub:'โรงแรมโซน Arashiyama (เลือกได้ในแผงโรงแรม) · พรุ่งนี้เที่ยว Kyoto เต็มวัน' } }),
   A('train_to_namba', '🚃', 'บ่าย: ย้ายจาก Universal City → เช็คอิน Osaka', [S('hotel_tail', 'กลับมารับกระเป๋าที่โรงแรม UC + รถไฟ → เช็คอินโรงแรม Namba', '15:30', null, 'Kaiyukan+Tempozan เช้า–บ่าย แล้วกลับรถไฟมารับกระเป๋าที่โรงแรมแถว UC ย้ายเข้า Namba (~35 นาที หรือแท็กซี่ตรง ~15 นาที) — เก็บของเสร็จออกมาเดิน Dotonbori ค่ำนี้เลย ใกล้โรงแรม')], { movable:false, fixedDay:4 }),
   A('kyoto_day', '🍁', 'Kyoto เต็มวัน — Arashiyama ธรรมชาติ', [], { heavy:true, tags:['kyoto'] }), // dynamic ตาม option
-  A('kyoto_day2', '🍃', 'Kyoto เช้า — Ginkakuji + Philosopher\'s Path + ลิงบ่าย', [
-    S('ginkakuji', 'วัดเงิน + เดินเลียบคลองใต้ต้นไม้เปลี่ยนสี', '08:30',
-      {a:500, c:300, label:'Ginkakuji ~¥500/¥300 · เดิน Philosopher\'s Path ฟรี ~1.5 กม.'},
-      'อาทิตย์ koyo คนเยอะ — มาให้ทันเปิด 08:30 (บัส 17/100 จากหน้าโรงแรม Vischio ~40 นาที)'),
-    S('monkey', 'บ่าย: Iwatayama Monkey Park (Arashiyama)', '14:30', {a:800, c:400, label:'~¥800/¥400'},
-      'JR Kyoto Stn → Saga-Arashiyama แล้วเดินขึ้น ~20 นาที — ลิงกลับมาในแผนหลังสลับวัน · เด็กเหนื่อย = ตัดแล้วกลับพักก่อนเที่ยง'),
+  A('kyoto_day2', '⛩️', 'Kyoto เมือง — วัดน้ำใส + Gion + วัดทอง', [
+    S('kiyomizu', 'วัดน้ำใส Kiyomizu-dera + ลงเขา Sannenzaka–Ninenzaka', '08:00',
+      {a:500, c:200, label:'~¥500/¥200 · วัดเปิด 06:00'},
+      'อาทิตย์ koyo คนเยอะ — เข้าก่อน 09:00 · จากโรงแรม: บัส 206 ชานชาลา D2 หน้าสถานี ~20 นาที ¥230 หรือแท็กซี่ ~15 นาที ~¥2,000 · ลงเขาเดินถนนหินโบราณ ชิมขนม yatsuhashi'),
+    S('gion', 'Gion + ศาลเจ้า Yasaka + กินกลางวันย่าน Shijo', '10:45', null,
+      'เดินจาก Ninenzaka ต่อ ~15 นาที · ถนน Hanamikoji บรรยากาศเกย์ชา · เที่ยงก่อนขึ้นไปวัดทอง'),
+    S('kinkakuji', 'วัดทอง Kinkaku-ji (บ่ายแสงเอียงสวยสุด)', '14:00',
+      {a:500, c:300, label:'~¥500/¥300 · เปิด 09:00–17:00'},
+      'จาก Gion: ⭐แท็กซี่ ~20–25 นาที ~¥2,500–3,000 (แนะนำ) หรือบัสเทศบาล ~45–55 นาที ¥230 · เดินรอบสวน ~45–60 นาที · กลับ: บัส 205/101 ~40–45 นาที หรือแท็กซี่ ~¥2,500 — พักโรงแรมแล้วค่ำกินแถว Kyoto Stn (Ramen Street ชั้น 10)'),
   ], { heavy:true, tags:['kyoto'] }),
   A('kobe_day', '🥩', 'Kobe — Steak + สวนสัตว์', [], { heavy:true, tags:['kobe','animal_kingdom'] }), // dynamic
   A('osaka_castle_day', '🏯', 'Osaka Castle — ปราสาท + สวนใบไม้แดง', [
@@ -746,15 +770,15 @@ const ACTIVITIES = [
 
 function activityStops(act) {
   if (act.id === 'checkin_d1' && state.kyotoWhen === 'first') {
-    return [S('hotel_base', 'เช็คอิน Hotel Vischio Kyoto (ติด Kyoto Stn) + วางกระเป๋า', '21:15', null,
-      'บินถึง KIX 18:15 → Haruka ~19:45 ถึง Kyoto Stn ~21:05 → ทางออก Hachijo เดิน 2 นาทีถึงโรงแรม · อาหารเย็น: Ramen Street ชั้น 10 ของสถานี (เปิดถึง ~22:00) หรือซื้อไว้ที่สนามบินก็ได้')];
+    return [S('hotel_base', 'เช็คอิน Hotel Vischio Kyoto + วางกระเป๋า', '~21:15', null,
+      'บินถึง KIX 18:15 → Haruka ~19:45 ถึง Kyoto Stn ~21:05 → ทางออก Hachijo เดิน 2 นาทีถึงโรงแรม ~21:15 (ไม่ต้องต่อรถไฟ/แท็กซี่ · front 24 ชม.) · อาหารเย็น: Ramen Street ชั้น 10 ของสถานี (เปิดถึง ~22:00) / conbini 24 ชม. — ไม่ต้องซื้อข้าวกล่องล่วงหน้า')];
   }
   if (act.id === 'train_to_kyoto' && state.kyotoWhen === 'first') {
     return state.bayOn
       ? [S('hotel_kyoto', 'เก็บกระเป๋า + รถไฟ Kyoto → เช็คอินโรงแรม Universal City', '16:30', null,
-        'เรือจบ ~15:30 ที่ Togetsukyo → JR Saga-Arashiyama กลับมาเก็บกระเป๋าที่ Vischio (ติดสถานี) → JR Kyoto Line ต่อ Sakurajima Line ถึง Universal-City (~60 นาที) เช็คอิน ~18:00 · ค่ำนี้เดิน CityWalk สั้น ๆ พรุ่งนี้ USJ เดินถึงประตู')]
+        'Torokko+เรือ+ป่าไผ่บ่าย จบ ~16:15 → JR Saga-Arashiyama กลับ Kyoto Stn เก็บกระเป๋าที่ Vischio (เดิน 2 นาที) → JR Kyoto Line + Sakurajima Line ถึง Universal-City (~75 นาที ~¥1,040) เช็คอิน Hotel Universal Port ~18:25 · ค่ำนี้เดิน CityWalk สั้น ๆ พรุ่งนี้ USJ เดินถึงประตู')]
       : [S('hotel_kyoto', 'เก็บกระเป๋า + รถไฟ Kyoto → เช็คอินโรงแรม Osaka (Namba)', '16:30', null,
-        'เรือจบ ~15:30 → กลับมาเก็บกระเป๋าที่ Vischio (ติดสถานี) แล้วเดินทางเข้า Osaka (~50 นาที) เช็คอิน Namba ~18:30 วางของก่อนออกมาเดิน Dotonbori ยามเย็น')];
+        'บ่ายจบ ~16:15 → JR กลับ Kyoto Stn เก็บกระเป๋าที่ Vischio แล้วเดินทางเข้า Osaka (~80 นาที) เช็คอิน Namba ~18:40 วางของก่อนออกมาเดิน Dotonbori ยามเย็น')];
   }
   if (act.id === 'tempozan') {
     return state.tempozan === 'legoland'
@@ -763,8 +787,14 @@ function activityStops(act) {
   }
   if (act.id === 'kyoto_day') {
     if (state.kyoto === 'A') return [
-      S('arashiyama', 'ป่าไผ่ Arashiyama + ถนนเซงคุจิ', '08:00', null, 'จันทร์วันธรรมดา = โล่งกว่าอาทิตย์มาก · JR จาก Kyoto Stn (ติดโรงแรม Vischio) ~17 นาที ลง Saga-Arashiyama เดิน ~10 นาที · เช้านี้ลุ้น Torokko 当日券ที่สถานีติดกันได้ (เคาน์เตอร์เปิด ~08:35)'),
-      S('togetsukyo', 'กลางวัน + เรือล่อง Hozugawa 2 ชม.', '13:30', {a:6000, c:4500, label:'Hozugawa-kudari: ผู้ใหญ่ ¥6,000 · เด็ก ¥4,500 — จองล่วงหน้า'}, 'Torokko เต็มช่วง koyo → เปลี่ยนเป็นเรือ: JR Saga-Arashiyama → Kameoka (~10 นาที ~¥210) แล้วล่อง 16 กม. ~2 ชม. ผ่านหุบเขาใบไม้แดง จบที่สะพาน Togetsukyo · จอง: hozugawakudari.jp / โทร +81-771-22-5846 / Klook · เรือเปิดโล่ง 2 ชม. หนาว — กันหนาวเด็กเต็มที่'),
+      S('torokko', 'Torokko-Saga: ต่อคิว当日券 (เคาน์เตอร์ ~08:35) + นั่งรถไฟวิวหุบเขา → Kameoka', '~08:35',
+        {a:880, c:0, label:'Sagano Romantic Railway: ผู้ใหญ่ ¥880 · เด็กก่อน 6 ขวบฟรีบนตัก — 当日券 หน้างาน (ออนไลน์คงหมด ลองเช็ค残席ก่อนวันจริง)'},
+        'จากโรงแรม: JR Sagano จาก Kyoto Stn ~17 นาที (ออก 07:15 — กระเป๋าฝากที่ Vischio) ลง Saga-Arashiyama เดิน 5 นาทีถึง Torokko-Saga · มาต่อคิว ~07:50 ก่อนเคาน์เตอร์เปิด ~08:35 — จันทร์วันธรรมดาโอกาสสูงสุด · เลือกขบวนตอนซื้อ: เล็ง 09:00–10:00 ให้ทันเรือ 11:30 (ได้แต่ขบวนช้า = เลื่อนเรือเป็นรอบ 13:30) · ถ้า当日券หมด: สลับไปป่าไผ่ 08:50 แล้ว JR ตรงไป Kameoka ทันเรือรอบเดิม'),
+      S('togetsukyo', 'เรือล่อง Hozugawa รอบ ~11:30 (2 ชม.) + กินกลางวันริม Togetsukyo', '11:30',
+        {a:6000, c:4500, label:'Hozugawa-kudari: ผู้ใหญ่ ¥6,000 · เด็ก ¥4,500 — จองล่วงหน้า'},
+        'Torokko ถึง Kameoka ~10:00 → ต่อรถรับส่งของเรือ/แท็กซี่ไปท่าเรือ ~10–15 นาที → เรือออก 11:30 ล่อง 16 กม. ผ่านหุบเขาใบไม้แดง จบ Togetsukyo ~13:30 · จอง: hozugawakudari.jp / โทร +81-771-22-5846 / Klook · เรือออกทุกชั่วโมง 09:00–15:00 — Torokko ได้ขบวนเร็ว/ช้ากว่าแผนก็โทรเลื่อนรอบได้ · เรือเปิดโล่ง 2 ชม. หนาว — กันหนาวเด็กเต็มที่ · พายุยกเลิก = คืนเงิน/เลื่อน'),
+      S('arashiyama', 'บ่าย: วัด Tenryu-ji + ป่าไผ่ + ถนนเซงคุจิ', '14:30', null,
+        'กินกลางวันริมแม่น้ำก่อน ~14:15 · Tenryu-ji (UNESCO ~¥500 · เปิด 08:30–17:00) → ออกประตูเหนือเข้าป่าไผ่เลย — จันทร์บ่ายคนน้อยกว่าอาทิตย์เยอะ · เรือยกเลิกพายุ = เปลี่ยนบ่ายเป็นลิง Iwatayama (เข้าก่อน 15:30) · เดินกลับ JR Saga-Arashiyama ~10 นาที กลับ Kyoto Stn ~16:45 เก็บกระเป๋าที่ Vischio'),
     ];
     return [
       S('tofukuji', 'วัด Tofuku-ji', '09:30', {a:500, c:300, label:'~¥500/¥300 (ช่วงใบไม้แดงอาจแพงขึ้น)'}, 'สะพาน Tsutenkyo — จุดชมใบไม้แดงอันดับ 1 ของเกียวโต'),
@@ -801,7 +831,7 @@ const DAY_MAPS = {
   first: { kuromon:5, kaiyukan:4, tempozan:4, dotonbori_ev:2, usj:3, kyoto_day:2, kyoto_day2:1, minoo_day:7, nara_day:5, kobe_day:6, osaka_castle_day:6, umeda_shop:6, illumination:6 },
   // Kuromon ย้ายมาเช้าวัน Nara (พฤ.) ทั้งสองโหมด — วันพุธเบา ๆ เหลือแค่ Kaiyukan+Tempozan
   // first + พัก UC คืน 3–4 (3 โซน): ค่ำ Dotonbori ย้ายมาค่ำวันย้ายเข้า Namba
-  // สลับวันแล้ว (8 พ.ย.): วันที่ 2 (อา.) = วัดเงิน+ลิง · วันที่ 3 (จ.) = Arashiyama+เรือ Hozugawa แล้วย้ายเข้า UC เย็น — ให้ป่าไผ่/เรือ/Torokko ได้วันธรรมดา
+  // จัดวันใหม่ (14 พ.ย.): วันที่ 2 (อา.) = เที่ยวเมือง วัดน้ำใส+Gion+วัดทอง · วันที่ 3 (จ.) = Arashiyama+เรือ Hozugawa แล้วย้ายเข้า UC เย็น — ป่าไผ่/เรือ/Torokko ได้วันธรรมดา
   // วันเสาร์ 5 ธ.ค. (วันที่ 8) = วันว่างก่อนบินกลับ: Minoo เช้า → บ่ายย้ายไปนอนแถวสนามบิน + Rinku Outlets
   first_bay: { kuromon:5, kaiyukan:4, tempozan:4, dotonbori_ev:4, usj:3, kyoto_day:2, kyoto_day2:1, minoo_day:7, nara_day:5, kobe_day:6, osaka_castle_day:6, umeda_shop:6, illumination:6 },
 };
@@ -1040,7 +1070,7 @@ function computeWarnings() {
     }
   }
   if (state.kyotoWhen === 'first') {
-    w.push({ lv:'info', t:'โหมด Kyoto คืนแรก: บินถึง KIX 18:15 → Haruka ~19:45 → ถึง Kyoto Stn ~21:05 → เดิน 2 นาทีเช็คอิน Vischio ~21:15 · อาหารเย็นได้ที่ Ramen Street ชั้น 10 ของสถานี (เปิดถึง ~22:00)' });
+    w.push({ lv:'info', t:'โหมด Kyoto คืนแรก (Hotel Vischio ติด Kyoto Stn): บินถึง KIX 18:15 → Haruka ~19:45 → Kyoto Stn ~21:05 → เดิน 2 นาทีเช็คอิน ~21:15 · อาหารเย็นยามดึกมีแถวสถานี (Ramen Street ถึง ~22:00) · วันอาทิตย์เที่ยวเมือง วัดน้ำใส+วัดทอง · วันจันทร์ JR Sagano ไป Arashiyama ออกเช้าก่อนคนเยอะ' });
   }
   if (state.kyotoWhen === 'first' && state.bayOn) {
     w.push({ lv:'info', t:'โหมด 3 โซน: คืน 3–4 แถว Universal City — เช้าวัน USJ เดิน ~5–10 นาทีถึงประตู + ค่ำวัน Kaiyukan ย้ายเข้า Namba (~35 นาที) เดิน Dotonbori ต่อ · ย่าน UC เงียบกว่า Namba ตอนกลางคืน และห้องครอบครัวหมดไว — ควรจองโรงแรม UC เร็ว' });
@@ -1093,15 +1123,16 @@ const MODE_STYLE = {
 
 function initMap() {
   map = L.map('map', { scrollWheelZoom: true }).setView([34.75, 135.45], 9);
-  const enTiles = L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
-    maxZoom: 19, attribution: '© OpenStreetMap contributors © CARTO'
+  // CARTO basemaps เริ่มบังคับ API Key (ลายน้ำ "API KEY REQUIRED" ตั้งแต่ล่าสุด) — จึงเปลี่ยนไปใช้ Esri/OSM-DE ที่ไม่ต้องใช้ key
+  const enTiles = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', {
+    maxZoom: 19, attribution: '© Esri, Maxar, Earthstar Geographics'
   }).addTo(map);
-  const jaTiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    maxZoom: 18, attribution: '© OpenStreetMap contributors'
+  const jaTiles = L.tileLayer('https://tile.openstreetmap.de/{z}/{x}/{y}.png', {
+    maxZoom: 19, attribution: '© OpenStreetMap contributors (tile.openstreetmap.de)'
   });
   L.control.layers({
-    '🗺️ ภาษาอังกฤษ': enTiles,
-    '🇯🇵 ภาษาญี่ปุ่น (OSM)': jaTiles
+    '🗺️ ป้าย EN/JP (Esri)': enTiles,
+    '🇯🇵 ป้ายญี่ปุ่น (OSM)': jaTiles
   }, null, { position: 'topright', collapsed: false }).addTo(map);
   layerGroup = L.layerGroup().addTo(map);
   hotelLayer = L.layerGroup().addTo(map);
@@ -1350,9 +1381,9 @@ function renderDayDetail() {
 /* แผนสำรองรายวัน (ฝนตก / เด็กหมดแรง / ปิดกิจกรรม) — แสดงเป็นกล่องกางได้ท้ายแต่ละวัน · วันที่ 6 สลับจริงได้ผ่าน state.kobePlan */
 function backupPlanFor(d) {
   const B = {
-    0: { t:'วันเดินทาง — พักให้สุด', items:['วันนี้ไม่มีกิจกรรมหลักอยู่แล้ว (ตั้งใจ) — ถ้าลูกยังไหว เดินเล่นริมแม่น้ำ Katsura หน้าโรงแรม 10 นาที แล้วนอนเร็ว','🛁 ออนเซนในโรงแรม Ranzan/Kadensho ช่วยล้างเหนื่อยเครื่องบินได้มาก'] },
-    1: { t:'ฝนตกที่ Arashiyama', items:['🚂 <b>Kyoto Railway Museum</b> — รถไฟจริง 50+ คัน จำลองขับขี่ขบวนไอน้ำได้ (เด็ก 5 ขวบชอบมาก) · JR จาก Saga-Arashiyama 1 สถานีถึง Umekoji-Kyotonishi · ~¥1,500/ผู้ใหญ่ เด็ก ~¥200–500','🐠 <b>Kyoto Aquarium</b> — อยู่ข้างกัน ในร่มทั้งหมด (นากยักษ์ + แมงกะพรุน) · ~¥2,400/ผู้ใหญ่','☕ ฝนปรอย: คาเฟ่ริมน้ำแถวสะพาน Togetsukyo + เดินถนนเซงคุจิสั้น ๆ ก็ยังโรแมนติก'] },
-    2: { t:'ฝนตกเช้าวัน Ginkakuji', items:['⛩️ <b>Sanjusangendo</b> — หอไม้ยาว 120 ม. ประดิษฐานกันดารี 1,001 องค์ (ในร่มทั้งหมด เดินชมไม่นาน เด็กว้าว) · ใกล้ Kyoto Stn · ~¥600','🍜 Kyoto Stn ชั้น 10 <b>Ramen Street</b> — รวมราเม็งดังทั่วญี่ปุ่น กินแล้วสบายใจก่อนขึ้นรถไฟไป UC ตามแผนบ่าย'] },
+    0: { t:'วันเดินทาง — พักให้สุด', items:['ถึงโรงแรม ~21:15 — ไม่มีกิจกรรม นอนเลย','🍜 ถ้าลูกยังไหว: ข้าวเย็น Ramen Street ชั้น 10 ของสถานี (เปิดถึง ~22:00) แล้วนอนเร็ว'] },
+    1: { t:'ฝนตกวันเที่ยวเมือง (วัดน้ำใส/วัดทอง)', items:['⛩️ <b>Sanjusangendo</b> — หอไม้ยาว 120 ม. ประดิษฐานกันดารี 1,001 องค์ (ในร่มทั้งหมด เดินชมไม่นาน เด็กว้าว) · ใกล้ Kyoto Stn บัส 1 ป้าย · ~¥600','🚂 <b>Kyoto Railway Museum</b> / 🐠 <b>Kyoto Aquarium</b> — โซนใกล้โรงแรม (JR 1 สถานี) ในร่มทั้งหมด','🍜 เที่ยง Ramen Street ชั้น 10 ของสถานี — กลับโรงแรมง่าย ๆ'] },
+    2: { t:'ฝนตกวัน Arashiyama + ย้ายเข้า UC', items:['🎫 Torokko 当日券หมด (ไม่ใช่ฝน): ป่าไผ่ 08:50 แทน (โล่งสุดของวัน) แล้ว JR ตรง Kameoka ขึ้นเรือรอบเดิม — แผนไม่พัง','🚂 <b>Kyoto Railway Museum</b> — รถไฟจริง 50+ คัน จำลองขับขี่ขบวนไอน้ำได้ (เด็ก 5 ขวบชอบมาก) · JR จาก Saga-Arashiyama 1 สถานีถึง Umekoji-Kyotonishi · ~¥1,500/ผู้ใหญ่ เด็ก ~¥200–500','🐠 <b>Kyoto Aquarium</b> — อยู่ข้างกัน ในร่มทั้งหมด (นากยักษ์ + แมงกะพรุน) · ~¥2,400/ผู้ใหญ่','🚣 เรือ Hozugawa ยกเลิกถ้าพายุ/น้ำหลาก (คืนเงิน/เลื่อนตามเงื่อนไข) — เที่ยวในร่มแทน (หรือลิง Iwatayama ถ้าฝนปรอย) แล้วย้ายเข้า UC ตามแผน · ฝนปรอย: ป่าไผ่/Tenryu-ji เดินได้ปกติ'] },
     3: { t:'วัน USJ — ฝนตก / อยากเปลี่ยน', items:['🌧️ ฝนปรอยยังคุ้ม: โซนในร่มเยอะ (Minion Park, ครึ่งในของ Nintendo World) — พกร่มซื้อหน้าประตู','🔄 ฝนหนักทั้งวัน: กด "ย้ายกิจกรรม" สลับ USJ กับ Kaiyukan (วันพุธ) — Kaiyukan ในร่มทั้งหมด · ระวังราคาตั๋ว USJ ต่างวัน','🧒 ทางเลือกในร่มแทน: <b>Kids Plaza Osaka</b> — พิพิธภัณฑ์เด็กเล่นสนุกทั้งวัน ใกล้สถานี Ogimachi · ~¥1,450/ผู้ใหญ่ เด็ก ม.ต้นลงมาฟรี'] },
     4: { t:'วัน Kaiyukan + ย้ายโรงแรม', items:['วันนี้ในร่มเกือบทั้งวันอยู่แล้ว — ฝนไม่ใช่ปัญหา','🎡 ชิงช้าสวรรค์หยุดถ้าลม/ฝนแรง: เพิ่มเวลาที่ Legoland (มีโรงหนัง 4D) หรือล่องเรือ Santa Maria รอบอ่าว ~45 นาที (~¥1,800/ผู้ใหญ่)','🚕 ถ้าเด็กหมดแรงก่อนย้ายโรงแรม: แท็กซี่ตรง UC → Namba ~15 นาที ~¥3,000 คุ้มกว่าแบกกระเป๋าขึ้นรถไฟ'] },
     5: { t:'วัน Nara — ฝนตก', items:['ตลาด Kuromon มีหลังคา เดินกินได้แม้ฝนปรอย','🏛️ <b>Nara National Museum</b> — ในร่ม ใกล้ปาก Nara Park · ~¥700/ผู้ใหญ่ เด็กฟรี · กวางยังเจอตอนเดินทางอยู่ดี','🌧️ ฝนหนักมาก: ย้าย Nara ไปวันศุกร์ (กดย้ายกิจกรรม) แล้ววันนี้ไป <b>Osaka Museum of Housing and Living</b> — เมืองโอซาก้ายุคเอโดะจำลองเท่าจริง เดินในร่ม ~¥600 หรือ Kids Plaza ข้าง ๆ (แต่วันศุกร์จะชนกับ Kobe/Castle — คิดดี ๆ: กวางไม่กลัวฝน)'] },
@@ -1436,7 +1467,7 @@ function renderOptions() {
   el.innerHTML = `
     ${cutHtml}
     <label>เส้นทาง Kyoto (วันที่มีกิจกรรม Kyoto)</label>
-    <label class="radio-line"><input type="radio" name="kyoto" value="A" ${state.kyoto === 'A' ? 'checked' : ''}> A: Arashiyama — ป่าไผ่ + เรือ Hozugawa + ลิง <span class="price">ตั๋วเรือ ~¥16,500 (Torokko เต็ม → เรือแทน)</span></label>
+    <label class="radio-line"><input type="radio" name="kyoto" value="A" ${state.kyoto === 'A' ? 'checked' : ''}> A: Arashiyama — Torokko เช้า + เรือ Hozugawa + ป่าไผ่บ่าย <span class="price">เรือ ~¥16,500 + Torokko ~¥1,800 (当日券 ต่อคิว 08:35)</span></label>
     <label class="radio-line"><input type="radio" name="kyoto" value="B" ${state.kyoto === 'B' ? 'checked' : ''}> B: Higashiyama — Tofuku-ji + Kiyomizu + Gion <span class="price">ตั๋ว ~¥2,300</span></label>
     <div style="height:6px"></div>
     <label>แผนวันศุกร์ 4 ธ.ค. — สลับได้ทุกเมื่อ</label>
@@ -1470,7 +1501,7 @@ function renderOptions() {
       : '🥩 สลับวันศุกร์ 4 ธ.ค. เป็นแผน Kobe — Steak + Animal Kingdom (เปิดวันศุกร์) + Harborland (จอง steak ล่วงหน้าหากสลับไปวันนี้)');
     saveState(); updateAll(true);
   }));
-  el.querySelectorAll('[name=kyoto]').forEach(r => r.addEventListener('change', e => { state.kyoto = e.target.value; impact(`🍁 เลือก Kyoto แบบ ${e.target.value === 'A' ? 'A: Arashiyama (เรือ Hozugawa แทน Torokko)' : 'B: Higashiyama (วัด Tofuku-ji + Kiyomizu)'}`); saveState(); updateAll(true); }));
+  el.querySelectorAll('[name=kyoto]').forEach(r => r.addEventListener('change', e => { state.kyoto = e.target.value; impact(`🍁 เลือก Kyoto แบบ ${e.target.value === 'A' ? 'A: Arashiyama (Torokko เช้า + เรือ Hozugawa)' : 'B: Higashiyama (วัด Tofuku-ji + Kiyomizu)'}`); saveState(); updateAll(true); }));
   el.querySelectorAll('[name=steak]').forEach(r => r.addEventListener('change', e => { state.steak = e.target.value; impact(`🥩 ร้าน steak: ${e.target.value === 'steakland' ? 'Steak Land (คุ้มสุด)' : 'Mouriya (พรีเมียม, จองล่วงหน้า)'}`); saveState(); updateAll(true); }));
   el.querySelectorAll('[name=tempozan]').forEach(r => r.addEventListener('change', e => { state.tempozan = e.target.value; impact(`🎡 บ่ายแถว Tempozan: ${e.target.value === 'legoland' ? 'Legoland' : 'ชิงช้าสวรรค์'}`); saveState(); updateAll(true); }));
   $('optExpress').addEventListener('change', e => { state.express = e.target.checked; impact(state.express ? '🎟️ เพิ่ม Express Pass USJ (+~¥48,600)' : '🎟️ ยกเลิก Express Pass'); saveState(); updateAll(true); });
@@ -1511,7 +1542,7 @@ function renderShiftSelect() {
 }
 
 /* ================= แท็บโรงแรม: รวมรายการ + เพิ่ม/แก้/ลบโรงแรมเอง ================= */
-const ZONE_TH = { namba:'📍 Osaka/Namba', kyoto:'🍁 Kyoto (Arashiyama)', bay:'🎢 Universal City', kix:'✈️ KIX/Rinku' };
+const ZONE_TH = { namba:'📍 Osaka/Namba', kyoto:'🍁 Kyoto', bay:'🎢 Universal City', kix:'✈️ KIX/Rinku' };
 const zoneWord = area => area === 'kyoto' ? 'Kyoto' : area === 'bay' ? 'UC' : area === 'kix' ? 'KIX' : 'Osaka';
 function nearestStationKey(lat, lng) {
   let best = null, bd = Infinity;
@@ -1580,7 +1611,7 @@ function switchKyotoWhen(mode) {
   state.assign = {};
   applyModeDefaults();
   impact(mode === 'first'
-    ? `🔄 สลับเป็นพัก Kyoto คืนที่ 1–2 (Vischio ติด Kyoto Stn)${state.bayOn ? ' + Universal City คืนที่ 3–4 (3 โซน)' : ''}: วันแรก KIX → Kyoto ตรง (Haruka ~80 นาที) เดิน 2 นาทีถึงห้อง · วันที่ 2 วัดเงิน+ลิง · วันที่ 3 Arashiyama+เรือ Hozugawa แล้วย้ายเข้า${state.bayOn ? ' UC' : ' Osaka'}เย็นวันที่ 3 · USJ วันที่ 4 · Kaiyukan วันที่ 5${state.bayOn ? ' แล้วย้ายเข้า Namba ค่ำ Dotonbori' : ''} · Nara วันที่ 6 · Kobe/Castle วันที่ 7 · เสาร์วันที่ 8 Minoo + ค่ำย้ายไปนอนแถวสนามบิน (Rinku)`
+    ? `🔄 สลับเป็นพัก Kyoto คืนที่ 1–2 (Hotel Vischio ติด Kyoto Stn)${state.bayOn ? ' + Universal City คืนที่ 3–4 (3 โซน)' : ''}: วันแรก KIX → Haruka → Kyoto Stn ~21:05 เดิน 2 นาทีเช็คอิน ~21:15 · วันที่ 2 วัดน้ำใส+Gion+วัดทอง · วันที่ 3 Arashiyama+เรือ Hozugawa แล้วย้ายเข้า${state.bayOn ? ' UC' : ' Osaka'}เย็นวันที่ 3 · USJ วันที่ 4 · Kaiyukan วันที่ 5${state.bayOn ? ' แล้วย้ายเข้า Namba ค่ำ Dotonbori' : ''} · Nara วันที่ 6 · Kobe/Castle วันที่ 7 · เสาร์วันที่ 8 Minoo + ค่ำย้ายไปนอนแถวสนามบิน (Rinku)`
     : '🔄 กลับเป็นพัก Kyoto คืนที่ 3–4 (2 โซน — ปิดโซน UC เพราะไม่มีช่วงคืนให้จัด): Osaka ก่อน · USJ วันที่ 3 → Kyoto ค่ำวันที่ 3 · Kyoto วันที่ 4–5 · Nara วันที่ 6 · Kobe/Castle วันที่ 7 · เสาร์วันที่ 8 Minoo + นอนแถวสนามบิน (บินกลับเช้าวันอาทิตย์)');
   saveState(); updateAll(true);
 }
