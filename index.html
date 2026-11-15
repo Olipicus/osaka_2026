@@ -1,1827 +1,903 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Osaka Trip 2026 — วางแผนแบบ interactive</title>
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>โอซาก้า เกียวโต 2026 — หน้าหลักทริป 9 วัน 8 คืน</title>
+<meta name="description" content="หน้าหลักสรุปทริปโอซาก้า–เกียวโต 2026 (28 พ.ย. – 6 ธ.ค. 2026): เส้นทาง 9 วัน 4 โรงแรม งบประมาณ และลิงก์ไปแผนรายวันทั้ง 9 วัน">
+<meta name="color-scheme" content="light">
 <style>
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: 'Sukhumvit Set', 'Prompt', -apple-system, 'Segoe UI', Tahoma, sans-serif; background: #f0f4f8; color: #1e293b; }
-  header { background: linear-gradient(135deg, #b91c1c, #dc2626); color: #fff; padding: 14px 20px; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; justify-content: space-between; }
-  header h1 { font-size: 1.15rem; }
-  header .sub { font-size: .8rem; opacity: .92; }
-  header .tools { display: flex; gap: 8px; align-items: center; font-size: .8rem; }
-  header select, header button { border: none; border-radius: 6px; padding: 6px 10px; font-size: .8rem; cursor: pointer; }
-  header button.btn-ghost { background: rgba(255,255,255,.2); color: #fff; }
-  header button.btn-ghost:hover { background: rgba(255,255,255,.35); }
+:root{
+  --paper:#f2ece0; --surface:#faf6ec; --surface-2:#f6f0e3;
+  --ink:#1b2233; --ink-2:#454d60; --muted:#626877;
+  --rule:#d9cfb9; --rule-strong:#c2b69a;
+  --accent:#b23a25; --accent-ink:#8c2a17; --ochre:#7f5c10; --moss:#3d5b45;
+  --radius:14px;
+  --font-sans:'Sukhumvit Set','Thonburi','Noto Sans Thai','IBM Plex Sans Thai',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  --font-mono:ui-monospace,'SF Mono','JetBrains Mono','Roboto Mono',Menlo,monospace;
+  --ease:cubic-bezier(.2,.7,.25,1);
+}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{
+  margin:0;background:var(--paper);color:var(--ink);
+  font-family:var(--font-sans);font-size:16px;line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{width:min(1120px,calc(100% - 40px));margin-inline:auto}
+@media (max-width:640px){.wrap{width:calc(100% - 28px)}}
+a{color:inherit}
+h1,h2,h3{margin:0;line-height:1.25;letter-spacing:-.015em}
+p{margin:0}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+.mono-label{font-family:var(--font-mono);font-size:.64rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.eyebrow{margin:0 0 10px;font-family:var(--font-mono);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-ink)}
 
-  .layout { display: grid; grid-template-columns: 400px 1fr; height: calc(100vh - 58px); }
-  aside { overflow-y: auto; padding: 12px; display: flex; flex-direction: column; gap: 12px; background: #e8eef5; }
-  main { display: flex; flex-direction: column; min-width: 0; }
-  #map { flex: 1; min-height: 320px; }
-  .daydetail { background: #fff; border-top: 3px solid #dc2626; padding: 14px 18px; overflow-y: auto; max-height: 46vh; }
+/* ---------- skip + topbar ---------- */
+.skip{position:absolute;left:-9999px;top:0;padding:10px 14px;background:var(--ink);color:var(--paper);z-index:50}
+.skip:focus{left:12px;top:12px}
+.topbar{position:sticky;top:0;z-index:20;background:rgba(242,236,224,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--rule)}
+.topbar__in{display:flex;align-items:center;gap:16px;min-height:58px;padding-block:8px}
+.brand{display:flex;flex-direction:column;gap:1px;text-decoration:none;line-height:1.15}
+.brand b{font-size:.86rem;letter-spacing:.12em}
+.brand span{font-family:var(--font-mono);font-size:.6rem;letter-spacing:.1em;color:var(--muted)}
+.topnav{display:flex;gap:2px;margin-left:auto;flex-wrap:wrap}
+.topnav a{
+  padding:6px 10px;border-radius:7px;text-decoration:none;font-size:.8rem;color:var(--ink-2);
+}
+.topnav a:hover{background:var(--surface-2);color:var(--ink)}
+.btn-quiet{
+  display:inline-flex;align-items:center;gap:6px;min-height:34px;padding:4px 12px;
+  border:1px solid var(--rule-strong);border-radius:8px;background:var(--surface);
+  color:var(--ink-2);font-family:inherit;font-size:.78rem;cursor:pointer;
+}
+.btn-quiet:hover{background:var(--surface-2);color:var(--ink)}
+.btn-quiet svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+@media (max-width:720px){.topnav{display:none}}
 
-  .card { background: #fff; border-radius: 10px; padding: 12px; box-shadow: 0 1px 3px rgba(0,0,0,.08); }
-  .card h2 { font-size: .9rem; color: #b91c1c; margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
-  .card h2 .badge { font-size: .65rem; background: #fee2e2; color: #b91c1c; padding: 2px 6px; border-radius: 999px; }
+/* ---------- hero ---------- */
+.hero{padding:clamp(34px,5vw,64px) 0 clamp(22px,3vw,34px)}
+.hero__grid{position:relative;z-index:1;display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:clamp(24px,4vw,48px);align-items:start}
+@media (max-width:900px){.hero__grid{grid-template-columns:1fr}}
+.hero h1{font-size:clamp(2.05rem,5.2vw,3.5rem);font-weight:600;letter-spacing:-.03em}
+.hero h1 .dot{color:var(--accent)}
+.hero__lede{margin-top:16px;max-width:46ch;font-size:1rem;color:var(--ink-2)}
+.hero__meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+.pill{
+  display:inline-flex;align-items:center;gap:7px;padding:6px 11px;
+  border:1px solid var(--rule);border-radius:999px;background:var(--surface);
+  font-size:.76rem;color:var(--ink-2);
+}
+.pill b{font-family:var(--font-mono);font-size:.8rem;color:var(--ink);font-weight:600}
+.pill svg{width:13px;height:13px;stroke:var(--muted);fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
 
-  /* day list */
-  .daylist { display: flex; flex-direction: column; gap: 6px; }
-  .daybtn { display: flex; align-items: center; gap: 8px; padding: 8px 10px; border-radius: 8px; border: 1.5px solid transparent; background: #fff; cursor: pointer; text-align: left; width: 100%; font-size: .78rem; }
-  .daybtn:hover { border-color: #fca5a5; }
-  .daybtn.active { border-color: #dc2626; background: #fef2f2; }
-  .daybtn .dnum { background: #dc2626; color: #fff; border-radius: 6px; min-width: 34px; text-align: center; padding: 3px 0; font-weight: 700; font-size: .7rem; }
-  .daybtn.active .dnum { background: #991b1b; }
-  .daybtn .dtitle { flex: 1; }
-  .daybtn .dtitle b { font-size: .8rem; display: block; }
-  .daybtn .dtitle span { color: #64748b; font-size: .68rem; }
-  .daybtn .warnic { font-size: .85rem; }
+/* ---------- route strip ---------- */
+.routecard{
+  background:var(--surface);border:1px solid var(--rule);border-radius:var(--radius);
+  padding:20px 22px 18px;box-shadow:0 1px 2px rgba(27,34,51,.05);
+}
+.routecard__top{display:flex;align-items:center;justify-content:space-between;gap:10px;padding-bottom:12px;border-bottom:1px solid var(--rule)}
+.routecard__hint{font-family:var(--font-mono);font-size:.62rem;letter-spacing:.1em;color:var(--muted)}
+.route{list-style:none;margin:16px 0 0;padding:0;position:relative;display:flex;flex-direction:column;gap:14px}
+.route::before{content:"";position:absolute;left:15px;top:12px;bottom:12px;border-left:1px dashed var(--rule-strong)}
+.route li{position:relative;display:grid;grid-template-columns:32px minmax(0,1fr) auto;gap:11px;align-items:center}
+.route .dot{
+  position:relative;z-index:1;width:32px;height:32px;border-radius:50%;
+  display:grid;place-items:center;background:var(--surface);border:1.5px solid var(--ink-2);
+  font-family:var(--font-mono);font-size:.6rem;color:var(--ink-2);
+}
+.route li:first-child .dot{border-color:var(--accent);color:var(--accent-ink)}
+.route li:last-child .dot{border-color:var(--accent);color:var(--accent-ink);background:var(--accent);color:#fff}
+.route b{display:block;font-size:.9rem;font-weight:600}
+.route small{display:block;font-family:var(--font-mono);font-size:.64rem;color:var(--muted);letter-spacing:.02em}
+.route .stay{font-family:var(--font-mono);font-size:.6rem;letter-spacing:.06em;color:var(--ink-2);text-align:right}
+.routecard__foot{margin-top:16px;padding-top:11px;border-top:1px dashed var(--rule-strong);font-family:var(--font-mono);font-size:.62rem;color:var(--ink-2);display:flex;justify-content:space-between;gap:10px}
 
-  /* forms */
-  select, input[type=number] { border: 1px solid #cbd5e1; border-radius: 6px; padding: 5px 7px; font-size: .78rem; background: #fff; max-width: 100%; font-family: inherit; }
-  label { font-size: .75rem; color: #475569; display: block; margin-bottom: 3px; }
-  .row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 8px; }
-  .nightrow { display: grid; grid-template-columns: 88px 1fr; gap: 6px; align-items: center; margin-bottom: 5px; font-size: .72rem; }
-  .nightrow .nd { color: #475569; }
-  .hint { font-size: .68rem; color: #64748b; margin-top: 5px; line-height: 1.5; }
-  .radio-line { display: flex; align-items: center; gap: 6px; font-size: .75rem; margin: 4px 0; cursor: pointer; }
-  .radio-line input { cursor: pointer; }
-  .radio-line .price { color: #b91c1c; font-size: .68rem; }
+/* ---------- section ---------- */
+.section{padding:clamp(30px,4.4vw,54px) 0 0;scroll-margin-top:76px}
+.section__head{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-bottom:clamp(18px,2.6vw,28px)}
+.section__head h2{font-size:clamp(1.32rem,2.6vw,1.7rem);font-weight:600}
+.section__note{font-size:.8rem;color:var(--muted);max-width:52ch}
 
-  /* budget */
-  .budget-row { display: flex; justify-content: space-between; font-size: .76rem; padding: 4px 0; border-bottom: 1px dashed #e2e8f0; }
-  .budget-row .val { font-weight: 700; white-space: nowrap; }
-  .budget-total { display: flex; justify-content: space-between; align-items: baseline; margin-top: 8px; padding: 8px 10px; background: #fef2f2; border-radius: 8px; }
-  .budget-total b { font-size: 1.05rem; color: #b91c1c; }
-  .budget-total .thb { font-size: .85rem; color: #7f1d1d; }
+/* ---------- flights ---------- */
+.flights{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+@media (max-width:720px){.flights{grid-template-columns:1fr}}
+.flight{
+  background:var(--surface);border:1px solid var(--rule);border-radius:var(--radius);
+  padding:16px 18px;display:grid;gap:10px;
+}
+.flight__top{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.flight__no{font-family:var(--font-mono);font-size:.68rem;letter-spacing:.08em;color:var(--ink-2)}
+.flight__row{display:flex;align-items:center;gap:12px;justify-content:space-between}
+.flight__end b{display:block;font-family:var(--font-mono);font-size:1.24rem;font-weight:600;line-height:1.1;font-variant-numeric:tabular-nums}
+.flight__end span{display:block;font-size:.72rem;color:var(--muted)}
+.flight__end--end{text-align:right}
+.flight__arrow{flex:1;height:1px;background:repeating-linear-gradient(90deg,var(--rule-strong) 0 4px,transparent 4px 8px);position:relative;min-width:28px}
+.flight__arrow svg{position:absolute;right:-2px;top:-7px;width:16px;height:16px;background:var(--surface);padding:2px;color:var(--ink-2);stroke-width:1.6;fill:none;stroke:currentColor;stroke-linecap:round;stroke-linejoin:round}
+.flight__meta{font-size:.74rem;color:var(--ink-2);border-top:1px dashed var(--rule-strong);padding-top:9px}
+.flight__meta b{font-family:var(--font-mono);letter-spacing:.04em}
 
-  /* warnings */
-  .wline { display: flex; gap: 7px; font-size: .72rem; padding: 5px 7px; border-radius: 6px; margin-bottom: 4px; line-height: 1.45; }
-  .wline.error { background: #fee2e2; color: #7f1d1d; }
-  .wline.warn { background: #fef9c3; color: #713f12; }
-  .wline.info { background: #dbeafe; color: #1e3a8a; }
-  .wline.ok { background: #dcfce7; color: #14532d; }
-  #impactlog .wline { background: #f1f5f9; color: #334155; }
+/* ---------- day grid ---------- */
+.days{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+@media (max-width:960px){.days{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:620px){.days{grid-template-columns:1fr}}
+.day{
+  --tint:var(--ink-2); --wash:rgba(27,34,51,.06);
+  position:relative;isolation:isolate;overflow:hidden;
+  display:flex;flex-direction:column;gap:8px;text-decoration:none;
+  background:var(--surface);border:1px solid var(--rule);border-radius:var(--radius);
+  padding:20px 18px 16px;
+  transition:transform .24s var(--ease),border-color .24s var(--ease),box-shadow .24s var(--ease);
+}
+.day:hover{transform:translateY(-3px);border-color:var(--tint);box-shadow:0 12px 24px -18px rgba(27,34,51,.5)}
+.day:focus-visible{outline:2px solid var(--tint);outline-offset:2px}
+.day__band{
+  position:absolute;left:0;right:0;top:0;height:3px;background:var(--tint);
+  transform:scaleX(.32);transform-origin:left;
+  transition:transform .45s var(--ease);
+}
+.day:hover .day__band,.day:focus-visible .day__band{transform:scaleX(1)}
+.day__mark{
+  position:absolute;right:-8px;bottom:-6px;width:96px;height:96px;z-index:-1;
+  color:var(--tint);opacity:.11;fill:none;stroke:currentColor;stroke-width:2.2;
+  stroke-linecap:round;stroke-linejoin:round;
+  transform:rotate(-5deg);
+  transition:transform .55s var(--ease),opacity .3s var(--ease);
+}
+.day:hover .day__mark{opacity:.2;transform:rotate(0deg) scale(1.06)}
+.day__theme{
+  align-self:flex-start;display:inline-flex;align-items:center;gap:5px;
+  padding:2px 8px;border-radius:999px;
+  background:var(--wash);color:var(--tint);
+  font-family:var(--font-mono);font-size:.58rem;letter-spacing:.06em;
+  border:1px solid transparent;
+  transition:border-color .24s var(--ease);
+}
+.day:hover .day__theme{border-color:var(--tint)}
+.day__num{display:flex;align-items:baseline;gap:8px;margin-top:2px}
+.day__num b{font-family:var(--font-mono);font-size:1.5rem;font-weight:600;line-height:1;color:var(--tint);letter-spacing:-.02em}
+.day__num span{font-family:var(--font-mono);font-size:.62rem;letter-spacing:.1em;color:var(--muted)}
+.day h3{font-size:1rem;font-weight:600;letter-spacing:-.01em}
+.day__date{font-family:var(--font-mono);font-size:.64rem;letter-spacing:.06em;color:var(--muted)}
+.day ul{list-style:none;margin:2px 0 0;padding:0;display:grid;gap:3px;position:relative;z-index:1}
+.day li{position:relative;padding-left:11px;font-size:.78rem;color:var(--ink-2)}
+.day li::before{content:"";position:absolute;left:0;top:.62em;width:4px;height:4px;border-radius:50%;background:var(--tint);opacity:.55}
+.day__foot{margin-top:auto;padding-top:10px;border-top:1px dashed var(--rule-strong);display:flex;justify-content:space-between;align-items:center;gap:8px;font-family:var(--font-mono);font-size:.62rem;color:var(--ink-2);position:relative;z-index:1}
+.day__go{display:inline-flex;align-items:center;gap:4px;color:var(--tint)}
+.day__go svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;transition:transform .24s var(--ease)}
+.day:hover .day__go svg{transform:translateX(3px)}
 
-  /* day detail timeline */
-  .dd-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 10px; margin-bottom: 10px; }
-  .dd-head h3 { font-size: 1.05rem; }
-  .dd-head .dddate { color: #b91c1c; font-weight: 700; font-size: .85rem; }
-  .tl { display: flex; flex-direction: column; }
-  .tlact { display: flex; gap: 10px; }
-  .tlact .dot { display: flex; flex-direction: column; align-items: center; width: 30px; flex-shrink: 0; }
-  .tlact .dot .pin { width: 30px; height: 30px; border-radius: 50%; background: #dc2626; color: #fff; display: flex; align-items: center; justify-content: center; font-size: .8rem; font-weight: 700; flex-shrink: 0; }
-  .tlact .dot .pin.hotel { background: #7c3aed; }
-  .tlact .dot .line { width: 3px; flex: 1; background: #cbd5e1; }
-  .tlact:last-child .dot .line { display: none; }
-  .tlbody { padding-bottom: 14px; flex: 1; min-width: 0; }
-  .tlbody h4 { font-size: .86rem; margin-bottom: 2px; }
-  .tlbody .tm { font-size: .7rem; color: #64748b; margin-bottom: 3px; }
-  .tlbody .desc { font-size: .72rem; color: #475569; line-height: 1.5; }
-  .tlbody .ticket { display: inline-block; margin-top: 5px; font-size: .68rem; background: #fff7ed; color: #9a3412; border: 1px solid #fed7aa; padding: 2px 7px; border-radius: 999px; }
-  .tlbody .move { margin-top: 6px; display: flex; gap: 6px; align-items: center; font-size: .68rem; color: #64748b; }
-  .legchip { margin: 2px 0 2px 40px; display: inline-flex; flex-direction: column; align-items: flex-start; max-width: 340px; background: #eef2ff; border: 1px solid #c7d2fe; color: #3730a3; border-radius: 10px; padding: 4px 10px; font-size: .68rem; }
-  .legchip .stn { display: block; font-size: .62rem; opacity: .9; margin-top: 2px; line-height: 1.5; }
-  .infobtn { margin-top: 6px; background: #fff; border: 1px solid #cbd5e1; color: #475569; border-radius: 999px; padding: 3px 10px; font-size: .68rem; cursor: pointer; font-family: inherit; }
-  .infobtn:hover { border-color: #dc2626; color: #b91c1c; }
-  .placeinfo { margin-top: 8px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 8px; font-size: .7rem; line-height: 1.6; max-width: 440px; }
-  .placeinfo img.ph-img { width: 100%; max-height: 190px; object-fit: cover; border-radius: 6px; margin-bottom: 6px; display: block; background: #e2e8f0; min-height: 60px; }
-  .placeinfo .ph-fallback { background: #e2e8f0; color: #64748b; border-radius: 6px; padding: 14px; text-align: center; margin-bottom: 6px; }
-  .placeinfo .ph-h { font-weight: 700; color: #b91c1c; display: block; }
-  .placeinfo ul { margin: 5px 0 0 16px; padding: 0; }
-  .placeinfo li { margin-bottom: 3px; }
-  .placeinfo .credit { display: block; margin-top: 6px; font-size: .6rem; color: #94a3b8; }
-  .legchip.walking { background: #ecfdf5; border-color: #a7f3d0; color: #065f46; }
-  .legchip.special { background: #fdf4ff; border-color: #f0abfc; color: #86198f; }
-  .emptyday { font-size: .75rem; color: #94a3b8; padding: 14px 0; }
-  .backupplan { margin-top: 10px; background: #faf5ff; border: 1px dashed #d8b4fe; border-radius: 8px; padding: 8px 10px; font-size: .72rem; color: #475569; max-width: 520px; }
-  .backupplan summary { cursor: pointer; font-weight: 700; color: #7c3aed; font-size: .75rem; }
-  .backupplan ul { margin: 6px 0 2px 16px; }
-  .backupplan li { margin-bottom: 4px; line-height: 1.6; }
+/* stagger the scroll reveal inside the grid */
+.days .day:nth-child(1){transition-delay:0ms}
+.days .day:nth-child(2){transition-delay:45ms}
+.days .day:nth-child(3){transition-delay:90ms}
+.days .day:nth-child(4){transition-delay:135ms}
+.days .day:nth-child(5){transition-delay:180ms}
+.days .day:nth-child(6){transition-delay:225ms}
+.days .day:nth-child(7){transition-delay:270ms}
+.days .day:nth-child(8){transition-delay:315ms}
+.days .day:nth-child(9){transition-delay:360ms}
 
-  .legend { background: rgba(255,255,255,.95); padding: 7px 10px; border-radius: 8px; font-size: .68rem; line-height: 1.7; box-shadow: 0 1px 4px rgba(0,0,0,.2); }
-  .legend span { display: inline-block; width: 22px; height: 3px; margin-right: 4px; vertical-align: middle; border-radius: 2px; }
-  .src { font-size: .66rem; color: #94a3b8; line-height: 1.6; padding: 4px 2px 14px; }
+/* ---------- motion ---------- */
+@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes fadein{from{opacity:0}to{opacity:1}}
+@keyframes pop{0%{opacity:0;transform:scale(.55)}62%{transform:scale(1.1)}100%{opacity:1;transform:none}}
+@keyframes grow{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+@keyframes taxi{0%,100%{transform:translateY(-50%) translateX(-2px)}50%{transform:translateY(-50%) translateX(3px)}}
+@keyframes pulse{0%,100%{opacity:.25;transform:scale(.85)}50%{opacity:1;transform:scale(1)}}
+@keyframes tick{0%{transform:scale(1)}45%{transform:scale(1.07)}100%{transform:scale(1)}}
+@keyframes strike{from{background-size:0% 1.5px}to{background-size:100% 1.5px}}
 
-  /* tabs ใน sidebar */
-  .tabs { display: flex; gap: 6px; }
-  .tabbtn { flex: 1; border: none; border-radius: 8px; padding: 9px 6px; font-size: .78rem; font-weight: 700; background: #cbd5e1; color: #334155; cursor: pointer; font-family: inherit; }
-  .tabbtn:hover { background: #b6c2d2; }
-  .tabbtn.active { background: #b91c1c; color: #fff; }
+.hero{position:relative;overflow:hidden}
+.hero .eyebrow{animation:rise .55s var(--ease) both}
+.hero h1{animation:rise .62s var(--ease) .07s both}
+.hero__lede{animation:rise .62s var(--ease) .15s both}
+.hero__meta{animation:rise .62s var(--ease) .23s both}
+.routecard{animation:rise .7s var(--ease) .13s both}
+.route::before{transform-origin:top;animation:grow .8s var(--ease) .4s both}
+.route li .dot{animation:pop .55s var(--ease) both}
+.route li:nth-child(1) .dot{animation-delay:.42s}
+.route li:nth-child(2) .dot{animation-delay:.52s}
+.route li:nth-child(3) .dot{animation-delay:.62s}
+.route li:nth-child(4) .dot{animation-delay:.72s}
 
-  /* แท็บโรงแรม */
-  input[type=text] { border: 1px solid #cbd5e1; border-radius: 6px; padding: 5px 7px; font-size: .78rem; background: #fff; max-width: 100%; font-family: inherit; }
-  .hrow { border: 1px solid #e2e8f0; border-radius: 8px; padding: 8px 10px; margin-bottom: 7px; font-size: .72rem; background: #fff; }
-  .hrow.custom { border-color: #c7d2fe; background: #f5f7ff; }
-  .hrow-head b { font-size: .78rem; }
-  .hbadge-you { background: #4f46e5; color: #fff; font-size: .6rem; border-radius: 999px; padding: 2px 7px; margin-left: 6px; vertical-align: middle; }
-  .hrow-meta { color: #64748b; margin-top: 3px; line-height: 1.55; }
-  .hrow-note { color: #475569; margin-top: 3px; line-height: 1.55; }
-  .hrow-actions { display: flex; gap: 6px; margin-top: 6px; flex-wrap: wrap; }
-  .mini { border: 1px solid #cbd5e1; background: #fff; color: #475569; border-radius: 6px; padding: 4px 8px; font-size: .68rem; cursor: pointer; font-family: inherit; }
-  .mini:hover { border-color: #dc2626; color: #b91c1c; }
-  .mini.danger:hover { border-color: #dc2626; background: #fef2f2; }
-  #addHotelBtn { background: #b91c1c; color: #fff; border: none; border-radius: 6px; padding: 8px 14px; font-size: .78rem; font-weight: 700; cursor: pointer; font-family: inherit; }
-  #addHotelBtn:hover { background: #991b1b; }
-  #cancelEditBtn { background: #e2e8f0; color: #334155; border: none; border-radius: 6px; padding: 8px 12px; font-size: .75rem; cursor: pointer; font-family: inherit; }
+.flights .flight{animation:rise .6s var(--ease) both}
+.flights .flight:nth-child(2){animation-delay:.1s}
+.flight__arrow svg{animation:taxi 3.8s ease-in-out infinite}
 
-  /* แบนเนอร์โหมดเลือกตำแหน่งบนแผนที่ */
-  main { position: relative; }
-  #pickBanner { position: absolute; top: 10px; left: 50%; transform: translateX(-50%); z-index: 1100; background: #1e293b; color: #fff; border-radius: 999px; padding: 8px 14px; font-size: .75rem; display: flex; gap: 10px; align-items: center; box-shadow: 0 2px 8px rgba(0,0,0,.3); white-space: nowrap; }
-  #pickBanner button { background: #dc2626; color: #fff; border: none; border-radius: 999px; padding: 3px 10px; cursor: pointer; font-size: .7rem; font-family: inherit; }
+.section__head h2{position:relative}
+.section__head h2::after{
+  content:"";display:block;height:2px;width:34px;margin-top:9px;background:var(--accent);
+  transform:scaleX(0);transform-origin:left;transition:transform .5s var(--ease) .1s;
+}
+.section__head.is-seen h2::after{transform:scaleX(1)}
 
-  @media (max-width: 900px) {
-    .layout { grid-template-columns: 1fr; height: auto; }
-    aside { order: 2; }
-    #map { height: 46vh; }
-    .daydetail { max-height: none; }
-  }
+.totalcard{position:relative;overflow:hidden}
+.totalcard .mono-label::after{
+  content:"";display:inline-block;width:6px;height:6px;border-radius:50%;
+  margin-left:7px;vertical-align:middle;background:var(--ochre);
+  animation:pulse 2.6s var(--ease) infinite;
+}
+.check span{
+  background-image:linear-gradient(currentColor,currentColor);
+  background-repeat:no-repeat;background-position:0 60%;background-size:0% 1.5px;
+}
+.check input:checked + span{animation:strike .3s var(--ease) forwards}
+#countdown.is-tick{animation:tick .45s var(--ease)}
+
+/* ---------- falling maple leaves (hero) ---------- */
+.leaves{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:0}
+.leaf{
+  position:absolute;display:block;
+  top:calc(-1 * (var(--lead,0px) + 70px));
+  right:calc(-70px + var(--x,0px));
+  color:var(--leaf,#b23a25);
+  animation:fall var(--dur,11s) linear var(--delay,0s) infinite;
+  will-change:transform;
+}
+.leaf svg{display:block;width:var(--size,22px);height:var(--size,22px);fill:currentColor;opacity:.72;
+  animation:sway calc(var(--dur,11s) / 2.6) ease-in-out var(--delay,0s) infinite alternate}
+@keyframes fall{
+  0%{transform:translate3d(0,0,0)}
+  100%{transform:translate3d(var(--travelX,-1100px),var(--travelY,520px),0)}
+}
+@keyframes sway{
+  0%{transform:translate(-5px,0) rotate(var(--rot,-16deg))}
+  100%{transform:translate(5px,3px) rotate(calc(var(--rot,-16deg) + 30deg))}
+}
+@media print{.leaves{display:none}}
+@media (prefers-reduced-motion:reduce){.leaves{display:none}}
+
+@media (prefers-reduced-motion:reduce){
+  .check input:checked + span{background-size:100% 1.5px;animation:none}
+}
+
+/* ---------- hotels ---------- */
+.hotels{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+@media (max-width:960px){.hotels{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:560px){.hotels{grid-template-columns:1fr}}
+.hotel{background:var(--surface);border:1px solid var(--rule);border-radius:12px;padding:15px 16px;display:grid;gap:6px}
+.hotel__when{font-family:var(--font-mono);font-size:.6rem;letter-spacing:.08em;color:var(--accent-ink)}
+.hotel b{font-size:.9rem;font-weight:600;line-height:1.35}
+.hotel span{font-size:.74rem;color:var(--muted);line-height:1.5}
+
+/* ---------- budget ---------- */
+.budget{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,.75fr);gap:16px;align-items:start}
+@media (max-width:860px){.budget{grid-template-columns:1fr}}
+.tablewrap{overflow-x:auto;border:1px solid var(--rule);border-radius:var(--radius);background:var(--surface)}
+table{width:100%;border-collapse:collapse;font-size:.82rem;min-width:430px}
+caption{text-align:left;padding:14px 16px 0;font-family:var(--font-mono);font-size:.62rem;letter-spacing:.1em;color:var(--muted)}
+th,td{padding:9px 16px;text-align:left;border-bottom:1px solid var(--rule)}
+th{font-family:var(--font-mono);font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:600}
+td:last-child,th:last-child{text-align:right;font-family:var(--font-mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+tbody tr:last-child td{border-bottom:0}
+tbody tr:hover{background:var(--surface-2)}
+tfoot td{padding:11px 16px;border-top:1px solid var(--rule-strong);font-weight:600;background:var(--surface-2)}
+tfoot td:last-child{color:var(--accent-ink)}
+.totalcard{background:var(--ink);color:#efe7d8;border-radius:var(--radius);padding:20px 22px;display:grid;gap:12px}
+.totalcard .mono-label{color:#98a1b3}
+.totalcard b{font-family:var(--font-mono);font-size:1.42rem;font-weight:600;letter-spacing:-.01em;line-height:1.2}
+.totalcard small{display:block;font-size:.72rem;color:#c3cad7;line-height:1.6}
+.totalcard ul{list-style:none;margin:0;padding:12px 0 0;border-top:1px dashed rgba(239,231,216,.24);display:grid;gap:5px;font-size:.76rem;color:#c3cad7}
+.totalcard li{display:flex;justify-content:space-between;gap:10px}
+.totalcard li span:last-child{font-family:var(--font-mono);color:#efe7d8}
+
+/* ---------- checks ---------- */
+.checks{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 22px}
+@media (max-width:720px){.checks{grid-template-columns:1fr}}
+.check{display:flex;align-items:flex-start;gap:9px;padding:9px 0;border-bottom:1px solid var(--rule);cursor:pointer;font-size:.84rem}
+.check input{margin:4px 0 0;accent-color:var(--accent);width:15px;height:15px;flex:none}
+.check input:checked + span{color:var(--muted);text-decoration:line-through}
+.check span{line-height:1.5}
+.checks__head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px}
+.checks__count{font-family:var(--font-mono);font-size:.68rem;color:var(--ink-2)}
+.link-btn{border:0;background:none;padding:0;font:inherit;font-size:.74rem;color:var(--accent-ink);text-decoration:underline;cursor:pointer}
+
+/* ---------- footer ---------- */
+.foot{margin-top:clamp(34px,5vw,60px);border-top:1px solid var(--rule);padding:22px 0 40px}
+.foot__grid{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,.6fr);gap:24px;font-size:.78rem;color:var(--ink-2)}
+@media (max-width:720px){.foot__grid{grid-template-columns:1fr}}
+.foot p+p{margin-top:8px}
+.foot a{color:var(--accent-ink)}
+
+/* ---------- toast + reveal ---------- */
+.toast{
+  position:fixed;left:50%;bottom:22px;transform:translate(-50%,14px);
+  background:var(--ink);color:var(--paper);padding:9px 16px;border-radius:999px;
+  font-size:.78rem;opacity:0;pointer-events:none;transition:opacity .25s var(--ease),transform .25s var(--ease);z-index:40;
+}
+.toast.is-on{opacity:1;transform:translate(-50%,0)}
+.reveal{opacity:0;transform:translateY(10px);transition:opacity .5s var(--ease),transform .5s var(--ease)}
+.reveal.is-in{opacity:1;transform:none}
+
+@media (prefers-reduced-motion:reduce){
+  *{animation:none !important;transition:none !important}
+  .reveal{opacity:1;transform:none}
+}
+@media print{
+  .topbar,.toast,.btn-quiet{display:none !important}
+  body{background:#fff}
+  .day,.flight,.hotel,.routecard,.tablewrap,.totalcard{box-shadow:none;break-inside:avoid}
+  .reveal{opacity:1;transform:none}
+}
 </style>
 </head>
 <body>
+<a class="skip" href="#main">ข้ามไปที่เนื้อหา</a>
 
-<header>
-  <div>
-    <h1>🇯🇵 Osaka Trip Planner — 28 พ.ย. – 6 ธ.ค. 2026</h1>
-    <div class="sub">ผู้ใหญ่ 2 + เด็ก 5 ขวบ · Thai AirAsia X XJ614/XJ615 · ทุกอย่างเชื่อมโยงกัน: เปลี่ยนโรงแรม/ย้ายวัน = เส้นทาง + งบ + การแจ้งเตือนอัปเดตทันที</div>
-  </div>
-  <div class="tools">
-    <label style="color:#fff">อัตราแลกเปลี่ยน ฿/¥</label>
-    <input type="number" id="rateInput" step="0.01" min="0.1" max="1" style="width:70px">
-    <button class="btn-ghost" id="resetBtn">↺ รีเซ็ตแผนต้นฉบับ</button>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-plane" viewBox="0 0 24 24"><path d="M2 14l20-6-8 10-3-3-4 3-1-4-4 0z"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s6-5.2 6-10a6 6 0 1 0-12 0c0 4.8 6 10 6 10z"/><circle cx="12" cy="11" r="2.2"/></symbol>
+  <symbol id="i-train" viewBox="0 0 24 24"><rect x="5" y="3.5" width="14" height="13" rx="3"/><path d="M5 11h14M9 20l-2 2M15 20l2 2M9 16.5h.01M15 16.5h.01"/></symbol>
+  <symbol id="i-doc" viewBox="0 0 24 24"><path d="M6 3.5h8l4 4v13H6z"/><path d="M14 3.5v4h4M9 12h6M9 16h4"/></symbol>
+  <symbol id="i-copy" viewBox="0 0 24 24"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M15 6H6a2 2 0 0 0-2 2v9"/></symbol>
+  <symbol id="i-print" viewBox="0 0 24 24"><path d="M7 9V4h10v5"/><rect x="4" y="9" width="16" height="7" rx="2"/><path d="M7 16h10v4H7z"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h13M13 7l5 5-5 5"/></symbol>
+  <symbol id="i-bag" viewBox="0 0 24 24"><path d="M5 8h14l-1.2 12H6.2z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></symbol>
+  <symbol id="i-leaf" viewBox="0 0 24 24"><path d="M12 1.4 13.8 5.4 17.6 4.2 16.3 8.2 20.8 9.4 17.3 12.2 20.5 16.2 15.6 15.3 15.2 20.2 12 17.4 8.8 20.2 8.4 15.3 3.5 16.2 6.7 12.2 3.2 9.4 7.7 8.2 6.4 4.2 10.2 5.4Z"/><path d="M12 17.6v5.2" stroke="currentColor" stroke-width="1.2" fill="none"/></symbol>
+</svg>
+
+<header class="topbar">
+  <div class="wrap topbar__in">
+    <a class="brand" href="index.html">
+      <b>OSAKA 2026</b>
+      <span>หน้าหลักทริป</span>
+    </a>
+    <nav class="topnav" aria-label="เมนูหน้าแรก">
+      <a href="#days">9 วัน</a>
+      <a href="#hotels">ที่พัก</a>
+      <a href="#budget">งบประมาณ</a>
+      <a href="#checks">เช็กลิสต์</a>
+      <a href="index-original.html">แผนเดิม</a>
+    </nav>
+    <button class="btn-quiet" type="button" id="printBtn">
+      <svg aria-hidden="true"><use href="#i-print"/></svg>
+      พิมพ์
+    </button>
   </div>
 </header>
 
-<div class="layout">
-  <aside>
-    <div class="tabs">
-      <button class="tabbtn active" data-tab="plan">🗺️ แผนทริป</button>
-      <button class="tabbtn" data-tab="hotels">🏨 โรงแรม & เพิ่มเอง</button>
-    </div>
+<main id="main">
 
-    <div id="tab-plan">
-    <div class="card">
-      <h2>📅 แผนการเดินทางรายวัน <span class="badge">คลิกเลือกวัน</span></h2>
-      <div class="row">
-        <label style="margin:0">เลื่อนทั้งทริป:</label>
-        <select id="shiftSelect"></select>
-      </div>
-      <div class="daylist" id="daylist"></div>
-    </div>
+  <!-- ============ HERO ============ -->
+  <section class="hero wrap" aria-labelledby="hero-title">
+  <div class="leaves" aria-hidden="true">
+    <span class="leaf" style="--lead:0px;--size:26px;--dur:11.5s;--delay:-0.6s;--leaf:#8f2b1e;--rot:-14deg;--x:0px"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-leaf"/></svg></span>
+    <span class="leaf" style="--lead:55px;--size:15px;--dur:9.2s;--delay:-3.4s;--leaf:#a8480a;--rot:18deg;--x:18px"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-leaf"/></svg></span>
+    <span class="leaf" style="--lead:110px;--size:21px;--dur:12.6s;--delay:-6.1s;--leaf:#9c5b10;--rot:-22deg;--x:6px"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-leaf"/></svg></span>
+    <span class="leaf" style="--lead:165px;--size:13px;--dur:8.6s;--delay:-1.8s;--leaf:#8a6a12;--rot:10deg;--x:26px"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-leaf"/></svg></span>
+    <span class="leaf" style="--lead:220px;--size:28px;--dur:10.8s;--delay:-5.2s;--leaf:#6e3a2c;--rot:-8deg;--x:0px"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-leaf"/></svg></span>
+    <span class="leaf" style="--lead:275px;--size:17px;--dur:9.8s;--delay:-7.6s;--leaf:#a83a22;--rot:26deg;--x:12px"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-leaf"/></svg></span>
+    <span class="leaf" style="--lead:330px;--size:22px;--dur:12.2s;--delay:-2.9s;--leaf:#8f2b1e;--rot:-18deg;--x:30px"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-leaf"/></svg></span>
+    <span class="leaf" style="--lead:385px;--size:14px;--dur:8.8s;--delay:-6.8s;--leaf:#9c5b10;--rot:14deg;--x:4px"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-leaf"/></svg></span>
+    <span class="leaf" style="--lead:140px;--size:24px;--dur:11.2s;--delay:-8.4s;--leaf:#56622e;--rot:-26deg;--x:22px"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-leaf"/></svg></span>
+    <span class="leaf" style="--lead:300px;--size:16px;--dur:10.4s;--delay:-4.5s;--leaf:#a8480a;--rot:8deg;--x:10px"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-leaf"/></svg></span>
+    <span class="leaf" style="--lead:420px;--size:20px;--dur:12.8s;--delay:-9.1s;--leaf:#8a6a12;--rot:-12deg;--x:0px"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-leaf"/></svg></span>
+    <span class="leaf" style="--lead:240px;--size:15px;--dur:9.4s;--delay:-0.2s;--leaf:#6e3a2c;--rot:20deg;--x:20px"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#i-leaf"/></svg></span>
+  </div>
 
-    <div class="card">
-      <h2>🏨 โรงแรม (เลือกได้ทุกคืน)</h2>
-      <label>พัก Kyoto ช่วงไหน? (สลับแล้วระบบจัดวันกิจกรรมใหม่ให้อัตโนมัติ)</label>
-      <label class="radio-line"><input type="radio" name="kyotoWhen" value="first"> คืนที่ 1–2 — เปิดทริปที่ Kyoto <span class="price">KIX → Kyoto ตรงเลย</span></label>
-      <label class="radio-line"><input type="radio" name="kyotoWhen" value="mid"> คืนที่ 3–4 — กลางทริป <span class="price">Osaka ก่อน (แบบเดิม)</span></label>
-      <div style="height:6px"></div>
-      <div class="row">
-        <label style="margin:0" id="labelGlobal">ตั้งหลัก (โซน Osaka คืนที่ 3-7):</label>
-        <select id="hotelGlobal" style="flex:1"></select>
-      </div>
-      <div class="row">
-        <label style="margin:0" id="labelKyoto">ตั้งโรงแรม Kyoto (คืนที่ 1–2):</label>
-        <select id="hotelKyoto" style="flex:1"></select>
-      </div>
-      <label class="radio-line" id="bayRow"><input type="checkbox" id="bayToggle"> 🎢 พักแถว Universal City คืนที่ 3–4 <span class="price">3 โซน: ใกล้ USJ + Kaiyukan</span></label>
-      <div class="row" id="bayHotelRow">
-        <label style="margin:0" id="labelBay">โรงแรม Universal City (คืนที่ 3–4):</label>
-        <select id="hotelBay" style="flex:1"></select>
-      </div>
-      <div class="hint" id="bayHint" hidden>โหมด "Kyoto คืนที่ 3–4" (กลางทริป) ไม่มีช่วงคืนที่จัดโซน UC ได้ — ใช้ได้เฉพาะโหมด Kyoto คืนแรก</div>
-      <div id="nightrows"></div>
-      <div class="hint" id="hotelSummary"></div>
-    </div>
-
-    <div class="card">
-      <h2>🎛️ ตัวเลือกกิจกรรม</h2>
-      <div id="optionsPanel"></div>
-    </div>
-
-    <div class="card">
-      <h2>💰 งบประมาณ (ครอบครัว 2+1)</h2>
-      <div id="budgetPanel"></div>
-    </div>
-
-    <div class="card">
-      <h2>⚠️ ตรวจสอบ & ผลกระทบ</h2>
-      <div id="warnings"></div>
-      <h2 style="margin-top:10px">📝 บันทึกการเปลี่ยนแปลงล่าสุด</h2>
-      <div id="impactlog"></div>
-      <button class="btn-ghost" id="clearLog" style="margin-top:6px;background:#cbd5e1;color:#334155;border-radius:6px;padding:5px 10px;font-size:.7rem;cursor:pointer">ล้างบันทึก</button>
-    </div>
-    </div><!-- /tab-plan -->
-
-    <div id="tab-hotels" hidden>
-      <div class="card">
-        <h2>🏨 โรงแรมทั้งหมด <span class="badge">ใช้ / แก้ / เพิ่มเอง</span></h2>
-        <div class="hint">โรงแรมที่เพิ่มเองจะโผล่ในเมนูเลือกโรงแรมรายคืนทันที · <b>ขั้นต่ำที่ต้องใส่: ชื่อ · โซน · ราคา/คืน · พิกัด</b> — พิกัดคือจุดที่โชว์บนแผนที่ กด "📍 เลือกบนแผนที่" แล้วคลิกตำแหน่ง หรือวางลิงก์ Google Maps ก็ได้ · ส่วนสถานีใกล้/เวลาเดิน/หมายเหตุ ใส่เพิ่มได้ ไม่ใส่ก็ใช้งานได้</div>
-        <div style="height:8px"></div>
-        <div id="hotelList"></div>
-      </div>
-
-      <div class="card">
-        <h2 id="formTitle">➕ เพิ่มโรงแรมของฉัน</h2>
-        <label>ชื่อโรงแรม *</label>
-        <input type="text" id="hName" placeholder="เช่น Cross Hotel Osaka" style="width:100%">
-        <div class="row" style="margin-top:8px">
-          <div style="flex:1;min-width:130px">
-            <label>โซน * (กำหนดตรรกะเส้นทาง)</label>
-            <select id="hArea" style="width:100%">
-              <option value="namba">📍 Osaka / Namba</option>
-              <option value="bay">🎢 Universal City (USJ)</option>
-              <option value="kyoto">🍁 Kyoto (Arashiyama)</option>
-              <option value="kix">✈️ KIX / Rinku</option>
-            </select>
-          </div>
-          <div style="flex:1;min-width:110px">
-            <label>ราคา/คืน ¥ * (คำนวณงบ)</label>
-            <input type="number" id="hPrice" min="0" step="500" placeholder="20000" style="width:100%">
-          </div>
+    <div class="hero__grid">
+      <div>
+        <p class="eyebrow">28 พ.ย. – 6 ธ.ค. 2026 · ครอบครัว 2 ผู้ใหญ่ + 1 เด็ก</p>
+        <h1 id="hero-title">โอซาก้า <span class="dot">·</span> เกียวโต</h1>
+        <p class="hero__lede">
+          9 วัน 8 คืน จากดอนเมืองลงคันไซ นอนเกียวโตสองคืนก่อนขึ้นอาราชิยามะ เล่น Universal Studios เต็มวัน
+          แล้วย้ายเข้า Namba ไปนารา ปราสาทโอซาก้า น้ำตกมิโนโอ ปิดท้ายที่ Rinku ก่อนกลับบ้าน
+        </p>
+        <div class="hero__meta">
+          <span class="pill"><svg aria-hidden="true"><use href="#i-clock"/></svg><b id="countdown">—</b><span>ก่อนถึงวันออกเดินทาง</span></span>
+          <span class="pill"><svg aria-hidden="true"><use href="#i-train"/></svg><b>4 ฐานที่พัก</b><span>เกียวโต → ยูนิเวอร์แซล → นัมบะ → รินคุ</span></span>
+          <span class="pill"><svg aria-hidden="true"><use href="#i-plane"/></svg><b>XJ614 / XJ615</b><span>Thai AirAsia X</span></span>
         </div>
-        <label style="margin-top:8px">พิกัด (lat, lng) * — จุดบนแผนที่</label>
-        <div class="row">
-          <input type="text" id="hLat" placeholder="lat" style="width:86px">
-          <input type="text" id="hLng" placeholder="lng" style="width:86px">
-          <button class="mini" id="pickBtn" type="button">📍 เลือกบนแผนที่</button>
+      </div>
+
+      <div class="routecard" aria-labelledby="route-title">
+        <div class="routecard__top">
+          <span class="mono-label">เส้นทางทั้งทริป</span>
+          <span class="routecard__hint">4 ฐาน · 8 คืน</span>
         </div>
-        <div class="row">
-          <input type="text" id="hUrl" placeholder="วางลิงก์ Google Maps หรือ 34.666,135.500" style="flex:1;min-width:150px">
-          <button class="mini" id="urlBtn" type="button">↳ อ่านพิกัด</button>
+        <h2 id="route-title" class="sr-only">เส้นทางที่พักทั้งทริป</h2>
+        <ol class="route">
+          <li>
+            <span class="dot" aria-hidden="true">01</span>
+            <span><b>เกียวโต</b><small>Hotel Vischio Kyoto by GRANVIA</small></span>
+            <span class="stay">28–30 พ.ย.<br>2 คืน</span>
+          </li>
+          <li>
+            <span class="dot" aria-hidden="true">02</span>
+            <span><b>Universal City</b><small>Hotel Universal Port</small></span>
+            <span class="stay">30 พ.ย.–2 ธ.ค.<br>2 คืน</span>
+          </li>
+          <li>
+            <span class="dot" aria-hidden="true">03</span>
+            <span><b>นัมบะ</b><small>Citadines Namba Osaka</small></span>
+            <span class="stay">2–5 ธ.ค.<br>3 คืน</span>
+          </li>
+          <li>
+            <span class="dot" aria-hidden="true">04</span>
+            <span><b>รินคุ ทาวน์</b><small>OMO Kansai Airport by Hoshino</small></span>
+            <span class="stay">5–6 ธ.ค.<br>1 คืน</span>
+          </li>
+        </ol>
+        <div class="routecard__foot">
+          <span>DMK → KIX → กลับ</span>
+          <span>รวม 8 คืน</span>
         </div>
-        <div class="row" style="margin-top:8px">
-          <div style="flex:1;min-width:150px">
-            <label>สถานีใกล้ (ถ้ารู้ — ไม่ใส่ใช้สถานีใกล้พิกัดสุด)</label>
-            <select id="hStation" style="width:100%"></select>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FLIGHTS ============ -->
+  <section class="section wrap" aria-labelledby="flights-title">
+    <div class="section__head">
+      <div>
+        <p class="eyebrow">ตั๋วสองใบ</p>
+        <h2 id="flights-title">เที่ยวบินไป–กลับ</h2>
+      </div>
+      <p class="section__note">ทั้งสองเที่ยวบินออกจากอาคารผู้โดยสารที่กำหนดไว้ด้านล่าง — ตรวจเลข gate บนจออีกครั้งในวันเดินทาง</p>
+    </div>
+
+    <div class="flights">
+      <article class="flight">
+        <div class="flight__top">
+          <span class="mono-label">ขาไป · ส. 28 พ.ย. 2026</span>
+          <span class="flight__no">XJ 614</span>
+        </div>
+        <div class="flight__row">
+          <div class="flight__end">
+            <b>10:40</b>
+            <span>DMK · ดอนเมือง</span>
           </div>
-          <div style="width:96px">
-            <label>เดินจากสถานี (นาที)</label>
-            <input type="number" id="hWalk" value="5" min="0" max="30" style="width:100%">
+          <div class="flight__arrow" aria-hidden="true"><svg><use href="#i-plane"/></svg></div>
+          <div class="flight__end flight__end--end">
+            <b>18:15</b>
+            <span>KIX · คันไซ (T1)</span>
           </div>
         </div>
-        <label>หมายเหตุ (จุดเด่น / ลิงก์จอง)</label>
-        <input type="text" id="hNote" placeholder="เช่น 4 ดาว · เดิน 5 นาทีถึง Dotonbori · จอง agoda.com/..." style="width:100%">
-        <div class="row" style="margin-top:10px">
-          <button id="addHotelBtn" type="button">➕ เพิ่มโรงแรม</button>
-          <button id="cancelEditBtn" type="button" hidden>✖ ยกเลิกแก้ไข</button>
+        <p class="flight__meta">เลขจอง <b>EBRQ8M</b> · ใช้เวลา 5 ชม. 35 น. · ถึงญี่ปุ่นแล้วต้องผ่าน ตม. และรับกระเป๋าอีก ~40 นาที</p>
+      </article>
+
+      <article class="flight">
+        <div class="flight__top">
+          <span class="mono-label">ขากลับ · อา. 6 ธ.ค. 2026</span>
+          <span class="flight__no">XJ 615</span>
         </div>
-        <div class="hint">💡 พิกัดง่าย ๆ: เปิด Google Maps ค้นชื่อโรงแรม → คลิกขวาที่หมุด → คัดลอกตัวเลขพิกัด (หรือคัดลอกลิงก์) → วางในช่องข้างบน · โซน Kyoto = คำนวณเส้นทางจากย่าน Arashiyama, โซน UC = จาก JR Universal-City (USJ), โซน Osaka = จากย่าน Namba</div>
-      </div>
-    </div><!-- /tab-hotels -->
-
-    <div class="src">
-      ราคา/เวลาเดินทางเป็นค่าประมาณจากข้อมูลปี 2025–26 (ตั๋วเด็ก 5 ขวบ: รถไฟ/บัสฟรี, สถานที่เสียเงินคิดตามเกณฑ์เด็ก 4–6 ปี) · ตำแหน่งบนแผนที่เป็นโดยประมาณ · ตรวจสอบราคาจริงอีกครั้งก่อนจ่ายเงิน
+        <div class="flight__row">
+          <div class="flight__end">
+            <b>10:30</b>
+            <span>KIX · คันไซ (T1)</span>
+          </div>
+          <div class="flight__arrow" aria-hidden="true"><svg><use href="#i-plane"/></svg></div>
+          <div class="flight__end flight__end--end">
+            <b>15:05</b>
+            <span>DMK · ดอนเมือง</span>
+          </div>
+        </div>
+        <p class="flight__meta">เลขจอง <b>Y77M9B</b> · ใช้เวลา 6 ชม. 35 น. · เคาน์เตอร์ปิด 09:30 และ gate ปิด 10:10</p>
+      </article>
     </div>
-  </aside>
+  </section>
 
-  <main>
-    <div id="pickBanner" hidden>🎯 คลิกตำแหน่งโรงแรมบนแผนที่ <button id="pickCancel" type="button">ยกเลิก</button></div>
-    <div id="map"></div>
-    <div class="daydetail" id="daydetail"></div>
-  </main>
-</div>
+  <!-- ============ DAYS ============ -->
+  <section class="section wrap" id="days" aria-labelledby="days-title">
+    <div class="section__head">
+      <div>
+        <p class="eyebrow">แผนรายวัน</p>
+        <h2 id="days-title">9 วันของทริป</h2>
+      </div>
+      <p class="section__note">แต่ละวันมีหน้าแผนของตัวเอง — ตารางเวลา รถไฟ ปุ่มแผนที่ งบ และเช็กลิสต์ติ๊กได้</p>
+    </div>
 
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <div class="days">
+
+      <a class="day reveal" href="day-1-bangkok-kyoto.html" style="--tint:#8f2b1e;--wash:rgba(143,43,30,.11)">
+        <span class="day__band" aria-hidden="true"></span>
+        <svg class="day__mark" viewBox="0 0 64 64" aria-hidden="true"><path d="M8 32 58 12 44 52l-12-13-8 9z"/><path d="M32 39 58 12"/></svg>
+        <span class="day__theme">บินเข้าญี่ปุ่น</span>
+        <div class="day__num"><b>01</b><span>ส. 28 พ.ย.</span></div>
+        <h3>กรุงเทพ → เกียวโต</h3>
+        <p class="day__date">07:30–22:00 · 10 จุด</p>
+        <ul>
+          <li>บิน XJ614 ลง KIX 18:15</li>
+          <li>Haruka ตรงเข้าเกียวโต</li>
+          <li>ถึงโรงแรม ~22:00</li>
+        </ul>
+        <div class="day__foot"><span>¥7,900–10,600</span><span class="day__go">เปิดแผน <svg aria-hidden="true"><use href="#i-arrow"/></svg></span></div>
+      </a>
+
+      <a class="day reveal" href="day-2-kiyomizu-gion-nanzenji.html" style="--tint:#a83a22;--wash:rgba(168,58,34,.11)">
+        <span class="day__band" aria-hidden="true"></span>
+        <svg class="day__mark" viewBox="0 0 64 64" aria-hidden="true"><path d="M12 54h40"/><path d="M18 54V38h28v16"/><path d="M12 38h40l-7-9H19z"/><path d="M20 29h24l-6-7H26z"/><path d="M28 22v-5h8v5"/></svg>
+        <span class="day__theme">วัดและย่านเก่า</span>
+        <div class="day__num"><b>02</b><span>อา. 29 พ.ย.</span></div>
+        <h3>วัดน้ำใส → นันเซ็นจิ</h3>
+        <p class="day__date">07:00–19:30 · 11 จุด</p>
+        <ul>
+          <li>Kiyomizu-dera เช้าไม่คน</li>
+          <li>เดิน Gion ลงนาเซ็นจิ</li>
+          <li>บัส 206 กลับสถานี</li>
+        </ul>
+        <div class="day__foot"><span>¥10,800–16,500</span><span class="day__go">เปิดแผน <svg aria-hidden="true"><use href="#i-arrow"/></svg></span></div>
+      </a>
+
+      <a class="day reveal" href="day-3-arashiyama-universal-city.html" style="--tint:#97400a;--wash:rgba(151,64,10,.12)">
+        <span class="day__band" aria-hidden="true"></span>
+        <svg class="day__mark" viewBox="0 0 64 64" aria-hidden="true"><path d="M21 12v42M32 8v46M43 14v40"/><path d="M17 27h8M28 23h8M39 29h8M17 43h8M28 39h8M39 45h8"/></svg>
+        <span class="day__theme">ธรรมชาติและย้ายเมือง</span>
+        <div class="day__num"><b>03</b><span>จ. 30 พ.ย.</span></div>
+        <h3>อาราชิยามะ → ยูนิเวอร์แซล</h3>
+        <p class="day__date">07:00–17:00 · 11 จุด</p>
+        <ul>
+          <li>ป่าไผ่แต่เช้า + Torokko</li>
+          <li>เรือยาคาตะบุเนะ 30 นาที</li>
+          <li>ย้ายไปนอน Universal City</li>
+        </ul>
+        <div class="day__foot"><span>¥15,200–17,200</span><span class="day__go">เปิดแผน <svg aria-hidden="true"><use href="#i-arrow"/></svg></span></div>
+      </a>
+
+      <a class="day reveal" href="day-4-universal-studios.html" style="--tint:#8f520d;--wash:rgba(143,82,13,.13)">
+        <span class="day__band" aria-hidden="true"></span>
+        <svg class="day__mark" viewBox="0 0 64 64" aria-hidden="true"><path d="M32 8l7.5 16.5L57 27l-13 12 4 17-16-9.5L16 56l4-17L7 27l17.5-2.5z"/></svg>
+        <span class="day__theme">ธีมพาร์กเต็มวัน</span>
+        <div class="day__num"><b>04</b><span>อ. 1 ธ.ค.</span></div>
+        <h3>Universal Studios</h3>
+        <p class="day__date">07:30–19:30 · 10 จุด</p>
+        <ul>
+          <li>เข้าเช้าที่สุด เปิดประตู</li>
+          <li>มาริโอ + โดราเอมอน</li>
+          <li>Light Up the Night 17:30</li>
+        </ul>
+        <div class="day__foot"><span>¥33,500–47,500</span><span class="day__go">เปิดแผน <svg aria-hidden="true"><use href="#i-arrow"/></svg></span></div>
+      </a>
+
+      <a class="day reveal" href="day-5-kaiyukan-namba.html" style="--tint:#7a5d0f;--wash:rgba(122,93,15,.13)">
+        <span class="day__band" aria-hidden="true"></span>
+        <svg class="day__mark" viewBox="0 0 64 64" aria-hidden="true"><path d="M10 38c6-10 21-13 31-6 4 3 6 6 7 9-6 6-16 9-26 5-8-3-11-5-12-8z"/><path d="M48 46l9 7-2-11 2-9-9 7"/><path d="M22 28c-1-5 2-8 6-8"/></svg>
+        <span class="day__theme">พิพิธภัณฑ์สัตว์น้ำ</span>
+        <div class="day__num"><b>05</b><span>พ. 2 ธ.ค.</span></div>
+        <h3>คายูคัง → นัมบะ</h3>
+        <p class="day__date">08:30–20:00 · 10 จุด</p>
+        <ul>
+          <li>Kaiyukan ฉลามวาฬ</li>
+          <li>Legoland / ชิงช้า Tempozan</li>
+          <li>ย้ายเข้า Citadines + Dotonbori</li>
+        </ul>
+        <div class="day__foot"><span>¥22,600–25,100</span><span class="day__go">เปิดแผน <svg aria-hidden="true"><use href="#i-arrow"/></svg></span></div>
+      </a>
+
+      <a class="day reveal" href="day-6-kuromon-nara.html" style="--tint:#8a5a3b;--wash:rgba(138,90,59,.12)">
+        <span class="day__band" aria-hidden="true"></span>
+        <svg class="day__mark" viewBox="0 0 64 64" aria-hidden="true"><path d="M8 20c9-4 39-4 48 0"/><path d="M13 27h38"/><path d="M19 27v27M45 27v27"/><path d="M32 27v9"/><path d="M15 34h34"/></svg>
+        <span class="day__theme">กวางและวัดใหญ่</span>
+        <div class="day__num"><b>06</b><span>พฤ. 3 ธ.ค.</span></div>
+        <h3>คุโระมง → นารา</h3>
+        <p class="day__date">08:00–19:30 · 10 จุด</p>
+        <ul>
+          <li>มื้อเช้าตลาด Kuromon</li>
+          <li>Kintetsu ตรงไปนารา 36–40 น.</li>
+          <li>กวาง + Todai-ji + Naramachi</li>
+        </ul>
+        <div class="day__foot"><span>¥10,000–12,700</span><span class="day__go">เปิดแผน <svg aria-hidden="true"><use href="#i-arrow"/></svg></span></div>
+      </a>
+
+      <a class="day reveal" href="day-7-osaka-castle-midosuji.html" style="--tint:#6e3a2c;--wash:rgba(110,58,44,.12)">
+        <span class="day__band" aria-hidden="true"></span>
+        <svg class="day__mark" viewBox="0 0 64 64" aria-hidden="true"><path d="M8 56h48"/><path d="M14 56V38h36v18"/><path d="M10 38h44l-7-9H17z"/><path d="M18 29h28l-6-8H24z"/><path d="M14 18l4 4M50 18l-4 4M24 12l2 4M40 12l-2 4"/></svg>
+        <span class="day__theme">ปราสาทและไฟกลางคืน</span>
+        <div class="day__num"><b>07</b><span>ศ. 4 ธ.ค.</span></div>
+        <h3>ปราสาท → ไฟกลางคืน</h3>
+        <p class="day__date">08:30–20:00 · 12 จุด</p>
+        <ul>
+          <li>หอคอยปราสาทโอซาก้า</li>
+          <li>Pokémon Center ที่ Lucua</li>
+          <li>ไฟ Midosuji 4 กม.</li>
+        </ul>
+        <div class="day__foot"><span>¥12,800–16,400</span><span class="day__go">เปิดแผน <svg aria-hidden="true"><use href="#i-arrow"/></svg></span></div>
+      </a>
+
+      <a class="day reveal" href="day-8-minoo-rinku.html" style="--tint:#56622e;--wash:rgba(86,98,46,.13)">
+        <span class="day__band" aria-hidden="true"></span>
+        <svg class="day__mark" viewBox="0 0 64 64" aria-hidden="true"><path d="M20 8h24v24c0 9-5 15-12 24-7-9-12-15-12-24z"/><path d="M26 14v14M32 12v18M38 14v14"/><path d="M12 56c7 4 13 4 20 0s13-4 20 0"/></svg>
+        <span class="day__theme">น้ำตกและย้ายสนามบิน</span>
+        <div class="day__num"><b>08</b><span>ส. 5 ธ.ค.</span></div>
+        <h3>น้ำตก → สนามบิน</h3>
+        <p class="day__date">07:30–20:00 · 11 จุด</p>
+        <ul>
+          <li>เดิน 2.7 กม. ขึ้นน้ำตก Minoo</li>
+          <li>ย้ายไป OMO Kansai Airport</li>
+          <li>Rinku Outlets รอบสุดท้าย</li>
+        </ul>
+        <div class="day__foot"><span>¥11,400–15,400</span><span class="day__go">เปิดแผน <svg aria-hidden="true"><use href="#i-arrow"/></svg></span></div>
+      </a>
+
+      <a class="day reveal" href="day-9-return-bangkok.html" style="--tint:#7f5c10;--wash:rgba(127,92,16,.12)">
+        <span class="day__band" aria-hidden="true"></span>
+        <svg class="day__mark" viewBox="0 0 64 64" aria-hidden="true"><path d="M18 56 28 8M46 56 36 8"/><path d="M32 50v-8M32 36v-8M32 22v-8"/><path d="M12 58h40"/></svg>
+        <span class="day__theme">วันบินกลับ</span>
+        <div class="day__num"><b>09</b><span>อา. 6 ธ.ค.</span></div>
+        <h3>โอซาก้า → กรุงเทพ</h3>
+        <p class="day__date">05:45–16:00 · 8 จุด</p>
+        <ul>
+          <li>รถไฟ 1 สถานีไป KIX</li>
+          <li>เช็คอิน T1 ก่อน 09:30</li>
+          <li>ถึงดอนเมือง 15:05</li>
+        </ul>
+        <div class="day__foot"><span>¥600–1,740</span><span class="day__go">เปิดแผน <svg aria-hidden="true"><use href="#i-arrow"/></svg></span></div>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- ============ HOTELS ============ -->
+  <section class="section wrap" id="hotels" aria-labelledby="hotels-title">
+    <div class="section__head">
+      <div>
+        <p class="eyebrow">ที่พัก</p>
+        <h2 id="hotels-title">4 โรงแรม 8 คืน</h2>
+      </div>
+      <p class="section__note">ย้ายโรงแรม 3 ครั้ง — ทุกครั้งมีแผนฝากกระเป๋าและเวลาเดินทางระบุไว้ในหน้า Day แล้ว</p>
+    </div>
+
+    <div class="hotels">
+      <article class="hotel">
+        <span class="hotel__when">28–30 พ.ย. · 2 คืน</span>
+        <b>Hotel Vischio Kyoto by GRANVIA</b>
+        <span>ติดสถานีเกียวโต ทางออก Hachijo · เดิน 2 นาที</span>
+      </article>
+      <article class="hotel">
+        <span class="hotel__when">30 พ.ย.–2 ธ.ค. · 2 คืน</span>
+        <b>Hotel Universal Port</b>
+        <span>ติด Universal City · เดินถึง USJ ~5 นาที</span>
+      </article>
+      <article class="hotel">
+        <span class="hotel__when">2–5 ธ.ค. · 3 คืน</span>
+        <b>Citadines Namba Osaka</b>
+        <span>Nipponbashi · ตลาด Kuromon 8 นาที · Nankai Namba 7 นาที</span>
+      </article>
+      <article class="hotel">
+        <span class="hotel__when">5–6 ธ.ค. · 1 คืน</span>
+        <b>OMO Kansai Airport by Hoshino</b>
+        <span>Rinku Town ทางออก 5 · 1 สถานีถึง KIX + shuttle เช้า</span>
+      </article>
+    </div>
+  </section>
+
+  <!-- ============ BUDGET ============ -->
+  <section class="section wrap" id="budget" aria-labelledby="budget-title">
+    <div class="section__head">
+      <div>
+        <p class="eyebrow">งบประมาณ</p>
+        <h2 id="budget-title">ค่าใช้จ่ายหน้างานทั้งทริป</h2>
+      </div>
+      <p class="section__note">ตัวเลขจากท้ายหน้าของแต่ละวัน — 3 คน (เด็ก 5 ขวบฟรีค่าโดยสารและค่าเข้าส่วนใหญ่)</p>
+    </div>
+
+    <div class="budget">
+      <div class="tablewrap">
+        <table>
+          <caption>ไม่รวมตั๋วเครื่องบิน ค่าโรงแรม และของฝาก</caption>
+          <thead>
+            <tr><th scope="col">วัน</th><th scope="col">กิจกรรมหลัก</th><th scope="col">ประมาณ (เยน)</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>1</td><td>เดินทาง + Haruka + มื้อเย็น</td><td>¥7,900–10,600</td></tr>
+            <tr><td>2</td><td>วัดน้ำใส + นันเซ็นจิ + มื้ออาหาร</td><td>¥10,800–16,500</td></tr>
+            <tr><td>3</td><td>อาราชิยามะ + Torokko + เรือ + ย้ายโรงแรม</td><td>¥15,200–17,200</td></tr>
+            <tr><td>4</td><td>Universal Studios (ตั๋ว + อาหาร)</td><td>¥33,500–47,500</td></tr>
+            <tr><td>5</td><td>Kaiyukan + Legoland + แท็กซี่ + Dotonbori</td><td>¥22,600–25,100</td></tr>
+            <tr><td>6</td><td>Kuromon + Kintetsu + Todai-ji + Naramachi</td><td>¥10,000–12,700</td></tr>
+            <tr><td>7</td><td>ปราสาท + Metro + Pokémon + ไฟ Midosuji</td><td>¥12,800–16,400</td></tr>
+            <tr><td>8</td><td>Minoo + Hankyu + Nankai + Outlets</td><td>¥11,400–15,400</td></tr>
+            <tr><td>9</td><td>รถไฟไป KIX + มื้อเช้า</td><td>¥600–1,740</td></tr>
+          </tbody>
+          <tfoot>
+            <tr><td colspan="2">รวมทั้งทริป</td><td>¥124,800–163,140</td></tr>
+          </tfoot>
+        </table>
+      </div>
+
+      <div class="totalcard">
+        <span class="mono-label">สรุปตัวเลข</span>
+        <b>≈ ฿27,500–35,900</b>
+        <small>ที่เรต 0.22 บาท/เยน · สำหรับ 3 คน 9 วัน</small>
+        <ul>
+          <li><span>เฉลี่ยต่อวัน</span><span>≈ ฿3,050–3,990</span></li>
+          <li><span>ค่าตั๋วเครื่องบิน</span><span>แยกต่างหาก</span></li>
+          <li><span>โรงแรม 8 คืน</span><span>แยกต่างหาก</span></li>
+          <li><span>ของฝาก/ช้อป</span><span>ไม่รวม</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CHECKS ============ -->
+  <section class="section wrap" id="checks" aria-labelledby="checks-title">
+    <div class="section__head">
+      <div>
+        <p class="eyebrow">ก่อนออกเดินทาง</p>
+        <h2 id="checks-title">เช็กลิสต์ระดับทริป</h2>
+      </div>
+      <p class="section__note">ต่างจากเช็กลิสต์รายวัน — อันนี้ติ๊กครั้งเดียวจบ เก็บไว้ในเครื่องนี้</p>
+    </div>
+
+    <div class="checks__head">
+      <span class="checks__count" id="checkCount">0 / 8</span>
+      <button class="link-btn" type="button" id="resetChecks">ล้างติ๊กทั้งหมด</button>
+    </div>
+
+    <div class="checks" id="checks-list">
+      <label class="check"><input type="checkbox" data-key="passport"><span>พาสปอร์ต 3 เล่ม เหลืออายุมากกว่า 6 เดือน</span></label>
+      <label class="check"><input type="checkbox" data-key="flight"><span>ตั๋วเครื่องบิน XJ614 / XJ615 + กระเป๋าโหลดตามน้ำหนัก</span></label>
+      <label class="check"><input type="checkbox" data-key="usj"><span>ตั๋ว Universal Studios ล่วงหน้า + เช็กส่วนสูงเครื่องเล่นที่เด็กขึ้นได้</span></label>
+      <label class="check"><input type="checkbox" data-key="lego"><span>ตั๋ว Legoland Discovery Center (จองล่วงหน้า ≥24 ชม.)</span></label>
+      <label class="check"><input type="checkbox" data-key="ic"><span>IC card ในมือถือ (Suica/ICOCA) ใช้ JR · Metro · Kintetsu · Nankai · Hankyu</span></label>
+      <label class="check"><input type="checkbox" data-key="hotel"><span>เลขจองโรงแรมทั้ง 4 แห่ง ในโฟลเดอร์เดียวกัน</span></label>
+      <label class="check"><input type="checkbox" data-key="cash"><span>เงินสดเยนสำหรับตลาด/ร้านเล็กที่รับแต่เงินสด</span></label>
+      <label class="check"><input type="checkbox" data-key="clothes"><span>เสื้อกันหนาว ถุงมือ หมวกเด็ก (ต้น ธ.ค. ญี่ปุ่น 5–13°C)</span></label>
+    </div>
+  </section>
+
+</main>
+
+<footer class="foot wrap">
+  <div class="foot__grid">
+    <div>
+      <p><strong>ที่มาของข้อมูล:</strong> หน้าแผนรายวันทั้ง 9 หน้าสร้างจาก itinerary.md · transport.md · hotels.md ที่อัปเดต 14 พ.ย. 2026 และตรวจสอบกับเว็บทางการของ Osaka Castle, Minoo Park, Kintetsu, JR West, Osaka Metro, Nankai, Hankyu, Midosuji Illumination 2026 · ตัวเลขที่กำกับว่า “ประมาณ” คือการกะจากแผน ไม่ใช่ราคาที่จองแล้ว</p>
+      <p>หน้าแรกนี้อ้างอิงงบจากท้ายหน้าของ Day 1–9 · เด็กก่อนประถมฟรีค่าโดยสารรถไฟและค่าเข้าส่วนใหญ่ แต่ควรพกเอกสารยืนยันอายุ</p>
+    </div>
+    <div>
+      <p><strong>ลิงก์อื่น:</strong> <a href="index-original.html">แผนเดิมแบบอินเทอร์แอกทีฟ</a> · <a href="README.md">README</a></p>
+      <p>ซ่อนเมนูรายวันไว้ที่แถบด้านบนของทุกหน้า Day — หรือเปิดจากรายการ 9 วันด้านบน</p>
+    </div>
+  </div>
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
 <script>
-/* ================= ข้อมูลกลาง (source of truth) ================= */
-const RATE_DEFAULT = 0.22;
-const START = new Date(2026, 10, 28); // 28 พ.ย. 2026 (วันถึง KIX)
-const N_DAYS = 9;    // 28 พ.ย. – 6 ธ.ค. 2026 (เที่ยวบินใหม่: ถึง 18:15 / กลับบิน 10:30)
-const N_NIGHTS = 8;
-const DAYS_TH = ['อาทิตย์','จันทร์','อังคาร','พุธ','พฤหัส','ศุกร์','เสาร์'];
-const MONTHS_TH = ['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
+(function () {
+  'use strict';
 
-const HOTELS = [
-  { id:'monterey', name:'Hotel Monterey Grasmere Osaka ⭐คุ้มสุด', area:'namba', price:20000, lat:34.6660, lng:135.5005, walkHub:1,
-    note:'4 ดาว · ห้อง triple 26 ม². / family 33 ม². · ติดสถานี Nankai Namba (Rapi:t จาก KIX ถึงที่เดิน 1 นาที)' },
-  { id:'mimaru', name:'MIMARU Osaka Namba Station ⭐เหมาะเด็กสุด', area:'namba', price:38000, lat:34.6645, lng:135.5012, walkHub:5,
-    note:'อพาร์ตเมนต์ครอบครัว · ห้อง 2 ห้องนอน + เตียง 2 ชั้น · ครัว + เครื่องซักผ้า · แพงสุดและหมดเร็ว' },
-  { id:'fraser', name:'Fraser Residence Nankai Osaka', area:'namba', price:30000, lat:34.6648, lng:135.5014, walkHub:2,
-    note:'เซอร์วิสอพาร์ตเมนต์ · 1-Bedroom กว้าง · ครัว + ซักรีด · ติดสถานี Nankai' },
-  { id:'swissotel', name:'Swissôtel Nankai Osaka', area:'namba', price:34000, lat:34.6666, lng:135.5014, walkHub:0,
-    note:'อยู่บนสถานี Nankai Namba โดยตรง — วันถึง/วันกลับสบายสุด ไม่ต้องแบกกระเป๋าเดิน' },
-  { id:'budget', name:'ห้องคู่ + เด็กนอนฟรี (Karaksa / Toyoko Inn ย่าน Namba)', area:'namba', price:15000, lat:34.6655, lng:135.5045, walkHub:6,
-    note:'กฎ co-sleeping: เด็กเล็กนอนกับผู้ใหญ่ฟรี — ประหยัดสุด แต่ต้องยืนยันกับโรงแรมก่อนจอง' },
-  { id:'citadines', name:'Citadines Namba Osaka ✅จองแล้ว 2–5 ธ.ค.', area:'namba', price:22000, lat:34.6632, lng:135.5022, walkHub:7,
-    note:'คืน 5–7 · เซอร์วิสอพาร์ตเมนต์ (ครัว+เครื่องซักผ้า) ย่าน Nipponbashi · เดิน ~6 นาทีถึงสถานี Nippombashi (Kintetsu/Sakaisuji) · ตลาด Kuromon ~6 นาที · Nankai Namba ~7 นาที · Dotonbori ~12 นาที' },
-  { id:'grandwest', name:'The GrandWest Arashiyama (ทางเลือกโซน Arashiyama)', area:'kyoto', price:30000, lat:35.0150, lng:135.6812, walkHub:10,
-    note:'บูติค 10 ห้อง ห้องรับได้ถึง 5 คน กว้างแบบวิลล่า (คะแนน 9/10) · เดิน 5 นาทีจากสถานี Hankyu Arashiyama · ~10 นาทีจาก JR Saga-Arashiyama · ป่าไผ่/วัด Tenryu-ji 10–15 นาที · ⚠️ ร้านแถวนั้นปิด ~21:00 + หน้างานรับถึง ~22:00 (โรงแรมเดิมก่อนกลับมาใช้ Vischio 14 พ.ย.)' },
-  { id:'vischio', name:'Hotel Vischio Kyoto by GRANVIA ✅จองแล้ว 28–30 พ.ย.', area:'kyoto', price:30000, lat:34.9820, lng:135.7600, walkHub:0,
-    note:'คืน 1–2 · ตรงข้าม Kyoto Stn ทางออก Hachijo เดิน 2 นาที · ห้อง Triple 26 ม². 3 เตียง · อ่างน้ำใหญ่+ซาวน่า · front 24 ชม. — Day 1 ถึงดึก 21:15 เดินถึงห้องเลย · Day 3 ขึ้น JR Sagano ชานชาลา 30–33 ไป Arashiyama + ฝากกระเป๋าวันย้าย' },
-  { id:'ranzan', name:'Kyoto Arashiyama Ranzan Hotel (ทางเลือกโซนธรรมชาติ)', area:'kyoto', price:32000, lat:35.0085, lng:135.6723, walkHub:0,
-    note:'Kyoto คืนที่ 3–4 · ริมแม่น้ำ Katsura ใกล้สะพาน Togetsukyo · กว้าง เหมาะครอบครัว · มีออนเซ็น · เดินป่าไผ่ได้เลย' },
-  { id:'kadensho', name:'Kadensho, Arashiyama Onsen (Kyoritsu Resort)', area:'kyoto', price:40000, lat:35.0066, lng:135.6715, walkHub:0,
-    note:'Kyoto คืนที่ 3–4 · ออนเซ็น 4 ดาว · บางห้องมีฮอนึมุโระส่วนตัว · 1 นาทีจากสถานี Hankyu Arashiyama' },
-  { id:'hanaikada', name:'Hanaikada Ryokan (เรียวกังริมแม่น้ำ)', area:'kyoto', price:42000, lat:35.0110, lng:135.6716, walkHub:0,
-    note:'Kyoto คืนที่ 3–4 · เรียวกังดั้งเดิมกลาง Arashiyama · ห้องทาทามิ+ฟุต้น นอน 3 คนสบายโดยไม่ต้องหา triple room' },
-  { id:'kintetsu_uc', name:'Hotel Kintetsu Universal City ⭐ติดสถานี UC', area:'bay', price:26000, lat:34.6666, lng:135.4290, walkHub:1,
-    note:'อยู่ในอาคาร Universal CityWalk ต่อจากสถานี JR Universal-City · เดิน ~5 นาทีถึงประตู USJ · โรงแรมพันธมิตรทางการ USJ · ราคาประมาณ ต้องเช็คจริง' },
-  { id:'universal_port', name:'Hotel Universal Port ✅จองแล้ว 30 พ.ย.–2 ธ.ค.', area:'bay', price:22000, lat:34.6622, lng:135.4322, walkHub:10,
-    note:'คืน 3–4 · ห้องครอบครัวรับ 4 ท่าน + ห้องธีมเด็กช่วง event · เดิน ~10 นาทีจากสถานี UC / ~7–10 นาทีถึงประตู USJ · พันธมิตรทางการ USJ' },
-  { id:'singulari', name:'The Singulari Hotel & SkySpa at USJ ⭐คุ้ม + ออนเซ็นดาดฟ้า', area:'bay', price:20000, lat:34.6685, lng:135.4295, walkHub:2,
-    note:'ต่อจากสถานี UC ด้วยสะพานเดิน · SkySpa ออนเซ็นชั้นสูง · โรงแรม official USJ ราคาเข้าถึงง่ายที่สุดในย่าน' },
-  { id:'keihan_tower', name:'Hotel Keihan Universal Tower ⭐ห้อง bunk เด็กชอบ', area:'bay', price:27000, lat:34.6703, lng:135.4300, walkHub:5,
-    note:'ตึก 32 ชั้นหันหน้าเข้าสถานี UC · ห้อง bunk bed ได้ถึง 6 ท่าน · ออนเซ็น S-PARK ชั้น 31 (ค่าใช้เพิ่ม) · เดิน ~7 นาทีถึง USJ · ราคาประมาณ' },
-  { id:'park_front', name:'Park Front Hotel at USJ ⭐ใกล้ประตูที่สุด', area:'bay', price:42000, lat:34.6674, lng:135.4319, walkHub:8,
-    note:'โรงแรม official USJ อยู่หน้าประตูสวนสนุกเลย (เดิน ~2 นาที) · ห้องครอบครัว/ชั้นเด็ก ของเล่น+ชุดนอนเด็ก · แพงสุดในย่าน — เหมาะถ้างบถึง' },
-  { id:'omo_kix', name:'OMO Kansai Airport (Hoshino) ✅จองแล้ว 5 ธ.ค.', area:'kix', price:22000, lat:34.3990, lng:135.2677, walkHub:0,
-    note:'คืนก่อนบิน (5 ธ.ค.) · เดิน 1 นาทีจาก Rinku Town Stn (ทางออก 5) · เดิน ~12 นาทีถึง Rinku Outlets · มีรถรับส่ง KIX ช่วงเช้าฟรี' },
-  { id:'hennna_kix', name:'Henn na Resort & Spa Kansai Airport ⭐ออนเซ็นก่อนบิน', area:'kix', price:18000, lat:34.3975, lng:135.2810, walkHub:0,
-    note:'คืนก่อนบิน (5 ธ.ค.) · ออนเซ็นธรรมชาติ "Senshu no Yu" แขกพักเข้าฟรี · เดิน ~15 นาทีถึง Rinku Outlets · มีรถรับส่ง KIX · ราคาประมาณ เช็คจริง' },
-];
+  /* ---------- countdown to departure ---------- */
+  var DEP = new Date('2026-11-28T10:40:00+07:00');
+  var countdownEl = document.getElementById('countdown');
 
-/* โรงแรมทั้งหมด = ตัวในระบบ + ที่ผู้ใช้เพิ่มเอง (ใช้แทน HOTELS.find ทุกจุด) */
-function allHotels(list) { return HOTELS.concat(list || (typeof state !== 'undefined' && state && state.customHotels) || []); }
-function getHotel(id) { return allHotels().find(h => h.id === id); }
+  function pad(n) { return n < 10 ? '0' + n : String(n); }
 
-const P = {
-  kix:            { name:'สนามบิน Kansai (KIX)', lat:34.4347, lng:135.2441 },
-  dotonbori:      { name:'Dotonbori / Glico Bridge', lat:34.6687, lng:135.5017 },
-  ginkakuji:      { name:'Ginkakuji + Philosopher\'s Path', lat:35.0270, lng:135.7968 },
-  kinkakuji:      { name:'วัด Kinkaku-ji (วัดทอง)', lat:35.0394, lng:135.7292 },
-  torokko:        { name:'รถไฟ Torokko — สถานี Torokko-Saga', lat:35.0168, lng:135.6715 },
-  kuromon:        { name:'ตลาดปลา Kuromon Ichiba', lat:34.6669, lng:135.5062 },
-  usj:            { name:'Universal Studios Japan', lat:34.6654, lng:135.4323 },
-  osakako:        { name:'Kaiyukan Aquarium', lat:34.6553, lng:135.4292 },
-  legoland:       { name:'Legoland Discovery Center', lat:34.6553, lng:135.4290 },
-  ferris:         { name:'Tempozan Ferris Wheel', lat:34.6573, lng:135.4278 },
-  arashiyama:     { name:'ป่าไผ่ Arashiyama', lat:35.0170, lng:135.6712 },
-  togetsukyo:     { name:'สะพาน Togetsukyo', lat:35.0093, lng:135.6716 },
-  yakatabune:     { name:'Yakatabune Arashiyama (ท่าเรือเหนือ ติด Tenryu-ji)', lat:35.0166, lng:135.6706 },
-  monkey:         { name:'Iwatayama Monkey Park', lat:35.0112, lng:135.6678 },
-  tofukuji:       { name:'วัด Tofuku-ji', lat:34.9781, lng:135.7717 },
-  kiyomizu:       { name:'วัด Kiyomizu-dera', lat:34.9949, lng:135.7850 },
-  gion:           { name:'ย่าน Gion / ศาลเจ้า Yasaka', lat:35.0037, lng:135.7788 },
-  steakland:      { name:'Steak Land Kobe (Sannomiya)', lat:34.6919, lng:135.1966 },
-  animal_kingdom: { name:'Kobe Animal Kingdom', lat:34.6679, lng:135.2240 },
-  harborland:     { name:'Kobe Harborland / Mosaic', lat:34.6826, lng:135.1878 },
-  nara_park:      { name:'Nara Park (กวาง)', lat:34.6851, lng:135.8430 },
-  todaiji:        { name:'วัด Todai-ji (พระใหญ่)', lat:34.6869, lng:135.8396 },
-  nakatanidou:    { name:'Nakatanidou (โมจิตีสด)', lat:34.6828, lng:135.8284 },
-  minoo_station:  { name:'Minoo Station (ต้นทางเทรล)', lat:34.8737, lng:135.6162 },
-  minoo_falls:    { name:'น้ำตก Minoo', lat:34.8486, lng:135.6040 },
-  umeda:          { name:'Umeda / Osaka Station', lat:34.7024, lng:135.4959 },
-  rinku:          { name:'Rinku Premium Outlets', lat:34.3990, lng:135.2660 },
-  osaka_castle:   { name:'Osaka Castle (หอคอยปราสาท)', lat:34.6876, lng:135.5259 },
-  miraiza:        { name:'Miraiza Osaka-jo', lat:34.6854, lng:135.5273 },
-  nishinomaru:    { name:'สวน Nishinomaru', lat:34.6843, lng:135.5228 },
-};
-
-/* เรื่องน่ารู้ของแต่ละสถานที่ + ชื่อหน้า Wikipedia สำหรับดึงรูป */
-const PLACES_INFO = {
-  kix:            { wiki:'Kansai International Airport', desc:'สนามบินบนเกาะประดิษฐ์แห่งแรกของโลก (เปิด 1994) ลอยอยู่กลางอ่าวโอซาก้า', bullets:['อาคารผู้โดยสารออกแบบโดยเรโน ปีอาโน ชั้น 4 มีจุดชมวิว Sky View ดูเครื่องบินลง-ขึ้นสวยมาก','ชั้น 1 มีร้านของฝาก + ร้านราเม็งสตรีทคัด 10 ร้านดังทั่วญี่ปุ่น','ถ่ายรูปหน้าป้าย "KIX" ได้ที่ดาดฟ้าชั้น 4'] },
-  dotonbori:      { wiki:'Dōtonbori', desc:'ย่านกิน-เที่ยวสุดคลาสสิกของโอซาก้า ยาว ~600 ม. ริมคลอง Dotonbori อายุกว่า 400 ปี', bullets:['ป้าย Glico Running Man — โพสต์ยืนถ่ายท่าวิ่งเหมือนป้าย ของนักท่องเที่ยวทุกคน','ปูยักษ์ Kani Doraku ขยับก้ามได้ / ปลาหมึก Kanidouraku ลอยอยู่หน้าร้าน','ของกินต้องลอง: ทาโกะยากิ (แหล่งกำเนิดสายดัง), โอโคโนมิยากิ, โชคุงิกุ (ปลาหมึกย่างน้ำมัน), อิจิบังยะ (ไอศกรีมมัทฉะชา-ชีส์)','ยิ่งมืดยิ่งสวย — ป้ายนีออนทั้งสองฝั่งคลอง'] },
-  kuromon:        { wiki:['Kuromon Ichiba','ja:黒門市場'], desc:'"ครัวของคนโอซาก้า" ตลาดอายุ ~120 ปี ยาว 580 ม. รวม ~150 ร้านของกิน/ของสด', bullets:['เดินกินไปเรื่อย ๆ: ปลาดิบ, โอทัมโปะ (ไข่ปลา), เนื้อวากิวย่างเสียบ, แกงกะหรี่, ผลไม้สตรอว์เบอร์รียักษ์','ร้านดัง: Yamato (หอยนางรม), Dakyu Meat (เนื้อวากิวเสียบ — เด็กชอบ)','เปิดช่วงเช้าถึงบ่าย (~08:00–17:00) บางร้านปิดแล้วตอนบ่ายแก่ ๆ — ไปเช้าที่สุด'] },
-  usj:            { wiki:'Universal Studios Japan', desc:'สวนธีมยอดนิยมอันดับต้นของโลก 10 โซน — เปิด 2001 มีผู้เยี่ยมชมมากกว่าสวนสนุกไหนในญี่ปุ่น', bullets:['Super Nintendo World (2021) — โลกมาริโอจริง ๆ เหรียญทองปังได้, Mario Kart AR, Yoshi ride','Donkey Kong Country (2024) — Mine-Cart Madness รถรางกระโดดรางแบบเกม','Harry Potter — หมู่บ้าน Hogsmeade + Butterbeer (ของหวานเด็กดื่มได้)','Minion Park / Sesame Street / Hello Kitty — โซนเด็กเล็กเยอะที่สุด'] },
-  osakako:        { wiki:'Osaka Aquarium Kaiyukan', desc:'พิพิธภัณฑ์สัตว์น้ำใหญ่ที่สุดในโลกตอนเปิด (1990) — เดินชมเป็นเกลียววงกลมลงมา 8 ชั้นรอบถังยักษ์', bullets:['ฉลามวาลยักษ์ (whale shark) สูงถึง 8 ม. ในถังกลางใหญ่ที่สุด — จุดว้าวที่สุดสำหรับเด็ก','แมงกะพรุนนีออน, น็อตเตอร์เรย์, นากยักษ์, นกเพนกวิน Antarctica','อยู่ใน Tempozan Harbor Village — เดินต่อ Legoland/ชิงช้าสวรรค์ได้ใน 5 นาที'] },
-  legoland:       { wiki:['Legoland Discovery Center Osaka','ja:レゴランド・ディスカバリー・センター大阪'], desc:'ศูนย์ความบันเทิงในร่มสำหรับเด็ก 3–10 ปี (ต้องมีเด็กเข้าด้วยเสมอ)', bullets:['Miniland Osaka — เมืองโอซาก้าจำลองจากตัวต่อ LEGO เกือบ 1 ล้านชิ้น เปลี่ยนกลางวัน-กลางคืนได้','โรงหนัง 4D, โรงงาน LEGO จำลอง และพื้นที่ปีนป่าย/ขับรถ LEGO','จองตั๋วออนไลน์ล่วงหน้า ≥24 ชม. ถูกกว่าและการันตีเข้า'] },
-  ferris:         { wiki:'Tempozan Ferris Wheel', desc:'ชิงช้าสวรรค์ยักษ์ริมอ่าวโอซาก้า สูง 112 ม. — เคยเป็นใหญ่ที่สุดในโลกตอนเปิด 1997', bullets:['รอบละ ~17 นาที วิวอ่าวโอซาก้า + ท่าเรือ + ถนัดแดดวันเคลียร์เห็นถึง KIX','กล่องกระจกโปร่งแสง 4 กล่อง (ถ้ากล้า!)','ควรนั่งช่วงกลางวันแสงสวย — กลางคืนไฟรุ้งทั้งวง'] },
-  arashiyama:     { wiki:'Arashiyama', desc:'ย่านธรรมชาติทางตะวันตกของเกียวโต — หุบเขาใบไม้แดง, ป่าไผ่, แม่น้ำ Katsura และวัด UNESCO อยู่ด้วยกันแถวนี้', bullets:['ป่าไผ่ Arashiyama — เดินใต้ต้นไผ่สูงหลายสิบเมตร เสียงลมพัดผ่านไผ่ได้รับเลือกเป็น "เสียงแห่งญี่ปุ่น" 100 อันดับ','วัด Tenryu-ji (UNESCO) สวนสวยที่สุดแห่งหนึ่งของญี่ปุ่น สู้ราคาค่าเข้า ~¥500 คุ้ม','ถนนเซงคุจิ (เมนทสุจิ) — ขนมโมจิ, ไอศกรีมมัทฉะ, ร้านคราฟต์ระหว่างทาง','ต้น ธ.ค. คือช่วงท้ายพีคใบไม้แดง — เข้าเช้าแดด 8:00–10:00 คนน้อยสุด'] },
-  togetsukyo:     { wiki:'Togetsukyo Bridge', desc:'สะพานไม้ข้ามแม่น้ำ Katsura ยาว 155 ม. อายุ 90 ปี — จุดถ่ายรูปอันดับ 1 ของ Arashiyama', bullets:['ชื่อแปลว่า "สะพานพระจันทร์ข้ามฟ้า" ตามพระราชดำริของจักรพรรดิ','ต้นไม้ทั้งสองฝั่งเปลี่ยนสีแดง-เหลืองพร้อมกันช่วงปลาย พ.ย.–ต้น ธ.ค.','มีเรือพายให้เช่า (เด็ก 5 ขวบนั่งได้) และรถกระบะกระต่ายลากเที่ยว'] },
-  monkey:         { wiki:'Iwatayama Monkey Park', desc:'สวนลิงภูเขาญี่ปุ่น ~120 ตัว อยู่อย่างอิสระบนภูเขา Iwata สูง 160 ม.', bullets:['เดินเทรลขึ้น ~20–30 นาที (ทางชัน เตรียมน้ำ) — เด็กวัย 5 ขวบไหวแต่ต้องพักเป็นช่วง','ปลายทางเลี้ยงลิงจากในกรงกระจก — ปลอดภัยกับเด็ก','วิวยอดเขามองเห็นตัวเมืองเกียวโตทั้งเมือง + ใบไม้แดงเต็มลาด'] },
-  yakatabune:     { desc:'เรือเรือนไม้ (屋形船) ล่องแม่น้ำ Katsura รอบสะพาน Togetsukyo ~60 นาที พร้อมอาหารบนเรือ (ตัดออกจากแผนหลักแล้ว 14 พ.ย. — ไม่ได้อยู่ Arashiyama ตอนเที่ยง)', bullets:['เรือเหมา (2–3 คนได้) + อาหาร: sukiyaki / shabu / เบนโตะเกียวโต ~¥5,500–9,000/คน — จองล่วงหน้า 3–4 วันทาง Veltra / Klook / Tabione (เรือ Arashiyama Tsusen) หรือร้าน松尾川よし โทร 075-391-6755','ขึ้นที่ท่าเรือเหนือ (Susukinobaba ติดวัด Tenryu-ji — เดินจาก JR Saga-Arashiyama ~10 นาที)','เรือมีโซนอบอุ่น + ฟืน เดินทางทั้งปี · พายุ/น้ำหลากยกเลิก · ช่วง koyo วันหยุดคิวแน่น — จองเร็ว','สำรองถ้าจองไม่ทัน: เรือแชร์ชมวิว 30 นาที ¥1,800/¥900 ไม่ต้องจอง (9:00–15:30) หรือกินมื้อกลางวันริม Togetsukyo ตามปกติ'] },
-  tofukuji:       { wiki:'Tofuku-ji', desc:'วัดสาย Zen อายุ ~600 ปี — "จุดชมใบไม้แดงอันดับ 1 ของเกียวโต"', bullets:['สะพานไม้ Tsutenkyo โค้งยาว 100 ม. ทอดผ่านลำธารใบเมเปิล ~2,000 ต้น — มุมที่เห็นในโปสการ์ด','สวนหิน+มอสส์ทางเหนือออกแบบโดยปรมาจารย์ Mirei Shigemori','ตอนพีค (กลาง–ปลาย พ.ย.) อาจรอเข้านาน 30–60 นาที — ต้น ธ.ค. คนเริ่มเบา ใบยังสวย'] },
-  kiyomizu:       { wiki:'Kiyomizu-dera', desc:'วัด UNESCO บนเนิน Higashiyama อายุ ~1,250 ปี — ชื่อแปลว่า "น้ำบริสุทธิ์"', bullets:['เวทีไม้ Kiyomizu (Butai) ยื่นออกจากผาสูง 13 ม. สร้างโดยไม่ใช้ตะปูแม้แต่ตัวเดียว','น้ำศักดิ์สิทธิ์ Otowa 3 สาย (สุขภาพ/ความรัก/การศึกษา) — จิบ 1 สายพอ','ลงมาเดินถนน Ninenzaka/Sannenzaka ก้อนหินโบราณ ร้านขนม yatsuhashi ลองชิมสารพัดรส — เด็กชอบขนมถั่ว','เปิด special viewing ช่วงใบไม้แดง เย็นมี light-up (เช็คครั้งนั้นก่อน)'] },
-  gion:           { wiki:'Gion', desc:'ย่านเกย์ชาสุดคลาสสิกของเกียวโต — บ้านไม้ Machiya เรียงราย 2 ฝั่งถนน Hanamikoji', bullets:['โอคากิมัจิ — โชว์วัฒนธรรมเกย์ชาฟรี (ช่วง พ.ย.–มิ.ย.)','ตรอกเล็ก Ishibei-koji สวยแบบโพสการ์ด','เย็นอาจเจอมาอิโกะเดินไปทำงาน (~18:00–19:00) — ถ่ายรูปแต่ไกล เคารพกันหน่อยนะ','ศาลเจ้า Yasaka ปลายถนน — ฟรี เดินเล่นเย็นสบาย'] },
-  steakland:      { wiki:'Kobe beef', desc:'Kobe beef — เนื้อวัวสายพันธุ์ Tajima จากเมืองโกเบ ที่มีลายหยดน้ำ (marbling) ละลายในปาก', bullets:['Steak Land เปิดสอนเชฟเทปปังยากิมาแล้ว 50+ ปี — นั่งแคนเตอร์ดูเชฟย่างหน้าเสา (เด็กติดใจ)','มื้อกลางวันราคาครึ่งหนึ่งของเย็น — Kobe beef lunch เริ่ม ¥3,500','ชุดมี salad/soup/rice ครบ — สั่งเนื้อ loin เด็กกินได้ (ไม่เผ็ด ไม่หนักมัน)'] },
-  animal_kingdom: { wiki:'Kobe Animal Kingdom', desc:'สวนสัตว์ในร่มขนาดใหญ่ (เดินได้ไม่โดนฝน/ลมหนาว) — สัตว์เดินอิสระประมาณ 100 ชนิด', bullets:['แคปปีบารา, ฟลามิงโก, นกแก้วมาคอว์บินวนรอบหัว (โชว์ฟรีทุกชั่วโมง)','ให้อาหารสัตว์ด้วยมือ: capybara, นกอีมู, กระต่าย','ต้นไม้จริง+น้ำพุในอาคาร อบอุ่นทั้งฤดูหนาว — เด็ก 5 ขวบเล่น 2–3 ชม. ไม่เบื่อ','⚠️ ปิดทุกวันพฤหัส (ยกเว้นช่วงวันหยุด) — จึงจัดไว้วันศุกร์'] },
-  harborland:     { wiki:'Harborland', desc:'ท่าเรือสมัยใหม่ริมอ่าวโกเบ — ห้าง Mosaic, หอคอยแดง Port Tower และชิงช้าสวรรค์ริมทะเล', bullets:['Mosaic Mall — ช้อป/ขนม พร้อมวิวท่าเรือ','Kobe Port Tower รูปไฮเดรนเยียแดงสัญลักษณ์เมืองโกเบ','ตอนพลบค่ำไฟทั้งท่าเรือสวยแบบโรแมนติก + ตัวเมืองโกเบเบื้องหลัง'] },
-  nara_park:      { wiki:'Nara Park', desc:'อุทยาน 660 เอเคอร์ เพื่อนบ้านกับกวางดาว ~1,200 ตัวที่ถือว่าเป็น "ผู้ส่งสารของเทพเจ้า"', bullets:['ซื้อขนม shika senbei (แครกเกอร์ข้าว ¥200) ให้กวาง — กวางจะโค้งคำนับถ้าเห็นขนม!','กวางมาเดินเกาะตัว/โผล่ข้ามถนนเอง — จับมือเด็กไว้ ซ่อนขนมตอนไม่ให้','ฤดูใบไม้เปลี่ยนสีที่นี่สวยด้วย — ต้นเมเปิลใหญ่กระจายทั่วอุทยาน','UNESCO รวมกับวัดโดยรอบ (Todai-ji/Kasuga Taisha)'] },
-  todaiji:        { wiki:'Tōdai-ji', desc:'วัดอายุ ~1,270 ปี (สร้าง 752) — พระพุทธรูปบรอนซ์ใหญ่ที่สุดในญี่ปุ่น สูง ~15 ม.', bullets:['หอพระใหญ่ (Daibutsuden) ใหญ่ที่สุดในโลกแห่งหนึ่งของอาคารไม้ — ใหญ่จนกวางตัวเตี้ยดูเล็กไปเลย','กิจกรรมฮิตของเด็ก: ลอดรูเสาไม้ "จมูกพระ" (Nostril pillar) — ใหญ่พอเด็ก 5 ขวบลอดสบาย ขอสุขภาพดีทั้งปี','กวางมาแจกกินหญ้าหน้าวัดเรื่อย ๆ ถ่ายรูปกับพระ+กวางได้'] },
-  nakatanidou:    { wiki:['Nakatanidou','ja:中谷堂'], desc:'ร้านโมจิดังระดับตำนานของ Naramachi — เชฟตีโมจิสดด้วยไม้ปายเร็วที่สุดในญี่ปุ่น', bullets:['โชว์ตีโมจิทุก ~10–15 นาที (ดูฟรี) — จังหวะปังๆ ๆ รัวไม้ยาวเร็วมาก เด็กตาค้าง','ยากุโมจิ (โมจิถั่วแดง) ออกร้อน ๆ ชิ้นละ ~¥150–250','ร้านอยู่ทางเข้า Naramachi — เดินต่อซอยขนม/ร้านคราฟต์ได้เรื่อย ๆ'] },
-  minoo_station:  { wiki:'Minoh', desc:'เมืองน้ำตกทางเหนือของโอซาก้า — เทรลธรรมชาติชื่อดังที่สุดของโอซาก้า ห่างเมืองแค่ ~30 นาที', bullets:['ทางเดิน Takimichi 2.8 กม. ลาดยางเรียบ ใต้เงาใบเมเปิล ~3,700 ต้น (โรงเรียนญี่ปุ่นมาเดินกันทั้งคณะ)','ระหว่างทางมีร้านทอด **momiji tempura** — ใบเมเปิลดองเค็ม 1 ปีแล้วทอดกรอบ ขนมเฉพาะเมืองนี้ อายุ 1,300 ปี','กระรอกจอมซนมาแจกขนม (อย่าให้เด็กจับ)'] },
-  minoo_falls:    { wiki:['Minoh Falls','ja:箕面大滝'], desc:'น้ำตกสูง 33 ม. กว้าง 5 ม. — หนึ่งในสามน้ำตกสวยของญี่ปุ่น', bullets:['ต้น ธ.ค. ใบเมเปิลลาดเขาเปลี่ยนสวยสุดในโอซาก้า — มุมถ่ายจากดาดฟ้าหน้าน้ำตก','เดินช้า ๆ กลับไปสถานี ~45 นาที (ขากลับลงเขา ง่ายกว่าขาไป)','เหนื่อยมีน้ำชา/โอเด้งร้านริมทางขาย'] },
-  umeda:          { wiki:'Umeda', desc:'ย่านธุรกิจ+ช้อปปิ้งใหญ่สุดของโอซาก้า — สถานีรถไฟ Osaka/Umeda เป็นหนึ่งในสถานีที่คนใช้มากที่สุดในโลก', bullets:['ห้าง Daimaru ชั้น B1 "Depachika" — ขนม/อาหารฝีมือเชฟระดับประเทศ ซื้อของฝากที่นี่แหละคุ้มสุด','Don Quijote (สาขาใหญ่) ของฝากราคาถูก + drugstore ซันโด้ ป้ายแดง','HEP FIVE ชิงช้าสวรรค์สีแดงบนหลังคาห้าง (ถ้ามีเวลาเหลือ)'] },
-  rinku:          { wiki:'Rinku Town', desc:'เมืองเอาต์เล็ตริมทะเล ตรงข้ามสนามบิน KIX — 1 สถานีจากผู้โดยสาร', bullets:['Rinku Premium Outlets ~250 ร้าน แบรนด์ราคาพิเศษ','ประภาคาร Rinku Gate Tower สูง 256 ม. สูงที่สุดในญี่ปุ่น (ในนั้นมีโรงแรมด้วย)','เดินชมเครื่องบินลง-ขึ้นขนานชายหาดได้ทั้งวัน'] },
-  ginkakuji:      { wiki:'Ginkaku-ji', desc:'"วัดเงิน" สร้าง 1482 โดยโชกุนอาชิกางะ โยชิมาซะ — ต้นแบบความงามแบบ wabi-sabi', bullets:['สวนหินกรวด Ginshadan (ทะเลเงิน) + กองทรายเงิน Kogetsudai สวยแบบมินิมอล','เดินเส้นทางวนรอบสวน มองเห็นต้นไม้เปลี่ยนสีเต็มลาดเขา','ต่อด้วย **Philosopher\'s Path** — ทางเดินเลียบคลอง 1.5–1.8 กม. ใต้ต้นเมเปิล/ซากุระ (ฟรี เด็กเดินสบาย)','ถ้าอยากลุยกว่านี้: รถไฟ Eizan ขึ้นเขา Kurama–Kibune (เดินเทรล ~90 นาที ระหว่างวัด2แห่ง)'] },
-  kinkakuji:      { wiki:'Kinkaku-ji', desc:'"วัดทอง" — เจดีย์ 3 ชั้น 2 ชั้นบนหุ้มแผ่นทองคำแท้ ตั้งกลางสระ Kyoko-chi (สร้าง 1397 · ซ่อมใหม่ 1955)', bullets:['ชั้นบนหุ้มทองคำรวม ~20 กก. — สะท้อนแสงบนสระสวยสุดช่วงบ่ายแดดเอียง','เดินรอบสวนตามเส้นทางกำหนด ~45–60 นาที · มีจุดโยนเหรียญกุ๊กกิ๊กขวานส้ม','ปลาย พ.ย. ต้นเมเปิลรอบสระเริ่มแดง — ถ่ายเจดีย์ทอง+ใบแดงในเฟรมเดียว','จุดถ่ายหลักคนเยอะ — เดินถึงจุดหลังสุดก่อนแล้วย้อนมาถ่ายตอนออก'] },
-  torokko:        { wiki:'Sagano Scenic Railway', desc:'รถไฟเรโทร "Sagano Romantic Railway" วิ่ง 7.3 กม. ~25 นาที เลียบแม่น้ำ Hozugawa ระหว่าง Torokko-Saga ↔ Torokko-Kameoka — ที่นั่งระบุทั้งหมด', bullets:['ตั๋วล่วงหน้าขายที่เว็บทางการ 1 เดือนก่อนวันนั่ง เวลา 0:00 — ช่วง koyo หมดเร็วมาก · เหลือ当日券หน้างาน: Torokko-Saga เริ่มขาย ~08:35 (มาต่อคิว ~07:50 — จันทร์วันธรรมดาโอกาสสูง)','ผู้ใหญ่ ¥880 · เด็ก 6–11 ขวบ ¥440 · เด็กก่อนวัยประถม (5 ขวบ) ฟรีบนตัก','คู่กับเรือ Hozugawa พอดี: นั่งขบวน ~09:30 ขาขึ้นไป Kameoka แล้วล่องเรือขาลงกลับ Arashiyama รอบ ~11:30','ถ้า当日券หมด: สลับเป็นป่าไผ่เช้า 08:50 แล้ว JR ตรงไป Kameoka ขึ้นเรือรอบเดิม'] },
-  osaka_castle:   { wiki:'Osaka Castle', desc:'ปราสาทสัญลักษณ์ของโอซาก้า สร้างปี 1583 โดยโชกุน Toyotomi Hideyoshi — หอคอย 8 ชั้นบนกำแพงหินยักษ์ กลางสวนใหญ่ตรงกลางเมือง', bullets:['ขึ้นหอคอยได้ถึงชั้น 8 — วิวเมืองโอซาก้า 360° (~¥600 · เด็ก ม.ต้นลงมาฟรี) ชั้นในเป็นพิพิธภัณฑ์ซามูไร (ในร่ม ฝนก็ได้)','รอบปราสาทคือจุดชมใบไม้แดงดังของโอซาก้า — Nishinomaru Garden มุมถ่ายปราสาทข้ามใบเมเปิลสวยสุด (~¥200)','กำแพงหินยักษ์ + ทางลาด Gokurakubashi โค้งยักษ์ — เด็กชอบวิ่งเล่น','Miraiza (อาคารโบราณหน้าปราสาท) มีร้านอาหาร/ของฝาก และให้เช่าชุดซามูไรถ่ายรูปกับปราสาท — จุดถ่ายรูปครอบครัวสุดฮิต','ที่จอดรถไฟใต้ดิน + สถานี Osakajokoen (JR) เดิน ~15 นาทีขึ้นเนิน — รถเข็นเด็กได้ (มีลิฟต์บางช่วง)'] },
-};
-
-/* สถานีรถไฟจริงที่ใช้ในทริป (ชื่อภาษาอังกฤษ) */
-const ST = {
-  namba:            { name:'Namba (Nankai/Metro)', lat:34.6668, lng:135.5016 },
-  namba_jr:         { name:'JR Namba', lat:34.6664, lng:135.4964 },
-  shin_imamiya:     { name:'Shin-Imamiya', lat:34.6568, lng:135.5023 },
-  sakai:            { name:'Sakai', lat:34.5734, lng:135.4783 },
-  kishiwada:        { name:'Kishiwada', lat:34.4622, lng:135.3862 },
-  izumisano:        { name:'Izumisano', lat:34.4107, lng:135.3396 },
-  rinku_town:       { name:'Rinku-Town', lat:34.3981, lng:135.2681 },
-  kix_stn:          { name:'Kansai-Airport Stn.', lat:34.4345, lng:135.2338 },
-  yotsubashi:       { name:'Yotsubashi', lat:34.6712, lng:135.4988 },
-  hommachi:         { name:'Hommachi', lat:34.6831, lng:135.4995 },
-  bentencho:        { name:'Bentencho', lat:34.6677, lng:135.4753 },
-  osakako_stn:      { name:'Osakako', lat:34.6592, lng:135.4322 },
-  nishikujo:        { name:'Nishikujo', lat:34.6697, lng:135.4620 },
-  universal_city:   { name:'Universal-City', lat:34.6668, lng:135.4285 },
-  sakurajima:       { name:'Sakurajima', lat:34.6732, lng:135.4387 },
-  yonemachi:        { name:'Yonemachi', lat:34.6819, lng:135.4459 },
-  taisho:           { name:'Taisho', lat:34.6734, lng:135.4785 },
-  ashiharacho:      { name:'Ashiharacho', lat:34.6668, lng:135.4852 },
-  umeda_stn:        { name:'Osaka/Umeda', lat:34.7024, lng:135.4959 },
-  juso:             { name:'Juso', lat:34.7168, lng:135.4787 },
-  ishibashi:        { name:'Ishibashi handai-mae', lat:34.8050, lng:135.4430 },
-  minoo_stn:        { name:'Minoo', lat:34.8737, lng:135.6162 },
-  tsuruhashi:       { name:'Tsuruhashi', lat:34.6687, lng:135.5212 },
-  kawachi_eiwa:     { name:'Kawachi-Eiwa', lat:34.6496, lng:135.5718 },
-  yamato_saidaiji:  { name:'Yamato-Saidaiji', lat:34.6946, lng:135.7825 },
-  kintetsu_nara:    { name:'Kintetsu-Nara', lat:34.6821, lng:135.8288 },
-  yamato_yagi:      { name:'Yamato-Yagi', lat:34.5620, lng:135.7630 },
-  kyoto_stn:        { name:'Kyoto', lat:34.9858, lng:135.7588 },
-  shin_osaka:       { name:'Shin-Osaka', lat:34.7335, lng:135.5001 },
-  takatsuki:        { name:'Takatsuki', lat:34.8495, lng:135.6232 },
-  umekoji:          { name:'Umekoji-Kyotonishi', lat:34.9873, lng:135.7528 },
-  saga_arashiyama:  { name:'Saga-Arashiyama', lat:35.0154, lng:135.6734 },
-  tofukuji_stn:     { name:'Tofukuji', lat:34.9776, lng:135.7714 },
-  kiyomizu_gojo:    { name:'Kiyomizu-Gojo', lat:34.9935, lng:135.7698 },
-  gion_shijo:       { name:'Gion-Shijo', lat:35.0034, lng:135.7715 },
-  sannomiya_stn:    { name:'Kobe-Sannomiya', lat:34.6946, lng:135.1950 },
-  fukushima_h:      { name:'Fukushima', lat:34.6900, lng:135.4880 },
-  amagasaki_h:      { name:'Amagasaki', lat:34.7168, lng:135.4160 },
-  minatogawa:       { name:'Minatogawa-Koen', lat:34.6796, lng:135.1843 },
-  keisan_kagaku:    { name:'Keisan-Kagaku-Center', lat:34.6679, lng:135.2240 },
-  kobe_stn:         { name:'Kobe', lat:34.6885, lng:135.1910 },
-  nara_jr:          { name:'Nara (JR)', lat:34.6847, lng:135.8158 },
-  katsura:          { name:'Katsura (Hankyu)', lat:35.0104, lng:135.6927 },
-  kawaramachi:      { name:'Kyoto-Kawaramachi (Hankyu)', lat:35.0029, lng:135.7685 },
-  demachiyanagi:    { name:'Demachiyanagi', lat:35.0270, lng:135.7715 },
-  kurama_stn:       { name:'Kurama', lat:35.1197, lng:135.7672 },
-  kibune_stn:       { name:'Kibuneguchi', lat:35.1250, lng:135.7683 },
-  /* สถานีตลอดสาย (ให้เส้นทางบนแผนที่วิ่งตามรถไฟจริง) */
-  imamiyaebisu:     { name:'Imamiya-Ebisu', lat:34.6538, lng:135.5005 },
-  tengachaya:       { name:'Tengachaya', lat:34.6495, lng:135.4972 },
-  kishinosato:      { name:'Kishinosato', lat:34.6425, lng:135.4960 },
-  hagoromo:         { name:'Hagoromo', lat:34.5772, lng:135.4452 },
-  tannowa:          { name:'Tannowa', lat:34.3675, lng:135.2905 },
-  misakikoen:       { name:'Misaki-Koen', lat:34.3330, lng:135.3180 },
-  yodoyabashi:      { name:'Yodoyabashi', lat:34.6903, lng:135.5018 },
-  shinsaibashi:     { name:'Shinsaibashi', lat:34.6718, lng:135.5012 },
-  nakatsu:          { name:'Nakatsu (Hankyu)', lat:34.7043, lng:135.4959 },
-  mukonosho:        { name:'Mukonosho', lat:34.7225, lng:135.4800 },
-  hotarugaike:      { name:'Hotarugaike', lat:34.7292, lng:135.4688 },
-  shibatsuji:       { name:'Shibatsuji', lat:34.8140, lng:135.4477 },
-  motosumiyoshi:    { name:'Motosumiyoshi', lat:34.8177, lng:135.4532 },
-  sakurai:          { name:'Sakurai (Hankyu)', lat:34.8311, lng:135.4651 },
-  yamanowaka:       { name:'Yamanowaka', lat:34.8464, lng:135.5155 },
-  tsukamoto:        { name:'Tsukamoto', lat:34.7398, lng:135.4885 },
-  higashi_yodogawa: { name:'Higashi-Yodogawa', lat:34.7536, lng:135.4967 },
-  ibaraki:          { name:'Ibaraki', lat:34.7736, lng:135.5167 },
-  settsu_tonda:     { name:'Settsu-Tonda', lat:34.8095, lng:135.5687 },
-  yamashina:        { name:'Yamashina', lat:35.0263, lng:135.8062 },
-  hanazono:         { name:'Hanazono', lat:35.0120, lng:135.7258 },
-  enmachi:          { name:'Enmachi', lat:35.0140, lng:135.7455 },
-  uzumasa:          { name:'Uzumasa', lat:35.0196, lng:135.7088 },
-  imamiya:          { name:'Imamiya (JR)', lat:34.6550, lng:135.4930 },
-  tennoji:          { name:'Tennoji', lat:34.6463, lng:135.5133 },
-  tamatsukuri:      { name:'Tamatsukuri', lat:34.6711, lng:135.5231 },
-  ajikawaguchi:     { name:'Ajikawaguchi', lat:34.6859, lng:135.4522 },
-  nippombashi:      { name:'Nippombashi (Kintetsu)', lat:34.6657, lng:135.5117 },
-  uehommachi:       { name:'Uehommachi (Kintetsu)', lat:34.6613, lng:135.5227 },
-  kujo:             { name:'Kujo (Kintetsu)', lat:34.9802, lng:135.7524 },
-  takeda:           { name:'Takeda (Kintetsu)', lat:34.9677, lng:135.7627 },
-  fushimi:          { name:'Fushimi (Kintetsu)', lat:34.9442, lng:135.7660 },
-  momoyama_goryomae:{ name:'Momoyama-Goryomae', lat:34.9257, lng:135.7695 },
-  mukaijima:        { name:'Mukaijima', lat:34.8996, lng:135.7856 },
-  shin_omiya:       { name:'Shin-Omiya', lat:34.6863, lng:135.8077 },
-  inari:            { name:'Inari (Fushimi-Inari)', lat:34.9673, lng:135.7727 },
-  shichijo:         { name:'Shichijo (Keihan)', lat:34.9863, lng:135.7717 },
-  sanjo:            { name:'Sanjo (Keihan)', lat:35.0087, lng:135.7717 },
-  karasuma:         { name:'Karasuma (Hankyu)', lat:35.0026, lng:135.7593 },
-  omiya:            { name:'Omiya (Hankyu)', lat:35.0030, lng:135.7457 },
-  dome_mae:         { name:'Dome-mae (Hanshin)', lat:34.6673, lng:135.4889 },
-  yodogawa_h:       { name:'Yodogawa (Hanshin)', lat:34.7096, lng:135.4700 },
-  deyashiki:        { name:'Deyashiki (Hanshin)', lat:34.6990, lng:135.4418 },
-  kasuganomichi:    { name:'Kasuganomichi (Hanshin)', lat:34.6909, lng:135.2101 },
-  iwaya:            { name:'Iwaya (Hanshin)', lat:34.6914, lng:135.2005 },
-  motomachi:        { name:'Motomachi (JR)', lat:34.6865, lng:135.1951 },
-  hanadokeimae:     { name:'Hanadokeimae', lat:34.6906, lng:135.1894 },
-  boeki_center:     { name:'Boeki-Center', lat:34.6855, lng:135.1848 },
-  port_terminal:    { name:'Port-Terminal', lat:34.6785, lng:135.1820 },
-  nakafuto:         { name:'Nakafuto', lat:34.6722, lng:135.1900 },
-  minatojima:       { name:'Minatojima', lat:34.6695, lng:135.2080 },
-  hineno:           { name:'Hineno', lat:34.3697, lng:135.3345 },
-  kumeda:           { name:'Kumeda', lat:34.4024, lng:135.3681 },
-  osakajokoen:      { name:'Osakajokoen', lat:34.6865, lng:135.5192 },
-  morinomiya:       { name:'Morinomiya', lat:34.6873, lng:135.5202 },
-  temma:            { name:'Temma', lat:34.7060, lng:135.5148 },
-  sakuranomiya:     { name:'Sakuranomiya', lat:34.7093, lng:135.5213 },
-};
-/* เส้นทางรถไฟจริงตลอดสาย (kix → namba): วิ่งตามสถานี Nankai Main Line */
-const KIX2NAMBA = ['rinku_town','izumisano','misakikoen','tannowa','kishiwada','hagoromo','sakai','kishinosato','tengachaya','imamiyaebisu','shin_imamiya','namba'];
-
-/* ระยะเวลา/ค่ารถระหว่างจุดที่รู้จักจริง (per adult, เด็ก 5 ขวบฟรี) · via = เส้นทางผ่านสถานีจริง */
-const LINKS = {
-  'kuromon|dotonbori':        { mode:'walk',  min:10 },
-  'kuromon|osakako':          { mode:'train', min:30, fare:260, via:['namba','yotsubashi','shinsaibashi','hommachi','bentencho','osakako_stn'], lineName:'Metro Midosuji + Chuo Line' },
-  'osakako|legoland':         { mode:'walk',  min:5 },
-  'osakako|ferris':           { mode:'walk',  min:5 },
-  'osakako|dotonbori':        { mode:'train', min:25, fare:260, via:['osakako_stn','bentencho','hommachi','shinsaibashi','yotsubashi','namba'], lineName:'Metro Chuo + Midosuji Line' },
-  'arashiyama|togetsukyo':    { mode:'walk',  min:8 },
-  'togetsukyo|monkey':        { mode:'walk',  min:15 },
-  'ginkakuji|yakatabune':     { mode:'train', min:75, fare:470, via:['kyoto_stn','umekoji','hanazono','enmachi','uzumasa','saga_arashiyama'], lineName:'บัส 17/100 กลับ Kyoto Stn + JR Sagano Line + เดิน ~10 นาที' },
-  'tofukuji|kiyomizu':        { mode:'train', min:20, fare:220, via:['tofukuji_stn','shichijo','kiyomizu_gojo'], lineName:'Keihan Main Line' },
-  'kiyomizu|gion':            { mode:'walk',  min:15 },
-  'steakland|animal_kingdom': { mode:'train', min:25, fare:210, via:['sannomiya_stn','hanadokeimae','boeki_center','port_terminal','nakafuto','minatojima','keisan_kagaku'], lineName:'Port Liner' },
-  'animal_kingdom|harborland':{ mode:'train', min:20, fare:220, via:['keisan_kagaku','minatojima','nakafuto','port_terminal','boeki_center','hanadokeimae','sannomiya_stn','motomachi','kobe_stn'], lineName:'Port Liner + JR Kobe Line' },
-  'harborland|umeda':         { mode:'train', min:35, fare:330, via:['kobe_stn','motomachi','sannomiya_stn','amagasaki_h','fukushima_h','umeda_stn'], lineName:'JR Kobe Line' },
-  'legoland|dotonbori':       { mode:'train', min:30, fare:260, via:['osakako_stn','bentencho','hommachi','shinsaibashi','yotsubashi','namba'], lineName:'เดิน 5 นาที + Metro Chuo + Midosuji' },
-  'ferris|dotonbori':         { mode:'train', min:30, fare:260, via:['osakako_stn','bentencho','hommachi','shinsaibashi','yotsubashi','namba'], lineName:'เดิน 5 นาที + Metro Chuo + Midosuji' },
-  'nara_park|todaiji':        { mode:'walk',  min:15 },
-  'kuromon|nara_park':        { mode:'train', min:50, fare:560, via:['namba','nippombashi','tsuruhashi','uehommachi','kawachi_eiwa','yamato_saidaiji','shin_omiya','kintetsu_nara'], lineName:'เดิน 10 นาที + Kintetsu Nara Line' },
-  'todaiji|nakatanidou':      { mode:'walk',  min:15 },
-  'minoo_station|minoo_falls':{ mode:'walk',  min:45, note:'เทรลใต้ใบเมเปิล' },
-  'minoo_falls|umeda':        { mode:'train', min:40, fare:380, via:['minoo_stn','yamanowaka','sakurai','motosumiyoshi','shibatsuji','ishibashi','hotarugaike','mukonosho','juso','nakatsu','umeda_stn'], lineName:'Hankyu Minoo + Takarazuka Line' },
-  'minoo_falls|rinku':        { mode:'train', min:95, fare:1330, via:['minoo_stn','yamanowaka','sakurai','motosumiyoshi','shibatsuji','ishibashi','hotarugaike','mukonosho','juso','nakatsu','umeda_stn','hommachi','shinsaibashi','yotsubashi','namba','tengachaya','kishinosato','sakai','hagoromo','kishiwada','tannowa','misakikoen','izumisano','rinku_town'], lineName:'Hankyu + Metro + Nankai (เปลี่ยนขบวนที่ Namba)' },
-  'umeda|dotonbori':          { mode:'train', min:12, fare:190, via:['umeda_stn','yodoyabashi','hommachi','shinsaibashi','yotsubashi','namba'], lineName:'Metro Midosuji Line' },
-  'osaka_castle|miraiza':     { mode:'walk',  min:6 },
-  'miraiza|nishinomaru':      { mode:'walk',  min:8 },
-  'osaka_castle|umeda':       { mode:'train', min:25, fare:160, via:['osakajokoen','sakuranomiya','temma','umeda_stn'], lineName:'เดินลงเนิน 15 นาที + JR Osaka Loop' },
-  'nishinomaru|umeda':        { mode:'train', min:25, fare:160, via:['osakajokoen','sakuranomiya','temma','umeda_stn'], lineName:'เดินลงเนิน 15 นาที + JR Osaka Loop' },
-  'rinku|kix':                { mode:'train', min:10, fare:180, via:['rinku_town','kix_stn'], lineName:'Nankai Airport Line' },
-  'usj|hotel_kyoto':          { mode:'train', min:85, fare:1110, via:['universal_city','sakurajima','yonemachi','ajikawaguchi','nishikujo','fukushima_h','umeda_stn','tsukamoto','shin_osaka','higashi_yodogawa','ibaraki','settsu_tonda','takatsuki','yamashina','kyoto_stn'], lineName:'JR Sakurajima + Osaka Loop + Kyoto Line' },
-  'usj|hotel_bay':            { mode:'walk',  min:10 },
-  'usj|hotel_namba':          { mode:'train', min:35, fare:570, via:['universal_city','sakurajima','yonemachi','ajikawaguchi','nishikujo','bentencho','hommachi','shinsaibashi','yotsubashi','namba'], lineName:'JR Sakurajima + Loop + Metro Chuo + Midosuji' },
-  'ginkakuji|hotel_bay':      { mode:'train', min:90, fare:820, via:['kyoto_stn','takatsuki','settsu_tonda','ibaraki','higashi_yodogawa','shin_osaka','umeda_stn','fukushima_h','nishikujo','ajikawaguchi','yonemachi','sakurajima','universal_city'], lineName:'City Bus + JR Kyoto + Sakurajima Line' },
-  'osakako|hotel_namba':      { mode:'train', min:25, fare:260, via:['osakako_stn','bentencho','hommachi','shinsaibashi','yotsubashi','namba'], lineName:'Metro Chuo + Midosuji Line' },
-  'legoland|hotel_namba':     { mode:'train', min:30, fare:260, via:['osakako_stn','bentencho','hommachi','shinsaibashi','yotsubashi','namba'], lineName:'เดิน 5 นาที + Metro Chuo + Midosuji' },
-  'ferris|hotel_namba':       { mode:'train', min:30, fare:260, via:['osakako_stn','bentencho','hommachi','shinsaibashi','yotsubashi','namba'], lineName:'เดิน 5 นาที + Metro Chuo + Midosuji' },
-  'ginkakuji|minoo_station':  { mode:'train', min:70, fare:630, via:['kawaramachi','karasuma','omiya','katsura','ishibashi','shibatsuji','motosumiyoshi','sakurai','yamanowaka','minoo_stn'], lineName:'City Bus + Hankyu Kyoto + Minoo Line' },
-  'ginkakuji|hotel_namba':    { mode:'train', min:75, fare:820, via:['kyoto_stn','takatsuki','settsu_tonda','ibaraki','higashi_yodogawa','shin_osaka','umeda_stn','yodoyabashi','hommachi','shinsaibashi','yotsubashi','namba'], lineName:'City Bus + JR Kyoto Line + Metro Midosuji' },
-};
-
-/* เวลา/ค่ารถจากย่านที่พัก (namba) ไปจุดไกล — เด็ก 5 ขวบฟรีทั้งหมด · via = เส้นทางรถไฟจริงตามสถานี (จากโรงแรม → จุดหมาย) */
-const HUB_NAMBA = {
-  usj:            { mode:'train', min:40, fare:320, via:['namba_jr','imamiya','ashiharacho','taisho','bentencho','nishikujo','ajikawaguchi','yonemachi','sakurajima','universal_city'], lineName:'JR Loop + Sakurajima (Yumesaki) Line' },
-  osakako:        { mode:'train', min:25, fare:260, via:['namba','yotsubashi','shinsaibashi','hommachi','bentencho','osakako_stn'], lineName:'Metro Midosuji + Chuo Line' },
-  arashiyama:     { mode:'train', min:75, fare:820, via:['namba_jr','imamiya','nishikujo','fukushima_h','umeda_stn','tsukamoto','shin_osaka','higashi_yodogawa','ibaraki','settsu_tonda','takatsuki','yamashina','kyoto_stn','umekoji','hanazono','enmachi','uzumasa','saga_arashiyama'], lineName:'JR Kyoto + Sagano Line' },
-  tofukuji:       { mode:'train', min:60, fare:800, via:['namba','nippombashi','tsuruhashi','uehommachi','kawachi_eiwa','yamato_yagi','mukaijima','takeda','fushimi','momoyama_goryomae','kujo','kyoto_stn','tofukuji_stn'], lineName:'Kintetsu Nara/Kyoto + JR Nara Line' },
-  kiyomizu:       { mode:'train', min:65, fare:820, via:['namba','nippombashi','tsuruhashi','uehommachi','kawachi_eiwa','yamato_yagi','mukaijima','takeda','fushimi','momoyama_goryomae','kujo','kyoto_stn','tofukuji_stn','shichijo','kiyomizu_gojo'], lineName:'Kintetsu + Keihan Main Line' },
-  gion:           { mode:'train', min:60, fare:800, via:['namba','nippombashi','tsuruhashi','uehommachi','kawachi_eiwa','yamato_yagi','mukaijima','takeda','fushimi','momoyama_goryomae','kujo','kyoto_stn','tofukuji_stn','shichijo','gion_shijo'], lineName:'Kintetsu + Keihan Main Line' },
-  steakland:      { mode:'train', min:45, fare:420, via:['namba','dome_mae','fukushima_h','yodogawa_h','deyashiki','amagasaki_h','kasuganomichi','iwaya','sannomiya_stn'], lineName:'Hanshin Namba Line' },
-  animal_kingdom: { mode:'train', min:60, fare:630, via:['namba','dome_mae','fukushima_h','yodogawa_h','deyashiki','amagasaki_h','sannomiya_stn','hanadokeimae','boeki_center','port_terminal','nakafuto','minatojima','keisan_kagaku'], lineName:'Hanshin + Port Liner' },
-  harborland:     { mode:'train', min:55, fare:520, via:['namba','dome_mae','fukushima_h','yodogawa_h','deyashiki','amagasaki_h','sannomiya_stn','motomachi','kobe_stn'], lineName:'Hanshin + JR Kobe Line' },
-  nara_park:      { mode:'train', min:40, fare:560, via:['namba','nippombashi','tsuruhashi','uehommachi','kawachi_eiwa','yamato_saidaiji','shin_omiya','kintetsu_nara'], lineName:'Kintetsu Nara Line' },
-  nakatanidou:    { mode:'train', min:40, fare:560, via:['namba','nippombashi','tsuruhashi','uehommachi','kawachi_eiwa','yamato_saidaiji','shin_omiya','kintetsu_nara'], lineName:'Kintetsu Nara Line' },
-  minoo_station:  { mode:'train', min:45, fare:380, via:['namba','yotsubashi','shinsaibashi','hommachi','yodoyabashi','umeda_stn','nakatsu','juso','mukonosho','hotarugaike','ishibashi','shibatsuji','motosumiyoshi','sakurai','yamanowaka','minoo_stn'], lineName:'Metro Midosuji + Hankyu Minoo Line' },
-  minoo_falls:    { mode:'train', min:55, fare:570, via:['namba','hommachi','yodoyabashi','umeda_stn','nakatsu','juso','mukonosho','hotarugaike','ishibashi','shibatsuji','motosumiyoshi','sakurai','yamanowaka','minoo_stn'], lineName:'Metro Midosuji + Hankyu Minoo Line' },
-  umeda:          { mode:'train', min:15, fare:190, via:['namba','yotsubashi','shinsaibashi','hommachi','yodoyabashi','umeda_stn'], lineName:'Metro Midosuji Line' },
-  kix:            { mode:'train', min:40, fare:1490, via:['namba','shin_imamiya','imamiyaebisu','tengachaya','kishinosato','sakai','hagoromo','kishiwada','tannowa','misakikoen','izumisano','rinku_town','kix_stn'], lineName:'Nankai Rapi:t', special:'Rapi:t มีที่นั่งกำหนด' },
-  rinku:          { mode:'train', min:50, fare:1600, via:['namba','shin_imamiya','imamiyaebisu','tengachaya','kishinosato','sakai','hagoromo','kishiwada','tannowa','misakikoen','izumisano','rinku_town'], lineName:'Nankai Rapi:t', special:'Rapi:t + JR' },
-  dotonbori:      { mode:'walk',  min:8 },
-  kuromon:        { mode:'walk',  min:10 },
-  legoland:       { mode:'train', min:25, fare:260, via:['namba','yotsubashi','shinsaibashi','hommachi','bentencho','osakako_stn'], lineName:'Metro Midosuji + Chuo Line' },
-  ferris:         { mode:'train', min:25, fare:260, via:['namba','yotsubashi','shinsaibashi','hommachi','bentencho','osakako_stn'], lineName:'Metro Midosuji + Chuo Line' },
-  osaka_castle:   { mode:'train', min:30, fare:180, via:['namba_jr','imamiya','shin_imamiya','tennoji','tsuruhashi','tamatsukuri','morinomiya','osakajokoen'], lineName:'JR Osaka Loop (+ เดิน 15 นาทีขึ้นเนินปราสาท)' },
-};
-
-/* เวลา/ค่ารถจากโรงแรมโซน Kyoto (Arashiyama) · via = เส้นทางรถไฟจริงตามสถานี (จากโรงแรม → จุดหมาย) */
-const HUB_KYOTO = {
-  arashiyama:     { mode:'walk',  min:12 },
-  togetsukyo:     { mode:'walk',  min:15 },
-  monkey:         { mode:'walk',  min:20 },
-  yakatabune:     { mode:'walk',  min:14 },
-  ginkakuji:      { mode:'train', min:65, fare:470, via:['saga_arashiyama','umekoji','kyoto_stn'], lineName:'JR Sagano → Kyoto Stn + City Bus 17/100 (หรือแท็กซี่ตรง ~40 นาที ~¥5,500)' },
-  kinkakuji:      { mode:'train', min:70, fare:470, via:['saga_arashiyama','umekoji','kyoto_stn'], lineName:'JR Sagano → Kyoto Stn + City Bus 205/101 (หรือแท็กซี่ตรง ~35 นาที ~¥6,000)' },
-  torokko:        { mode:'walk',  min:10 },
-  tofukuji:       { mode:'train', min:20, fare:150, via:['saga_arashiyama','umekoji','kyoto_stn','tofukuji_stn'], lineName:'JR Sagano + Nara Line' },
-  kiyomizu:       { mode:'train', min:30, fare:330, via:['saga_arashiyama','umekoji','kyoto_stn','tofukuji_stn','shichijo','kiyomizu_gojo'], lineName:'JR + Keihan Main Line' },
-  gion:           { mode:'train', min:25, fare:330, via:['saga_arashiyama','umekoji','kyoto_stn','tofukuji_stn','shichijo','gion_shijo'], lineName:'JR + Keihan Main Line' },
-  usj:            { mode:'train', min:85, fare:1110, via:['saga_arashiyama','umekoji','kyoto_stn','yamashina','takatsuki','settsu_tonda','ibaraki','higashi_yodogawa','shin_osaka','umeda_stn','fukushima_h','nishikujo','ajikawaguchi','yonemachi','sakurajima','universal_city'], lineName:'JR Sagano + Kyoto + Sakurajima Line' },
-  osakako:        { mode:'train', min:80, fare:1090, via:['saga_arashiyama','umekoji','kyoto_stn','yamashina','takatsuki','settsu_tonda','ibaraki','higashi_yodogawa','shin_osaka','umeda_stn','yodoyabashi','hommachi','bentencho','osakako_stn'], lineName:'JR + Metro Midosuji + Chuo' },
-  steakland:      { mode:'train', min:55, fare:1110, via:['saga_arashiyama','umekoji','kyoto_stn','yamashina','takatsuki','settsu_tonda','ibaraki','higashi_yodogawa','shin_osaka','umeda_stn','fukushima_h','amagasaki_h','kasuganomichi','iwaya','sannomiya_stn'], lineName:'JR Kyoto + Kobe Line' },
-  animal_kingdom: { mode:'train', min:70, fare:1320, via:['saga_arashiyama','umekoji','kyoto_stn','yamashina','takatsuki','settsu_tonda','ibaraki','higashi_yodogawa','shin_osaka','umeda_stn','fukushima_h','amagasaki_h','sannomiya_stn','hanadokeimae','boeki_center','port_terminal','nakafuto','minatojima','keisan_kagaku'], lineName:'JR + Port Liner' },
-  harborland:     { mode:'train', min:65, fare:1230, via:['saga_arashiyama','umekoji','kyoto_stn','yamashina','takatsuki','settsu_tonda','ibaraki','higashi_yodogawa','shin_osaka','umeda_stn','fukushima_h','amagasaki_h','sannomiya_stn','motomachi','kobe_stn'], lineName:'JR Kyoto + Kobe Line' },
-  nara_park:      { mode:'train', min:50, fare:720, via:['saga_arashiyama','umekoji','kyoto_stn','tofukuji_stn','inari','nara_jr'], lineName:'JR Sagano + Nara Line' },
-  nakatanidou:    { mode:'train', min:50, fare:720, via:['saga_arashiyama','umekoji','kyoto_stn','tofukuji_stn','inari','nara_jr'], lineName:'JR Sagano + Nara Line' },
-  minoo_station:  { mode:'train', min:60, fare:870, via:['katsura','ishibashi','shibatsuji','motosumiyoshi','sakurai','yamanowaka','minoo_stn'], lineName:'Randen ไป Katsura + Hankyu Minoo Line' },
-  umeda:          { mode:'train', min:30, fare:580, via:['saga_arashiyama','umekoji','kyoto_stn','yamashina','takatsuki','settsu_tonda','ibaraki','higashi_yodogawa','shin_osaka','umeda_stn'], lineName:'JR Sagano + Kyoto Line' },
-  kix:            { mode:'train', min:95, fare:3880, via:['saga_arashiyama','umekoji','kyoto_stn','yamashina','takatsuki','settsu_tonda','ibaraki','higashi_yodogawa','shin_osaka','umeda_stn','fukushima_h','nishikujo','imamiya','shin_imamiya','tennoji','kumeda','hineno','izumisano','rinku_town','kix_stn'], lineName:'JR Haruka → Kyoto Stn ต่อ Sagano Line (+เดิน 10 นาที/แท็กซี่ 5 นาที)' },
-  rinku:          { mode:'train', min:90, fare:3750, via:['saga_arashiyama','umekoji','kyoto_stn','yamashina','takatsuki','settsu_tonda','ibaraki','higashi_yodogawa','shin_osaka','umeda_stn','fukushima_h','nishikujo','imamiya','shin_imamiya','tennoji','kumeda','hineno','izumisano','rinku_town'], lineName:'JR Haruka + Sagano Line' },
-  dotonbori:      { mode:'train', min:60, fare:780, via:['saga_arashiyama','umekoji','kyoto_stn','yamashina','takatsuki','settsu_tonda','ibaraki','higashi_yodogawa','shin_osaka','umeda_stn','yodoyabashi','hommachi','shinsaibashi','yotsubashi','namba'], lineName:'JR + Metro Midosuji' },
-  kuromon:        { mode:'train', min:60, fare:780, via:['saga_arashiyama','umekoji','kyoto_stn','yamashina','takatsuki','settsu_tonda','ibaraki','higashi_yodogawa','shin_osaka','umeda_stn','yodoyabashi','hommachi','shinsaibashi','yotsubashi','namba'], lineName:'JR + Metro Midosuji' },
-  osaka_castle:   { mode:'train', min:75, fare:1090, via:['saga_arashiyama','umekoji','kyoto_stn','yamashina','takatsuki','settsu_tonda','ibaraki','higashi_yodogawa','shin_osaka','umeda_stn','temma','sakuranomiya','morinomiya','osakajokoen'], lineName:'JR Sagano + Kyoto + Osaka Loop' },
-};
-
-/* เวลา/ค่ารถจาก Hotel Vischio (ติด Kyoto Station — ใช้เฉพาะโรงแรม id 'vischio') */
-const HUB_KYOTO_STN = {
-  arashiyama:     { mode:'train', min:20, fare:240, via:['kyoto_stn','umekoji','hanazono','enmachi','uzumasa','saga_arashiyama'], lineName:'JR Sagano Line (+ เดิน ~10 นาที)' },
-  togetsukyo:     { mode:'train', min:28, fare:240, via:['kyoto_stn','umekoji','hanazono','enmachi','uzumasa','saga_arashiyama'], lineName:'JR Sagano Line (+ เดิน)' },
-  monkey:         { mode:'train', min:35, fare:240, via:['kyoto_stn','umekoji','hanazono','enmachi','uzumasa','saga_arashiyama'], lineName:'JR Sagano Line (+ เดิน 18 นาที)' },
-  yakatabune:     { mode:'train', min:40, fare:240, via:['kyoto_stn','umekoji','hanazono','enmachi','uzumasa','saga_arashiyama'], lineName:'JR Sagano Line (+ เดิน ~10 นาที)' },
-  ginkakuji:      { mode:'bus',   min:40, fare:230, lineName:'City Bus 17/100 หน้าสถานี (ชานชาลา D2)' },
-  kinkakuji:      { mode:'bus',   min:40, fare:230, lineName:'City Bus 205/101 จากสถานี ~40–45 นาที (แท็กซี่ ~25 นาที ~¥2,500)' },
-  torokko:        { mode:'train', min:25, fare:240, via:['kyoto_stn','umekoji','hanazono','enmachi','uzumasa','saga_arashiyama'], lineName:'JR Sagano Line (+ เดิน 5 นาทีถึง Torokko-Saga · ต่อคิว当日券 ~07:50 ก่อนเคาน์เตอร์เปิด ~08:35)' },
-  tofukuji:       { mode:'train', min:10, fare:150, via:['kyoto_stn','tofukuji_stn'], lineName:'JR Nara Line' },
-  kiyomizu:       { mode:'train', min:25, fare:330, via:['kyoto_stn','tofukuji_stn','shichijo','kiyomizu_gojo'], lineName:'JR + Keihan Main Line' },
-  gion:           { mode:'train', min:20, fare:330, via:['kyoto_stn','tofukuji_stn','shichijo','gion_shijo'], lineName:'JR + Keihan Main Line' },
-  usj:            { mode:'train', min:60, fare:800, via:['kyoto_stn','yamashina','takatsuki','settsu_tonda','ibaraki','higashi_yodogawa','shin_osaka','umeda_stn','fukushima_h','nishikujo','ajikawaguchi','yonemachi','sakurajima','universal_city'], lineName:'JR Kyoto + Sakurajima Line' },
-  umeda:          { mode:'train', min:30, fare:580, via:['kyoto_stn','yamashina','takatsuki','settsu_tonda','ibaraki','higashi_yodogawa','shin_osaka','umeda_stn'], lineName:'JR Kyoto Line (Special Rapid)' },
-  osakako:        { mode:'train', min:50, fare:750, via:['kyoto_stn','yamashina','takatsuki','settsu_tonda','ibaraki','higashi_yodogawa','shin_osaka','umeda_stn','yodoyabashi','hommachi','bentencho','osakako_stn'], lineName:'JR + Metro Midosuji + Chuo' },
-  nara_park:      { mode:'train', min:45, fare:720, via:['kyoto_stn','tofukuji_stn','inari','nara_jr'], lineName:'JR Nara Line' },
-  minoo_station:  { mode:'train', min:70, fare:870, via:['kyoto_stn','yamashina','takatsuki','settsu_tonda','ibaraki','higashi_yodogawa','shin_osaka','umeda_stn','nakatsu','juso','mukonosho','hotarugaike','ishibashi','shibatsuji','motosumiyoshi','sakurai','yamanowaka','minoo_stn'], lineName:'JR Kyoto + Hankyu Minoo Line' },
-  dotonbori:      { mode:'train', min:40, fare:770, via:['kyoto_stn','yamashina','takatsuki','settsu_tonda','ibaraki','higashi_yodogawa','shin_osaka','umeda_stn','yodoyabashi','hommachi','shinsaibashi','yotsubashi','namba'], lineName:'JR + Metro Midosuji' },
-  kuromon:        { mode:'train', min:40, fare:770, via:['kyoto_stn','yamashina','takatsuki','settsu_tonda','ibaraki','higashi_yodogawa','shin_osaka','umeda_stn','yodoyabashi','hommachi','shinsaibashi','yotsubashi','namba'], lineName:'JR + Metro Midosuji' },
-  kix:            { mode:'train', min:80, fare:3640, via:['kyoto_stn','yamashina','takatsuki','settsu_tonda','ibaraki','higashi_yodogawa','shin_osaka','umeda_stn','fukushima_h','nishikujo','imamiya','shin_imamiya','tennoji','kumeda','hineno','izumisano','rinku_town','kix_stn'], lineName:'JR Haruka (ลง Kyoto Stn เดิน 2 นาทีถึงโรงแรม)' },
-};
-
-/* เวลา/ค่ารถจากโรงแรมโซน Universal City (JR Universal-City) · via = เส้นทางรถไฟจริงตามสถานี (จากโรงแรม → จุดหมาย) */
-const HUB_BAY = {
-  usj:            { mode:'walk',  min:8,  note:'เดินผ่าน Universal CityWalk ถึงประตู USJ' },
-  osakako:        { mode:'train', min:25, fare:400, via:['universal_city','sakurajima','yonemachi','ajikawaguchi','nishikujo','bentencho','osakako_stn'], lineName:'JR Sakurajima + Loop + Metro Chuo' },
-  legoland:       { mode:'train', min:28, fare:400, via:['universal_city','sakurajima','yonemachi','ajikawaguchi','nishikujo','bentencho','osakako_stn'], lineName:'JR + Loop + Metro Chuo (+ เดิน 5 นาที)' },
-  ferris:         { mode:'train', min:28, fare:400, via:['universal_city','sakurajima','yonemachi','ajikawaguchi','nishikujo','bentencho','osakako_stn'], lineName:'JR + Loop + Metro Chuo (+ เดิน 5 นาที)' },
-  dotonbori:      { mode:'train', min:35, fare:570, via:['universal_city','sakurajima','yonemachi','ajikawaguchi','nishikujo','bentencho','hommachi','shinsaibashi','yotsubashi','namba'], lineName:'JR + Loop + Metro Chuo + Midosuji' },
-  kuromon:        { mode:'train', min:40, fare:570, via:['universal_city','sakurajima','yonemachi','ajikawaguchi','nishikujo','bentencho','hommachi','shinsaibashi','yotsubashi','namba'], lineName:'JR + Loop + Metro Chuo + Midosuji (+ เดิน)' },
-  umeda:          { mode:'train', min:20, fare:220, via:['universal_city','sakurajima','yonemachi','ajikawaguchi','nishikujo','fukushima_h','umeda_stn'], lineName:'JR Sakurajima + Osaka Loop' },
-  steakland:      { mode:'train', min:50, fare:630, via:['universal_city','sakurajima','yonemachi','ajikawaguchi','nishikujo','fukushima_h','umeda_stn','amagasaki_h','kasuganomichi','iwaya','sannomiya_stn'], lineName:'JR Sakurajima + Kobe Line' },
-  animal_kingdom: { mode:'train', min:65, fare:840, via:['universal_city','sakurajima','yonemachi','ajikawaguchi','nishikujo','fukushima_h','umeda_stn','amagasaki_h','sannomiya_stn','hanadokeimae','boeki_center','port_terminal','nakafuto','minatojima','keisan_kagaku'], lineName:'JR + Port Liner' },
-  harborland:     { mode:'train', min:60, fare:730, via:['universal_city','sakurajima','yonemachi','ajikawaguchi','nishikujo','fukushima_h','umeda_stn','amagasaki_h','sannomiya_stn','motomachi','kobe_stn'], lineName:'JR Sakurajima + Kobe Line' },
-  nara_park:      { mode:'train', min:65, fare:920, via:['universal_city','sakurajima','yonemachi','ajikawaguchi','nishikujo','bentencho','taisho','imamiya','shin_imamiya','namba','nippombashi','tsuruhashi','uehommachi','kawachi_eiwa','yamato_saidaiji','shin_omiya','kintetsu_nara'], lineName:'JR + Kintetsu Nara Line' },
-  nakatanidou:    { mode:'train', min:65, fare:920, via:['universal_city','sakurajima','yonemachi','ajikawaguchi','nishikujo','bentencho','taisho','imamiya','shin_imamiya','namba','nippombashi','tsuruhashi','uehommachi','kawachi_eiwa','yamato_saidaiji','shin_omiya','kintetsu_nara'], lineName:'JR + Kintetsu Nara Line' },
-  minoo_station:  { mode:'train', min:55, fare:570, via:['universal_city','sakurajima','yonemachi','ajikawaguchi','nishikujo','fukushima_h','umeda_stn','nakatsu','juso','mukonosho','hotarugaike','ishibashi','shibatsuji','motosumiyoshi','sakurai','yamanowaka','minoo_stn'], lineName:'JR + Hankyu Minoo Line' },
-  minoo_falls:    { mode:'train', min:65, fare:760, via:['universal_city','sakurajima','yonemachi','ajikawaguchi','nishikujo','fukushima_h','umeda_stn','nakatsu','juso','mukonosho','hotarugaike','ishibashi','shibatsuji','motosumiyoshi','sakurai','yamanowaka','minoo_stn'], lineName:'JR + Hankyu Minoo Line (+ เดินเทรล)' },
-  arashiyama:     { mode:'train', min:95, fare:1340, via:['universal_city','sakurajima','yonemachi','ajikawaguchi','nishikujo','fukushima_h','umeda_stn','tsukamoto','shin_osaka','higashi_yodogawa','ibaraki','settsu_tonda','takatsuki','yamashina','kyoto_stn','umekoji','hanazono','enmachi','uzumasa','saga_arashiyama'], lineName:'JR Sakurajima + Kyoto + Sagano Line' },
-  tofukuji:       { mode:'train', min:85, fare:1260, via:['universal_city','sakurajima','yonemachi','ajikawaguchi','nishikujo','fukushima_h','umeda_stn','tsukamoto','shin_osaka','higashi_yodogawa','ibaraki','settsu_tonda','takatsuki','yamashina','kyoto_stn','tofukuji_stn'], lineName:'JR Sakurajima + Kyoto + Nara Line' },
-  kiyomizu:       { mode:'train', min:90, fare:1280, via:['universal_city','sakurajima','yonemachi','ajikawaguchi','nishikujo','fukushima_h','umeda_stn','tsukamoto','shin_osaka','higashi_yodogawa','ibaraki','settsu_tonda','takatsuki','yamashina','kyoto_stn','tofukuji_stn','shichijo','kiyomizu_gojo'], lineName:'JR + Keihan Main Line' },
-  gion:           { mode:'train', min:85, fare:1260, via:['universal_city','sakurajima','yonemachi','ajikawaguchi','nishikujo','fukushima_h','umeda_stn','tsukamoto','shin_osaka','higashi_yodogawa','ibaraki','settsu_tonda','takatsuki','yamashina','kyoto_stn','tofukuji_stn','shichijo','gion_shijo'], lineName:'JR + Keihan Main Line' },
-  ginkakuji:      { mode:'train', min:100, fare:1490, via:['universal_city','sakurajima','yonemachi','ajikawaguchi','nishikujo','fukushima_h','umeda_stn','tsukamoto','shin_osaka','higashi_yodogawa','ibaraki','settsu_tonda','takatsuki','yamashina','kyoto_stn'], lineName:'JR + City Bus' },
-  kix:            { mode:'train', min:80, fare:1900, via:['universal_city','sakurajima','yonemachi','ajikawaguchi','nishikujo','bentencho','taisho','imamiya','shin_imamiya','tennoji','kumeda','hineno','izumisano','rinku_town','kix_stn'], lineName:'JR Loop + Kansai-Airport Rapid' },
-  rinku:          { mode:'train', min:75, fare:1790, via:['universal_city','sakurajima','yonemachi','ajikawaguchi','nishikujo','bentencho','taisho','imamiya','shin_imamiya','tennoji','kumeda','hineno','izumisano','rinku_town'], lineName:'JR Loop + Kansai-Airport Rapid' },
-  osaka_castle:   { mode:'train', min:40, fare:360, via:['universal_city','sakurajima','yonemachi','ajikawaguchi','nishikujo','fukushima_h','umeda_stn','temma','sakuranomiya','morinomiya','osakajokoen'], lineName:'JR Sakurajima + Osaka Loop (+ เดิน 15 นาที)' },
-};
-
-/* ================= state ================= */
-const DEFAULT_STATE = () => ({
-  shift: 0,
-  kyotoWhen: 'first',      // 'first' = คืน 1–2 พัก Kyoto (เปิดทริป) · 'mid' = คืน 3–4 (กลางทริป)
-  bayOn: true,             // พักแถว Universal City คืนที่ 3–4 (โหมด 3 โซน — ใช้ได้เฉพาะ kyotoWhen 'first')
-  kobePlan: 'castle',      // วันศุกร์ 4 ธ.ค.: 'castle' = Osaka Castle (แผนที่เลือก) · 'kobe' = สลับกลับไป Kobe
-  hotelGlobal: 'citadines',
-  nights: ['vischio','vischio','universal_port','universal_port','citadines','citadines','citadines','omo_kix'],
-  planV: 4,               // 4 = จองที่พักจริงครบ 4 โรงแรม (14 พ.ย.): Vischio Kyoto (ติด Kyoto Stn) + Universal Port + Citadines + OMO
-  assign: {},              // activityId -> day index (override)
-  kyoto: 'A',              // A = Arashiyama, B = Higashiyama
-  steak: 'steakland',      // steakland | mouriya
-  tempozan: 'legoland',    // legoland | ferris
-  express: false,
-  rinku: true,
-  foodPerDay: 10000,
-  rate: RATE_DEFAULT,
-  customHotels: [],        // โรงแรมที่ผู้ใช้เพิ่มเอง (id ขึ้นต้น c...)
-  log: [],
-});
-let state = loadState();
-
-function loadState() {
-  const s = DEFAULT_STATE();
-  try {
-    const raw = localStorage.getItem('osaka2026_v2');
-    if (raw) {
-      const saved = JSON.parse(raw);
-      if (saved && typeof saved === 'object' && !('kyotoWhen' in saved)) {
-        // เซฟรุ่นก่อนมีโหมด Kyoto-first: เก็บ id โรงแรมรายโซนเดิม แล้วจัดคืนใหม่ตามโหมดเริ่มต้น
-        const pool = HOTELS.concat(Array.isArray(saved.customHotels) ? saved.customHotels : []);
-        const oldN = Array.isArray(saved.nights) ? saved.nights : [];
-        const kyotoId = (pool.find(h => h.area === 'kyoto' && oldN.includes(h.id)) || pool.find(h => h.id === 'ranzan')).id;
-        const osakaId = (pool.find(h => h.area === 'namba' && oldN.includes(h.id)) || pool.find(h => h.id === 'monterey')).id;
-        saved.kyotoWhen = 'first';
-        saved.nights = ['k','k','o','o','o','o','o'].map(z => z === 'k' ? kyotoId : osakaId);
-        saved.assign = {}; // วันกิจกรรมถูกจัดใหม่ตามโหมด
-      }
-      if (!('bayOn' in saved)) saved.bayOn = false; // เซฟรุ่น 2 โซน (ก่อนมีโซน UC): คงแผนเดิมไว้ — ผู้ใช้เปิดเองได้ในแผงโรงแรม
-      Object.assign(s, saved);
+  function updateCountdown() {
+    var now = new Date();
+    var diff = DEP - now;
+    if (diff <= 0) {
+      var endOfTrip = new Date('2026-12-06T23:59:00+09:00');
+      countdownEl.textContent = now < endOfTrip ? 'ออกเดินทางแล้ว' : 'จบทริปแล้ว';
+      return;
     }
-  } catch (e) {}
-  // เซฟเดิมสมัย 7 คืน (ก่อนเที่ยวบินกลับเลื่อนเป็น 6 ธ.ค.): เติมคืนที่ 8 = นอนแถวสนามบินอัตโนมัติ
-  while (Array.isArray(s.nights) && s.nights.length < N_NIGHTS) s.nights.push('omo_kix');
-  // เซฟเดิมก่อนเปลี่ยนโรงแรมเกียวโตเป็น Vischio (8 พ.ย.): ย้ายคืนที่ 1–2 ให้อัตโนมัติ (ครั้งเดียว)
-  if (!s.planV) { s.nights[0] = 'vischio'; s.nights[1] = 'vischio'; s.planV = 2; }
-  // เซฟเดิมก่อนจองที่พักจริงครบ 4 โรงแรม (10 พ.ย.): ย้ายทุกโซนไปโรงแรมที่จอง (ครั้งเดียว)
-  if (s.planV === 2) { s.nights[0] = s.nights[1] = 'grandwest'; s.nights[2] = s.nights[3] = 'universal_port'; s.nights[4] = s.nights[5] = s.nights[6] = 'citadines'; s.planV = 3; }
-  // เซฟสมัยจอง GrandWest (10–13 พ.ย.): ย้ายคืน 1–2 กลับมา Vischio ตามแผนใหม่ (ครั้งเดียว)
-  if (s.planV === 3) { s.nights[0] = s.nights[1] = 'vischio'; s.planV = 4; }
-  s.customHotels = Array.isArray(s.customHotels) ? s.customHotels : [];
-  // กัน id โรงแรมที่หายไป (เช่น ลบในอีกแท็บ) — คืนค่าเริ่มต้นตามโซนคืนนั้น
-  const def = DEFAULT_STATE().nights;
-  s.nights = (Array.isArray(s.nights) ? s.nights : def).map((hid, i) =>
-    allHotels(s.customHotels).some(h => h.id === hid) ? hid : def[i]);
-  return s;
-}
-function saveState() { try { localStorage.setItem('osaka2026_v2', JSON.stringify(state)); } catch (e) {} }
-
-/* ================= activities ================= */
-function A(id, emoji, title, stops, opts) {
-  return Object.assign({ id, emoji, title, stops, movable:true, heavy:false, fixedDay:null, tags:[], note:'' }, opts);
-}
-function S(place, title, time, ticket, note) {
-  return { place, title, time, ticket, note };
-}
-/* ticket = {a: adult yen, c: child yen, label} หรือ null = ฟรี */
-
-const ACTIVITIES = [
-  A('flight_in', '🛬', 'เที่ยวบิน XJ614 ถึง KIX', [S('kix', 'ถึง KIX 18:15 (เวลาญี่ปุ่น)', '18:15', null, 'DMK 10:40 → KIX 18:15 · immigration ~1 ชม. → ออกจากสนามบิน ~19:15')], { movable:false, fixedDay:0, startsAt:'kix' }),
-  A('checkin_d1', '🧳', 'เข้าที่พัก — เช็คอิน + ฝากกระเป๋า', [S('hotel_base', 'เช็คอิน / ฝากกระเป๋า ก่อนออกมาเที่ยว', '20:00', null, 'บินถึง KIX 18:15 → ออกจากสนามบิน ~19:15 → ถึงโรงแรม Namba ~20:00 · ผ่านเวลาเช็คอินมาตรฐาน (15:00) แล้ว เข้าห้องได้ทันที · วางกระเป๋า ล้างหน้า แล้วออกมาหาอาหารเย็นใกล้ ๆ')], { movable:false, fixedDay:0 }),
-  A('dotonbori_d1', '🍢', 'เดินเล่น Dotonbori + อาหารเย็นมื้อแรก', [S('dotonbori', 'Dotonbori', '20:30–22:00', null, 'แกงกะหรี่/ราเม็ง/ทาโกะยากิ — ร้านเด็กกินง่าย · เดินชิล ๆ ไม่รีบ แล้วกลับมาพักเร็วเพราะเด็กเหนื่อยจากเที่ยวบินบ่าย')], { movable:false, fixedDay:0, tags:['dotonbori'] }),
-
-  A('kuromon', '🐟', 'ข้าวเช้าตลาด Kuromon Ichiba', [S('kuromon', 'ตลาด Kuromon', '08:00–09:30', null, 'ปลาดิบ ทามาโกะยากิ ผลไม้ — ตื่นเช้า (jet lag) ถือเป็นโบนัส')]),
-  A('kaiyukan', '🐋', 'Kaiyukan Aquarium', [S('osakako', 'Kaiyukan', '10:00–12:30', {a:2700, c:700, label:'ผู้ใหญ่ ~¥2,700 · เด็ก 4–6 ~¥700'}, 'ฉลามวาฬยักษ์ — เด็กเพลิน 2 ชม. · ถึงก่อน 10:00 เลี่ยงคนวันอาทิตย์')]),
-  A('tempozan', '🎡', 'บ่ายแถว Tempozan', [], {}), // stops กำหนด dynamic ตาม option
-  A('dotonbori_ev', '🏮', 'ค่ำ Dotonbori', [S('dotonbori', 'Dotonbori / Glico Bridge', '18:30', null, 'ตัว Glico, ปูยักษ์ Kani Doraku, ทาโกะยากิ')]),
-  A('usj', '🎢', 'Universal Studios Japan', [S('usj', 'USJ เปิด ~09:00 (มาก่อนเปิด 1 ชม.)', '08:00–19:30',
-    {a:9800, c:6200, label:'1-Day Pass ราคาลอยตามวัน · ผู้ใหญ่ ~¥8,900–12,400 · เด็ก 4–11 ~¥5,600–8,000', extra:'express'},
-    'บี๊เข้า Super Nintendo World ทันที · Yoshi ≥92 ซม. · Mario Kart/Mine-Cart ≥107 ซม. (ต่ำกว่า 122 ซม. ผู้ปกครองนั่งด้วย)')], { heavy:true, tags:['usj'] }),
-  A('train_to_kyoto', '🚄', 'ค่ำ: ย้ายไปพัก Kyoto 2 คืน', [S('hotel_kyoto', 'รถไฟจาก Osaka → เช็คอินโรงแรม Kyoto (โซน Arashiyama)', '18:30', null, 'JR จาก Universal-City ~75 นาที (ผ่าน Osaka Station) · โรงแรมริมแม่น้ำ Katsura ใกล้ป่าไผ่ — ธรรมชาติสุด ๆ พร้อมเที่ยว Kyoto เช้าวันถัดไป')], { movable:false, fixedDay:2, endsAt:true,
-    endBlock: { icon:'🏨', title:'เข้าพัก Kyoto · คืนที่ 3–4', sub:'โรงแรมโซน Arashiyama (เลือกได้ในแผงโรงแรม) · พรุ่งนี้เที่ยว Kyoto เต็มวัน' } }),
-  A('train_to_namba', '🚃', 'บ่าย: ย้ายจาก Universal City → เช็คอิน Osaka', [S('hotel_tail', 'กลับมารับกระเป๋าที่โรงแรม UC + รถไฟ → เช็คอินโรงแรม Namba', '15:30', null, 'Kaiyukan+Tempozan เช้า–บ่าย แล้วกลับรถไฟมารับกระเป๋าที่โรงแรมแถว UC ย้ายเข้า Namba (~35 นาที หรือแท็กซี่ตรง ~15 นาที) — เก็บของเสร็จออกมาเดิน Dotonbori ค่ำนี้เลย ใกล้โรงแรม')], { movable:false, fixedDay:4 }),
-  A('kyoto_day', '🍁', 'Kyoto เต็มวัน — Arashiyama ธรรมชาติ', [], { heavy:true, tags:['kyoto'] }), // dynamic ตาม option
-  A('kyoto_day2', '⛩️', 'Kyoto เมือง — วัดน้ำใส + Gion + วัดทอง', [
-    S('kiyomizu', 'วัดน้ำใส Kiyomizu-dera + ลงเขา Sannenzaka–Ninenzaka', '08:00',
-      {a:500, c:200, label:'~¥500/¥200 · วัดเปิด 06:00'},
-      'อาทิตย์ koyo คนเยอะ — เข้าก่อน 09:00 · จากโรงแรม: บัส 206 ชานชาลา D2 หน้าสถานี ~20 นาที ¥230 หรือแท็กซี่ ~15 นาที ~¥2,000 · ลงเขาเดินถนนหินโบราณ ชิมขนม yatsuhashi'),
-    S('gion', 'Gion + ศาลเจ้า Yasaka + กินกลางวันย่าน Shijo', '10:45', null,
-      'เดินจาก Ninenzaka ต่อ ~15 นาที · ถนน Hanamikoji บรรยากาศเกย์ชา · เที่ยงก่อนขึ้นไปวัดทอง'),
-    S('kinkakuji', 'วัดทอง Kinkaku-ji (บ่ายแสงเอียงสวยสุด)', '14:00',
-      {a:500, c:300, label:'~¥500/¥300 · เปิด 09:00–17:00'},
-      'จาก Gion: ⭐แท็กซี่ ~20–25 นาที ~¥2,500–3,000 (แนะนำ) หรือบัสเทศบาล ~45–55 นาที ¥230 · เดินรอบสวน ~45–60 นาที · กลับ: บัส 205/101 ~40–45 นาที หรือแท็กซี่ ~¥2,500 — พักโรงแรมแล้วค่ำกินแถว Kyoto Stn (Ramen Street ชั้น 10)'),
-  ], { heavy:true, tags:['kyoto'] }),
-  A('kobe_day', '🥩', 'Kobe — Steak + สวนสัตว์', [], { heavy:true, tags:['kobe','animal_kingdom'] }), // dynamic
-  A('osaka_castle_day', '🏯', 'Osaka Castle — ปราสาท + สวนใบไม้แดง', [
-    S('osaka_castle', 'หอคอยปราสาท + พิพิธภัณฑ์ซามูไร (ในร่ม)', '10:00', {a:600, c:0, label:'พิพิธภัณฑ์ ~¥600/ผู้ใหญ่ · เด็ก ม.ต้นลงมาฟรี'}, 'ขึ้นหอคอย 8 ชั้นวิวเมือง 360° · รอบปราสาทคือจุดชมใบไม้แดงดังของโอซาก้า — JR ถึง Osakajokoen แล้วเดินขึ้นเนิน 15 นาที'),
-    S('miraiza', 'Miraiza Osaka-jo — กลางวัน + เช่าชุดซามูไร', '12:00', null, 'อาคารโบราณหน้าปราสาท: ร้านอาหาร/ของฝาก · ถ่ายรูปครอบครัวชุดซามูไรกับปราสาท (เด็กชอบมาก)'),
-    S('nishinomaru', 'สวน Nishinomaru — มุมถ่ายปราสาทสวยสุด', '14:00', {a:200, c:0, label:'ค่าเข้า ~¥200 (ช่วง koyo อาจปรับ)'}, 'สนามหญ้าใต้กำแพงหินยักษ์ — มุมถ่ายปราสาทข้ามใบเมเปิลแดง แล้วข้ามไปช้อป Umeda ตามแผนค่ำ'),
-  ], { heavy:true, tags:['osaka_castle'] }),
-  A('nara_day', '🦌', 'Nara — ให้อาหารกวาง', [
-    S('nara_park', 'Nara Park — ขนมกวาง ¥200', '09:30', null, 'ไฮไลต์ของเด็ก! ซ่อนขนมในกระเป๋า อย่าชู จับมือตอนให้อาหาร'),
-    S('todaiji', 'วัด Todai-ji', '11:00', {a:800, c:400, label:'ผู้ใหญ่ ~¥800 · เด็กประถม ~¥400'}, 'พระใหญ่ที่สุดในญี่ปุ่น'),
-    S('nakatanidou', 'Naramachi + โมจิตีสด', '12:30', null, 'โชว์ตีโมจิ Nakatanidou'),
-  ], { heavy:true, tags:['nara'] }),
-  A('minoo_day', '🍁', 'น้ำตก Minoo — เทรลใบเมเปิล', [
-    S('minoo_station', 'เดินเทรล 2.8 กม. สู่น้ำตก', '10:00', null, 'กิน momiji tempura (ใบเมเปิลทอด) ระหว่างทาง · พีคช่วงต้น ธ.ค. พอดี'),
-    S('minoo_falls', 'น้ำตก Minoo', '11:30', null, 'เดินกลับ / รถไฟกลับ Umeda'),
-  ], { heavy:true, tags:['minoo'] }),
-  A('umeda_shop', '🛍️', 'ช้อปของฝาก Umeda', [S('umeda', 'Don Quijote + drugstore + Daimaru B1', '14:30', null, 'ขนมชั้นใต้ดินห้าง Daimaru')]),
-  A('illumination', '✨', 'ค่ำมื้ออำลา Dotonbori + Midosuji Illumination', [S('dotonbori', 'ถนน Midosuji — ไฟประดับยาว 4 กม.', '18:00', null, 'ฟรี · ช่วง พ.ย.–ธ.ค.'), ], { tags:['dotonbori'] }),
-
-  A('rinku', '🛍️', 'ค่ำ: รับกระเป๋า → Nankai ไป Rinku Outlets', [S('rinku', 'Rinku Premium Outlets + มื้อค่ำสุดท้าย', '16:30', null, 'กลับมารับกระเป๋าที่โรงแรม Namba → Nankai ตรง Rinku Town ~40 นาที (¥760) → เช็คอินโรงแรมแถวสนามบิน แล้วเดินช้อป — OMO อยู่ติดสถานี (เดินไป outlets ~12 นาที) · ร้านเปิดถึง ~20:00')], { movable:false, fixedDay:7 }),
-  A('flight_out', '🛫', 'เช็คอิน KIX + บินกลับ XJ615', [S('kix', 'เช็คอิน 07:30 (เปิด 3 ชม.ก่อนบิน) → บิน 10:30', '07:15', null, 'ออกจากโรงแรม Rinku ~06:45 · JR/Nankai 1 สถานี 5 นาทีถึง KIX ~07:00 · ถึง DMK 15:05')], { movable:false, fixedDay:8, endsAt:true }),
-];
-
-function activityStops(act) {
-  if (act.id === 'checkin_d1' && state.kyotoWhen === 'first') {
-    return [S('hotel_base', 'เช็คอิน Hotel Vischio Kyoto + วางกระเป๋า', '~21:15', null,
-      'บินถึง KIX 18:15 → Haruka ~19:45 ถึง Kyoto Stn ~21:05 → ทางออก Hachijo เดิน 2 นาทีถึงโรงแรม ~21:15 (ไม่ต้องต่อรถไฟ/แท็กซี่ · front 24 ชม.) · อาหารเย็น: Ramen Street ชั้น 10 ของสถานี (เปิดถึง ~22:00) / conbini 24 ชม. — ไม่ต้องซื้อข้าวกล่องล่วงหน้า')];
-  }
-  if (act.id === 'train_to_kyoto' && state.kyotoWhen === 'first') {
-    return state.bayOn
-      ? [S('hotel_kyoto', 'เก็บกระเป๋า + รถไฟ Kyoto → เช็คอินโรงแรม Universal City', '16:30', null,
-        'Torokko+เรือ+ป่าไผ่บ่าย จบ ~16:15 → JR Saga-Arashiyama กลับ Kyoto Stn เก็บกระเป๋าที่ Vischio (เดิน 2 นาที) → JR Kyoto Line + Sakurajima Line ถึง Universal-City (~75 นาที ~¥1,040) เช็คอิน Hotel Universal Port ~18:25 · ค่ำนี้เดิน CityWalk สั้น ๆ พรุ่งนี้ USJ เดินถึงประตู')]
-      : [S('hotel_kyoto', 'เก็บกระเป๋า + รถไฟ Kyoto → เช็คอินโรงแรม Osaka (Namba)', '16:30', null,
-        'บ่ายจบ ~16:15 → JR กลับ Kyoto Stn เก็บกระเป๋าที่ Vischio แล้วเดินทางเข้า Osaka (~80 นาที) เช็คอิน Namba ~18:40 วางของก่อนออกมาเดิน Dotonbori ยามเย็น')];
-  }
-  if (act.id === 'tempozan') {
-    return state.tempozan === 'legoland'
-      ? [S('legoland', 'Legoland Discovery Center', '13:30', {a:2300, c:2300, label:'~¥2,300/คน · จองออนไลน์ก่อนเข้า ≥24 ชม.'}, 'สำหรับเด็ก 3–10 ปี อยู่กันเป็นครอบครัวเท่านั้น')]
-      : [S('ferris', 'Tempozan Ferris Wheel', '13:30', {a:1000, c:500, label:'ผู้ใหญ่ ~¥1,000 · เด็ก ~¥500'}, 'ชิงช้ายักษ์วิวทะเล ~15 นาที')];
-  }
-  if (act.id === 'kyoto_day') {
-    if (state.kyoto === 'A') return [
-      S('torokko', 'Torokko-Saga: ต่อคิว当日券 (เคาน์เตอร์ ~08:35) + นั่งรถไฟวิวหุบเขา → Kameoka', '~08:35',
-        {a:880, c:0, label:'Sagano Romantic Railway: ผู้ใหญ่ ¥880 · เด็กก่อน 6 ขวบฟรีบนตัก — 当日券 หน้างาน (ออนไลน์คงหมด ลองเช็ค残席ก่อนวันจริง)'},
-        'จากโรงแรม: JR Sagano จาก Kyoto Stn ~17 นาที (ออก 07:15 — กระเป๋าฝากที่ Vischio) ลง Saga-Arashiyama เดิน 5 นาทีถึง Torokko-Saga · มาต่อคิว ~07:50 ก่อนเคาน์เตอร์เปิด ~08:35 — จันทร์วันธรรมดาโอกาสสูงสุด · เลือกขบวนตอนซื้อ: เล็ง 09:00–10:00 ให้ทันเรือ 11:30 (ได้แต่ขบวนช้า = เลื่อนเรือเป็นรอบ 13:30) · ถ้า当日券หมด: สลับไปป่าไผ่ 08:50 แล้ว JR ตรงไป Kameoka ทันเรือรอบเดิม'),
-      S('togetsukyo', 'เรือล่อง Hozugawa รอบ ~11:30 (2 ชม.) + กินกลางวันริม Togetsukyo', '11:30',
-        {a:6000, c:4500, label:'Hozugawa-kudari: ผู้ใหญ่ ¥6,000 · เด็ก ¥4,500 — จองล่วงหน้า'},
-        'Torokko ถึง Kameoka ~10:00 → ต่อรถรับส่งของเรือ/แท็กซี่ไปท่าเรือ ~10–15 นาที → เรือออก 11:30 ล่อง 16 กม. ผ่านหุบเขาใบไม้แดง จบ Togetsukyo ~13:30 · จอง: hozugawakudari.jp / โทร +81-771-22-5846 / Klook · เรือออกทุกชั่วโมง 09:00–15:00 — Torokko ได้ขบวนเร็ว/ช้ากว่าแผนก็โทรเลื่อนรอบได้ · เรือเปิดโล่ง 2 ชม. หนาว — กันหนาวเด็กเต็มที่ · พายุยกเลิก = คืนเงิน/เลื่อน'),
-      S('arashiyama', 'บ่าย: วัด Tenryu-ji + ป่าไผ่ + ถนนเซงคุจิ', '14:30', null,
-        'กินกลางวันริมแม่น้ำก่อน ~14:15 · Tenryu-ji (UNESCO ~¥500 · เปิด 08:30–17:00) → ออกประตูเหนือเข้าป่าไผ่เลย — จันทร์บ่ายคนน้อยกว่าอาทิตย์เยอะ · เรือยกเลิกพายุ = เปลี่ยนบ่ายเป็นลิง Iwatayama (เข้าก่อน 15:30) · เดินกลับ JR Saga-Arashiyama ~10 นาที กลับ Kyoto Stn ~16:45 เก็บกระเป๋าที่ Vischio'),
-    ];
-    return [
-      S('tofukuji', 'วัด Tofuku-ji', '09:30', {a:500, c:300, label:'~¥500/¥300 (ช่วงใบไม้แดงอาจแพงขึ้น)'}, 'สะพาน Tsutenkyo — จุดชมใบไม้แดงอันดับ 1 ของเกียวโต'),
-      S('kiyomizu', 'วัด Kiyomizu-dera + Ninenzaka', '11:30', {a:400, c:200, label:'~¥400/¥200'}, 'เดินถนนสายขนม yatsuhashi'),
-      S('gion', 'Gion / ศาลเจ้า Yasaka', '14:30', null, 'ถ้าเด็กไหว: Eikando light-up ยามค่ำ ~¥1,000+'),
-    ];
-  }
-  if (act.id === 'kobe_day') {
-    const steak = state.steak === 'steakland'
-      ? { a:4000, c:1800, label:'Steak Land: Kobe beef lunch ~¥3,500–4,880 · เด็ก ~¥1,800 · จองโทร/EPARK' }
-      : { a:9800, c:2000, label:'Mouriya: จาก ~¥9,800 + ค่าบริการ 10% · จองเว็บ mouriya.co.jp พร้อมมัดจำ' };
-    return [
-      S('steakland', state.steak === 'steakland' ? 'Steak Land Kobe — teppanyaki เที่ยง' : 'Mouriya — teppanyaki เที่ยง', '11:00', steak, 'กินกลางวันถูกกว่าเย็น 30–40% และเด็กไม่ง่วง — มาถึงก่อน 11:00'),
-      S('animal_kingdom', 'Kobe Animal Kingdom', '13:00', {a:2400, c:500, label:'ผู้ใหญ่ ¥2,400 · เด็ก 4–5 ขวบ ¥500'}, '⚠️ ปิดทุกวันพฤหัส (10:00–17:00 รับสุดท้าย 16:30)'),
-      S('harborland', 'Harborland / Mosaic + ชิงช้าสวรรค์', '16:30', null, 'วิวท่าเรือโกเบ'),
-    ];
-  }
-  return act.stops;
-}
-function findActivity(id) { return ACTIVITIES.find(a => a.id === id); }
-
-/* ================= วัน & การมอบหมาย ================= */
-function tripStart() { const d = new Date(START); d.setDate(d.getDate() + state.shift); return d; }
-function dayDate(i) { const d = tripStart(); d.setDate(d.getDate() + i); return d; }
-function fmtDate(d) { return `${DAYS_TH[d.getDay()]} ${d.getDate()} ${MONTHS_TH[d.getMonth()]}`; }
-
-function effectiveDay(act) {
-  if (act.fixedDay !== null) return act.fixedDay;
-  return (state.assign[act.id] !== undefined) ? state.assign[act.id] : act.defaultDay;
-}
-/* default days — จัดวันใหม่อัตโนมัติตามโหมดพัก Kyoto (first: คืน 1–2 / mid: คืน 3–4) */
-const DAY_MAPS = {
-  mid:   { kuromon:1, kaiyukan:1, tempozan:1, dotonbori_ev:1, usj:2, kyoto_day:3, kyoto_day2:4, minoo_day:7, nara_day:5, kobe_day:6, osaka_castle_day:6, umeda_shop:6, illumination:6 },
-  first: { kuromon:5, kaiyukan:4, tempozan:4, dotonbori_ev:2, usj:3, kyoto_day:2, kyoto_day2:1, minoo_day:7, nara_day:5, kobe_day:6, osaka_castle_day:6, umeda_shop:6, illumination:6 },
-  // Kuromon ย้ายมาเช้าวัน Nara (พฤ.) ทั้งสองโหมด — วันพุธเบา ๆ เหลือแค่ Kaiyukan+Tempozan
-  // first + พัก UC คืน 3–4 (3 โซน): ค่ำ Dotonbori ย้ายมาค่ำวันย้ายเข้า Namba
-  // จัดวันใหม่ (14 พ.ย.): วันที่ 2 (อา.) = เที่ยวเมือง วัดน้ำใส+Gion+วัดทอง · วันที่ 3 (จ.) = Arashiyama+เรือ Hozugawa แล้วย้ายเข้า UC เย็น — ป่าไผ่/เรือ/Torokko ได้วันธรรมดา
-  // วันเสาร์ 5 ธ.ค. (วันที่ 8) = วันว่างก่อนบินกลับ: Minoo เช้า → บ่ายย้ายไปนอนแถวสนามบิน + Rinku Outlets
-  first_bay: { kuromon:5, kaiyukan:4, tempozan:4, dotonbori_ev:4, usj:3, kyoto_day:2, kyoto_day2:1, minoo_day:7, nara_day:5, kobe_day:6, osaka_castle_day:6, umeda_shop:6, illumination:6 },
-};
-function applyModeDefaults() {
-  const bay = state.kyotoWhen === 'first' && !!state.bayOn;
-  const map = bay ? DAY_MAPS.first_bay : (DAY_MAPS[state.kyotoWhen] || DAY_MAPS.mid);
-  ACTIVITIES.forEach(a => { if (a.id in map) a.defaultDay = map[a.id]; });
-  const mv = findActivity('train_to_kyoto');
-  if (state.kyotoWhen === 'first') {
-    if (state.bayOn) {
-      mv.title = 'บ่าย: ย้ายจาก Kyoto → เช็คอิน Universal City';
-      mv.endBlock = { icon:'🏨', title:'เข้าพัก Universal City · คืนที่ 3–4', sub:'โรงแรมใกล้ประตู USJ (เลือกได้ในแผงโรงแรม) · พรุ่งนี้เช้า USJ เดินแป๊บเดียวถึง' };
+    var days = Math.floor(diff / 86400000);
+    var hours = Math.floor((diff % 86400000) / 3600000);
+    var next;
+    if (days >= 1) {
+      next = days + ' วัน ' + hours + ' ชม.';
     } else {
-      mv.title = 'บ่าย: ย้ายจาก Kyoto → เช็คอิน Osaka';
-      mv.endBlock = { icon:'🏨', title:'เข้าพัก Osaka · คืนที่ 3–7', sub:'โรงแรมโซน Namba (เลือกได้ในแผงโรงแรม) · เย็นนี้เดิน Dotonbori' };
+      var mins = Math.floor((diff % 3600000) / 60000);
+      next = hours + ' ชม. ' + pad(mins) + ' น.';
     }
-  } else {
-    mv.title = 'ค่ำ: ย้ายไปพัก Kyoto 2 คืน';
-    mv.endBlock = { icon:'🏨', title:'เข้าพัก Kyoto · คืนที่ 3–4', sub:'โรงแรมโซน Arashiyama (เลือกได้ในแผงโรงแรม) · พรุ่งนี้เที่ยว Kyoto เต็มวัน' };
-  }
-}
-applyModeDefaults();
-ACTIVITIES.forEach(a => { if (a.defaultDay === undefined || a.defaultDay === null) a.defaultDay = 0; });
-
-function dayActivities(i) {
-  return ACTIVITIES
-    .filter(a => !(a.id === 'rinku' && !state.rinku))
-    // โหมด Kyoto คืนแรก: ค่ำวันแรกอยู่ Arashiyama (ไม่มี Dotonbori) — Minoo ย้ายไปวันเสาร์ 5 ธ.ค. (วันก่อนบินกลับ)
-    .filter(a => !(state.kyotoWhen === 'first' && a.id === 'dotonbori_d1'))
-    // กิจกรรมย้าย UC → Namba มีเฉพาะโหมด 3 โซน (Kyoto คืนแรก + UC คืน 3–4)
-    .filter(a => !(a.id === 'train_to_namba' && !(state.kyotoWhen === 'first' && state.bayOn)))
-    // วันศุกร์ 4 ธ.ค.: เลือกได้ระหว่างแผนหลัก Kobe / แผนสำรอง Osaka Castle
-    .filter(a => !(a.id === 'kobe_day' && state.kobePlan === 'castle'))
-    .filter(a => !(a.id === 'osaka_castle_day' && state.kobePlan !== 'castle'))
-    .filter(a => effectiveDay(a) === i)
-    .sort((x, y) => (x.seq ?? 99) - (y.seq ?? 99));
-}
-ACTIVITIES.forEach((a, idx) => a.seq = idx * 10);
-const FIXED_SEQ = { kuromon:5, kaiyukan:10, tempozan:15, usj:20, train_to_kyoto:50, train_to_namba:45, kyoto_day:20, kyoto_day2:4, kobe_day:20, osaka_castle_day:20, nara_day:20, minoo_day:5, umeda_shop:30, illumination:40 };
-ACTIVITIES.forEach(a => { if (FIXED_SEQ[a.id] !== undefined) a.seq = FIXED_SEQ[a.id]; });
-
-/* ================= เดินทาง: คำนวณ leg ================= */
-function distM(p1, p2) {
-  const R = 6371000, rad = Math.PI / 180;
-  const dLat = (p2.lat - p1.lat) * rad, dLng = (p2.lng - p1.lng) * rad;
-  const a = Math.sin(dLat/2)**2 + Math.cos(p1.lat*rad) * Math.cos(p2.lat*rad) * Math.sin(dLng/2)**2;
-  return 2 * R * Math.asin(Math.sqrt(a));
-}
-function hotelOfNight(i) { return allHotels().find(h => h.id === state.nights[Math.min(i, N_NIGHTS - 1)]) || HOTELS[0]; }
-/* hotel "ที่ใช้ตอนต้นวัน i" = คืนก่อนหน้า (คืนแรกของวัน 0 คือโรงแรมหลักของคืนที่ 1 หลังเช็คอิน) */
-/* เส้นทางระหว่างสองสถานที่ (ไม่เกี่ยวกับโรงแรม) */
-/* anchor "โรงแรมหลังย้าย" (hotel_kyoto = ค่ำวันที่ 3 / hotel_tail = ค่ำวันที่ 5) เปลี่ยนโซนตามแผน —
-   เลือก key ของ LINKS ให้ตรงกับโซนจริงของโรงแรมคืนนั้น */
-function hotelLinkKey(place, dayIdx) {
-  if (place !== 'hotel_kyoto' && place !== 'hotel_tail') return place;
-  const nightIdx = place === 'hotel_kyoto' ? 2 : 4;
-  const area = endHotelOfDay(dayIdx === undefined ? nightIdx : dayIdx).area;
-  return area === 'kyoto' ? 'hotel_kyoto' : (area === 'bay' ? 'hotel_bay' : 'hotel_namba');
-}
-function linkFor(fromPlace, toPlace, dayIdx) {
-  const isAnchor = k => k === 'hotel_kyoto' || k === 'hotel_tail';
-  const a = isAnchor(fromPlace) ? hotelLinkKey(fromPlace, dayIdx) : fromPlace;
-  const b = isAnchor(toPlace) ? hotelLinkKey(toPlace, dayIdx) : toPlace;
-  return LINKS[a + '|' + b] || LINKS[b + '|' + a]
-    // ไม่มีลิงก์เฉพาะ: คู่สถานที่ธรรมดาอาจมี key ตรง ๆ อยู่แล้ว (anchor ห้าม fallback เพราะ key ขึ้นกับโซน)
-    || (!isAnchor(fromPlace) && !isAnchor(toPlace) ? (LINKS[fromPlace + '|' + toPlace] || LINKS[toPlace + '|' + fromPlace]) : null);
-}
-function legBetween(fromPlace, toPlace, dayIdx) {
-  const pA = P[fromPlace], pB = P[toPlace];
-  if (!pA || !pB) return null;
-  const d = distM(pA, pB);
-  const link = linkFor(fromPlace, toPlace, dayIdx);
-  if (link) return { from: fromPlace, to: toPlace, mode: link.mode, min: link.min, fare: link.fare || 0, note: link.note || '', via: link.via, lineName: link.lineName };
-  if (d < 1200) return { from: fromPlace, to: toPlace, mode: 'walk', min: Math.max(4, Math.round(d / 80)), fare: 0 };
-  const min = Math.round(10 + d / 25000 * 60);
-  const fare = Math.min(900, 150 + Math.round(d / 1000 * 22));
-  return { from: fromPlace, to: toPlace, mode: 'train', min, fare, note: 'ประมาณการ' };
-}
-
-/* โรงแรมตอนเช้าของวัน i = ที่นอนคืนก่อนหน้า · โรงแรมตอนค่ำ = คืนของวันนั้น */
-function startHotelOfDay(i) { return hotelOfNight(Math.max(i - 1, 0)); }
-function endHotelOfDay(i) { return hotelOfNight(Math.min(i, N_NIGHTS - 1)); }
-/* คืนไหนอยู่โซนไหน: first = คืน 1–2 Kyoto, คืน 3–4 UC (ถ้าเปิด bayOn), ที่เหลือ Namba · mid = คืน 3–4 Kyoto */
-function zoneOfNight(n) {
-  if (n === N_NIGHTS - 1) return 'kix';   // คืนสุดท้าย (5 ธ.ค.) นอนแถวสนามบิน — บินกลับ 10:30 เช้าวันที่ 6 ธ.ค.
-  if (state.kyotoWhen === 'first') {
-    if (n <= 1) return 'kyoto';
-    if (state.bayOn && (n === 2 || n === 3)) return 'bay';
-    return 'namba';
-  }
-  return (n === 2 || n === 3) ? 'kyoto' : 'namba';
-}
-function isKyotoNight(n) { return zoneOfNight(n) === 'kyoto'; }
-function kyotoNights() { return state.kyotoWhen === 'first' ? [0, 1] : [2, 3]; }
-function defaultBayHotelId() { return (allHotels().find(h => h.area === 'bay') || { id:'kintetsu_uc' }).id; }
-function nambaHotelId() { const h = getHotel(state.hotelGlobal); return (h && h.area === 'namba') ? h.id : (allHotels().find(x => x.area === 'namba') || HOTELS[0]).id; }
-function isSwitchDay(i) { return i >= 1 && i <= N_NIGHTS - 1 && state.nights[i] !== state.nights[i - 1]; }
-function hotelToHotel(a, b) {
-  const kyoA = a.area === 'kyoto', bayA = a.area === 'bay', kyoB = b.area === 'kyoto', bayB = b.area === 'bay';
-  if (kyoA !== kyoB) {
-    if (a.area === 'kix' || b.area === 'kix') return { min:85, fare:3640, note:'JR Haruka Kyoto–KIX' };
-    if (bayA || bayB) return { min:90, fare:820, note:'JR Kyoto + Sakurajima Line (ผ่าน Osaka)' };
-    return { min:45, fare:1110, note:'JR Kyoto Line สายด่วนพิเศษ' };
-  }
-  if (bayA !== bayB) return { min:35, fare:570, note:'JR Sakurajima + Loop + Metro (หรือแท็กซี่ ~15 นาที)' };
-  if ((a.area === 'kix') !== (b.area === 'kix')) {
-    if (bayA || bayB) return { min:70, fare:1390, note:'JR Loop + Kansai-Airport Rapid' };
-    return { min:40, fare:760, note:'Nankai Namba ↔ Rinku Town' };
-  }
-  if (a.area !== b.area) return { min:55, fare:1490, note:'Rapi:t/JR เข้า-ออกเมือง' };
-  if (a.area === 'kix' && b.area === 'kix') return { min:15, note:'อยู่ย่านเดียวกัน (แถวสนามบิน)' };
-  const d = distM(a, b);
-  if (d < 2000) return { min:15, fare:0, note:'เดิน/แท็กซี่สั้น ๆ ในย่านเดียวกัน' };
-  return { min:25, fare:500, note:'แท็กซี่/รถไฟในเมือง' };
-}
-
-function daySegments(i) {
-  const acts = dayActivities(i);
-  const seg = { startH: startHotelOfDay(i), endH: endHotelOfDay(i), switchDay: isSwitchDay(i), items: [] };
-  let prev = null; // null = เริ่มวันจากโรงแรม
-  for (const act of acts) {
-    const stops = activityStops(act);
-    stops.forEach((st, si) => {
-      if (prev === null) {
-        if (act.startsAt && si === 0 && st.place === act.startsAt) { prev = st.place; seg.items.push({ type:'stop', stop:st, act, first:true }); return; }
-        seg.items.push({ type:'leg', leg: hotelLeg(st.place, seg.startH, 'start') });
-      } else if (st.place !== prev) {
-        if (prev === 'kix') {
-          // วันถึง: สนามบิน → โรงแรม (Rapi:t) → จุดหมาย (ถ้าจุดหมายคือตัวโรงแรมเอง ไม่ต้องมีช่วงเดินต่อ)
-          const rl = hotelLeg('kix', seg.startH, 'start');
-          seg.items.push({ type:'leg', leg: { ...rl, from:'kix', to:'__hotel__', via: rl.via ? [...rl.via].reverse() : rl.via } });
-          if (st.place !== 'hotel_base') seg.items.push({ type:'leg', leg: hotelLeg(st.place, seg.startH, 'start') });
-        } else if (prev === 'hotel_base') {
-          // ออกจากโรงแรมหลังเช็คอิน — ใช้เวลาเดินทางเดียวกับขากลับเข้าพัก
-          const l = hotelLeg(st.place, seg.startH, 'start');
-          seg.items.push({ type:'leg', leg: { ...l, from:'hotel_base', to:st.place } });
-        } else if (prev === 'hotel_tail' || prev === 'hotel_kyoto') {
-          // ออกจากโรงแรมหลังย้ายมาถึงแล้ว (ครึ่งบ่าย/ค่ำของวันย้าย) — นับจากโรงแรมคืนนี้ (endH)
-          const l = hotelLeg(st.place, seg.endH, 'end');
-          seg.items.push({ type:'leg', leg: { ...l, from:prev, to:st.place } });
-        } else {
-          seg.items.push({ type:'leg', leg: legBetween(prev, st.place, i) });
-        }
-      }
-      prev = st.place;
-      seg.items.push({ type:'stop', stop:st, act, first: si === 0 });
-    });
-  }
-  const last = acts[acts.length - 1];
-  // ไม่ต้องมี "กลับเข้าพัก" ถ้าจุดสุดท้ายของวันคือตัวโรงแรมเอง (เช่น วันแรกโหมด Kyoto: เช็คอินแล้วจบเลย)
-  if (prev && prev !== 'hotel_base' && prev !== 'hotel_kyoto' && prev !== 'hotel_tail' && !(last && last.endsAt)) {
-    const finalLeg = hotelLeg(prev, seg.endH, 'end');
-    if (seg.switchDay) finalLeg.special = (finalLeg.special ? finalLeg.special + ' · ' : '') + 'ย้ายโรงแรม';
-    seg.items.push({ type:'leg', leg: finalLeg });
-  }
-  return seg;
-}
-function dayLegs(i) { return daySegments(i).items.filter(it => it.type === 'leg').map(it => it.leg); }
-
-/* เส้นทางจาก/กลับโรงแรม — ราคาเป็นค่ารถผู้ใหญ่ 1 คน (เด็ก 5 ขวบฟรี) · which = 'start' (ออกจากโรงแรมเช้า) หรือ 'end' (ไปเข้าพักค่ำ) */
-function hotelLeg(place, hotel, which) {
-  const tag = { from:'__hotel__', to:place, which };
-  const b = (hotel.id === 'vischio' ? HUB_KYOTO_STN : ({ namba: HUB_NAMBA, kyoto: HUB_KYOTO, bay: HUB_BAY }[hotel.area] || HUB_NAMBA))[place];
-  if (hotel.area === 'kix') {
-    if (place === 'kix') return { ...tag, mode:'train', min:10, fare:180, via:['rinku_town','kix_stn'], lineName:'JR Kansai-Airport Line' };
-    if (place === 'rinku') return { ...tag, mode:'walk', min:5, fare:0 };
-    const bb = b || { mode:'train', min:60, fare:600 };
-    if (bb.mode === 'walk') return { ...tag, mode:'train', min:bb.min + 50, fare:500, via:[...KIX2NAMBA], lineName:'Nankai (เข้าเมือง)', note:'จากแถวสนามบิน' };
-    return { ...tag, mode:'train', min:bb.min + 50, fare:(bb.fare || 0) + 500, via:[...KIX2NAMBA, ...(bb.via ? bb.via.slice(1) : [])], lineName:'Nankai + ' + (bb.lineName || 'รถไฟเมือง'), note:'จากแถวสนามบิน' };
-  }
-  if (!b) {
-    const d = distM(hotel, P[place] || P.dotonbori);
-    return d < 1200
-      ? { ...tag, mode:'walk', min:Math.max(4, Math.round(d / 80)), fare:0 }
-      : { ...tag, mode:'train', min:Math.max(25, Math.round(10 + d / 25000 * 60)), fare:Math.min(1500, 150 + Math.round(d / 1000 * 22)), via: hotel.area === 'kyoto' ? ['kyoto_stn'] : ['namba'], lineName:'ประมาณการ' };
-  }
-  if (b.mode === 'walk') return { ...tag, mode:'walk', min:b.min + (hotel.area === 'namba' ? Math.round(hotel.walkHub * 0.8) : 0), fare:0 };
-  return { ...tag, mode:b.mode, min:b.min + (hotel.area === 'namba' && hotel.walkHub > 3 ? Math.round(hotel.walkHub * 0.7) : 0), fare:b.fare, note:b.note, special:b.special, via:b.via, lineName:b.lineName };
-}
-function distFromNamba(place) { const p = P[place]; if (!p) return 99999; return distM(p, P.dotonbori); }
-
-/* ================= คำนวณงบ ================= */
-function familyTicket(t) { return t ? (t.a * 2 + (t.c || 0)) : 0; }
-
-function computeBudget() {
-  const lodging = state.nights.reduce((s, hid) => s + (getHotel(hid)?.price || 0), 0);
-  let attractions = 0;
-  const lines = [];
-  for (let d = 0; d < N_DAYS; d++) {
-    for (const act of dayActivities(d)) {
-      for (const st of activityStops(act)) {
-        if (!st.ticket) continue;
-        let fam = familyTicket(st.ticket);
-        if (st.ticket.extra === 'express' && state.express) fam += 18000 * 2 + 12600;
-        attractions += fam;
-        lines.push({ d, name: st.title.split('—')[0].trim(), fam });
-      }
+    if (countdownEl.textContent !== next) {
+      countdownEl.textContent = next;
+      countdownEl.classList.remove('is-tick');
+      void countdownEl.offsetWidth;
+      countdownEl.classList.add('is-tick');
     }
   }
-  let transport = 0;
-  const legsAll = [];
-  for (let d = 0; d < N_DAYS; d++) for (const l of dayLegs(d)) { transport += (l.fare || 0) * 2; legsAll.push(l); }
-  const food = state.foodPerDay * N_DAYS;
-  const total = lodging + attractions + transport + food;
-  return { lodging, attractions, transport, food, total, ticketLines: lines, legsAll };
-}
+  updateCountdown();
+  setInterval(updateCountdown, 60000);
 
-/* ================= คำเตือน ================= */
-function computeWarnings() {
-  const w = [];
-  if (state.shift !== 0) {
-    w.push({ lv:'error', t:`เที่ยวบินที่จองไว้คือ XJ614 วันเสาร์ 28 พ.ย. และ XJ615 วันอาทิตย์ 6 ธ.ค. — การเลื่อนทริป ${state.shift > 0 ? '+' : ''}${state.shift} วัน ต้องเปลี่ยนเที่ยวบิน (มีค่าธรรมเนียม AirAsia)` });
-  }
-  for (let d = 0; d < N_DAYS; d++) {
-    const date = dayDate(d), wd = date.getDay();
-    const acts = dayActivities(d);
-    const names = acts.map(a => a.title.split('—')[0].trim()).join(' + ');
-    if (!names) continue;
-    if (acts.some(a => a.tags.includes('animal_kingdom')) && wd === 4) {
-      w.push({ lv:'error', t:`วัน${fmtDate(date)}: Kobe Animal Kingdom ปิดทุกวันพฤหัสบดี — ย้ายวัน Kobe ไปวันอื่น` });
-    }
-    if (acts.some(a => a.tags.includes('usj')) && (wd === 0 || wd === 6)) {
-      w.push({ lv:'warn', t:`วัน${fmtDate(date)}: USJ ตรงวันเสาร์-อาทิตย์ คนเยอะมาก — ถ้าย้ายไปวันธรรมดาจะสบายกว่า (ตั๋วแพงขึ้นตามความต้องการด้วย)` });
-    }
-    if (acts.some(a => a.tags.includes('kyoto')) && (wd === 0 || wd === 6)) {
-      w.push({ lv:'warn', t:`วัน${fmtDate(date)}: Kyoto ช่วงใบไม้แดงวันเสาร์-อาทิตย์คนล้น — ออกเช้ามาก ๆ หรือเปลี่ยนเป็นวันธรรมดา` });
-    }
-    if (d === 0 && acts.some(a => a.heavy)) {
-      w.push({ lv:'warn', t:`วัน${fmtDate(date)}: บินถึง KIX 18:15 น. ไม่ควรใส่กิจกรรมเต็มวัน (${acts.filter(a=>a.heavy).map(a=>a.emoji + a.title).join(', ')})` });
-    }
-    if (acts.filter(a => a.heavy).length >= 2) {
-      w.push({ lv:'warn', t:`วัน${fmtDate(date)}: มีกิจกรรมหลัก 2 อย่างในวันเดียว — เด็ก 5 ขวบอาจเหนื่อยมาก ถ้าเหนื่อยให้ย้าย/ตัดหนึ่งออก` });
-    }
-    if (d === N_DAYS - 1 && acts.some(a => a.heavy)) {
-      w.push({ lv:'warn', t:`วัน${fmtDate(date)}: วันกลับบินเช้า 10:30 (ออกจากที่พักก่อน ~07:00) — กิจกรรมเต็มวันเสี่ยงพลาดเครื่อง` });
-    }
-  }
-  if (state.kyotoWhen === 'first') {
-    w.push({ lv:'info', t:'โหมด Kyoto คืนแรก (Hotel Vischio ติด Kyoto Stn): บินถึง KIX 18:15 → Haruka ~19:45 → Kyoto Stn ~21:05 → เดิน 2 นาทีเช็คอิน ~21:15 · อาหารเย็นยามดึกมีแถวสถานี (Ramen Street ถึง ~22:00) · วันอาทิตย์เที่ยวเมือง วัดน้ำใส+วัดทอง · วันจันทร์ JR Sagano ไป Arashiyama ออกเช้าก่อนคนเยอะ' });
-  }
-  if (state.kyotoWhen === 'first' && state.bayOn) {
-    w.push({ lv:'info', t:'โหมด 3 โซน: คืน 3–4 แถว Universal City — เช้าวัน USJ เดิน ~5–10 นาทีถึงประตู + ค่ำวัน Kaiyukan ย้ายเข้า Namba (~35 นาที) เดิน Dotonbori ต่อ · ย่าน UC เงียบกว่า Namba ตอนกลางคืน และห้องครอบครัวหมดไว — ควรจองโรงแรม UC เร็ว' });
-  }
-  if (state.kobePlan === 'castle') {
-    w.push({ lv:'info', t:'วันศุกร์ 4 ธ.ค. = Osaka Castle (ไม่ไป Kobe): ตั๋วรวมครอบครัว ~¥1,400 · อยากกิน Kobe beef: มี teppanyaki แถว Umeda/Namba หลายร้าน (มื้อกลางวันราคาดีกว่าเย็น) หรือกดสลับกลับแผน Kobe ที่แผงตัวเลือกกิจกรรม' });
-  } else if (state.steak === 'mouriya') {
-    w.push({ lv:'info', t:'Mouriya ต้องจองล่วงหน้าพร้อมมัดจำที่เว็บ (มีค่าบริการ 10%) — งบมื้อ steak รวม ~¥21,600 สำหรับ 3 คน' });
-  } else {
-    w.push({ lv:'info', t:'Steak Land แนะนำให้จองล่วงหน้าผ่าน EPARK หรือโทร (เสิร์ฟกลางวัน 11:00–14:00) — งบมื้อ steak ~¥9,800 สำหรับ 3 คน' });
-  }
-  if (state.express) {
-    w.push({ lv:'info', t:'Express Pass เปิดขายเป็นรอบกลางเดือนและหมดภายในชั่วโมง — ติดตามซื้อตั้งแต่ ก.ย.–ต.ค. 2569 (บางเวอร์ชันต้องสูง ≥107 ซม. ถึงใช้ประโยชน์ครบ)' });
-  }
-  const kixNights = state.nights.filter(hid => getHotel(hid)?.area === 'kix').length;
-  if (kixNights > 0 && kixNights < N_NIGHTS) {
-    w.push({ lv:'info', t:`พักแถวสนามบิน ${kixNights} คืน (คืนก่อนบิน): เช้าวันบินออกจาก Rinku Town 1 สถานีถึง KIX สบาย ๆ · แถวนี้ติด Rinku Outlets — บ่ายก่อนบินเที่ยวช้อปได้เลย` });
-  }
-  for (let sd = 1; sd <= N_NIGHTS - 1; sd++) {
-    if (state.nights[sd] !== state.nights[sd - 1]) {
-      const a = getHotel(state.nights[sd - 1]), b2 = getHotel(state.nights[sd]);
-      const mv = hotelToHotel(a, b2);
-      w.push({ lv:'info', t:`วัน${fmtDate(dayDate(sd))}: ย้ายโรงแรมหลังเที่ยวเสร็จ — ${a.name.split('⭐')[0].trim()} ➜ ${b2.name.split('⭐')[0].trim()} เดินทาง ~${mv.min} นาที (${mv.note}) · ดูเส้นทางช่วงเย็นของวันนี้ใน timeline/แผนที่` });
-    }
-  }
-  if (!w.some(x => x.lv === 'error')) w.unshift({ lv:'ok', t:'✓ แผนปัจจุบันไม่มีข้อขัดแย้งเรื่องวันปิด/เที่ยวบิน' });
-  return w;
-}
+  /* ---------- trip checklist ---------- */
+  var STORE = 'osaka2026.trip.check';
+  var boxes = Array.prototype.slice.call(document.querySelectorAll('#checks-list input[type="checkbox"]'));
+  var countEl = document.getElementById('checkCount');
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
 
-/* ================= ผลกระทบ (log) ================= */
-function impact(msg) {
-  state.log.unshift(msg);
-  state.log = state.log.slice(0, 8);
-  saveState();
-}
-
-/* ================= rendering ================= */
-const $ = id => document.getElementById(id);
-const yen = n => '¥' + Math.round(n).toLocaleString('en-US');
-const thb = n => '฿' + Math.round(n * state.rate).toLocaleString('en-US');
-
-let selectedDay = 0;
-let map, layerGroup, hotelLayer, pickLayer;
-let pickMode = false, editHotelId = null;
-const MODE_STYLE = {
-  walk:   { color:'#059669', dash:'6,6', icon:'🚶', label:'เดิน' },
-  train:  { color:'#2563eb', dash:null,  icon:'🚆', label:'รถไฟ' },
-  bus:    { color:'#ea580c', dash:null,  icon:'🚌', label:'รถบัส' },
-};
-
-function initMap() {
-  map = L.map('map', { scrollWheelZoom: true }).setView([34.75, 135.45], 9);
-  // CARTO basemaps เริ่มบังคับ API Key (ลายน้ำ "API KEY REQUIRED" ตั้งแต่ล่าสุด) — จึงเปลี่ยนไปใช้ Esri/OSM-DE ที่ไม่ต้องใช้ key
-  const enTiles = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}', {
-    maxZoom: 19, attribution: '© Esri, Maxar, Earthstar Geographics'
-  }).addTo(map);
-  const jaTiles = L.tileLayer('https://tile.openstreetmap.de/{z}/{x}/{y}.png', {
-    maxZoom: 19, attribution: '© OpenStreetMap contributors (tile.openstreetmap.de)'
-  });
-  L.control.layers({
-    '🗺️ ป้าย EN/JP (Esri)': enTiles,
-    '🇯🇵 ป้ายญี่ปุ่น (OSM)': jaTiles
-  }, null, { position: 'topright', collapsed: false }).addTo(map);
-  layerGroup = L.layerGroup().addTo(map);
-  hotelLayer = L.layerGroup().addTo(map);
-  pickLayer = L.layerGroup().addTo(map); // หมุด 🎯 ตอนเลือกตำแหน่งโรงแรมใหม่
-  map.zoomControl.setPosition('topleft');
-  const legend = L.control({ position: 'bottomright' });
-  legend.onAdd = function() {
-    const div = L.DomUtil.create('div', 'legend');
-    div.innerHTML = `
-      <div><span style="background:#2563eb"></span> 🚆 รถไฟ/Metro (วิ่งตามสถานีจริง)</div>
-      <div><span style="background:#059669"></span> 🚶 เดิน</div>
-      <div><span style="background:#a21caf"></span> ⭐ โรงแรมเริ่มวัน · 🏨 เข้าพักคืนนี้ (ถ้าย้าย)</div>
-      <div>จุดกลม = สถานีรถไฟ · ตัวเลข = ลำดับจุดแวะ</div>
-      <div>ชี้ที่เส้น/จุดเพื่อดูชื่อสถานี ขึ้น-ลง</div>`;
-    return div;
-  };
-  legend.addTo(map);
-}
-
-function drawMap() {
-  layerGroup.clearLayers();
-  hotelLayer.clearLayers();
-  const seg = daySegments(selectedDay);
-  const sH = seg.startH, eH = seg.endH;
-  const acts = dayActivities(selectedDay);
-  const stops = [];
-  acts.forEach(a => activityStops(a).forEach(st => stops.push(st)));
-  const bounds = [];
-  // จุดแวะ
-  stops.forEach((st, i) => {
-    const p = P[st.place];
-    const mk = L.marker([p.lat, p.lng], {
-      icon: L.divIcon({ className:'', html:`<div style="background:#dc2626;color:#fff;width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;border:2px solid #fff;box-shadow:0 1px 3px rgba(0,0,0,.4)">${i + 1}</div>`, iconSize:[22,22], iconAnchor:[11,11] })
-    }).bindTooltip(`${i + 1}. ${p.name}`, { direction:'top' });
-    layerGroup.addLayer(mk);
-    bounds.push([p.lat, p.lng]);
-  });
-  // โรงแรมเริ่มวัน (⭐) และโรงแรมที่ไปเข้าพักคืนนี้ (🏨 เฉพาะวันย้ายโรงแรม)
-  hotelLayer.addLayer(L.marker([sH.lat, sH.lng], {
-    icon: L.divIcon({ className:'', html:`<div style="font-size:22px;filter:drop-shadow(0 1px 2px rgba(0,0,0,.4))">⭐</div>`, iconSize:[26,26], iconAnchor:[13,22] })
-  }).bindTooltip(`🏨 เริ่มวันจาก: ${sH.name}`, { direction:'top' }));
-  if (seg.switchDay) {
-    hotelLayer.addLayer(L.marker([eH.lat, eH.lng], {
-      icon: L.divIcon({ className:'', html:`<div style="font-size:22px;filter:drop-shadow(0 1px 2px rgba(0,0,0,.4))">🏨</div>`, iconSize:[26,26], iconAnchor:[13,22] })
-    }).bindTooltip(`🏨 เข้าพักคืนนี้: ${eH.name}`, { direction:'top' }));
+  function showToast(msg) {
+    toast.textContent = msg;
+    toast.classList.add('is-on');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { toast.classList.remove('is-on'); }, 2200);
   }
-  bounds.push([sH.lat, sH.lng]);
-  if (seg.switchDay) bounds.push([eH.lat, eH.lng]);
-  // เส้นทาง
-  const pt = (key) => key === '__hotel__' ? null : [P[key].lat, P[key].lng];
-  const hotelPt = (leg) => leg.which === 'end' ? [eH.lat, eH.lng] : [sH.lat, sH.lng];
-  for (const it of seg.items) {
-    if (it.type !== 'leg') continue;
-    const leg = it.leg;
-    const style = MODE_STYLE[leg.mode] || MODE_STYLE.train;
-    const p1 = pt(leg.from) || hotelPt(leg);
-    const p2 = pt(leg.to) || hotelPt(leg);
-    if (!p1 || !p2) continue;
-    let coords = [p1, p2];
-    if (leg.mode === 'train' && leg.via && leg.via.length) {
-      coords = [p1, ...leg.via.map(k => [ST[k].lat, ST[k].lng]), p2];
-      leg.via.forEach((k, vi) => {
-        const isEnd = vi === 0 || vi === leg.via.length - 1;
-        layerGroup.addLayer(L.circleMarker([ST[k].lat, ST[k].lng], {
-          radius: isEnd ? 5 : 3, color: '#1d4ed8', weight: 2, fillColor: '#fff', fillOpacity: 1
-        }).bindTooltip(`${isEnd ? (vi === 0 ? '🚉 ขึ้น: ' : '🚉 ลง: ') : '• '}${ST[k].name}${leg.lineName ? ' (' + leg.lineName + ')' : ''}`, { direction: 'top' }));
-        bounds.push([ST[k].lat, ST[k].lng]);
-      });
-    }
-    const line = L.polyline(coords, { color: style.color, weight: 4, dashArray: style.dash || null, opacity: .85 });
-    const routeInfo = leg.mode === 'train' && leg.via && leg.via.length
-      ? ` · ขึ้น ${ST[leg.via[0]].name} → ลง ${ST[leg.via[leg.via.length - 1]].name}${leg.via.length > 2 ? ` (ผ่าน ${leg.via.length - 2} สถานี)` : ''}` : '';
-    line.bindTooltip(`${style.icon} ${leg.lineName || leg.special || leg.note || style.label} · ~${leg.min} นาที${leg.fare ? ' · ' + yen(leg.fare) + '/ผู้ใหญ่' : ''}${routeInfo}`);
-    layerGroup.addLayer(line);
-  }
-  if (bounds.length) map.fitBounds(bounds, { padding: [40, 40], maxZoom: 14 });
-}
 
-function legChip(leg) {
-  const st = MODE_STYLE[leg.mode] || MODE_STYLE.train;
-  const cls = leg.mode === 'walk' ? ' walking' : (leg.special ? ' special' : '');
-  const fareTxt = leg.fare ? ` · ${yen(leg.fare)}/ผู้ใหญ่ (เด็กฟรี)` : '';
-  let routeTxt = '';
-  if (leg.mode === 'train' && leg.via && leg.via.length) {
-    routeTxt = `<span class="stn">🚉 ขึ้น ${ST[leg.via[0]].name} → ลง ${ST[leg.via[leg.via.length - 1]].name}${leg.lineName ? ' · ' + leg.lineName : ''}</span>`;
-    const mid = leg.via.slice(1, -1);
-    if (mid.length) routeTxt += `<span class="stn">ผ่าน ${mid.length} สถานี: ${mid.map(k => (ST[k] ? ST[k].name : k)).join(' · ')}</span>`;
-  } else if (leg.special || leg.note) {
-    routeTxt = `<span class="stn">${leg.special || leg.note}</span>`;
+  function save() {
+    var data = {};
+    boxes.forEach(function (b) { if (b.checked) data[b.dataset.key] = 1; });
+    try { localStorage.setItem(STORE, JSON.stringify(data)); } catch (e) {}
   }
-  return `<div class="legchip${cls}">${st.icon} ${st.label} ~${leg.min} นาที${fareTxt}${routeTxt}</div>`;
-}
 
-function renderDayList() {
-  const el = $('daylist');
-  let html = '';
-  for (let d = 0; d < N_DAYS; d++) {
-    const acts = dayActivities(d);
-    const hasErr = computeWarnings().some(w => w.lv === 'error' && w.t.startsWith('วัน' + fmtDate(dayDate(d))));
-    const titles = acts.map(a => a.emoji + ' ' + a.title.split('—')[0].trim()).join(', ') || '—';
-    html += `<button class="daybtn ${d === selectedDay ? 'active' : ''}" data-day="${d}">
-      <span class="dnum">วัน ${d + 1}</span>
-      <span class="dtitle"><b>${fmtDate(dayDate(d))}</b><span>${titles}</span></span>
-      <span class="warnic">${hasErr ? '⛔' : (acts.length ? '' : '')}</span>
-    </button>`;
+  function render() {
+    var done = boxes.filter(function (b) { return b.checked; }).length;
+    countEl.textContent = done + ' / ' + boxes.length;
   }
-  el.innerHTML = html;
-  el.querySelectorAll('.daybtn').forEach(b => b.addEventListener('click', () => { selectedDay = +b.dataset.day; updateAll(false); }));
-}
 
-/* รูปภาพ + เรื่องน่ารู้ของสถานที่ (ดึงรูปจาก Wikipedia REST API แบบ on-demand + cache)
-   wiki: 'ชื่อหน้า' (en) หรือ ['ชื่อหน้า', 'ja:ชื่อหน้าญี่ปุ่น'] ลองหลายชื่อเรียงลำดับ */
-const photoCache = {};
-const NULL_TTL = 90000; // ความล้มเหลว (429/ออฟไลน์) หมดอายุใน 90 วิ — กดใหม่ครั้งถัดไปลองอีกครั้ง
-async function fetchWikiThumb(lang, title) {
-  const key = lang + ':' + title;
-  const c = photoCache[key];
-  if (c !== undefined && (c.img !== null || Date.now() - c.at < NULL_TTL)) return c.img;
-  let img = null;
-  for (let attempt = 0; attempt < 2 && !img; attempt++) {
+  (function load() {
+    var raw = null;
+    try { raw = localStorage.getItem(STORE); } catch (e) {}
+    if (!raw) { render(); return; }
     try {
-      const url = `https://${lang}.wikipedia.org/api/rest_v1/page/summary/` + encodeURIComponent(title) + '?redirect=true';
-      const r = await fetch(url, { headers: { 'Api-User-Agent': 'OsakaTripPlanner/1.0 (personal trip plan)' } });
-      if (r.status === 429) { await new Promise(res => setTimeout(res, 2000)); continue; }
-      if (r.ok) {
-        const j = await r.json();
-        img = (j.thumbnail && j.thumbnail.source) || (j.originalimage && j.originalimage.source) || null;
-        if (img) img = img.replace(/\/320px-/, '/640px-');
-      }
+      var data = JSON.parse(raw);
+      boxes.forEach(function (b) { b.checked = !!data[b.dataset.key]; });
     } catch (e) {}
-  }
-  photoCache[key] = { img, at: Date.now() };
-  return img;
-}
-async function fetchPhoto(wiki) {
-  const candidates = Array.isArray(wiki) ? wiki : [wiki];
-  for (const c of candidates) {
-    const [lang, title] = c.includes(':') ? [c.slice(0, c.indexOf(':')), c.slice(c.indexOf(':') + 1)] : ['en', c];
-    const img = await fetchWikiThumb(lang, title);
-    if (img) return img;
-  }
-  return null;
-}
-function infoBtnHtml(place, idx) {
-  return `<button class="infobtn" data-info="${place}" data-idx="${idx}">📷 เรื่องน่ารู้ + รูปภาพ</button><div class="placeinfo" id="pi_${idx}" hidden></div>`;
-}
-function infoHtml(info) {
-  return `<img class="ph-img" alt="รูปสถานที่"><span class="ph-h">${info.desc}</span>
-    <ul>${info.bullets.map(b => `<li>${b}</li>`).join('')}</ul>
-    <span class="credit">รูปภาพจาก Wikipedia / Wikimedia Commons</span>`;
-}
+    render();
+  })();
 
-function renderDayDetail() {
-  const d = selectedDay;
-  const acts = dayActivities(d);
-  const seg = daySegments(d);
-  let html = `<div class="dd-head">
-    <h3>วันที่ ${d + 1} · ${fmtDate(dayDate(d))}</h3>
-    <span class="dddate">${d === 0 ? '🛬 เริ่มที่สนามบิน KIX' : `🏨 เริ่มวันจาก: ${seg.startH.name}`}${seg.switchDay ? ' · 🔄 คืนนี้ย้ายโรงแรม' : ''}</span>
-  </div>`;
-  if (!acts.length) {
-    html += `<div class="emptyday">ยังไม่มีกิจกรรมในวันนี้ — ย้ายกิจกรรมมาได้จากวันอื่น (เมนู "ย้ายกิจกรรมนี้ไป" ในแต่ละกิจกรรม)</div>`;
-    $('daydetail').innerHTML = html;
-    return;
-  }
-  html += `<div class="tl">`;
-  // จุดเริ่มต้นของวัน
-  if (d === 0) html += blockHtml('🛬', 'เริ่มวันที่สนามบิน KIX', 'เที่ยวบิน XJ614 ถึง 18:15 (เวลาญี่ปุ่น)');
-  else html += blockHtml('🏨', 'เริ่มวันจากโรงแรม', `${seg.startH.name} · ${yen(seg.startH.price)}/คืน`);
-  let n = 0, lastPlace = null;
-  seg.items.forEach(it => {
-    if (it.type === 'leg') { html += legChip(it.leg); return; }
-    const st = it.stop, act = it.act, head = it.first;
-    n++; lastPlace = st.place;
-    html += `<div class="tlact">
-      <div class="dot"><div class="pin">${n}</div><div class="line"></div></div>
-      <div class="tlbody">
-          ${head ? `<h4>${act.emoji} ${act.title}</h4>` : ''}
-          <div class="tm">${st.time} · ${P[st.place].name}</div>
-          ${st.note ? `<div class="desc">${st.note}</div>` : ''}
-          ${st.ticket ? ticketHtml(st) : ''}
-          ${head && act.movable ? moveHtml(act, d) : ''}
-          ${PLACES_INFO[st.place] ? infoBtnHtml(st.place, n) : ''}
-        </div>
-    </div>`;
+  boxes.forEach(function (b) {
+    b.addEventListener('change', function () {
+      save();
+      render();
+      if (b.checked && boxes.every(function (x) { return x.checked; })) {
+        showToast('ครบทุกข้อแล้ว — พร้อมออกเดินทาง');
+      }
+    });
   });
-  const lastAct = acts[acts.length - 1];
-  // วันที่การย้ายโรงแรมเกิดผ่านกิจกรรมกลางวัน (train_to_kyoto/train_to_namba) ไม่ต้องขึ้นบล็อก "ย้าย" ซ้ำท้ายวัน
-  const hasMoveAct = acts.some(a => a.id === 'train_to_kyoto' || a.id === 'train_to_namba');
-  if (!lastAct.endsAt) {
-    if (seg.switchDay && !hasMoveAct) {
-      const mv = hotelToHotel(seg.startH, seg.endH);
-      html += blockHtml('🔄', 'ย้ายโรงแรม → เข้าพักคืนนี้',
-        `${seg.startH.name} ➜ <b>${seg.endH.name}</b> · เดินทาง ~${mv.min} นาที (${mv.note}${mv.fare ? ' · ' + yen(mv.fare) + '/คน' : ''} · เด็กฟรี) · ${yen(seg.endH.price)}/คืน`);
-    } else if (lastPlace === 'hotel_base' || lastPlace === 'hotel_kyoto' || lastPlace === 'hotel_tail') {
-      html += blockHtml('🏨', 'เข้าพักแล้ว — จบวันที่ตัวโรงแรม',
-        state.kyotoWhen === 'first' && d === 0
-          ? 'วันแรกเดินทางยาว (บินบ่าย + รถไฟ ~2 ชม.) — ซื้ออาหารเย็นไว้ตั้งแต่สนามบิน (ร้านแถวนี้ปิด ~21:00) เข้านอนเร็ว เด็กได้นอนเต็มตา พรุ่งนี้เที่ยว Kyoto เต็มวัน'
-          : `อยู่ที่ ${seg.endH.name} ต่อคืนนี้`);
-    } else {
-      html += blockHtml('🏨', 'กลับเข้าพัก', `${seg.endH.name} · ${yen(seg.endH.price)}/คืน`);
+
+  document.getElementById('resetChecks').addEventListener('click', function () {
+    boxes.forEach(function (b) { b.checked = false; });
+    try { localStorage.removeItem(STORE); } catch (e) {}
+    render();
+    showToast('ล้างติ๊กทั้งหมดแล้ว');
+  });
+
+  /* ---------- print ---------- */
+  document.getElementById('printBtn').addEventListener('click', function () { window.print(); });
+
+  /* ---------- reveal on scroll ---------- */
+  var items = Array.prototype.slice.call(document.querySelectorAll('.reveal'));
+  var heads = Array.prototype.slice.call(document.querySelectorAll('.section__head'));
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (en.isIntersecting) { en.target.classList.add('is-in'); io.unobserve(en.target); }
+      });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+    items.forEach(function (el) { io.observe(el); });
+
+    if (heads.length) {
+      var io2 = new IntersectionObserver(function (entries) {
+        entries.forEach(function (en) {
+          if (en.isIntersecting) { en.target.classList.add('is-seen'); io2.unobserve(en.target); }
+        });
+      }, { threshold: 0.4 });
+      heads.forEach(function (el) { io2.observe(el); });
     }
-  } else if (lastAct.endBlock) {
-    html += blockHtml(lastAct.endBlock.icon, lastAct.endBlock.title, lastAct.endBlock.sub);
   } else {
-    html += blockHtml('🛫', 'จบวันที่สนามบิน KIX', 'เช็คอิน 07:30 · บิน XJ615 10:30 → ถึง DMK 15:05');
+    items.forEach(function (el) { el.classList.add('is-in'); });
+    heads.forEach(function (el) { el.classList.add('is-seen'); });
   }
-  const bp = backupPlanFor(d);
-  if (bp) html += `<details class="backupplan"><summary>🎴 แผนสำรอง — ${bp.t}</summary><ul>${bp.items.map(x => `<li>${x}</li>`).join('')}</ul></details>`;
-  html += `</div>`;
-  $('daydetail').innerHTML = html;
 
-  $('daydetail').querySelectorAll('[data-move]').forEach(sel => {
-    sel.addEventListener('change', e => {
-      const id = e.target.dataset.move, nd = +e.target.value;
-      const act = findActivity(id);
-      if (nd === -1) {
-        impact(`✂️ ตัด "${act.title}" ออกจากทริป — งบ/คำเตือนอัปเดตแล้ว · เปลี่ยนใจคืนกิจกรรมได้ที่แผง "🎛️ ตัวเลือกกิจกรรม"`);
-      } else {
-        impact(`🔄 ย้าย "${act.title}" ไปวันที่ ${nd + 1} (${fmtDate(dayDate(nd))}) — ตรวจสอบการแจ้งเตือนด้านล่าง`);
-      }
-      state.assign[id] = nd;
-      saveState();
-      updateAll(true);
-    });
-  });
-  $('daydetail').querySelectorAll('[data-info]').forEach(btn => {
-    btn.addEventListener('click', async () => {
-      const panel = btn.nextElementSibling;
-      const show = panel.hidden;
-      panel.hidden = !show;
-      if (show && !panel.dataset.loaded) {
-        panel.dataset.loaded = '1';
-        const info = PLACES_INFO[btn.dataset.info];
-        panel.innerHTML = infoHtml(info);
-        const img = await fetchPhoto(info.wiki);
-        const el = panel.querySelector('.ph-img');
-        if (el) {
-          if (img) el.src = img;
-          else el.outerHTML = '<div class="ph-fallback">📷 ไม่พบรูปภาพ (ออฟไลน์หรือโหลดไม่สำเร็จ — ข้อมูลด้านล่างใช้ได้ปกติ)</div>';
-        }
-      }
-    });
-  });
-}
-/* แผนสำรองรายวัน (ฝนตก / เด็กหมดแรง / ปิดกิจกรรม) — แสดงเป็นกล่องกางได้ท้ายแต่ละวัน · วันที่ 6 สลับจริงได้ผ่าน state.kobePlan */
-function backupPlanFor(d) {
-  const B = {
-    0: { t:'วันเดินทาง — พักให้สุด', items:['ถึงโรงแรม ~21:15 — ไม่มีกิจกรรม นอนเลย','🍜 ถ้าลูกยังไหว: ข้าวเย็น Ramen Street ชั้น 10 ของสถานี (เปิดถึง ~22:00) แล้วนอนเร็ว'] },
-    1: { t:'ฝนตกวันเที่ยวเมือง (วัดน้ำใส/วัดทอง)', items:['⛩️ <b>Sanjusangendo</b> — หอไม้ยาว 120 ม. ประดิษฐานกันดารี 1,001 องค์ (ในร่มทั้งหมด เดินชมไม่นาน เด็กว้าว) · ใกล้ Kyoto Stn บัส 1 ป้าย · ~¥600','🚂 <b>Kyoto Railway Museum</b> / 🐠 <b>Kyoto Aquarium</b> — โซนใกล้โรงแรม (JR 1 สถานี) ในร่มทั้งหมด','🍜 เที่ยง Ramen Street ชั้น 10 ของสถานี — กลับโรงแรมง่าย ๆ'] },
-    2: { t:'ฝนตกวัน Arashiyama + ย้ายเข้า UC', items:['🎫 Torokko 当日券หมด (ไม่ใช่ฝน): ป่าไผ่ 08:50 แทน (โล่งสุดของวัน) แล้ว JR ตรง Kameoka ขึ้นเรือรอบเดิม — แผนไม่พัง','🚂 <b>Kyoto Railway Museum</b> — รถไฟจริง 50+ คัน จำลองขับขี่ขบวนไอน้ำได้ (เด็ก 5 ขวบชอบมาก) · JR จาก Saga-Arashiyama 1 สถานีถึง Umekoji-Kyotonishi · ~¥1,500/ผู้ใหญ่ เด็ก ~¥200–500','🐠 <b>Kyoto Aquarium</b> — อยู่ข้างกัน ในร่มทั้งหมด (นากยักษ์ + แมงกะพรุน) · ~¥2,400/ผู้ใหญ่','🚣 เรือ Hozugawa ยกเลิกถ้าพายุ/น้ำหลาก (คืนเงิน/เลื่อนตามเงื่อนไข) — เที่ยวในร่มแทน (หรือลิง Iwatayama ถ้าฝนปรอย) แล้วย้ายเข้า UC ตามแผน · ฝนปรอย: ป่าไผ่/Tenryu-ji เดินได้ปกติ'] },
-    3: { t:'วัน USJ — ฝนตก / อยากเปลี่ยน', items:['🌧️ ฝนปรอยยังคุ้ม: โซนในร่มเยอะ (Minion Park, ครึ่งในของ Nintendo World) — พกร่มซื้อหน้าประตู','🔄 ฝนหนักทั้งวัน: กด "ย้ายกิจกรรม" สลับ USJ กับ Kaiyukan (วันพุธ) — Kaiyukan ในร่มทั้งหมด · ระวังราคาตั๋ว USJ ต่างวัน','🧒 ทางเลือกในร่มแทน: <b>Kids Plaza Osaka</b> — พิพิธภัณฑ์เด็กเล่นสนุกทั้งวัน ใกล้สถานี Ogimachi · ~¥1,450/ผู้ใหญ่ เด็ก ม.ต้นลงมาฟรี'] },
-    4: { t:'วัน Kaiyukan + ย้ายโรงแรม', items:['วันนี้ในร่มเกือบทั้งวันอยู่แล้ว — ฝนไม่ใช่ปัญหา','🎡 ชิงช้าสวรรค์หยุดถ้าลม/ฝนแรง: เพิ่มเวลาที่ Legoland (มีโรงหนัง 4D) หรือล่องเรือ Santa Maria รอบอ่าว ~45 นาที (~¥1,800/ผู้ใหญ่)','🚕 ถ้าเด็กหมดแรงก่อนย้ายโรงแรม: แท็กซี่ตรง UC → Namba ~15 นาที ~¥3,000 คุ้มกว่าแบกกระเป๋าขึ้นรถไฟ'] },
-    5: { t:'วัน Nara — ฝนตก', items:['ตลาด Kuromon มีหลังคา เดินกินได้แม้ฝนปรอย','🏛️ <b>Nara National Museum</b> — ในร่ม ใกล้ปาก Nara Park · ~¥700/ผู้ใหญ่ เด็กฟรี · กวางยังเจอตอนเดินทางอยู่ดี','🌧️ ฝนหนักมาก: ย้าย Nara ไปวันศุกร์ (กดย้ายกิจกรรม) แล้ววันนี้ไป <b>Osaka Museum of Housing and Living</b> — เมืองโอซาก้ายุคเอโดะจำลองเท่าจริง เดินในร่ม ~¥600 หรือ Kids Plaza ข้าง ๆ (แต่วันศุกร์จะชนกับ Kobe/Castle — คิดดี ๆ: กวางไม่กลัวฝน)'] },
-    7: { t:'วัน Minoo + ย้ายไปนอนแถวสนามบิน', items:['🌧️ ฝนตกที่ Minoo: สลับเป็น Kids Plaza Osaka หรือช้อปในร่มแถว Umeda แล้วไป Rinku ตามแผนบ่าย','🛍️ Rinku Outlets ส่วนใหญ่มีหลังคา — ฝนปรอยเดินได้','😴 เด็กเหนื่อย: ตัด Minoo (✂️) เหลือวันชิล ๆ ช้อป Rinku ก่อนขึ้นเครื่อง'] },
-    8: { t:'วันกลับ', items:['ฝนไม่กระทบ — ออกจากโรงแรมแถวสนามบิน ~06:45 · JR/Nankai 1 สถานีถึง KIX','⏱️ เคาน์เตอร์เปิด 07:30 (3 ชม.ก่อนบิน 10:30) — ถึงก่อน 07:15 สบาย ๆ'] },
-  };
-  if (d === 6) {
-    return state.kobePlan === 'castle'
-      ? { t:'วัน Castle — ฝนตก / เด็กหมดแรง', items:['🏯 พิพิธภัณฑ์ในปราสาทอยู่ในร่ม — ฝนปรอยเดินได้สบาย · สวน Nishinomaru สวยสุดตอนแดดออก ถ้าฝนหนักข้ามไป Umeda ก่อนก็ได้','🥩 เปลี่ยนใจอยากกิน Kobe beef + สวนสัตว์: กดสลับกลับแผน Kobe ที่แผง "🎛️ ตัวเลือกกิจกรรม" ได้ทุกเมื่อ'] }
-      : { t:'แผนสำรองแทน Kobe', items:['🏯 <b>Osaka Castle แทน Kobe</b> — กดสลับที่แผง "🎛️ ตัวเลือกกิจกรรม" → หัวข้อ "แผนวันศุกร์ 4 ธ.ค." · ไม่ต้องนั่งรถไฟไกล ประหยัดค่ารถ ~¥1,600 ครอบครัว · ตั๋วรวม ~¥1,400','🌧️ ฝนปรอยยังไป Kobe ได้: Steak Land ในร่ม + Animal Kingdom ในร่มทั้งอาคาร — แค่ Harborland อาจเดินช้าลงหน่อย','😴 ถ้าแค่เด็กเหนื่อย (ไม่ใช่ฝน): กดตัด Harborland ออกด้วยเมนู ✂️ — เหลือ steak + สวนสัตว์ กลับถึง Namba เร็วขึ้น 1–2 ชม.'] };
+  /* ---------- maple leaves: fall the exact height of the hero ---------- */
+  (function () {
+    var box = document.querySelector('.leaves');
+    var heroEl = document.querySelector('.hero');
+    if (!box || !heroEl) return;
+    function sizeLeaves() {
+      var h = heroEl.offsetHeight;
+      var w = heroEl.offsetWidth;
+      box.style.setProperty('--travelY', Math.round(h + 200) + 'px');
+      box.style.setProperty('--travelX', '-' + Math.round(w + 240) + 'px');
+    }
+    sizeLeaves();
+    window.addEventListener('resize', sizeLeaves);
+  })();
+
+  /* safety net — ถ้า observer ไม่ทำงาน (แท็บเบื้องหลัง/เบราว์เซอร์ในแอป) ให้โชว์เนื้อหาเสมอ */
+  function revealAll() {
+    items.forEach(function (el) { el.classList.add('is-in'); });
+    heads.forEach(function (el) { el.classList.add('is-seen'); });
   }
-  return B[d];
-}
-function blockHtml(icon, title, sub) {
-  return `<div class="tlact"><div class="dot"><div class="pin hotel">${icon}</div><div class="line"></div></div>
-    <div class="tlbody"><h4>${title}</h4><div class="tm">${sub}</div></div></div>`;
-}
-function ticketHtml(st) {
-  const fam = familyTicket(st.ticket) + (st.ticket.extra === 'express' && state.express ? 18000 * 2 + 12600 : 0);
-  return `<div class="ticket">🎫 ${st.ticket.label} · ครอบครัว ≈ ${yen(fam)} (${thb(fam)})${st.ticket.extra === 'express' && state.express ? ' + Express Pass แล้ว' : ''}</div>`;
-}
-function moveHtml(act, d) {
-  let opts = '';
-  for (let x = 0; x < N_DAYS; x++) opts += `<option value="${x}" ${x === d ? 'selected' : ''}>วัน ${x + 1} (${fmtDate(dayDate(x))})</option>`;
-  opts += `<option value="-1">✂️ ตัดออกจากทริป</option>`;
-  return `<div class="move">ย้าย/ตัดกิจกรรม: <select data-move="${act.id}">${opts}</select></div>`;
-}
-
-function renderHotels() {
-  const g = $('hotelGlobal');
-  g.innerHTML = allHotels().map(h => `<option value="${h.id}">${h.name}</option>`).join('');
-  g.value = state.hotelGlobal;
-  const gk = $('hotelKyoto');
-  gk.innerHTML = allHotels().filter(h => h.area === 'kyoto').map(h => `<option value="${h.id}">${h.name}</option>`).join('');
-  gk.value = state.nights[kyotoNights()[0]];
-  document.querySelectorAll('[name=kyotoWhen]').forEach(r => r.checked = r.value === state.kyotoWhen);
-  const bayActive = state.kyotoWhen === 'first' && !!state.bayOn;
-  $('labelGlobal').textContent = bayActive ? 'ตั้งหลัก (โซน Osaka คืนที่ 5–7):'
-    : state.kyotoWhen === 'first' ? 'ตั้งหลัก (โซน Osaka คืนที่ 3–7):' : 'ตั้งหลัก (โซน Osaka คืนที่ 1–2, 5–7):';
-  $('labelKyoto').textContent = state.kyotoWhen === 'first' ? 'ตั้งโรงแรม Kyoto (คืนที่ 1–2):' : 'ตั้งโรงแรม Kyoto (คืนที่ 3–4):';
-  const gb = $('hotelBay');
-  gb.innerHTML = allHotels().filter(h => h.area === 'bay').map(h => `<option value="${h.id}">${h.name}</option>`).join('');
-  const curBay = getHotel(state.nights[2]);
-  gb.value = (curBay && curBay.area === 'bay') ? curBay.id : defaultBayHotelId();
-  $('bayToggle').checked = !!state.bayOn;
-  $('bayToggle').disabled = state.kyotoWhen === 'mid';
-  $('bayHotelRow').hidden = !bayActive;
-  $('bayRow').style.opacity = state.kyotoWhen === 'mid' ? '.5' : '1';
-  $('bayHint').hidden = state.kyotoWhen !== 'mid';
-  const nr = $('nightrows');
-  let html = '';
-  for (let n = 0; n < N_NIGHTS; n++) {
-    const night = dayDate(n); // คืนที่ n = พักคืนวันที่ n ของทริป
-    html += `<div class="nightrow"><span class="nd">คืนที่ ${n + 1}<br><span style="color:#94a3b8">${fmtDate(dayDate(n))}</span></span>
-      <select data-night="${n}">${allHotels().map(h => `<option value="${h.id}" ${state.nights[n] === h.id ? 'selected' : ''}>${h.name}</option>`).join('')}</select></div>`;
-  }
-  nr.innerHTML = html;
-  nr.querySelectorAll('[data-night]').forEach(sel => sel.addEventListener('change', e => {
-    const n = +e.target.dataset.night, hid = e.target.value;
-    const h = getHotel(hid);
-    impact(`🏨 คืนที่ ${n + 1} → ${h.name} (${yen(h.price)}/คืน) — เส้นทางวันรุ่งขึ้นเปลี่ยนตาม`);
-    state.nights[n] = hid; saveState(); updateAll(true);
-  }));
-  const nightsCost = state.nights.reduce((s, hid) => s + (getHotel(hid)?.price || 0), 0);
-  const kyotoHotel = getHotel(state.nights[kyotoNights()[0]]);
-  const zoneLine = state.kyotoWhen === 'mid'
-    ? '💡 คืนที่ 3–4 นอนโซน Arashiyama (Kyoto) · คืนที่ 8 นอนแถวสนามบิน (Rinku) — เช้าวันบินสบาย'
-    : bayActive
-      ? '💡 คืน 1–2 Kyoto · คืน 3–4 Universal City (USJ เดินถึง) · คืน 5–7 Namba · คืน 8 แถวสนามบิน (Rinku — ติด Rinku Outlets)'
-      : '💡 คืนที่ 1–2 นอนโซน Arashiyama (Kyoto) · คืนที่ 8 นอนแถวสนามบิน (Rinku)';
-  $('hotelSummary').innerHTML = `รวมที่พัก ${N_NIGHTS} คืน = <b>${yen(nightsCost)}</b> (${thb(nightsCost)})<br><span style="color:#94a3b8">${kyotoHotel?.note || ''}</span><br>${zoneLine}`;
-}
-
-function renderOptions() {
-  const el = $('optionsPanel');
-  const cut = ACTIVITIES.filter(a => state.assign[a.id] === -1);
-  const cutHtml = cut.length
-    ? `<label>✂️ กิจกรรมที่ตัดออกจากทริป (เปลี่ยนใจคืนได้)</label>${cut.map(a =>
-        `<div class="radio-line">✂️ ${a.emoji} ${a.title.split('—')[0].trim()} <button class="mini" data-restore="${a.id}" type="button">คืนกิจกรรม</button></div>`).join('')}<div style="height:6px"></div>`
-    : '';
-  el.innerHTML = `
-    ${cutHtml}
-    <label>เส้นทาง Kyoto (วันที่มีกิจกรรม Kyoto)</label>
-    <label class="radio-line"><input type="radio" name="kyoto" value="A" ${state.kyoto === 'A' ? 'checked' : ''}> A: Arashiyama — Torokko เช้า + เรือ Hozugawa + ป่าไผ่บ่าย <span class="price">เรือ ~¥16,500 + Torokko ~¥1,800 (当日券 ต่อคิว 08:35)</span></label>
-    <label class="radio-line"><input type="radio" name="kyoto" value="B" ${state.kyoto === 'B' ? 'checked' : ''}> B: Higashiyama — Tofuku-ji + Kiyomizu + Gion <span class="price">ตั๋ว ~¥2,300</span></label>
-    <div style="height:6px"></div>
-    <label>แผนวันศุกร์ 4 ธ.ค. — สลับได้ทุกเมื่อ</label>
-    <label class="radio-line"><input type="radio" name="kobePlan" value="castle" ${state.kobePlan === 'castle' ? 'checked' : ''}> 🏯 <b>Osaka Castle</b> + Miraiza + สวน Nishinomaru <span class="price">แผนที่เลือก · ตั๋ว ~¥1,400 ครอบครัว · ไม่นั่งรถไฟไกล</span></label>
-    <label class="radio-line"><input type="radio" name="kobePlan" value="kobe" ${state.kobePlan !== 'castle' ? 'checked' : ''}> 🥩 ทางเลือก: Kobe — Steak + Animal Kingdom + Harborland <span class="price">ตั๋ว+ค่ารถ ~¥16,500 ครอบครัว</span></label>
-    <div style="height:6px"></div>
-    <label>มื้อ steak ที่ Kobe 🥩 ${state.kobePlan === 'castle' ? '<span style="color:#94a3b8">(มีผลเฉพาะถ้าสลับกลับแผน Kobe)</span>' : ''}</label>
-    <label class="radio-line"><input type="radio" name="steak" value="steakland" ${state.steak === 'steakland' ? 'checked' : ''}> Steak Land — คุ้มสุด <span class="price">~¥9,800 ครอบครัว</span></label>
-    <label class="radio-line"><input type="radio" name="steak" value="mouriya" ${state.steak === 'mouriya' ? 'checked' : ''}> Mouriya — พรีเมียม <span class="price">~¥21,600 ครอบครัว (+10%)</span></label>
-    <div style="height:6px"></div>
-    <label>บ่ายแถว Tempozan (หลัง Kaiyukan)</label>
-    <label class="radio-line"><input type="radio" name="tempozan" value="legoland" ${state.tempozan === 'legoland' ? 'checked' : ''}> Legoland Discovery Center <span class="price">~¥6,900</span></label>
-    <label class="radio-line"><input type="radio" name="tempozan" value="ferris" ${state.tempozan === 'ferris' ? 'checked' : ''}> ชิงช้าสวรรค์ Tempozan <span class="price">~¥2,500</span></label>
-    <div style="height:6px"></div>
-    <label class="radio-line"><input type="checkbox" id="optExpress" ${state.express ? 'checked' : ''}> ซื้อ Express Pass USJ <span class="price">+~¥48,600 (การันตีเข้า Nintendo World)</span></label>
-    <label class="radio-line"><input type="checkbox" id="optRinku" ${state.rinku ? 'checked' : ''}> แวะ Rinku Outlets ค่ำก่อนกลับ <span class="price">ติดโรงแรมแถวสนามบิน — เดินถึง</span></label>
-    <div class="row" style="margin-top:8px">
-      <label style="margin:0">ค่าอาหาร/วัน:</label>
-      <input type="number" id="foodInput" value="${state.foodPerDay}" step="500" style="width:90px"> ¥
-    </div>`;
-  el.querySelectorAll('[data-restore]').forEach(b => b.addEventListener('click', () => {
-    const act = findActivity(b.dataset.restore);
-    delete state.assign[act.id];
-    impact(`♻️ คืนกิจกรรม "${act.title}" กลับเข้าแผน (วันที่ ${act.defaultDay + 1})`);
-    saveState(); updateAll(true);
-  }));
-  el.querySelectorAll('[name=kobePlan]').forEach(r => r.addEventListener('change', e => {
-    state.kobePlan = e.target.value;
-    impact(e.target.value === 'castle'
-      ? '🏯 สลับวันศุกร์ 4 ธ.ค. เป็นแผนสำรอง Osaka Castle — ตัดเดินทางไป Kobe ออก (ประหยัดค่ารถ ~¥1,600 ครอบครัว) · อยากกิน steak ยังหา teppanyaki แถว Umeda/Namba ได้ หรือกดสลับกลับ'
-      : '🥩 สลับวันศุกร์ 4 ธ.ค. เป็นแผน Kobe — Steak + Animal Kingdom (เปิดวันศุกร์) + Harborland (จอง steak ล่วงหน้าหากสลับไปวันนี้)');
-    saveState(); updateAll(true);
-  }));
-  el.querySelectorAll('[name=kyoto]').forEach(r => r.addEventListener('change', e => { state.kyoto = e.target.value; impact(`🍁 เลือก Kyoto แบบ ${e.target.value === 'A' ? 'A: Arashiyama (Torokko เช้า + เรือ Hozugawa)' : 'B: Higashiyama (วัด Tofuku-ji + Kiyomizu)'}`); saveState(); updateAll(true); }));
-  el.querySelectorAll('[name=steak]').forEach(r => r.addEventListener('change', e => { state.steak = e.target.value; impact(`🥩 ร้าน steak: ${e.target.value === 'steakland' ? 'Steak Land (คุ้มสุด)' : 'Mouriya (พรีเมียม, จองล่วงหน้า)'}`); saveState(); updateAll(true); }));
-  el.querySelectorAll('[name=tempozan]').forEach(r => r.addEventListener('change', e => { state.tempozan = e.target.value; impact(`🎡 บ่ายแถว Tempozan: ${e.target.value === 'legoland' ? 'Legoland' : 'ชิงช้าสวรรค์'}`); saveState(); updateAll(true); }));
-  $('optExpress').addEventListener('change', e => { state.express = e.target.checked; impact(state.express ? '🎟️ เพิ่ม Express Pass USJ (+~¥48,600)' : '🎟️ ยกเลิก Express Pass'); saveState(); updateAll(true); });
-  $('optRinku').addEventListener('change', e => { state.rinku = e.target.checked; impact(state.rinku ? '🛍️ เพิ่มแวะ Rinku Outlets ค่ำก่อนกลับ (5 ธ.ค.)' : 'ยกเลิก Rinku Outlets'); saveState(); updateAll(true); });
-  $('foodInput').addEventListener('change', e => { state.foodPerDay = Math.max(0, +e.target.value || 0); impact(`🍱 งบอาหาร ${yen(state.foodPerDay)}/วัน`); saveState(); updateAll(true); });
-}
-
-function renderBudget() {
-  const b = computeBudget();
-  const rows = [
-    ['🏨 ที่พัก 8 คืน', b.lodging],
-    ['🎫 ตั๋วกิจกรรม', b.attractions],
-    ['🚆 ค่าเดินทาง (2 ผู้ใหญ่, เด็กฟรี)', b.transport],
-    ['🍱 อาหาร 9 วัน', b.food],
-  ];
-  let html = rows.map(([k, v]) => `<div class="budget-row"><span>${k}</span><span class="val">${yen(v)} · ${thb(v)}</span></div>`).join('');
-  html += `<div class="budget-total"><span>รวมทั้งทริป</span><span><b>${yen(b.total)}</b><br><span class="thb">≈ ${thb(b.total)}</span></span></div>`;
-  html += `<div class="hint">ต่อ 1 ผู้ใหญ่ ≈ ${yen(b.total / 2)} — ยังไม่รวมตั๋วเครื่องบินและช้อปปิ้ง · เด็ก 5 ขวบ: รถไฟฟรี ตั๋วเข้าสถานที่ราคาเด็ก</div>`;
-  $('budgetPanel').innerHTML = html;
-}
-
-function renderWarnings() {
-  const ws = computeWarnings();
-  $('warnings').innerHTML = ws.map(w => `<div class="wline ${w.lv}">${{error:'⛔', warn:'⚠️', info:'ℹ️', ok:'✅'}[w.lv]} ${w.t}</div>`).join('');
-  $('impactlog').innerHTML = state.log.length
-    ? state.log.map(l => `<div class="wline">${l}</div>`).join('')
-    : `<div class="wline">ยังไม่มีการเปลี่ยนแปลง — เปลี่ยนโรงแรม/ย้ายวัน/เลือกตัวเลือกแล้วดูผลที่นี่</div>`;
-}
-
-function renderShiftSelect() {
-  const el = $('shiftSelect');
-  let html = '';
-  for (let s = -2; s <= 3; s++) {
-    const d = new Date(START); d.setDate(d.getDate() + s);
-    html += `<option value="${s}" ${state.shift === s ? 'selected' : ''}>${s === 0 ? 'ตามเที่ยวบินที่จอง: ' : `เลื่อน ${s > 0 ? '+' : ''}${s} วัน → `}ออก ${fmtDate(d)}</option>`;
-  }
-  el.innerHTML = html;
-}
-
-/* ================= แท็บโรงแรม: รวมรายการ + เพิ่ม/แก้/ลบโรงแรมเอง ================= */
-const ZONE_TH = { namba:'📍 Osaka/Namba', kyoto:'🍁 Kyoto', bay:'🎢 Universal City', kix:'✈️ KIX/Rinku' };
-const zoneWord = area => area === 'kyoto' ? 'Kyoto' : area === 'bay' ? 'UC' : area === 'kix' ? 'KIX' : 'Osaka';
-function nearestStationKey(lat, lng) {
-  let best = null, bd = Infinity;
-  for (const [k, s] of Object.entries(ST)) { const d = distM({ lat, lng }, s); if (d < bd) { bd = d; best = k; } }
-  return { key: best, dist: bd };
-}
-function compressNights(arr) {
-  if (!arr.length) return '';
-  const out = []; let s = arr[0], p = arr[0];
-  for (let i = 1; i <= arr.length; i++) {
-    if (arr[i] !== p + 1) { out.push(s === p ? `${s + 1}` : `${s + 1}–${p + 1}`); s = arr[i]; }
-    p = arr[i];
-  }
-  return out.join(', ');
-}
-function renderHotelManager() {
-  const el = $('hotelList');
-  if (!el) return;
-  let html = '';
-  for (const h of allHotels()) {
-    const used = state.nights.map((hid, i) => hid === h.id ? i : -1).filter(i => i >= 0);
-    const ns = nearestStationKey(h.lat, h.lng);
-    const stn = h.station ? (ST[h.station] ? ST[h.station].name : h.station) : (ns.key ? ST[ns.key].name + ' (อัตโนมัติ)' : '—');
-    html += `<div class="hrow${h.custom ? ' custom' : ''}">
-      <div class="hrow-head"><b>${h.name}</b>${h.custom ? '<span class="hbadge-you">เพิ่มเอง</span>' : ''}</div>
-      <div class="hrow-meta">${ZONE_TH[h.area] || h.area} · <b>${yen(h.price)}</b>/คืน · 🚉 ${stn}${h.walkHub != null ? ' · เดิน ~' + h.walkHub + ' นาที' : ''}</div>
-      ${h.note ? `<div class="hrow-note">${h.note}</div>` : ''}
-      <div class="hrow-meta">${used.length ? `✅ ใช้คืนที่ ${compressNights(used)} (${used.length} คืน = <b>${yen(used.length * h.price)}</b>)` : 'ยังไม่ได้เลือกใช้'}</div>
-      <div class="hrow-actions">
-        <button class="mini" data-applyzone="${h.id}">ใช้ทุกคืนโซน ${zoneWord(h.area)}</button>
-        ${h.custom ? `<button class="mini" data-edit="${h.id}">✏️ แก้ไข</button><button class="mini danger" data-del="${h.id}">🗑️ ลบ</button>` : ''}
-      </div>
-    </div>`;
-  }
-  el.innerHTML = html;
-  el.querySelectorAll('[data-applyzone]').forEach(b => b.addEventListener('click', () => applyHotelZone(b.dataset.applyzone)));
-  el.querySelectorAll('[data-edit]').forEach(b => b.addEventListener('click', () => startEditHotel(b.dataset.edit)));
-  el.querySelectorAll('[data-del]').forEach(b => b.addEventListener('click', () => deleteCustomHotel(b.dataset.del)));
-}
-function applyHotelZone(hid) {
-  const h = getHotel(hid);
-  // โรงแรมโซน UC กด "ใช้ทุกคืนโซน" ตอนโซนปิดอยู่ = เปิดโหมด 3 โซนให้เลย
-  if (h.area === 'bay' && !state.bayOn) { state.bayOn = true; state.assign = {}; applyModeDefaults(); }
-  let changed = 0;
-  for (let n = 0; n < N_NIGHTS; n++) {
-    if (zoneOfNight(n) === h.area && state.nights[n] !== hid) { state.nights[n] = hid; changed++; }
-  }
-  if (changed) impact(`🏨 ใช้ "${h.name}" เป็นที่พักทุกคืนโซน ${zoneWord(h.area)} (${changed} คืน) — เส้นทาง/งบอัปเดต`);
-  saveState(); updateAll(true);
-}
-/* สลับโหมดพัก Kyoto คืนแรก (first) / กลางทริป (mid) — จัดคืน + วันกิจกรรมใหม่ทั้งหมด */
-function switchKyotoWhen(mode) {
-  if (mode === state.kyotoWhen) return;
-  const all = allHotels();
-  const kyotoId = (all.find(h => h.area === 'kyoto' && state.nights.includes(h.id)) || all.find(h => h.id === 'ranzan')).id;
-  const osakaId = (all.find(h => h.area === 'namba' && state.nights.includes(h.id)) || all.find(h => h.id === 'monterey')).id;
-  state.kyotoWhen = mode;
-  if (mode === 'mid') state.bayOn = false;      // โหมดกลางทริปไม่มีช่วงคืนให้จัดโซน UC
-  if (mode === 'first') state.bayOn = true;     // กลับมาโหมดคืนแรก = เปิดโซน UC ตามค่าเริ่มต้น (ปิดเองได้)
-  const bayId = defaultBayHotelId();
-  const kixId = (all.find(h => h.area === 'kix') || HOTELS[0]).id;
-  state.nights = (mode === 'first')
-    ? (state.bayOn ? [kyotoId, kyotoId, bayId, bayId, osakaId, osakaId, osakaId, kixId]
-                   : [kyotoId, kyotoId, osakaId, osakaId, osakaId, osakaId, osakaId, kixId])
-    : [osakaId, osakaId, kyotoId, kyotoId, osakaId, osakaId, osakaId, kixId];
-  state.assign = {};
-  applyModeDefaults();
-  impact(mode === 'first'
-    ? `🔄 สลับเป็นพัก Kyoto คืนที่ 1–2 (Hotel Vischio ติด Kyoto Stn)${state.bayOn ? ' + Universal City คืนที่ 3–4 (3 โซน)' : ''}: วันแรก KIX → Haruka → Kyoto Stn ~21:05 เดิน 2 นาทีเช็คอิน ~21:15 · วันที่ 2 วัดน้ำใส+Gion+วัดทอง · วันที่ 3 Arashiyama+เรือ Hozugawa แล้วย้ายเข้า${state.bayOn ? ' UC' : ' Osaka'}เย็นวันที่ 3 · USJ วันที่ 4 · Kaiyukan วันที่ 5${state.bayOn ? ' แล้วย้ายเข้า Namba ค่ำ Dotonbori' : ''} · Nara วันที่ 6 · Kobe/Castle วันที่ 7 · เสาร์วันที่ 8 Minoo + ค่ำย้ายไปนอนแถวสนามบิน (Rinku)`
-    : '🔄 กลับเป็นพัก Kyoto คืนที่ 3–4 (2 โซน — ปิดโซน UC เพราะไม่มีช่วงคืนให้จัด): Osaka ก่อน · USJ วันที่ 3 → Kyoto ค่ำวันที่ 3 · Kyoto วันที่ 4–5 · Nara วันที่ 6 · Kobe/Castle วันที่ 7 · เสาร์วันที่ 8 Minoo + นอนแถวสนามบิน (บินกลับเช้าวันอาทิตย์)');
-  saveState(); updateAll(true);
-}
-function deleteCustomHotel(hid) {
-  const h = getHotel(hid);
-  if (!h || !h.custom) return;
-  const usedN = state.nights.filter(x => x === hid).length;
-  if (!confirm(`ลบโรงแรม "${h.name}"?${usedN ? `\n(กำลังใช้อยู่ ${usedN} คืน — คืนเหล่านั้นจะกลับไปเป็นโรงแรมตั้งต้น)` : ''}`)) return;
-  state.customHotels = state.customHotels.filter(x => x.id !== hid);
-  state.nights = state.nights.map((x, i) => x === hid
-    ? (zoneOfNight(i) === 'kyoto' ? 'ranzan' : zoneOfNight(i) === 'bay' ? defaultBayHotelId() : 'monterey')
-    : x);
-  if (state.hotelGlobal === hid) state.hotelGlobal = 'monterey';
-  if (editHotelId === hid) { editHotelId = null; resetHotelForm(); }
-  impact(`🗑️ ลบโรงแรม "${h.name}"${usedN ? ' — คืนที่ใช้อยู่กลับไปเป็นโรงแรมตั้งต้น' : ''}`);
-  saveState(); updateAll(true);
-}
-/* วางลิงก์ Google Maps หรือ "lat,lng" แล้วดึงพิกัดออกมา */
-function parseCoords(text) {
-  const t = text || '';
-  const inJapan = (la, ln) => la >= 30 && la <= 46 && ln >= 127 && ln <= 146;
-  const m1 = t.match(/!3d(-?\d{1,2}\.\d{2,})!4d(-?\d{1,3}\.\d{2,})/); // รูปแบบ ...!3d34.66!4d135.50...
-  if (m1 && inJapan(+m1[1], +m1[2])) return { lat: +m1[1], lng: +m1[2] };
-  const m = t.match(/(-?\d{1,2}\.\d{2,})\s*[,，]\s*(-?\d{1,3}\.\d{2,})/); // @34.666,135.500 หรือพิมพ์ตรง ๆ
-  if (!m) return null;
-  const lat = +m[1], lng = +m[2];
-  if (!inJapan(lat, lng)) return null; // ต้องอยู่แถวญี่ปุ่น
-  return { lat, lng };
-}
-function setPickMarker(lat, lng) {
-  pickLayer.clearLayers();
-  pickLayer.addLayer(L.marker([lat, lng], { icon: L.divIcon({ className:'', html:'<div style="font-size:22px">🎯</div>', iconSize:[24,24], iconAnchor:[12,12] }) }));
-}
-function fillCoordExtras(lat, lng) {
-  const ns = nearestStationKey(lat, lng);
-  $('hStation').value = ns.key;
-  $('hWalk').value = Math.max(1, Math.min(30, Math.round(ns.dist / 80)));
-}
-function stopPick() {
-  pickMode = false;
-  $('pickBanner').hidden = true;
-  $('pickBtn').textContent = '📍 เลือกบนแผนที่';
-}
-function resetHotelForm() {
-  ['hName','hPrice','hLat','hLng','hUrl','hNote'].forEach(id => $(id).value = '');
-  $('hArea').value = 'namba';
-  $('hStation').value = '';
-  $('hWalk').value = 5;
-  $('addHotelBtn').textContent = '➕ เพิ่มโรงแรม';
-  $('cancelEditBtn').hidden = true;
-  $('formTitle').textContent = '➕ เพิ่มโรงแรมของฉัน';
-}
-function startEditHotel(hid) {
-  const h = getHotel(hid);
-  if (!h || !h.custom) return;
-  editHotelId = hid;
-  $('hName').value = h.name;
-  $('hArea').value = h.area;
-  $('hPrice').value = h.price;
-  $('hLat').value = h.lat;
-  $('hLng').value = h.lng;
-  $('hStation').value = h.station || nearestStationKey(h.lat, h.lng).key;
-  $('hWalk').value = h.walkHub != null ? h.walkHub : 5;
-  $('hNote').value = h.note || '';
-  $('addHotelBtn').textContent = '💾 บันทึกการแก้ไข';
-  $('cancelEditBtn').hidden = false;
-  $('formTitle').textContent = '✏️ แก้ไขโรงแรม: ' + h.name;
-}
-function saveHotelFromForm() {
-  const name = $('hName').value.trim();
-  const area = $('hArea').value;
-  const price = Math.round(+$('hPrice').value);
-  const lat = parseFloat($('hLat').value), lng = parseFloat($('hLng').value);
-  if (!name) { alert('กรอกชื่อโรงแรมก่อนนะ'); return; }
-  if (!(price > 0)) { alert('กรอกราคาต่อคืน (¥) — ใช้สำหรับคำนวณงบที่พัก'); return; }
-  if (!isFinite(lat) || !isFinite(lng) || lat < 30 || lat > 46 || lng < 127 || lng > 146) {
-    alert('ยังไม่มีพิกัด — กด "📍 เลือกบนแผนที่" แล้วคลิกตำแหน่งโรงแรมบนแผนที่ หรือวางลิงก์/ตัวเลขพิกัดจาก Google Maps แล้วกด "↳ อ่านพิกัด"');
-    return;
-  }
-  const obj = {
-    id: editHotelId || ('c' + Date.now().toString(36)),
-    name, area, price, lat, lng,
-    station: $('hStation').value || null,
-    walkHub: Math.max(0, Math.min(30, Math.round(+$('hWalk').value || 0))),
-    note: $('hNote').value.trim(),
-    custom: true,
-  };
-  if (editHotelId) {
-    const i = state.customHotels.findIndex(x => x.id === editHotelId);
-    if (i >= 0) state.customHotels[i] = obj;
-    impact(`✏️ แก้ไขโรงแรม "${name}" — ถ้ากำลังใช้อยู่ เส้นทาง/งบจะอัปเดตตาม`);
-  } else {
-    state.customHotels.push(obj);
-    impact(`🏨 เพิ่มโรงแรมของฉัน "${name}" (${yen(price)}/คืน · โซน ${zoneWord(area)}) — กด "ใช้ทุกคืนโซน..." หรือเลือกรายคืนในแท็บแผนทริป`);
-  }
-  editHotelId = null;
-  pickLayer.clearLayers();
-  resetHotelForm();
-  saveState(); updateAll(true);
-}
-
-function updateAll(rerenderOptions) {
-  // จุด anchor โรงแรมบนแผนที่: คืนแรก / ค่ำวันที่ 3 (หลังย้ายครั้งแรก) / ค่ำวันที่ 5 (หลังย้ายครั้งที่สอง โหมด 3 โซน)
-  const h0 = endHotelOfDay(0);
-  P.hotel_base = { name: h0.name, lat: h0.lat, lng: h0.lng };
-  const hk = endHotelOfDay(2);
-  P.hotel_kyoto = { name: hk.name, lat: hk.lat, lng: hk.lng };
-  const ht = endHotelOfDay(4);
-  P.hotel_tail = { name: ht.name, lat: ht.lat, lng: ht.lng };
-  if (rerenderOptions) renderOptions();
-  renderShiftSelect();
-  renderDayList();
-  renderHotels();
-  renderHotelManager();
-  renderBudget();
-  renderWarnings();
-  renderDayDetail();
-  drawMap();
-  $('rateInput').value = state.rate;
-  saveState();
-}
-
-/* ================= init ================= */
-initMap();
-
-/* แท็บ sidebar: แผนทริป / โรงแรม */
-document.querySelectorAll('.tabbtn').forEach(b => b.addEventListener('click', () => {
-  document.querySelectorAll('.tabbtn').forEach(x => x.classList.toggle('active', x === b));
-  $('tab-plan').hidden = b.dataset.tab !== 'plan';
-  $('tab-hotels').hidden = b.dataset.tab !== 'hotels';
-}));
-
-/* ฟอร์มเพิ่ม/แก้โรงแรมเอง */
-$('hStation').innerHTML = '<option value="">(อัตโนมัติ — สถานีใกล้พิกัดสุด)</option>'
-  + Object.entries(ST).map(([k, s]) => `<option value="${k}">${s.name}</option>`).join('');
-$('addHotelBtn').addEventListener('click', saveHotelFromForm);
-$('cancelEditBtn').addEventListener('click', () => { editHotelId = null; resetHotelForm(); });
-$('pickBtn').addEventListener('click', () => { pickMode = true; $('pickBanner').hidden = false; $('pickBtn').textContent = '⏳ คลิกตำแหน่งบนแผนที่...'; });
-$('pickCancel').addEventListener('click', stopPick);
-$('urlBtn').addEventListener('click', () => {
-  const c = parseCoords($('hUrl').value);
-  if (!c) { alert('อ่านพิกัดไม่ออก — วางลิงก์ที่มีพิกัด เช่น google.com/maps/@34.666,135.500,16z หรือพิมพ์ 34.666,135.500'); return; }
-  $('hLat').value = c.lat.toFixed(5);
-  $('hLng').value = c.lng.toFixed(5);
-  setPickMarker(c.lat, c.lng);
-  fillCoordExtras(c.lat, c.lng);
-  $('hUrl').value = '';
-});
-map.on('click', e => {
-  if (!pickMode) return;
-  stopPick();
-  $('hLat').value = e.latlng.lat.toFixed(5);
-  $('hLng').value = e.latlng.lng.toFixed(5);
-  setPickMarker(e.latlng.lat, e.latlng.lng);
-  fillCoordExtras(e.latlng.lat, e.latlng.lng);
-});
-
-$('hotelGlobal').addEventListener('change', e => {
-  const hid = e.target.value;
-  const h = getHotel(hid);
-  impact(`🏨 เปลี่ยนโรงแรมหลัก → ${h.name} (ใช้กับคืนโซน ${zoneWord(h.area)}) — เส้นทาง/งบอัปเดต`);
-  state.hotelGlobal = hid;
-  for (let n = 0; n < N_NIGHTS; n++) {
-    if (zoneOfNight(n) === h.area) state.nights[n] = hid;
-  }
-  saveState(); updateAll(true);
-});
-$('hotelKyoto').addEventListener('change', e => {
-  const hid = e.target.value;
-  const h = getHotel(hid);
-  const kn = kyotoNights();
-  impact(`🏨 โรงแรม Kyoto (คืนที่ ${kn[0] + 1}–${kn[1] + 1}) → ${h.name} — เส้นทางวันที่ ${kn[0] === 0 ? '1–3' : '3–5'} เปลี่ยนตาม`);
-  state.nights[kn[0]] = hid; state.nights[kn[1]] = hid;
-  saveState(); updateAll(true);
-});
-$('bayToggle').addEventListener('change', e => {
-  state.bayOn = e.target.checked;
-  if (state.bayOn) {
-    const bayId = (getHotel(state.nights[2])?.area === 'bay') ? state.nights[2] : defaultBayHotelId();
-    state.nights[2] = bayId; state.nights[3] = bayId;
-    impact('🎡 เปิดพักแถว Universal City คืนที่ 3–4 (3 โซน): วันที่ 3 ย้าย Kyoto → UC · วันที่ 4 USJ เดินถึงประตู · วันที่ 5 Kaiyukan แล้วย้ายเข้า Namba ค่ำ Dotonbori · Kuromon ขยับไปเช้าวันที่ 6 ก่อน Nara');
-  } else {
-    state.nights[2] = nambaHotelId(); state.nights[3] = nambaHotelId();
-    impact('🏨 ปิดโซน Universal City — กลับไปพัก Namba คืนที่ 3–7 ตามแผนเดิม');
-  }
-  state.assign = {}; applyModeDefaults(); saveState(); updateAll(true);
-});
-$('hotelBay').addEventListener('change', e => {
-  const hid = e.target.value;
-  const h = getHotel(hid);
-  state.nights[2] = hid; state.nights[3] = hid;
-  impact(`🏨 โรงแรม Universal City (คืนที่ 3–4) → ${h.name} — เส้นทางวันที่ 3–5 เปลี่ยนตาม`);
-  saveState(); updateAll(true);
-});
-document.querySelectorAll('[name=kyotoWhen]').forEach(r => r.addEventListener('change', e => {
-  if (e.target.checked) switchKyotoWhen(e.target.value);
-}));
-$('shiftSelect').addEventListener('change', e => {
-  const s = +e.target.value;
-  impact(s === 0 ? '📅 กลับไปใช้วันเดินทางตามเที่ยวบินที่จอง (28 พ.ย.)' : `📅 เลื่อนทั้งทริป ${s > 0 ? '+' : ''}${s} วัน — ตรวจสอบการแจ้งเตือนวันปิด & เที่ยวบิน`);
-  state.shift = s; saveState(); updateAll(true);
-});
-$('rateInput').addEventListener('change', e => { state.rate = Math.max(0.05, +e.target.value || RATE_DEFAULT); saveState(); updateAll(false); });
-$('resetBtn').addEventListener('click', () => {
-  if (confirm('รีเซ็ตกลับเป็นแผนต้นฉบับทั้งหมด? (โรงแรมที่เพิ่มเองจะถูกลบด้วย)')) { state = DEFAULT_STATE(); saveState(); updateAll(true); }
-});
-$('clearLog').addEventListener('click', () => { state.log = []; saveState(); updateAll(false); });
-
-updateAll(true);
-setTimeout(() => map.invalidateSize(), 300);
+  function nothingRevealed() { return !document.querySelector('.reveal.is-in'); }
+  setTimeout(function () { if (nothingRevealed()) revealAll(); }, 1200);
+  window.addEventListener('scroll', function () {
+    if (nothingRevealed()) revealAll();
+  }, { passive: true, once: true });
+})();
 </script>
 </body>
 </html>

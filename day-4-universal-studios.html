@@ -1,0 +1,1483 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#f2ece0">
+<title>Day 4 · Universal Studios Japan — ทริปโอซาก้า 2026</title>
+<meta name="description" content="แผนวันที่สี่ของทริปโอซาก้า 2026: Universal Studios Japan ทั้งวัน — Super Nintendo World, โซนเด็ก, พักกลางวันที่โรงแรม แล้วกลับไปดู parade (1 ธ.ค. 2026)">
+<style>
+/* ---------- tokens ---------- */
+:root{
+  --paper:#f2ece0;
+  --surface:#faf6ec;
+  --surface-2:#f6f0e3;
+  --ink:#1b2233;
+  --ink-2:#454d60;
+  --muted:#626877;
+  --rule:#d9cfb9;
+  --rule-strong:#c2b69a;
+  --accent:#b23a25;
+  --accent-ink:#8c2a17;
+  --ochre:#7f5c10;
+  --moss:#3d5b45;
+  --font-ui:'Sukhumvit Set','Thonburi','Noto Sans Thai','IBM Plex Sans Thai',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  --font-mono:ui-monospace,'SF Mono',SFMono-Regular,Menlo,Consolas,monospace;
+  --wrap:1140px;
+  --radius:14px;
+  --ease:cubic-bezier(.16,1,.3,1);
+}
+
+/* ---------- base ---------- */
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{
+  margin:0;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--font-ui);
+  font-size:16px;
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,h4,p,dl,dd,figure{margin:0}
+ul,ol{margin:0;padding:0;list-style:none}
+a{color:inherit}
+svg{display:block}
+:focus-visible{outline:2px solid var(--ink);outline-offset:3px;border-radius:2px}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+.skip{
+  position:absolute;left:16px;top:-64px;z-index:99;background:var(--ink);color:var(--surface);
+  padding:10px 16px;border-radius:8px;font-size:.85rem;text-decoration:none;transition:top .2s var(--ease);
+}
+.skip:focus{top:12px}
+.wrap{width:100%;max-width:var(--wrap);margin:0 auto;padding:0 clamp(18px,4vw,40px)}
+.mono-label{
+  font-family:var(--font-mono);font-size:.68rem;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--muted);font-weight:500;
+}
+.eyebrow{
+  display:inline-flex;align-items:center;gap:10px;
+  font-family:var(--font-mono);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2);
+}
+.eyebrow::before{content:"";width:22px;height:1px;background:var(--rule-strong);display:block}
+.nw{white-space:nowrap}
+
+/* ---------- top bar ---------- */
+.topbar{
+  position:sticky;top:0;z-index:40;
+  background:rgba(242,236,224,.94);
+  border-bottom:1px solid var(--rule);
+}
+@supports (backdrop-filter:blur(8px)){
+  .topbar{background:rgba(242,236,224,.82);backdrop-filter:blur(10px) saturate(120%)}
+}
+.topbar__in{
+  display:flex;align-items:center;gap:clamp(12px,2vw,28px);
+  min-height:62px;padding-top:8px;padding-bottom:8px;
+}
+.brand{display:flex;align-items:baseline;gap:10px;flex-shrink:0;text-decoration:none}
+.brand b{font-family:var(--font-mono);font-size:.78rem;letter-spacing:.14em;font-weight:600}
+.brand span{font-size:.78rem;color:var(--muted)}
+.days{display:flex;align-items:center;gap:4px;margin-left:auto;overflow-x:auto;scrollbar-width:none}
+.days::-webkit-scrollbar{display:none}
+.days__label{font-family:var(--font-mono);font-size:.66rem;letter-spacing:.1em;color:var(--muted);margin-right:6px;flex-shrink:0}
+.daycount{display:none;font-family:var(--font-mono);font-size:.74rem;color:var(--muted);font-variant-numeric:tabular-nums}
+.day{
+  display:inline-flex;align-items:center;justify-content:center;
+  min-width:32px;height:32px;border-radius:8px;
+  font-family:var(--font-mono);font-size:.78rem;font-variant-numeric:tabular-nums;
+  color:var(--muted);flex-shrink:0;
+}
+.day.is-active{background:var(--ink);color:var(--surface);font-weight:600}
+.day.is-next{color:var(--ink-2)}
+.tool{display:flex;align-items:center;gap:6px;flex-shrink:0}
+.btn-quiet{
+  display:inline-flex;align-items:center;gap:7px;
+  min-height:36px;padding:0 12px;border:1px solid var(--rule);border-radius:8px;
+  background:transparent;color:var(--ink-2);font-family:var(--font-ui);font-size:.78rem;
+  cursor:pointer;transition:background .18s var(--ease),border-color .18s var(--ease);
+}
+.btn-quiet:hover{background:var(--surface-2);border-color:var(--rule-strong)}
+.btn-quiet svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+
+/* ---------- hero ---------- */
+.hero{padding-top:clamp(36px,5vw,64px);padding-bottom:clamp(28px,4vw,44px)}
+.hero__grid{display:grid;grid-template-columns:minmax(0,1.02fr) minmax(0,.98fr);gap:clamp(28px,4vw,56px);align-items:center}
+.hero h1{
+  margin-top:16px;
+  font-size:clamp(2rem,4.6vw,3.35rem);
+  line-height:1.1;
+  letter-spacing:-.022em;
+  font-weight:600;
+}
+.hero h1 .arrow{color:var(--accent);padding:0 .12em;font-weight:400}
+.hero__lede{margin-top:16px;max-width:46ch;color:var(--ink-2);font-size:clamp(.95rem,1.2vw,1.02rem);line-height:1.7}
+.hero__meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
+.pill{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:7px 12px;border:1px solid var(--rule);border-radius:8px;background:var(--surface);
+  font-size:.8rem;color:var(--ink-2);
+}
+.pill b{font-family:var(--font-mono);font-variant-numeric:tabular-nums;color:var(--ink);font-weight:600}
+.pill svg{width:14px;height:14px;stroke:var(--muted);fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+
+/* ---------- boarding pass ---------- */
+.ticket{
+  position:relative;
+  background:var(--surface);
+  border:1px solid var(--rule);
+  border-radius:var(--radius);
+  box-shadow:0 1px 2px rgba(27,34,51,.05);
+  padding:22px 24px 0;
+  max-width:520px;
+  margin-left:auto;
+}
+.ticket__top{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-bottom:16px;border-bottom:1px solid var(--rule)}
+.ticket__airline{font-size:.76rem;color:var(--ink-2)}
+.ticket__route{display:grid;grid-template-columns:auto minmax(52px,1fr) auto;align-items:center;gap:10px;padding:20px 0 18px}
+.endpoint{min-width:0}
+.endpoint--end{text-align:right}
+.endpoint__code{display:block;font-family:var(--font-mono);font-size:.72rem;letter-spacing:.12em;color:var(--muted)}
+.endpoint__city{display:block;font-size:.8rem;color:var(--ink-2);margin-top:2px}
+.endpoint__time{
+  display:block;margin-top:4px;
+  font-family:var(--font-mono);font-weight:600;
+  font-size:clamp(1.9rem,3.6vw,2.5rem);line-height:1;
+  letter-spacing:-.02em;font-variant-numeric:tabular-nums;
+  color:var(--accent-ink);
+}
+.endpoint__tz{display:block;margin-top:4px;font-family:var(--font-mono);font-size:.64rem;letter-spacing:.08em;color:var(--muted)}
+.leg{position:relative;text-align:center;padding-bottom:2px;min-width:56px}
+.leg__dur{font-family:var(--font-mono);font-size:.64rem;letter-spacing:.06em;color:var(--muted);white-space:nowrap}
+.leg__track{position:relative;height:14px;margin:8px 0 6px}
+.leg__track::before{
+  content:"";position:absolute;left:0;right:0;top:50%;height:1px;
+  background:repeating-linear-gradient(90deg,var(--rule-strong) 0 4px,transparent 4px 8px);
+}
+.leg__track::after{
+  content:"";position:absolute;right:0;top:50%;width:5px;height:5px;border-radius:50%;
+  background:var(--rule-strong);transform:translateY(-50%);
+}
+.leg__plane{
+  position:absolute;left:50%;top:50%;transform:translate(-50%,-52%);
+  width:20px;height:20px;background:var(--surface);padding:2px;color:var(--ink-2);
+  stroke-width:1.6;
+}
+.leg__no{font-family:var(--font-mono);font-size:.66rem;letter-spacing:.08em;color:var(--ink-2);white-space:nowrap}
+.ticket__meta{
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;
+  background:var(--rule);border:1px solid var(--rule);border-radius:8px;overflow:hidden;
+}
+.ticket__meta > div{background:var(--surface);padding:9px 11px}
+.ticket__meta dt{font-family:var(--font-mono);font-size:.6rem;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+.ticket__meta dd{font-size:.82rem;color:var(--ink);margin-top:2px}
+.copy-row{display:flex;align-items:center;gap:6px}
+.copy-btn{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:26px;height:26px;border:1px solid var(--rule);border-radius:6px;background:var(--surface-2);
+  color:var(--ink-2);cursor:pointer;transition:background .18s var(--ease)
+}
+.copy-btn:hover{background:#efe7d6}
+.copy-btn svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.copy-ref{font-family:var(--font-mono);font-size:.86rem;letter-spacing:.04em;font-weight:600}
+.ticket__stub{
+  margin:18px -24px 0;padding:14px 24px 18px;
+  border-top:1px dashed var(--rule-strong);
+  font-size:.78rem;color:var(--ink-2);
+}
+.ticket__stub .mono-label{display:block;margin-bottom:4px}
+.ticket::before,.ticket::after{
+  content:"";position:absolute;width:16px;height:16px;border-radius:50%;
+  background:var(--paper);border:1px solid var(--rule);
+}
+.ticket::before{left:-9px;bottom:64px}
+.ticket::after{right:-9px;bottom:64px}
+.ticket__route,.ticket__meta,.ticket__top{animation:ticket-in .55s var(--ease) both}
+.ticket__meta{animation-delay:.08s}
+.ticket__stub{animation:ticket-in .55s var(--ease) .16s both}
+.endpoint__time{animation:time-in .6s var(--ease) .12s both}
+.endpoint--end .endpoint__time{animation-delay:.2s}
+@keyframes ticket-in{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@keyframes time-in{from{opacity:0;transform:translateY(12px);letter-spacing:.02em}to{opacity:1;transform:none}}
+
+/* ---------- wait tags ---------- */
+.wtags{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.wtag{display:inline-flex;align-items:center;gap:6px;padding:3px 9px;border-radius:999px;font-size:.7rem;line-height:1.55;border:1px solid var(--wbd);background:var(--wbg);color:var(--wtxt);font-family:var(--font-ui)}
+.wtag::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor;opacity:.9;flex-shrink:0}
+.w-fast{--wbg:#e8efe6;--wtxt:#2f5d3a;--wbd:#cbdbca}
+.w-mid{--wbg:#f6efd9;--wtxt:#75560f;--wbd:#e3d5ac}
+.w-long{--wbg:#f7e4d9;--wtxt:#8f3a1c;--wbd:#e6c6b4}
+.w-very{--wbg:#f6dedb;--wtxt:#86231a;--wbd:#e3bdb6}
+.w-show{--wbg:#e6edf4;--wtxt:#24405e;--wbd:#c6d5e4}
+.wlegend{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 22px}
+
+/* ---------- ride table ---------- */
+.tablewrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.rtable{width:100%;min-width:620px;border-collapse:collapse;font-size:.86rem}
+.rtable th{font-family:var(--font-mono);font-size:.62rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-align:left;padding:0 10px 8px;border-bottom:1px solid var(--rule-strong);white-space:nowrap;font-weight:500}
+.rtable td{padding:11px 10px;border-bottom:1px solid var(--rule);vertical-align:top;color:var(--ink-2)}
+.rtable tr:last-child td{border-bottom:0}
+.rtable td:first-child{color:var(--ink);font-weight:600}
+.rtable .yes{color:var(--moss);font-weight:600}
+.rtable .maybe{color:var(--ochre);font-weight:600}
+.rtable .no{color:var(--muted)}
+.rtable .num{font-family:var(--font-mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+
+/* ---------- route card (day 2) ---------- */
+a.day{text-decoration:none}
+a.day:hover{background:var(--surface-2);color:var(--ink)}
+.topback{display:none;align-items:center;gap:5px;min-height:32px;padding:0 4px;font-size:.76rem;color:var(--ink-2);text-decoration:none}
+.topback:hover{color:var(--ink);text-decoration:underline;text-underline-offset:3px}
+@media (max-width:640px){.topback{display:inline-flex}}
+.routecard{
+  position:relative;background:var(--surface);border:1px solid var(--rule);
+  border-radius:var(--radius);box-shadow:0 1px 2px rgba(27,34,51,.05);
+  padding:20px 22px 16px;max-width:520px;margin-left:auto;
+}
+.routecard__top{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-bottom:14px;border-bottom:1px solid var(--rule)}
+.routecard__hint{font-family:var(--font-mono);font-size:.64rem;letter-spacing:.09em;color:var(--muted)}
+.route{position:relative;display:flex;flex-direction:column;gap:15px;margin-top:18px}
+.route::before{content:"";position:absolute;left:17px;top:14px;bottom:14px;border-left:1px dashed var(--rule-strong)}
+.route__stop{position:relative;display:grid;grid-template-columns:36px minmax(0,1fr) auto;align-items:center;gap:12px}
+.seal{
+  position:relative;z-index:1;width:36px;height:36px;border-radius:50%;
+  display:grid;place-items:center;background:var(--surface);
+  border:1.6px solid var(--accent);color:var(--accent-ink);
+  font-family:var(--font-mono);font-size:.78rem;font-weight:600;font-variant-numeric:tabular-nums;
+  animation:seal-in .5s var(--ease) both;
+}
+.seal::after{content:"";position:absolute;inset:4px;border-radius:50%;border:1px solid rgba(178,58,37,.42)}
+.seal--line{width:40px;height:30px;border-radius:8px;border:1.5px solid var(--c);background:var(--c);color:#fff;font-size:.6rem;letter-spacing:.02em}
+.seal--line::after{display:none}
+.route__stop{grid-template-columns:40px minmax(0,1fr) auto}
+.route::before{left:20px}
+.route__stop:nth-child(1) .seal{animation-delay:.12s}
+.route__stop:nth-child(2) .seal{animation-delay:.2s}
+.route__stop:nth-child(3) .seal{animation-delay:.28s}
+@keyframes seal-in{from{opacity:0;transform:scale(1.25) rotate(-6deg)}to{opacity:1;transform:none}}
+.seal--time{width:auto;min-width:46px;height:28px;border-radius:7px;border:1.5px solid var(--rule-strong);background:var(--surface-2);color:var(--ink);font-size:.62rem;padding:0 6px}
+.seal--time::after{display:none}
+.barcode{height:26px;margin-top:14px;border-radius:2px;opacity:.7;background:repeating-linear-gradient(90deg,var(--ink) 0 2px,transparent 2px 5px,var(--ink) 5px 6px,transparent 6px 9px)}
+
+.route__body b{display:block;font-size:.95rem;font-weight:600;letter-spacing:-.005em}
+.route__meta{display:block;margin-top:1px;font-family:var(--font-mono);font-size:.66rem;color:var(--muted);letter-spacing:.02em}
+.route__tag{font-family:var(--font-mono);font-size:.6rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-align:right}
+.routecard__foot{display:flex;justify-content:space-between;gap:12px;margin-top:18px;padding-top:12px;border-top:1px dashed var(--rule-strong);font-family:var(--font-mono);font-size:.66rem;color:var(--ink-2)}
+@media (max-width:960px){.routecard{margin-left:0;max-width:none}}
+@media (max-width:640px){
+  .routecard{padding:16px 16px 14px}
+  .route__stop{grid-template-columns:32px minmax(0,1fr);gap:10px}
+  .seal{width:32px;height:32px;font-size:.72rem}
+  .route::before{left:15px}
+  .route__tag{display:none}
+  .routecard__foot{font-size:.6rem}
+}
+@media print{.routecard{box-shadow:none;page-break-inside:avoid}}
+
+/* ---------- day pager ---------- */
+.daypager{display:none;align-items:center;gap:2px;margin-left:auto;font-family:var(--font-mono);font-size:.72rem;color:var(--ink-2)}
+.daypager a{display:inline-grid;place-items:center;min-width:30px;height:30px;border-radius:6px;color:var(--ink-2);text-decoration:none}
+.daypager a:hover{background:var(--surface-2);color:var(--ink)}
+.daypager .is-off{display:inline-grid;place-items:center;min-width:30px;height:30px;color:var(--rule-strong)}
+.daypager span.now{padding:0 4px;color:var(--ink)}
+@media (max-width:640px){.daypager{display:inline-flex}}
+.pager{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:clamp(32px,4vw,56px);padding-top:18px;border-top:1px solid var(--rule)}
+.pager__btn{display:inline-flex;align-items:center;gap:6px;min-height:38px;padding:6px 14px;border:1px solid var(--rule-strong);border-radius:8px;background:var(--surface);color:var(--ink);font-size:.84rem;text-decoration:none}
+.pager__btn:hover{background:var(--surface-2);border-color:var(--ink-2)}
+.pager__label{font-family:var(--font-mono);font-size:.7rem;letter-spacing:.08em;color:var(--muted)}
+
+/* ---------- beat strip ---------- */
+.beats{
+  display:flex;flex-wrap:wrap;gap:0;
+  border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);
+  margin-top:clamp(24px,3vw,36px);
+}
+.beat{flex:1 1 180px;padding:14px 18px 14px 0;display:flex;gap:12px;align-items:baseline}
+.beat + .beat{padding-left:18px;border-left:1px solid var(--rule)}
+.beat time{font-family:var(--font-mono);font-size:.86rem;font-weight:600;font-variant-numeric:tabular-nums;color:var(--ink)}
+.beat span{font-size:.8rem;color:var(--ink-2)}
+.beat__th{display:block;font-family:var(--font-mono);font-size:.66rem;color:var(--muted);margin-top:2px;font-style:normal;letter-spacing:.01em}
+
+/* ---------- sections ---------- */
+.section{padding-top:clamp(44px,6vw,80px)}
+.section__head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:clamp(20px,3vw,32px)}
+.section__head h2{font-size:clamp(1.4rem,2.5vw,1.9rem);line-height:1.2;letter-spacing:-.015em;font-weight:600;margin-top:10px}
+.section__note{font-family:var(--font-mono);font-size:.7rem;letter-spacing:.05em;color:var(--muted);text-align:right;display:flex;flex-direction:column;align-items:flex-end;gap:2px}
+.note-legend{font-family:var(--font-ui);letter-spacing:0;font-size:.73rem;color:var(--ink-2)}
+.live{
+  display:none;align-items:center;gap:7px;padding:5px 10px;border-radius:6px;
+  background:rgba(178,58,37,.09);color:var(--accent-ink);font-size:.72rem;font-weight:600;
+}
+.live::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--accent);animation:pulse 2s infinite}
+.live.is-on{display:inline-flex}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+
+/* ---------- day grid ---------- */
+.daygrid{display:grid;grid-template-columns:minmax(0,1fr) 336px;gap:clamp(28px,4vw,52px);align-items:start}
+
+/* timeline */
+.steps{position:relative}
+.stop{display:grid;grid-template-columns:64px 26px minmax(0,1fr);column-gap:10px;padding-bottom:26px}
+.stop:last-child{padding-bottom:0}
+.stop__time{
+  font-family:var(--font-mono);font-size:.98rem;font-weight:600;font-variant-numeric:tabular-nums;
+  color:var(--ink);padding-top:2px;letter-spacing:-.01em;
+  display:flex;flex-direction:column;gap:1px;line-height:1.2;
+}
+.t-sub{font-size:.62rem;font-weight:500;color:var(--muted);letter-spacing:.02em;white-space:nowrap;font-variant-numeric:tabular-nums}
+.stop__rail{position:relative;display:flex;justify-content:center}
+.stop__rail::before{
+  content:"";position:absolute;top:12px;bottom:-26px;left:50%;width:1px;
+  background:var(--rule-strong);transform:translateX(-50%);
+}
+.stop:last-child .stop__rail::before{display:none}
+.stop__dot{
+  width:11px;height:11px;border-radius:50%;margin-top:5px;position:relative;z-index:1;
+  background:var(--surface);border:1.6px solid var(--rule-strong);
+}
+.stop.is-now .stop__dot{background:var(--accent);border-color:var(--accent);box-shadow:0 0 0 4px rgba(178,58,37,.14)}
+.stop.is-past .stop__dot{background:var(--rule-strong)}
+.stop__head{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.stop__head h3{font-size:1rem;font-weight:600;letter-spacing:-.008em;line-height:1.4}
+.stop__place{
+  font-family:var(--font-mono);font-size:.64rem;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--muted);white-space:nowrap;
+}
+.stop__body{color:var(--ink-2);font-size:.94rem;line-height:1.68;margin-top:5px;max-width:56ch}
+.facts{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.facts li{
+  font-family:var(--font-mono);font-size:.68rem;letter-spacing:.01em;
+  padding:3px 8px;border:1px solid var(--rule);border-radius:5px;
+  background:var(--surface);color:var(--ink-2);
+}
+.stop details{margin-top:10px}
+.stop summary{
+  display:inline-flex;align-items:center;gap:6px;min-height:28px;
+  cursor:pointer;list-style:none;
+  font-size:.78rem;color:var(--muted);
+  border-bottom:1px dashed transparent;transition:color .18s var(--ease),border-color .18s var(--ease);
+}
+.stop summary::-webkit-details-marker{display:none}
+.stop summary:hover{color:var(--ink-2);border-bottom-color:var(--rule-strong)}
+.stop summary svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;transition:transform .2s var(--ease)}
+.stop details[open] summary svg{transform:rotate(180deg)}
+.stop details[open] summary{color:var(--ink-2)}
+.detail-box{
+  margin-top:8px;padding:12px 14px;border-left:2px solid var(--rule-strong);
+  background:var(--surface-2);border-radius:0 8px 8px 0;
+  font-size:.85rem;line-height:1.7;color:var(--ink-2);max-width:58ch;
+}
+.maplink{
+  display:inline-flex;align-items:center;gap:7px;margin-top:10px;
+  min-height:36px;padding:5px 11px;
+  border:1px solid var(--rule-strong);border-radius:6px;
+  background:var(--surface);color:var(--ink);
+  font-size:.78rem;text-decoration:none;
+  transition:background .18s var(--ease),border-color .18s var(--ease);
+}
+.maplink:hover{background:var(--surface-2);border-color:var(--ink-2)}
+.maplink svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;color:var(--muted);flex-shrink:0}
+.maplink:hover svg{color:var(--ink-2)}
+.maplink .ext{width:11px;height:11px;margin-left:1px}
+/* ---------- transit strip ---------- */
+.transit{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;margin-top:10px;padding:8px 10px;border:1px solid var(--rule);border-radius:8px;background:var(--surface)}
+.transit__badge{display:inline-grid;place-items:center;min-width:34px;height:26px;padding:0 6px;border-radius:5px;background:var(--c,var(--ink));background-image:linear-gradient(rgba(0,0,0,.22),rgba(0,0,0,.22));color:#fff;font-family:var(--font-mono);font-size:.7rem;font-weight:600;letter-spacing:.02em;line-height:1}
+.transit__main{font-size:.82rem;color:var(--ink);line-height:1.4}
+.transit__main b{font-weight:600}
+.transit__meta{flex-basis:100%;font-family:var(--font-mono);font-size:.66rem;color:var(--muted);line-height:1.55}
+@media (min-width:700px){.transit__meta{flex-basis:auto}}
+.stop__links{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.stop__links .maplink{margin-top:0}
+.stop__links .maplink:first-child{border-color:var(--ink-2);background:var(--surface-2)}
+.detail-box ul{display:flex;flex-direction:column;gap:5px}
+.detail-box li{padding-left:13px;position:relative}
+.detail-box li::before{content:"";position:absolute;left:0;top:.62em;width:5px;height:1px;background:var(--muted)}
+.detail-box a{color:var(--accent-ink);text-decoration:underline;text-underline-offset:2px}
+.detail-box a:hover{color:var(--ink)}
+
+/* side rail */
+.rail{display:flex;flex-direction:column;gap:20px;position:sticky;top:82px}
+.card{
+  background:var(--surface);border:1px solid var(--rule);border-radius:var(--radius);
+  padding:18px 18px 16px;box-shadow:0 1px 2px rgba(27,34,51,.04);
+}
+.card__head{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-bottom:4px}
+.card h2,.card h3{font-size:.94rem;font-weight:600;letter-spacing:-.005em}
+.card__count{font-family:var(--font-mono);font-size:.7rem;color:var(--muted);font-variant-numeric:tabular-nums}
+.progress{height:3px;background:var(--rule);border-radius:99px;margin:10px 0 12px;overflow:hidden}
+.progress__bar{height:100%;width:0;background:var(--moss);border-radius:99px;transition:width .4s var(--ease)}
+.checks{display:flex;flex-direction:column;gap:1px}
+.check{display:flex;align-items:flex-start;gap:9px;padding:7px 2px;cursor:pointer;border-radius:5px;transition:background .15s var(--ease)}
+.check:hover{background:var(--surface-2)}
+.check input{appearance:none;-webkit-appearance:none;width:16px;height:16px;flex-shrink:0;margin:3px 0 0;border:1.5px solid var(--rule-strong);border-radius:4px;background:var(--surface);cursor:pointer;position:relative}
+.check input:checked{background:var(--moss);border-color:var(--moss)}
+.check input:checked::after{
+  content:"";position:absolute;left:4.5px;top:1.5px;width:4px;height:8px;
+  border:solid #fff;border-width:0 1.6px 1.6px 0;transform:rotate(42deg);
+}
+.check span{font-size:.81rem;line-height:1.5;color:var(--ink-2)}
+.check input:checked + span{color:var(--muted);text-decoration:line-through;text-decoration-color:var(--rule-strong)}
+.card__foot{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:10px;padding-top:10px;border-top:1px solid var(--rule)}
+.link-btn{
+  background:none;border:0;padding:4px 0;min-height:28px;cursor:pointer;
+  font-family:var(--font-ui);font-size:.74rem;color:var(--muted);text-decoration:underline;text-underline-offset:3px;
+}
+.link-btn:hover{color:var(--ink-2)}
+.card--plain{background:transparent;box-shadow:none;padding:0;border:0}
+.card--plain h3{font-size:.86rem}
+.costs{display:flex;flex-direction:column;gap:7px;margin-top:12px}
+.cost{display:flex;justify-content:space-between;align-items:baseline;gap:12px;font-size:.8rem;color:var(--ink-2);padding-bottom:7px;border-bottom:1px dotted var(--rule)}
+.cost:last-of-type{border-bottom:0}
+.cost b{font-family:var(--font-mono);font-weight:600;font-variant-numeric:tabular-nums;color:var(--ink);white-space:nowrap;font-size:.78rem}
+.cost-total{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-top:4px;padding-top:10px;border-top:1px solid var(--rule-strong)}
+.cost-total span{font-size:.8rem;font-weight:600}
+.cost-total b{font-family:var(--font-mono);font-size:.88rem;font-variant-numeric:tabular-nums}
+
+/* playbook */
+.playbook{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule);border-radius:var(--radius);overflow:hidden}
+.play{background:var(--surface);padding:22px 22px 24px}
+.play__ico{
+  width:30px;height:30px;border-radius:8px;border:1px solid var(--rule);background:var(--surface-2);
+  display:grid;place-items:center;margin-bottom:14px;color:var(--ink-2);
+}
+.play__ico svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.play h3{font-size:.95rem;font-weight:600;margin-bottom:8px}
+.play p{font-size:.85rem;line-height:1.7;color:var(--ink-2)}
+.play p + p{margin-top:9px}
+.play b{color:var(--ink);font-weight:600}
+
+/* tomorrow */
+.tomorrow{
+  margin-top:clamp(44px,6vw,76px);
+  border-top:1px solid var(--rule-strong);border-bottom:1px solid var(--rule);
+  padding:clamp(26px,3.5vw,38px) 0;
+  display:grid;grid-template-columns:minmax(0,1fr) auto;gap:24px;align-items:center;
+}
+.tomorrow h2{font-size:clamp(1.25rem,2.2vw,1.6rem);letter-spacing:-.015em;font-weight:600;margin-top:8px}
+.tomorrow p{color:var(--ink-2);font-size:.88rem;margin-top:8px;max-width:62ch}
+.tomorrow__list{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+.tomorrow__list li{font-family:var(--font-mono);font-size:.68rem;color:var(--ink-2);border:1px solid var(--rule);border-radius:5px;padding:3px 8px;background:var(--surface)}
+.tomorrow__note{font-family:var(--font-mono);font-size:.68rem;color:var(--muted);margin-top:10px}
+.tomorrow__num{font-family:var(--font-mono);font-size:clamp(2.4rem,5vw,3.4rem);font-weight:600;color:var(--rule-strong);line-height:1;letter-spacing:-.03em}
+
+/* footer */
+.foot{padding-top:28px;padding-bottom:44px;color:var(--muted);font-size:.76rem;line-height:1.7}
+.foot__grid{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:24px}
+.foot strong{color:var(--ink-2);font-weight:600}
+.foot a{text-decoration:underline;text-underline-offset:3px}
+.foot a:hover{color:var(--ink)}
+.toast{
+  position:fixed;left:50%;bottom:24px;transform:translate(-50%,16px);
+  background:var(--ink);color:var(--surface);font-size:.78rem;
+  padding:9px 16px;border-radius:8px;opacity:0;pointer-events:none;
+  transition:opacity .2s var(--ease),transform .2s var(--ease);z-index:60;
+}
+.toast.is-on{opacity:1;transform:translate(-50%,0)}
+
+/* reveal */
+.reveal{opacity:0;transform:translateY(14px);transition:opacity .6s var(--ease),transform .6s var(--ease)}
+.reveal.is-in{opacity:1;transform:none}
+
+/* ---------- responsive ---------- */
+@media (max-width:960px){
+  .hero__grid{grid-template-columns:1fr;gap:28px}
+  .ticket{margin-left:0;max-width:none}
+  .daygrid{grid-template-columns:1fr;gap:36px}
+  .rail{position:static;top:auto}
+  .playbook{grid-template-columns:1fr}
+  .tomorrow{grid-template-columns:1fr}
+  .tomorrow__num{display:none}
+  .foot__grid{grid-template-columns:1fr}
+}
+@media (max-width:640px){
+  body{font-size:15px}
+  .brand span{display:none}
+  .topbar__in{min-height:56px;gap:10px}
+  .days{display:none}
+  .daycount{display:inline-flex;margin-left:auto}
+  .hero{padding-top:28px}
+  .hero h1{font-size:clamp(1.85rem,8vw,2.4rem)}
+  .hero__lede{font-size:.92rem}
+  .ticket{padding:18px 16px 0}
+  .ticket__stub{margin-left:-16px;margin-right:-16px;padding-left:16px;padding-right:16px}
+  .ticket__route{grid-template-columns:1fr auto 1fr;gap:6px;padding:16px 0 14px}
+  .endpoint__time{font-size:1.75rem}
+  .endpoint__tz{font-size:.6rem;letter-spacing:.04em}
+  .leg{min-width:44px}
+  .leg__dur{display:none}
+  .leg__track{margin:9px 0 2px;height:10px}
+  .leg__track::before{background:repeating-linear-gradient(90deg,var(--rule-strong) 0 5px,transparent 5px 9px)}
+  .leg__plane{width:16px;height:16px}
+  .beat{flex-basis:100%;padding:10px 0}
+  .beat + .beat{padding-left:0;border-left:0;border-top:1px solid var(--rule)}
+  .stop{grid-template-columns:60px 20px minmax(0,1fr);column-gap:8px;padding-bottom:22px}
+  .stop__time{font-size:.86rem}
+  .t-sub{font-size:.6rem;letter-spacing:0}
+  .stop__rail::before{bottom:-22px}
+  .section__note{text-align:left;align-items:flex-start}
+  .tomorrow__num{display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation-duration:.001ms !important;animation-delay:0ms !important;transition-duration:.001ms !important}
+  .reveal{opacity:1;transform:none}
+}
+
+/* ---------- print ---------- */
+@page{size:A4;margin:14mm 12mm}
+@media print{
+  body{background:#fff;font-size:10.5pt}
+  .topbar,.tool,.beats,.tomorrow__num,.toast,.progress,.card__foot{display:none !important}
+  .hero{padding:0 0 8mm}
+  .maplink{display:none}
+  .wrap{padding-left:0;padding-right:0}
+  .hero__grid{grid-template-columns:1fr;gap:6mm}
+  .ticket{max-width:none;box-shadow:none;page-break-inside:avoid}
+  .daygrid{grid-template-columns:1fr}
+  .rail{position:static}
+  .card{page-break-inside:avoid;box-shadow:none}
+  .playbook{grid-template-columns:1fr 1fr 1fr;page-break-inside:avoid}
+  .stop{page-break-inside:avoid}
+  .detail-box{background:#fff;border-left:1px solid #999}
+  .reveal{opacity:1;transform:none}
+  a{text-decoration:none}
+}
+</style>
+</head>
+<body>
+
+<a class="skip" href="#main">ข้ามไปที่เนื้อหา</a>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <symbol id="i-plane" viewBox="0 0 24 24"><path d="M10.5 13.5 3 11l1.8-1.8 6.9 1L17.4 4l2.6 1-5.2 6.3 1 6.9L14 20l-2.4-7.4"/></symbol>
+    <symbol id="i-train" viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="14" rx="4"/><path d="M5 11h14M9 21l1.6-4M15 21l-1.6-4M8.5 7.5h.01M15.5 7.5h.01"/></symbol>
+    <symbol id="i-hotel" viewBox="0 0 24 24"><path d="M3 20V5a1 1 0 0 1 1-1h9a1 1 0 0 1 1 1v15M14 20V9h5a2 2 0 0 1 2 2v9M3 20h18"/><path d="M6.5 8h1M9.5 8h1M12 8h.01M6.5 11.5h1M9.5 11.5h1M12 11.5h.01M6.5 15h1M9.5 15h1M12 15h.01"/></symbol>
+    <symbol id="i-bowl" viewBox="0 0 24 24"><path d="M3 11h18a9 9 0 0 1-9 9 9 9 0 0 1-9-9ZM8 8c0-1.5 1-2 1-3.5M12 7.5c0-1.5 1-2 1-3.5M16 8c0-1.5 1-2 1-3.5"/></symbol>
+    <symbol id="i-doc" viewBox="0 0 24 24"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4M9 12h6M9 16h4"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m4.5 12.5 5 5 10-11"/></symbol>
+    <symbol id="i-warn" viewBox="0 0 24 24"><path d="M12 4 2.8 20h18.4L12 4Z"/><path d="M12 10v4M12 17h.01"/></symbol>
+    <symbol id="i-bag" viewBox="0 0 24 24"><rect x="4" y="7" width="16" height="13" rx="2.5"/><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2M10 11v6M14 11v6"/></symbol>
+    <symbol id="i-copy" viewBox="0 0 24 24"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M15 5.5A1.5 1.5 0 0 0 13.5 4H5.5A1.5 1.5 0 0 0 4 5.5v8A1.5 1.5 0 0 0 5.5 15"/></symbol>
+    <symbol id="i-chevron" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+    <symbol id="i-print" viewBox="0 0 24 24"><path d="M7 9V4h10v5M7 18H5a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2h-2"/><rect x="7" y="14" width="10" height="6" rx="1"/></symbol>
+    <symbol id="i-yen" viewBox="0 0 24 24"><path d="M7 4l5 7 5-7M12 11v9M8 13h8M8 16.5h8"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11Z"/><circle cx="12" cy="10" r="2.6"/></symbol>
+    <symbol id="i-ext" viewBox="0 0 24 24"><path d="M8 16 16 8M9.5 8H16v6.5"/></symbol>
+  </defs>
+</svg>
+
+<header class="topbar">
+  <div class="wrap topbar__in">
+    <a class="brand" href="index.html">
+      <b>OSAKA 2026</b>
+      <span>9 วัน 8 คืน</span>
+    </a>
+    <nav class="days" aria-label="เลื่อนดูวันของทริป">
+      <span class="days__label">วัน</span>
+      <a class="day" href="day-1-bangkok-kyoto.html">1</a>
+      <a class="day" href="day-2-kiyomizu-gion-nanzenji.html">2</a>
+      <a class="day" href="day-3-arashiyama-universal-city.html">3</a>
+      <span class="day is-active" aria-current="page">4</span>
+      <a class="day" href="day-5-kaiyukan-namba.html">5</a>
+      <a class="day" href="day-6-kuromon-nara.html">6</a>
+      <a class="day" href="day-7-osaka-castle-midosuji.html">7</a>
+      <a class="day" href="day-8-minoo-rinku.html">8</a>
+      <a class="day" href="day-9-return-bangkok.html">9</a>
+    </nav>
+    <div class="tool">
+      <nav class="daypager" aria-label="เลื่อนวัน">
+        <a href="day-3-arashiyama-universal-city.html" aria-label="วันก่อนหน้า">‹</a><span class="now">4 / 9</span><a href="day-5-kaiyukan-namba.html" aria-label="วันถัดไป">›</a>
+      </nav>
+      <button class="btn-quiet" type="button" id="printBtn">
+        <svg aria-hidden="true"><use href="#i-print"/></svg>
+        พิมพ์
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ============ HERO ============ -->
+  <section class="hero wrap" aria-labelledby="hero-title">
+    <div class="hero__grid">
+      <div>
+        <p class="eyebrow">วันที่ 4 · อังคารที่ 1 ธันวาคม 2026</p>
+        <h1 id="hero-title">Universal Studios</h1>
+        <p class="hero__lede">
+          วันนี้ไม่ต้องขึ้นรถไฟเลย — เดินจากโรงแรมถึงประตูสวน 7–10 นาที เข้า Super Nintendo World ทันทีที่เปิด
+          กลับห้องพักกลางวันให้เด็กนอน แล้วออกไปดู parade กับไฟคริสต์มาสตอนค่ำ
+        </p>
+        <div class="hero__meta">
+          <span class="pill"><svg aria-hidden="true"><use href="#i-clock"/></svg><b id="countdown">—</b><span>ก่อนสวนเปิด</span></span>
+          <span class="pill"><svg aria-hidden="true"><use href="#i-pin"/></svg><b>7–10 นาที</b><span>เดินถึงประตูสวน</span></span>
+        </div>
+      </div>
+
+      <article class="routecard" aria-labelledby="route-title">
+        <div class="routecard__top">
+          <span class="mono-label">Studio pass · 1 day</span>
+          <span class="routecard__hint">01 DEC</span>
+        </div>
+        <h2 id="route-title" class="sr-only">แผนวันนี้ในสวน: Super Nintendo World, โซนเด็ก, พักกลางวัน, parade</h2>
+        <ol class="route">
+          <li class="route__stop">
+            <span class="seal seal--time" aria-hidden="true">09:00</span>
+            <span class="route__body"><b>Super Nintendo World</b><span class="route__meta">เข้าโซนแรก · กด Area Timed Entry ทันที</span></span>
+            <span class="route__tag">Yoshi 92</span>
+          </li>
+          <li class="route__stop">
+            <span class="seal seal--time" aria-hidden="true">11:00</span>
+            <span class="route__body"><b>Wonderland + Minion Park</b><span class="route__meta">โซนเด็ก เครื่องเล่นนุ่ม ๆ</span></span>
+            <span class="route__tag">เด็ก 5 ขวบ</span>
+          </li>
+          <li class="route__stop">
+            <span class="seal seal--time" aria-hidden="true">13:30</span>
+            <span class="route__body"><b>กลับห้องพัก</b><span class="route__meta">นอนกลางวัน 1–1.5 ชม.</span></span>
+            <span class="route__tag">7–10 น.</span>
+          </li>
+          <li class="route__stop">
+            <span class="seal seal--time" aria-hidden="true">17:30</span>
+            <span class="route__body"><b>Light Up the Night</b><span class="route__meta">รอบ 17:30 · Gramercy Park</span></span>
+            <span class="route__tag">ค่ำ</span>
+          </li>
+        </ol>
+        <div class="routecard__foot">
+          <span>ปิดสวน ~21:00</span>
+          <span>กลับห้อง 19:30</span>
+        </div>
+        <div class="barcode" aria-hidden="true"></div>
+      </article>
+    </div>
+
+    <div class="beats" aria-label="สี่จังหวะหลักของวัน">
+      <div class="beat"><time>08:10</time><span>ออกจากโรงแรม<em class="beat__th">06:10 เวลาไทย</em></span></div>
+      <div class="beat"><time>09:00</time><span>เข้า Super Nintendo World<em class="beat__th">07:00 เวลาไทย</em></span></div>
+      <div class="beat"><time>13:30</time><span>พักกลางวันที่โรงแรม<em class="beat__th">11:30 เวลาไทย</em></span></div>
+      <div class="beat"><time>17:30</time><span>Light Up the Night<em class="beat__th">15:30 เวลาไทย</em></span></div>
+    </div>
+  </section>
+
+  <!-- ============ DAY GRID ============ -->
+  <section class="section wrap" aria-labelledby="steps-title">
+    <div class="section__head">
+      <div>
+        <p class="eyebrow">ตารางวันนี้</p>
+        <h2 id="steps-title">ลำดับของวันนี้</h2>
+      </div>
+      <p class="section__note">
+        <span class="live" id="liveBadge">ตอนนี้อยู่ขั้นนี้</span>
+        <span>07:30–19:30 · 10 จุด</span>
+        <span class="note-legend">ทุกเวลาเป็นเวลาญี่ปุ่น (JST) · ตัวเลขเล็กใต้เวลา = เวลาไทย (ICT)</span>
+      </p>
+    </div>
+
+    <div class="wlegend" aria-label="คำอธิบายสีของเวลารอ">
+      <span class="wtag w-fast">รอ ≤30 น.</span>
+      <span class="wtag w-mid">31–60 น.</span>
+      <span class="wtag w-long">61–120 น.</span>
+      <span class="wtag w-very">มากกว่า 120 น.</span>
+      <span class="wtag w-show">โชว์ / parade</span>
+    </div>
+
+    <div class="daygrid">
+      <ol class="steps" id="steps">
+
+        <li class="stop" data-start="2026-12-01T07:00:00+09:00" data-end="2026-12-01T08:10:00+09:00">
+          <div class="stop__time">07:30<span class="t-sub">05:30 ICT</span></div>
+          <div class="stop__rail" aria-hidden="true"><span class="stop__dot"></span></div>
+          <div>
+            <div class="stop__head"><h3>ตื่น + มื้อเช้า</h3><span class="stop__place">Hotel Universal Port</span></div>
+            <p class="stop__body">ไม่ต้องรีบ ไม่ต้องขึ้นรถไฟ — กินเช้าที่โรงแรม เตรียมกระเป๋าใบเล็กใส่น้ำ ขนม และเสื้อกันหนาวสำหรับตอนค่ำ</p>
+            <ul class="facts">
+              <li>สวนเปิด 09:00</li>
+              <li>เดินถึงประตู 7–10 น.</li>
+            </ul>
+            <details>
+              <summary>เช็กก่อนออกจากห้อง <svg aria-hidden="true"><use href="#i-chevron"/></svg></summary>
+              <div class="detail-box">
+                <ul>
+                  <li>ตั๋ววันนี้ต้องระบุวันที่ 1 ธ.ค. — เก็บในแอปหรือ Apple Wallet</li>
+                  <li>ถ้ามี Express Pass ดูเวลาเข้า Super Nintendo World ที่ระบุไว้</li>
+                  <li>ติดตั้งแอป USJ ไว้เช็กคิวและรอบโชว์</li>
+                </ul>
+              </div>
+            </details>
+          </div>
+        </li>
+
+        <li class="stop" data-start="2026-12-01T08:10:00+09:00" data-end="2026-12-01T08:30:00+09:00">
+          <div class="stop__time">08:10<span class="t-sub">06:10 ICT</span></div>
+          <div class="stop__rail" aria-hidden="true"><span class="stop__dot"></span></div>
+          <div>
+            <div class="stop__head"><h3>เดินผ่าน CityWalk ไปหน้าประตู</h3><span class="stop__place">CityWalk</span></div>
+            <p class="stop__body">ออกจากโรงแรมเดินผ่าน CityWalk ~7–10 นาทีถึงหน้าประตูสวน — ถึงก่อนเปิด ~50 นาทีคือจังหวะที่คิวสั้นและได้เข้าโซนแรกเร็ว</p>
+            <ul class="facts">
+              <li>7–10 นาที</li>
+              <li>ถึงก่อนเปิด ~50 น.</li>
+            </ul>
+            <div class="transit" style="--c:#3d5b45">
+              <span class="transit__badge">WALK</span>
+              <span class="transit__main"><b>เดิน</b> · โรงแรม → ประตูสวน</span>
+              <span class="transit__meta">ผ่าน CityWalk · ทางเรียบ รถเข็นใช้ได้ · ~7–10 นาที</span>
+            </div>
+            <details>
+              <summary>เข้าสวนให้ไว <svg aria-hidden="true"><use href="#i-chevron"/></svg></summary>
+              <div class="detail-box">
+                <ul>
+                  <li>ตรวจกระเป๋าที่ประตู — ของเหลว/อาหารบางชนิดมีข้อจำกัด</li>
+                  <li>เตรียมตั๋วในมือถือให้พร้อมสแกนก่อนถึงประตู</li>
+                  <li>ถ้าพักโรงแรมพันธมิตร ถามเรื่องสิทธิ์เข้าก่อนเวลา 15 นาที</li>
+                </ul>
+              </div>
+            </details>
+          </div>
+        </li>
+
+        <li class="stop" data-start="2026-12-01T08:30:00+09:00" data-end="2026-12-01T09:00:00+09:00">
+          <div class="stop__time">08:30<span class="t-sub">06:30 ICT</span></div>
+          <div class="stop__rail" aria-hidden="true"><span class="stop__dot"></span></div>
+          <div>
+            <div class="stop__head"><h3>รอเปิด + วัดส่วนสูงเด็ก</h3><span class="stop__place">หน้าประตู</span></div>
+            <p class="stop__body">ระหว่างรอ ให้วัดส่วนสูงเด็กที่จุดวัดก่อนเข้า — จะได้รู้ทันทีว่าเครื่องไหนขึ้นได้ และไม่ต้องไปเสียเวลาต่อแถวแล้วถูกปฏิเสธ</p>
+            <ul class="facts">
+              <li>Yoshi ≥92 ซม.</li>
+              <li>Mario Kart ≥107 ซม.</li>
+            </ul>
+            <details>
+              <summary>เรื่องส่วนสูง <svg aria-hidden="true"><use href="#i-chevron"/></svg></summary>
+              <div class="detail-box">
+                <ul>
+                  <li>เครื่องที่ต่ำกว่าเกณฑ์ ผู้ปกครองนั่งด้วยได้ในบางเครื่อง</li>
+                  <li>ขอสติกเกอร์/สายวัดส่วนสูงให้เด็ก ใช้ยืนยันซ้ำได้ทั้งวัน</li>
+                  <li>เครื่องใหญ่บางตัวสูงถึง ~122 ซม. — เด็ก 5 ขวบจะยังขึ้นไม่ได้</li>
+                </ul>
+              </div>
+            </details>
+          </div>
+        </li>
+
+        <li class="stop" data-start="2026-12-01T09:00:00+09:00" data-end="2026-12-01T11:00:00+09:00">
+          <div class="stop__time">09:00<span class="t-sub">07:00 ICT</span></div>
+          <div class="stop__rail" aria-hidden="true"><span class="stop__dot"></span></div>
+          <div>
+            <div class="stop__head"><h3>Super Nintendo World</h3><span class="stop__place">SNW</span></div>
+            <p class="stop__body">เข้าโซนแรกทันที — ถ้าไม่มี Express ต้องกด Area Timed Entry จากแอปตั้งแต่สแกนเข้าสวน เพื่อจองเวลาเข้าโซน</p>
+            <ul class="facts">
+              <li>Yoshi 92 ซม.</li>
+              <li>Mario Kart 107 ซม.</li>
+              <li>ต้องมี timed entry</li>
+            </ul>
+            <div class="wtags">
+              <span class="wtag w-long">Mario Kart 90–150 น.</span>
+              <span class="wtag w-long">Yoshi 40–90 น.</span>
+              <span class="wtag w-very">Donkey Kong 120–200 น.</span>
+            </div>
+            <details>
+              <summary>ลำดับในโซน <svg aria-hidden="true"><use href="#i-chevron"/></svg></summary>
+              <div class="detail-box">
+                <ul>
+                  <li>กด timed entry ทันทีที่เข้าสวน — ช่วงเช้าคิวโซนนี้หมดเร็วที่สุด</li>
+                  <li>เริ่มที่ Yoshi's Adventure ถ้าคิวสั้น (นั่งได้ทั้งครอบครัว)</li>
+                  <li>ถ่ายรูปหน้ากล่องปริศนาและปราสาทก่อนคนแน่น</li>
+                </ul>
+              </div>
+            </details>
+          </div>
+        </li>
+
+        <li class="stop" data-start="2026-12-01T11:00:00+09:00" data-end="2026-12-01T12:30:00+09:00">
+          <div class="stop__time">11:00<span class="t-sub">09:00 ICT</span></div>
+          <div class="stop__rail" aria-hidden="true"><span class="stop__dot"></span></div>
+          <div>
+            <div class="stop__head"><h3>Wonderland + Minion Park</h3><span class="stop__place">โซนเด็ก</span></div>
+            <p class="stop__body">ออกจาก SNW มาฝั่งโซนเด็ก Wonderland ที่เครื่องเล่นนุ่ม ๆ เหมาะกับ 5 ขวบ แล้วต่อ Minion Park</p>
+            <ul class="facts">
+              <li>เครื่องเล่นนุ่ม</li>
+              <li>เหมาะกับเด็ก 5 ขวบ</li>
+            </ul>
+            <div class="wtags">
+              <span class="wtag w-fast">Wonderland 10–40 น.</span>
+              <span class="wtag w-long">Minion Mayhem 50–90 น.</span>
+            </div>
+            <details>
+              <summary>พักขาในโซนนี้ <svg aria-hidden="true"><use href="#i-chevron"/></svg></summary>
+              <div class="detail-box">
+                <ul>
+                  <li>มีม้านั่งและจุดพักรถเข็นหลายจุด</li>
+                  <li>ห้องน้ำเด็กอยู่ใกล้โซน Wonderland</li>
+                  <li>ถ้าเด็กเริ่มล้า ให้ขยับแผนพักกลางวันเร็วขึ้นได้เลย</li>
+                </ul>
+              </div>
+            </details>
+          </div>
+        </li>
+
+        <li class="stop" data-start="2026-12-01T12:30:00+09:00" data-end="2026-12-01T13:30:00+09:00">
+          <div class="stop__time">12:30<span class="t-sub">10:30 ICT</span></div>
+          <div class="stop__rail" aria-hidden="true"><span class="stop__dot"></span></div>
+          <div>
+            <div class="stop__head"><h3>มื้อกลางวันในสวน</h3><span class="stop__place">ในสวน</span></div>
+            <p class="stop__body">ร้านในสวนราคา ~¥1,500–2,000 ต่อคน — ถ้าอยากถูกกว่าและเงียบกว่า เดินออกไปกินที่ CityWalk แล้วกลับเข้ามาใหม่ได้</p>
+            <ul class="facts">
+              <li>¥1,500–2,000 / คน</li>
+              <li>CityWalk ทางเลือก</li>
+            </ul>
+            <details>
+              <summary>กินกับเด็ก <svg aria-hidden="true"><use href="#i-chevron"/></svg></summary>
+              <div class="detail-box">
+                <ul>
+                  <li>ช่วง 12:00–13:00 ร้านในสวนแน่นมาก — เลี่ยงไป 11:30 หรือ 13:30</li>
+                  <li>เมนูเด็กมีในโซน Wonderland</li>
+                  <li>ถ้าออกไป CityWalk เก็บตั๋วไว้สำหรับ re-entry</li>
+                </ul>
+              </div>
+            </details>
+          </div>
+        </li>
+
+        <li class="stop" data-start="2026-12-01T13:30:00+09:00" data-end="2026-12-01T15:30:00+09:00">
+          <div class="stop__time">13:30<span class="t-sub">11:30 ICT</span></div>
+          <div class="stop__rail" aria-hidden="true"><span class="stop__dot"></span></div>
+          <div>
+            <div class="stop__head"><h3>กลับห้องพักเด็ก</h3><span class="stop__place">โรงแรม</span></div>
+            <p class="stop__body">เดินกลับโรงแรม 7–10 นาที ให้เด็กนอนกลางวัน 1–1.5 ชม. — เป็นข้อได้เปรียบของการพักติดสวน และทำให้ตอนเย็นไม่เพลีย</p>
+            <ul class="facts">
+              <li>7–10 นาที</li>
+              <li>พัก 1–1.5 ชม.</li>
+            </ul>
+            <details>
+              <summary>พักให้ได้จริง <svg aria-hidden="true"><use href="#i-chevron"/></svg></summary>
+              <div class="detail-box">
+                <ul>
+                  <li>ชาร์จมือถือ/พาวเวอร์แบงก์ระหว่างพัก</li>
+                  <li>เปลี่ยนถุงเท้า/เสื้อให้เด็ก และทาโลชั่นกันหนาว</li>
+                  <li>ตั้งนาฬิกา 15:15 เพื่อกลับเข้าไปทันรอบบ่าย</li>
+                </ul>
+              </div>
+            </details>
+          </div>
+        </li>
+
+        <li class="stop" data-start="2026-12-01T15:30:00+09:00" data-end="2026-12-01T17:30:00+09:00">
+          <div class="stop__time">15:30<span class="t-sub">13:30 ICT</span></div>
+          <div class="stop__rail" aria-hidden="true"><span class="stop__dot"></span></div>
+          <div>
+            <div class="stop__head"><h3>กลับเข้าไปโซนที่เหลือ</h3><span class="stop__place">ในสวน</span></div>
+            <p class="stop__body">เข้าอีกครั้งด้วยตั๋วเดิม — ไป Harry Potter หรือโซนที่ยังไม่ได้เล่น ช่วงบ่ายคิวจะสั้นกว่าตอนเช้า</p>
+            <ul class="facts">
+              <li>re-entry ได้</li>
+              <li>Harry Potter โซนใหญ่</li>
+            </ul>
+            <div class="wtags">
+              <span class="wtag w-mid">Hippogriff 30–70 น.</span>
+              <span class="wtag w-long">Forbidden Journey 50–110 น.</span>
+              <span class="wtag w-mid">Spider-Man 40–80 น.</span>
+            </div>
+            <details>
+              <summary>เลือกโซนตอนบ่าย <svg aria-hidden="true"><use href="#i-chevron"/></svg></summary>
+              <div class="detail-box">
+                <ul>
+                  <li>เครื่องใหญ่ใน Harry Potter สูง ~122 ซม. — เด็ก 5 ขวบอาจได้แค่เครื่องเล็ก</li>
+                  <li>ดูรอบโชว์ในแอปก่อนเดินไปโซนไกล</li>
+                  <li>ถ้าเด็กยังสนุกกับ SNW มากกว่า กลับเข้าไปซ้ำได้ถ้ามี timed entry</li>
+                </ul>
+              </div>
+            </details>
+          </div>
+        </li>
+
+        <li class="stop" data-start="2026-12-01T17:30:00+09:00" data-end="2026-12-01T19:30:00+09:00">
+          <div class="stop__time">17:30<span class="t-sub">15:30 ICT</span></div>
+          <div class="stop__rail" aria-hidden="true"><span class="stop__dot"></span></div>
+          <div>
+            <div class="stop__head"><h3>Light Up the Night + ไฟคริสต์มาส</h3><span class="stop__place">Gramercy Park</span></div>
+            <p class="stop__body">โชว์เปิดไฟคริสต์มาสที่ Gramercy Park — รอบแรก <b>17:30</b> รอบสอง <b>19:00</b> (ช่วง 25 พ.ย. 2026–11 ม.ค. 2027) ระหว่างรอเดินดู parade กลางวันได้ถ้าทัน</p>
+            <ul class="facts">
+              <li>17:30 / 19:00</li>
+              <li>Gramercy Park</li>
+              <li>ฟรี ไม่ต้องจอง</li>
+            </ul>
+            <div class="wtags">
+              <span class="wtag w-show">Light Up the Night 17:30 / 19:00</span>
+              <span class="wtag w-show">Joy of Lights 18:00 / 20:00</span>
+            </div>
+            <details>
+              <summary>จับจองที่ดูให้ดี <svg aria-hidden="true"><use href="#i-chevron"/></svg></summary>
+              <div class="detail-box">
+                <ul>
+                  <li>ไปถึงก่อน ~20 นาทีเพื่อยืนหน้าเวที</li>
+                  <li>หลังพระอาทิตย์ตกอากาศเย็นลงมาก — ใส่เสื้อกันหนาวให้เด็กก่อนออกจากห้อง</li>
+                  <li>มีโชว์ไฟอีกชุด “Joy of Lights” รอบ 18:00 / 20:00 ที่ลานเดียวกัน</li>
+                </ul>
+              </div>
+            </details>
+          </div>
+        </li>
+
+        <li class="stop" data-start="2026-12-01T19:30:00+09:00" data-end="2026-12-01T21:00:00+09:00">
+          <div class="stop__time">19:30<span class="t-sub">17:30 ICT</span></div>
+          <div class="stop__rail" aria-hidden="true"><span class="stop__dot"></span></div>
+          <div>
+            <div class="stop__head"><h3>เดินกลับโรงแรม</h3><span class="stop__place">Hotel Universal Port</span></div>
+            <p class="stop__body">เดินกลับ ~8 นาที นอนเร็ว — พรุ่งนี้ต้องเช็คเอาต์ 08:30 แล้วย้ายเข้า Namba</p>
+            <ul class="facts">
+              <li>8 นาที</li>
+              <li>พรุ่งนี้ 08:30 เช็คเอาต์</li>
+            </ul>
+            <details>
+              <summary>ก่อนนอน <svg aria-hidden="true"><use href="#i-chevron"/></svg></summary>
+              <div class="detail-box">
+                <ul>
+                  <li>เก็บกระเป๋าให้เสร็จคืนนี้ ยกเว้นของใช้เช้า</li>
+                  <li>ชาร์จทุกเครื่อง</li>
+                  <li>เช็กแผน Day 5: Kaiyukan แล้วย้ายเข้า Namba</li>
+                </ul>
+              </div>
+            </details>
+          </div>
+        </li>
+
+      </ol>
+
+      <aside class="rail" aria-label="เช็กลิสต์และงบของวัน">
+
+        <section class="card" aria-labelledby="check-title">
+          <div class="card__head">
+            <h2 id="check-title">ต้องมีติดตัว</h2>
+            <span class="card__count" id="checkCount">0 / 10</span>
+          </div>
+          <div class="progress" role="presentation"><div class="progress__bar" id="progressBar"></div></div>
+          <div class="checks" id="checks">
+            <label class="check"><input type="checkbox" data-key="ticket"><span>ตั๋ว USJ วันที่ 1 ธ.ค. (ระบุวัน)</span></label>
+            <label class="check"><input type="checkbox" data-key="express"><span>Express Pass + เวลาเข้า SNW</span></label>
+            <label class="check"><input type="checkbox" data-key="app"><span>แอป USJ (คิว/รอบโชว์)</span></label>
+            <label class="check"><input type="checkbox" data-key="power"><span>พาวเวอร์แบงก์</span></label>
+            <label class="check"><input type="checkbox" data-key="water"><span>น้ำ + ขนม</span></label>
+            <label class="check"><input type="checkbox" data-key="jacket"><span>เสื้อกันหนาวสำหรับตอนค่ำ</span></label>
+            <label class="check"><input type="checkbox" data-key="stroller"><span>รถเข็นพับ (หรือเช่าในสวน)</span></label>
+            <label class="check"><input type="checkbox" data-key="socks"><span>ถุงเท้าสำรอง</span></label>
+            <label class="check"><input type="checkbox" data-key="cash"><span>เงินสด/บัตรสำหรับของฝาก</span></label>
+            <label class="check"><input type="checkbox" data-key="roomkey"><span>กุญแจห้อง (กลับมาพักกลางวัน)</span></label>
+          </div>
+          <div class="card__foot">
+            <span class="mono-label">บันทึกในเครื่องนี้</span>
+            <button class="link-btn" type="button" id="resetChecks">ล้างติ๊กทั้งหมด</button>
+          </div>
+        </section>
+
+        <section class="card card--plain" aria-labelledby="cost-title">
+          <h3 id="cost-title" class="mono-label" style="color:var(--ink-2)">ค่าใช้จ่ายวันที่สี่ (ประมาณ)</h3>
+          <div class="costs">
+            <div class="cost"><span>ตั๋ว + Express (3 คน)</span><b>¥25,000–35,000</b></div>
+            <div class="cost"><span>มื้อกลางวัน</span><b>¥4,000–6,000</b></div>
+            <div class="cost"><span>ของว่าง/เครื่องดื่มในสวน</span><b>¥1,500–2,500</b></div>
+            <div class="cost"><span>มื้อเย็น</span><b>¥3,000–4,000</b></div>
+            <div class="cost"><span>ของฝาก</span><b>ตามจริง</b></div>
+          </div>
+          <div class="cost-total">
+            <span>รวมโดยประมาณ</span>
+            <b>¥33,500–47,500</b>
+          </div>
+          <p style="margin-top:8px;font-size:.72rem;color:var(--muted);line-height:1.6">≈ ฿7,370–10,450 ที่เรต 0.22 · ไม่รวมของฝาก</p>
+        </section>
+
+      </aside>
+    </div>
+  </section>
+
+  <!-- ============ RIDES ============ -->
+  <section class="section wrap" aria-labelledby="rides-title">
+    <div class="section__head">
+      <div>
+        <p class="eyebrow">เครื่องเล่น & คิว</p>
+        <h2 id="rides-title">อะไรขึ้นได้ และรอนานแค่ไหน</h2>
+      </div>
+      <p class="section__note">ค่ากลางจากหลายแหล่ง (พ.ย.–ธ.ค.) · เช็กคิวจริงในแอปวันนั้น</p>
+    </div>
+
+    <div class="tablewrap">
+      <table class="rtable">
+        <thead>
+          <tr>
+            <th scope="col">เครื่องเล่น</th>
+            <th scope="col">ส่วนสูง</th>
+            <th scope="col">เหมาะกับ 5 ขวบ</th>
+            <th scope="col">คิวปกติ</th>
+            <th scope="col">Single Rider</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Yoshi's Adventure</td>
+            <td class="num">92 ซม.+ (มีผู้ใหญ่)</td>
+            <td><span class="yes">เหมาะมาก</span> — ช้า นุ่ม</td>
+            <td><span class="wtag w-long">40–90 น.</span></td>
+            <td class="no">ไม่มี</td>
+          </tr>
+          <tr>
+            <td>Mario Kart</td>
+            <td class="num">107 ซม.+ (มีผู้ใหญ่)</td>
+            <td><span class="maybe">ได้</span> ถ้าไม่กลัวมืด/3D</td>
+            <td><span class="wtag w-long">90–150 น.</span></td>
+            <td><span class="yes">มี</span></td>
+          </tr>
+          <tr>
+            <td>Donkey Kong Crazy Trolley</td>
+            <td class="num">107 ซม.+ (มีผู้ใหญ่)</td>
+            <td><span class="maybe">ระวัง</span> — เร็ว แรง</td>
+            <td><span class="wtag w-very">120–200 น.</span></td>
+            <td><span class="yes">มี</span></td>
+          </tr>
+          <tr>
+            <td>Flight of the Hippogriff</td>
+            <td class="num">92 ซม.+ (มีผู้ใหญ่) · 122 เดี่ยว</td>
+            <td><span class="yes">ได้</span> — รถไฟเหาะเล็ก</td>
+            <td><span class="wtag w-mid">30–70 น.</span></td>
+            <td class="no">ไม่มี</td>
+          </tr>
+          <tr>
+            <td>Forbidden Journey</td>
+            <td class="num">122 ซม.+</td>
+            <td><span class="no">ไม่ได้</span> — ส่วนสูง + น่ากลัว</td>
+            <td><span class="wtag w-long">50–110 น.</span></td>
+            <td><span class="yes">มี</span></td>
+          </tr>
+          <tr>
+            <td>Minion Mayhem</td>
+            <td class="num">102 ซม.+ (มีผู้ใหญ่)</td>
+            <td><span class="maybe">ได้</span> ถ้าไม่กลัวเสียงดัง</td>
+            <td><span class="wtag w-long">50–90 น.</span></td>
+            <td class="no">ไม่ระบุ</td>
+          </tr>
+          <tr>
+            <td>Spider-Man 4K3D</td>
+            <td class="num">102 ซม.+ (มีผู้ใหญ่)</td>
+            <td><span class="maybe">อาจกลัว</span> — มืด/3D</td>
+            <td><span class="wtag w-mid">40–80 น.</span></td>
+            <td class="no">ไม่ระบุ</td>
+          </tr>
+          <tr>
+            <td>Jurassic Park The Ride</td>
+            <td class="num">107 ซม.+ (มีผู้ใหญ่)</td>
+            <td><span class="maybe">ระวัง</span> — เปียก/แรง</td>
+            <td><span class="wtag w-long">50–90 น.</span></td>
+            <td class="no">ไม่ระบุ</td>
+          </tr>
+          <tr>
+            <td>Wonderland (Snoopy/Elmo/Hello Kitty)</td>
+            <td class="num">ส่วนใหญ่ไม่มีขั้นต่ำ หรือ 92 ซม.+</td>
+            <td><span class="yes">เหมาะสุด</span> — เครื่องนุ่ม</td>
+            <td><span class="wtag w-fast">10–40 น.</span></td>
+            <td class="no">ไม่มี</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="playbook" style="margin-top:clamp(24px,3vw,36px)">
+      <article class="play">
+        <div class="play__ico"><svg aria-hidden="true"><use href="#i-clock"/></svg></div>
+        <h3>Single Rider คืออะไร</h3>
+        <p>คือคิวแยกสำหรับคนที่ขึ้นคนเดียว — จะถูกจัดให้เติมที่นั่งว่าง ทำให้รอสั้นกว่าคิวปกติมาก</p>
+        <p>แต่ <b>ต้องแยกจากกลุ่ม</b> และเด็ก 5 ขวบขึ้นคนเดียวไม่ได้ — จึงใช้ได้เฉพาะตอนพ่อหรือแม่จะเล่นเครื่องใหญ่คนใดคนหนึ่ง</p>
+      </article>
+      <article class="play">
+        <div class="play__ico"><svg aria-hidden="true"><use href="#i-check"/></svg></div>
+        <h3>Child Switch ดีกว่าสำหรับครอบครัว</h3>
+        <p>ให้ผู้ใหญ่คนหนึ่งเล่นก่อน อีกคนรอเด็กที่จุดพัก แล้วสลับกันโดย <b>ไม่ต้องต่อคิวใหม่</b> — เหมาะกับเครื่องที่เด็กขึ้นไม่ได้</p>
+        <p>แจ้งพนักงานที่ทางเข้าเครื่องว่าขอใช้ Child Switch</p>
+      </article>
+      <article class="play">
+        <div class="play__ico"><svg aria-hidden="true"><use href="#i-warn"/></svg></div>
+        <h3>ช่วงที่คิวสั้นสุด</h3>
+        <p><b>เปิดสวน–09:30</b> (รีบเข้าโซนแรก) · <b>หลัง 17:00</b> (คนเริ่มกลับ) · <b>ระหว่าง parade</b></p>
+        <p>เครื่องยอดนิยมอย่าง Donkey Kong กับ Mario Kart แตะ 150–200 นาทีได้ในวันหยุด</p>
+      </article>
+    </div>
+
+    <p class="note-legend" style="margin-top:14px">ส่วนสูงและ Single Rider อ้างจากหน้าทางการของ USJ (Flight of the Hippogriff: 92 ซม. พร้อมผู้ใหญ่ / 122 ซม. เดี่ยว) — ส่วนสูงเด็กวัดฟรีที่จุดวัดหน้าประตู และอาจมีเงื่อนไขอื่น เช่น ความกว้างที่นั่ง</p>
+  </section>
+
+  <!-- ============ SHOWS ============ -->
+  <section class="section wrap" aria-labelledby="shows-title">
+    <div class="section__head">
+      <div>
+        <p class="eyebrow">Parade & โชว์</p>
+        <h2 id="shows-title">รอบโชว์ช่วงต้นธันวาคม</h2>
+      </div>
+      <p class="section__note">เวลาจริงของวันนั้นดูในแอป USJ · Show Schedule</p>
+    </div>
+
+    <div class="tablewrap">
+      <table class="rtable">
+        <thead>
+          <tr>
+            <th scope="col">รายการ</th>
+            <th scope="col">เวลา</th>
+            <th scope="col">จุดชม</th>
+            <th scope="col">หมายเหตุ</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>NO LIMIT! Parade</td>
+            <td class="num">ช่วงบ่าย (มัก ~14:00)</td>
+            <td>ถนนหลัก</td>
+            <td>ขบวนใหญ่กลางวัน · ถึง 11 ม.ค. 2027 · เวลาเลื่อนตามฤดู</td>
+          </tr>
+          <tr>
+            <td>Light Up the Night</td>
+            <td class="num">17:30 / 19:00</td>
+            <td>Gramercy Park</td>
+            <td>โชว์เปิดไฟคริสต์มาส · 25 พ.ย. 2026–11 ม.ค. 2027</td>
+          </tr>
+          <tr>
+            <td>Joy of Lights</td>
+            <td class="num">18:00 / 20:00</td>
+            <td>Gramercy Park</td>
+            <td>โชว์แสงสีชุดเย็น · ลานเดียวกับ Light Up the Night</td>
+          </tr>
+          <tr>
+            <td>WaterWorld</td>
+            <td class="num">หลายรอบกลางวัน</td>
+            <td>โซน WaterWorld</td>
+            <td>โชว์ผาดโผน มีเสียงดัง/น้ำกระเซ็น — เด็กอาจกลัว</td>
+          </tr>
+          <tr>
+            <td>Harry Potter street shows</td>
+            <td class="num">หลายรอบ</td>
+            <td>โซน Harry Potter</td>
+            <td>Frog Choir · Triwizard Spirit Rally · ดูเวลาหน้าลาน</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p class="note-legend" style="margin-top:14px">parade กลางวันและโชว์ในสวนเปลี่ยนเวลาตามฤดูกาลและอาจงดตามอากาศ — เปิดแอป USJ วันนั้นแล้วดูหัวข้อ “Show Schedule” เพื่อยืนยันอีกรอบ (ช่วง christmas 2026 มีโชว์พิเศษเพิ่มหลายรอบ)</p>
+  </section>
+
+  <!-- ============ FOOD ============ -->
+  <section class="section wrap" aria-labelledby="food-title">
+    <div class="section__head">
+      <div>
+        <p class="eyebrow">อาหารในสวน</p>
+        <h2 id="food-title">กินที่ไหน ราคาเท่าไร</h2>
+      </div>
+      <p class="section__note">ราคาโดยประมาณจากเมนู 2026 · เช็กในแอปอีกครั้ง</p>
+    </div>
+
+    <div class="tablewrap">
+      <table class="rtable">
+        <thead>
+          <tr>
+            <th scope="col">ร้าน</th>
+            <th scope="col">โซน</th>
+            <th scope="col">ราคา / คน</th>
+            <th scope="col">เหมาะกับ 5 ขวบ</th>
+            <th scope="col">หมายเหตุ</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Kinopio's Cafe</td>
+            <td>SNW</td>
+            <td class="num">¥2,500–2,700 · kids ¥1,400–1,800</td>
+            <td><span class="yes">ดีมาก</span> — มี kids set 2 แบบ</td>
+            <td>ไม่มีจองล่วงหน้า · ลงคิวหน้างาน/QR ในโซน · สั่งผ่านมือถือได้</td>
+          </tr>
+          <tr>
+            <td>Snoopy's Backlot Cafe</td>
+            <td>Wonderland</td>
+            <td class="num">~¥1,300–1,700</td>
+            <td><span class="yes">ดีมาก</span> — ใกล้เครื่องเด็ก</td>
+            <td>โต๊ะในร่ม เหมาะพักขา</td>
+          </tr>
+          <tr>
+            <td>Three Broomsticks</td>
+            <td>Harry Potter</td>
+            <td class="num">~¥1,800–2,500</td>
+            <td><span class="yes">ดี</span> — บรรยากาศโลกเวทมนตร์</td>
+            <td>มี priority seating (จองคิวล่วงหน้า)</td>
+          </tr>
+          <tr>
+            <td>Mel's Drive-In</td>
+            <td>Hollywood</td>
+            <td class="num">~¥1,300–1,800</td>
+            <td><span class="yes">ดี</span> — เบอร์เกอร์</td>
+            <td>คิวไว เหมาะมื้อเร็ว</td>
+          </tr>
+          <tr>
+            <td>Leaky Cauldron</td>
+            <td>Harry Potter</td>
+            <td class="num">~¥1,500–2,200</td>
+            <td><span class="maybe">พอได้</span> — เมนูอังกฤษ</td>
+            <td>คนแน่นช่วงเที่ยง</td>
+          </tr>
+          <tr>
+            <td>Yoshi's Snack Island + รถเข็น</td>
+            <td>SNW / ทั่วสวน</td>
+            <td class="num">¥500–900</td>
+            <td><span class="yes">ดี</span> — ของว่าง</td>
+            <td>churros ¥800 · turkey-leg bun ¥850 · ป๊อปคอร์น ~¥500</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="playbook" style="margin-top:clamp(24px,3vw,36px)">
+      <article class="play">
+        <div class="play__ico"><svg aria-hidden="true"><use href="#i-check"/></svg></div>
+        <h3>Kinopio's Cafe — ต้องเข้าโซนก่อน</h3>
+        <p>เข้าร้านได้ต่อเมื่ออยู่ใน SNW แล้ว — ลงคิวหน้างานหรือสแกน QR ใกล้ร้าน แล้วรอเรียก</p>
+        <p><b>Kids set:</b> เบอร์เกอร์เซ็ต ¥1,800 (ถึง 11 ขวบ) · คาร์รีเซ็ต ¥1,400 (ถึง 6 ขวบ) — เด็ก 5 ขวบเลือกได้ทั้งสอง</p>
+      </article>
+      <article class="play">
+        <div class="play__ico"><svg aria-hidden="true"><use href="#i-clock"/></svg></div>
+        <h3>เลี่ยงคิวยังไง</h3>
+        <p>มื้อเที่ยงคนแน่น 12:00–13:00 — กิน 11:00 หรือ 13:30 จะรอสั้นกว่ามาก</p>
+        <p>ร้านที่รองรับ “smartphone order” สั่งจากมือถือได้ ไม่ต้องยืนต่อคิวหน้าเคาน์เตอร์</p>
+      </article>
+      <article class="play">
+        <div class="play__ico"><svg aria-hidden="true"><use href="#i-bag"/></svg></div>
+        <h3>ของว่าง &amp; น้ำ</h3>
+        <p>พกขวดน้ำและขนมเล็ก ๆ เข้าไปได้ (ของเหลวมีข้อจำกัดตอนตรวจกระเป๋า)</p>
+        <p>ของกินในสวนแพงกว่าข้างนอก ~1.5–2 เท่า — เตรียมงบมื้อกลางวัน ¥1,500–2,000/คน</p>
+      </article>
+    </div>
+
+    <p class="note-legend" style="margin-top:14px">ราคา Kinopio's Cafe อ้างจากเมนู 2026 (เมนูหลัก ¥2,500–2,700 · kids set ¥1,400/¥1,800) — ร้านอื่นเป็นราคาประมาณการจากเมนูช่วงเดียวกัน · ข้อมูลสารก่อภูมิแพ้สอบถามที่ร้าน</p>
+  </section>
+
+  <!-- ============ PLAYBOOK ============ -->
+  <section class="section wrap" aria-labelledby="planb-title">
+    <div class="section__head">
+      <div>
+        <p class="eyebrow">แผนสำรอง</p>
+        <h2 id="planb-title">ถ้าไม่เป็นไปตามแผน</h2>
+      </div>
+      <p class="section__note">วันที่คิวและอากาศมีผลกับแผนมากที่สุด</p>
+    </div>
+
+    <div class="playbook">
+      <article class="play">
+        <div class="play__ico"><svg aria-hidden="true"><use href="#i-warn"/></svg></div>
+        <h3>ฝนตก</h3>
+        <p>เครื่องเล่นกลางแจ้งบางตัวปิดชั่วคราว — เปลี่ยนไปเน้นโชว์ในร่มและโซนในอาคาร แล้วค่อยกลับไปเล่นเครื่องกลางแจ้งตอนฝนซา</p>
+        <p>พกร่มแบบพับได้และถุงพลาสติกใส่ของกันเปียก</p>
+      </article>
+
+      <article class="play">
+        <div class="play__ico"><svg aria-hidden="true"><use href="#i-clock"/></svg></div>
+        <h3>ไม่ได้ timed entry ของ SNW</h3>
+        <p>ถ้าคิวโซนเต็มตอนเช้า ให้ลองกดใหม่ช่วงบ่ายแก่ ๆ — คนมักน้อยลงหลัง 16:00</p>
+        <p>ระหว่างรอ ไปเล่นโซน Wonderland/Minion Park ก่อน แล้วค่อยกลับมา</p>
+        <p>ถ้ามี Express Pass ที่ระบุเวลา SNW ไว้แล้ว ไม่ต้องกังวลเรื่องนี้</p>
+      </article>
+
+      <article class="play">
+        <div class="play__ico"><svg aria-hidden="true"><use href="#i-bag"/></svg></div>
+        <h3>เด็กหมดแรงก่อนกำหนด</h3>
+        <p>กลับห้องพักเร็วกว่าแผนได้เลย — โรงแรมอยู่ห่าง 7–10 นาที และแผนมีช่วงพักกลางวันอยู่แล้ว</p>
+        <p>ถ้าออกก่อน parade ก็ไม่เสียอะไรสำคัญ เพราะพรุ่งนี้ยังได้นอนเต็มที่ที่ Namba</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ============ TOMORROW ============ -->
+  <section class="wrap" aria-labelledby="tomorrow-title">
+    <div class="tomorrow">
+      <div>
+        <p class="eyebrow">ถัดไป</p>
+        <h2 id="tomorrow-title">Day 5 · พุธ 2 ธ.ค. — Kaiyukan แล้วย้ายเข้า Namba</h2>
+        <p>เช็คเอาต์ ฝากกระเป๋าที่ Universal Port ไปดูฉลามวาฬที่ Kaiyukan เล่น Legoland ต่อตอนบ่าย แล้วนั่งแท็กซี่เข้า Citadines Namba ปิดท้ายด้วย Dotonbori ตอนค่ำ</p>
+        <ul class="tomorrow__list">
+          <li>08:30 เช็คเอาต์</li>
+          <li>09:30 Kaiyukan</li>
+          <li>13:30 Legoland</li>
+          <li>16:30 Citadines</li>
+          <li>18:30 Dotonbori</li>
+        </ul>
+        <p class="tomorrow__note">ทุกเวลาเป็นเวลาญี่ปุ่น (JST) — เร็วกว่าไทย 2 ชม.</p>
+        <a class="maplink" href="day-5-kaiyukan-namba.html">
+          <svg aria-hidden="true"><use href="#i-doc"/></svg>
+          เปิดแผน Day 5
+        </a>
+      </div>
+      <div class="tomorrow__num" aria-hidden="true">D5</div>
+    </div>
+  </section>
+
+  <nav class="pager wrap" aria-label="ไปวันอื่นในทริป">
+    <a class="pager__btn" href="day-3-arashiyama-universal-city.html">← Day 3</a>
+    <span class="pager__label">Day 4 / 9</span>
+    <a class="pager__btn" href="day-5-kaiyukan-namba.html">Day 5 →</a>
+  </nav>
+
+</main>
+
+<footer class="foot wrap">
+  <div class="foot__grid">
+    <div>
+      <p><strong>ที่มาของตัวเลข:</strong> เวลาเปิดสวน ส่วนสูงเครื่องเล่น และราคาตั๋ว อ้างจากแผนทริปที่อัปเดต 14 พ.ย. 2026 (itinerary.md) — ตัวเลขที่กำกับว่า “ประมาณ” คือการกะจากแผนเดิม ไม่ใช่ราคาที่จองแล้ว</p>
+      <p style="margin-top:8px">ตั๋วและ Express Pass ต้องซื้อล่วงหน้าและระบุวันที่ — เวลาเปิดสวนและรอบโชว์เปลี่ยนได้ ให้เช็กในแอป USJ อีกครั้งในวันนั้น</p>
+    </div>
+    <div>
+      <p><strong>หน้านี้:</strong> Day 4 ของ 9 · <a href="day-3-arashiyama-universal-city.html">ย้อนไป Day 3</a> · <a href="index.html">แผนรวม</a></p>
+      <p style="margin-top:8px">Day 6–9 จะทำเป็นหน้าแยกในชุดเดียวกัน</p>
+    </div>
+  </div>
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ---------- countdown ---------- */
+  var DEP = new Date('2026-12-01T07:30:00+09:00');
+  var countdownEl = document.getElementById('countdown');
+
+  function pad(n) { return n < 10 ? '0' + n : String(n); }
+
+  function updateCountdown() {
+    var now = new Date();
+    var diff = DEP - now;
+    if (diff <= 0) {
+      var endOfDay = new Date('2026-12-01T23:59:00+09:00');
+      countdownEl.textContent = now < endOfDay ? 'วันนี้' : 'ผ่านไปแล้ว';
+      return;
+    }
+    var days = Math.floor(diff / 86400000);
+    var hours = Math.floor((diff % 86400000) / 3600000);
+    if (days >= 1) {
+      countdownEl.textContent = days + ' วัน ' + hours + ' ชม.';
+    } else {
+      var mins = Math.floor((diff % 3600000) / 60000);
+      countdownEl.textContent = hours + ' ชม. ' + pad(mins) + ' น.';
+    }
+  }
+  updateCountdown();
+  setInterval(updateCountdown, 60000);
+
+  /* ---------- live step highlighting ---------- */
+  var stops = Array.prototype.slice.call(document.querySelectorAll('.stop'));
+  var liveBadge = document.getElementById('liveBadge');
+
+  function markNow() {
+    var now = Date.now();
+    var active = null;
+    stops.forEach(function (el) {
+      var start = Date.parse(el.dataset.start);
+      var end = Date.parse(el.dataset.end);
+      el.classList.remove('is-now', 'is-past');
+      if (now >= start && now <= end) {
+        el.classList.add('is-now');
+        active = el;
+      } else if (now > end) {
+        el.classList.add('is-past');
+      }
+    });
+    if (active) {
+      liveBadge.classList.add('is-on');
+      if (!active.dataset.seen) {
+        active.dataset.seen = '1';
+        active.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    } else {
+      liveBadge.classList.remove('is-on');
+    }
+  }
+  markNow();
+  setInterval(markNow, 30000);
+
+  /* ---------- checklist ---------- */
+  var STORE = 'osaka2026.day4.check';
+  var boxes = Array.prototype.slice.call(document.querySelectorAll('#checks input'));
+  var countEl = document.getElementById('checkCount');
+  var barEl = document.getElementById('progressBar');
+
+  function readStore() {
+    try { return JSON.parse(localStorage.getItem(STORE) || '{}') || {}; }
+    catch (e) { return {}; }
+  }
+  function writeStore(obj) {
+    try { localStorage.setItem(STORE, JSON.stringify(obj)); } catch (e) {}
+  }
+  function paint() {
+    var done = boxes.filter(function (b) { return b.checked; }).length;
+    countEl.textContent = done + ' / ' + boxes.length;
+    barEl.style.width = Math.round((done / boxes.length) * 100) + '%';
+  }
+
+  var saved = readStore();
+  boxes.forEach(function (box) {
+    if (saved[box.dataset.key]) box.checked = true;
+    box.addEventListener('change', function () {
+      var store = readStore();
+      if (box.checked) { store[box.dataset.key] = 1; } else { delete store[box.dataset.key]; }
+      writeStore(store);
+      paint();
+    });
+  });
+  paint();
+
+  /* ---------- toast ---------- */
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  function showToast(msg) {
+    toast.textContent = msg;
+    toast.classList.add('is-on');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { toast.classList.remove('is-on'); }, 2200);
+  }
+
+  document.getElementById('resetChecks').addEventListener('click', function () {
+    boxes.forEach(function (b) { b.checked = false; });
+    writeStore({});
+    paint();
+    showToast('ล้างติ๊กทั้งหมดแล้ว');
+  });
+
+  /* ---------- print ---------- */
+  document.getElementById('printBtn').addEventListener('click', function () { window.print(); });
+
+  var openBeforePrint = [];
+  window.addEventListener('beforeprint', function () {
+    openBeforePrint = [];
+    Array.prototype.forEach.call(document.querySelectorAll('details'), function (d) {
+      shortState(d);
+    });
+    function shortState(el) {
+      if (!el.open) { openBeforePrint.push(el); el.open = true; }
+      Array.prototype.forEach.call(el.querySelectorAll('details'), shortState);
+    }
+  });
+  window.addEventListener('afterprint', function () {
+    openBeforePrint.forEach(function (el) { el.open = false; });
+    openBeforePrint = [];
+  });
+
+  /* ---------- reveal on scroll ---------- */
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var revealTargets = Array.prototype.slice.call(document.querySelectorAll('.stop, .play, .card, .tomorrow > div'));
+  if (!reduce && 'IntersectionObserver' in window) {
+    revealTargets.forEach(function (el) { el.classList.add('reveal'); });
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-in');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+    revealTargets.forEach(function (el) { io.observe(el); });
+  }
+})();
+</script>
+</body>
+</html>

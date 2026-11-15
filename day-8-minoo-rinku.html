@@ -1,0 +1,1320 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#f2ece0">
+<title>Day 8 · Minoo → Rinku — ทริปโอซาก้า 2026</title>
+<meta name="description" content="แผนวันที่แปดของทริปโอซาก้า 2026: น้ำตก Minoo ยามใบไม้แดงเช้า แล้วย้ายกระเป๋าไปนอน OMO Kansai Airport ที่ Rinku Town ปิดท้ายช้อป Rinku Premium Outlets (5 ธ.ค. 2026)">
+<style>
+/* ---------- tokens ---------- */
+:root{
+  --paper:#f2ece0;
+  --surface:#faf6ec;
+  --surface-2:#f6f0e3;
+  --ink:#1b2233;
+  --ink-2:#454d60;
+  --muted:#626877;
+  --rule:#d9cfb9;
+  --rule-strong:#c2b69a;
+  --accent:#b23a25;
+  --accent-ink:#8c2a17;
+  --ochre:#7f5c10;
+  --moss:#3d5b45;
+  --font-ui:'Sukhumvit Set','Thonburi','Noto Sans Thai','IBM Plex Sans Thai',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  --font-mono:ui-monospace,'SF Mono',SFMono-Regular,Menlo,Consolas,monospace;
+  --wrap:1140px;
+  --radius:14px;
+  --ease:cubic-bezier(.16,1,.3,1);
+}
+
+/* ---------- base ---------- */
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{
+  margin:0;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--font-ui);
+  font-size:16px;
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,h4,p,dl,dd,figure{margin:0}
+ul,ol{margin:0;padding:0;list-style:none}
+a{color:inherit}
+svg{display:block}
+:focus-visible{outline:2px solid var(--ink);outline-offset:3px;border-radius:2px}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+.skip{
+  position:absolute;left:16px;top:-64px;z-index:99;background:var(--ink);color:var(--surface);
+  padding:10px 16px;border-radius:8px;font-size:.85rem;text-decoration:none;transition:top .2s var(--ease);
+}
+.skip:focus{top:12px}
+.wrap{width:100%;max-width:var(--wrap);margin:0 auto;padding:0 clamp(18px,4vw,40px)}
+.mono-label{
+  font-family:var(--font-mono);font-size:.68rem;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--muted);font-weight:500;
+}
+.eyebrow{
+  display:inline-flex;align-items:center;gap:10px;
+  font-family:var(--font-mono);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2);
+}
+.eyebrow::before{content:"";width:22px;height:1px;background:var(--rule-strong);display:block}
+.nw{white-space:nowrap}
+
+/* ---------- top bar ---------- */
+.topbar{
+  position:sticky;top:0;z-index:40;
+  background:rgba(242,236,224,.94);
+  border-bottom:1px solid var(--rule);
+}
+@supports (backdrop-filter:blur(8px)){
+  .topbar{background:rgba(242,236,224,.82);backdrop-filter:blur(10px) saturate(120%)}
+}
+.topbar__in{
+  display:flex;align-items:center;gap:clamp(12px,2vw,28px);
+  min-height:62px;padding-top:8px;padding-bottom:8px;
+}
+.brand{display:flex;align-items:baseline;gap:10px;flex-shrink:0;text-decoration:none}
+.brand b{font-family:var(--font-mono);font-size:.78rem;letter-spacing:.14em;font-weight:600}
+.brand span{font-size:.78rem;color:var(--muted)}
+.days{display:flex;align-items:center;gap:4px;margin-left:auto;overflow-x:auto;scrollbar-width:none}
+.days::-webkit-scrollbar{display:none}
+.days__label{font-family:var(--font-mono);font-size:.66rem;letter-spacing:.1em;color:var(--muted);margin-right:6px;flex-shrink:0}
+.daycount{display:none;font-family:var(--font-mono);font-size:.74rem;color:var(--muted);font-variant-numeric:tabular-nums}
+.day{
+  display:inline-flex;align-items:center;justify-content:center;
+  min-width:32px;height:32px;border-radius:8px;
+  font-family:var(--font-mono);font-size:.78rem;font-variant-numeric:tabular-nums;
+  color:var(--muted);flex-shrink:0;
+}
+.day.is-active{background:var(--ink);color:var(--surface);font-weight:600}
+.day.is-next{color:var(--ink-2)}
+.tool{display:flex;align-items:center;gap:6px;flex-shrink:0}
+.btn-quiet{
+  display:inline-flex;align-items:center;gap:7px;
+  min-height:36px;padding:0 12px;border:1px solid var(--rule);border-radius:8px;
+  background:transparent;color:var(--ink-2);font-family:var(--font-ui);font-size:.78rem;
+  cursor:pointer;transition:background .18s var(--ease),border-color .18s var(--ease);
+}
+.btn-quiet:hover{background:var(--surface-2);border-color:var(--rule-strong)}
+.btn-quiet svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+
+/* ---------- hero ---------- */
+.hero{padding-top:clamp(36px,5vw,64px);padding-bottom:clamp(28px,4vw,44px)}
+.hero__grid{display:grid;grid-template-columns:minmax(0,1.02fr) minmax(0,.98fr);gap:clamp(28px,4vw,56px);align-items:center}
+.hero h1{
+  margin-top:16px;
+  font-size:clamp(2rem,4.6vw,3.35rem);
+  line-height:1.1;
+  letter-spacing:-.022em;
+  font-weight:600;
+}
+.hero h1 .arrow{color:var(--accent);padding:0 .12em;font-weight:400}
+.hero__lede{margin-top:16px;max-width:46ch;color:var(--ink-2);font-size:clamp(.95rem,1.2vw,1.02rem);line-height:1.7}
+.hero__meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
+.pill{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:7px 12px;border:1px solid var(--rule);border-radius:8px;background:var(--surface);
+  font-size:.8rem;color:var(--ink-2);
+}
+.pill b{font-family:var(--font-mono);font-variant-numeric:tabular-nums;color:var(--ink);font-weight:600}
+.pill svg{width:14px;height:14px;stroke:var(--muted);fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+
+/* ---------- boarding pass ---------- */
+.ticket{
+  position:relative;
+  background:var(--surface);
+  border:1px solid var(--rule);
+  border-radius:var(--radius);
+  box-shadow:0 1px 2px rgba(27,34,51,.05);
+  padding:22px 24px 0;
+  max-width:520px;
+  margin-left:auto;
+}
+.ticket__top{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-bottom:16px;border-bottom:1px solid var(--rule)}
+.ticket__airline{font-size:.76rem;color:var(--ink-2)}
+.ticket__route{display:grid;grid-template-columns:auto minmax(52px,1fr) auto;align-items:center;gap:10px;padding:20px 0 18px}
+.endpoint{min-width:0}
+.endpoint--end{text-align:right}
+.endpoint__code{display:block;font-family:var(--font-mono);font-size:.72rem;letter-spacing:.12em;color:var(--muted)}
+.endpoint__city{display:block;font-size:.8rem;color:var(--ink-2);margin-top:2px}
+.endpoint__time{
+  display:block;margin-top:4px;
+  font-family:var(--font-mono);font-weight:600;
+  font-size:clamp(1.9rem,3.6vw,2.5rem);line-height:1;
+  letter-spacing:-.02em;font-variant-numeric:tabular-nums;
+  color:var(--accent-ink);
+}
+.endpoint__tz{display:block;margin-top:4px;font-family:var(--font-mono);font-size:.64rem;letter-spacing:.08em;color:var(--muted)}
+.leg{position:relative;text-align:center;padding-bottom:2px;min-width:56px}
+.leg__dur{font-family:var(--font-mono);font-size:.64rem;letter-spacing:.06em;color:var(--muted);white-space:nowrap}
+.leg__track{position:relative;height:14px;margin:8px 0 6px}
+.leg__track::before{
+  content:"";position:absolute;left:0;right:0;top:50%;height:1px;
+  background:repeating-linear-gradient(90deg,var(--rule-strong) 0 4px,transparent 4px 8px);
+}
+.leg__track::after{
+  content:"";position:absolute;right:0;top:50%;width:5px;height:5px;border-radius:50%;
+  background:var(--rule-strong);transform:translateY(-50%);
+}
+.leg__plane{
+  position:absolute;left:50%;top:50%;transform:translate(-50%,-52%);
+  width:20px;height:20px;background:var(--surface);padding:2px;color:var(--ink-2);
+  stroke-width:1.6;
+}
+.leg__no{font-family:var(--font-mono);font-size:.66rem;letter-spacing:.08em;color:var(--ink-2);white-space:nowrap}
+.ticket__meta{
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;
+  background:var(--rule);border:1px solid var(--rule);border-radius:8px;overflow:hidden;
+}
+.ticket__meta > div{background:var(--surface);padding:9px 11px}
+.ticket__meta dt{font-family:var(--font-mono);font-size:.6rem;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+.ticket__meta dd{font-size:.82rem;color:var(--ink);margin-top:2px}
+.copy-row{display:flex;align-items:center;gap:6px}
+.copy-btn{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:26px;height:26px;border:1px solid var(--rule);border-radius:6px;background:var(--surface-2);
+  color:var(--ink-2);cursor:pointer;transition:background .18s var(--ease)
+}
+.copy-btn:hover{background:#efe7d6}
+.copy-btn svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.copy-ref{font-family:var(--font-mono);font-size:.86rem;letter-spacing:.04em;font-weight:600}
+.ticket__stub{
+  margin:18px -24px 0;padding:14px 24px 18px;
+  border-top:1px dashed var(--rule-strong);
+  font-size:.78rem;color:var(--ink-2);
+}
+.ticket__stub .mono-label{display:block;margin-bottom:4px}
+.ticket::before,.ticket::after{
+  content:"";position:absolute;width:16px;height:16px;border-radius:50%;
+  background:var(--paper);border:1px solid var(--rule);
+}
+.ticket::before{left:-9px;bottom:64px}
+.ticket::after{right:-9px;bottom:64px}
+.ticket__route,.ticket__meta,.ticket__top{animation:ticket-in .55s var(--ease) both}
+.ticket__meta{animation-delay:.08s}
+.ticket__stub{animation:ticket-in .55s var(--ease) .16s both}
+.endpoint__time{animation:time-in .6s var(--ease) .12s both}
+.endpoint--end .endpoint__time{animation-delay:.2s}
+@keyframes ticket-in{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@keyframes time-in{from{opacity:0;transform:translateY(12px);letter-spacing:.02em}to{opacity:1;transform:none}}
+
+/* ---------- route card (day 2) ---------- */
+a.day{text-decoration:none}
+a.day:hover{background:var(--surface-2);color:var(--ink)}
+.topback{display:none;align-items:center;gap:5px;min-height:32px;padding:0 4px;font-size:.76rem;color:var(--ink-2);text-decoration:none}
+.topback:hover{color:var(--ink);text-decoration:underline;text-underline-offset:3px}
+@media (max-width:640px){.topback{display:inline-flex}}
+.routecard{
+  position:relative;background:var(--surface);border:1px solid var(--rule);
+  border-radius:var(--radius);box-shadow:0 1px 2px rgba(27,34,51,.05);
+  padding:20px 22px 16px;max-width:520px;margin-left:auto;
+}
+.routecard__top{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-bottom:14px;border-bottom:1px solid var(--rule)}
+.routecard__hint{font-family:var(--font-mono);font-size:.64rem;letter-spacing:.09em;color:var(--muted)}
+.route{position:relative;display:flex;flex-direction:column;gap:15px;margin-top:18px}
+.route::before{content:"";position:absolute;left:17px;top:14px;bottom:14px;border-left:1px dashed var(--rule-strong)}
+.route__stop{position:relative;display:grid;grid-template-columns:36px minmax(0,1fr) auto;align-items:center;gap:12px}
+.seal{
+  position:relative;z-index:1;width:36px;height:36px;border-radius:50%;
+  display:grid;place-items:center;background:var(--surface);
+  border:1.6px solid var(--accent);color:var(--accent-ink);
+  font-family:var(--font-mono);font-size:.78rem;font-weight:600;font-variant-numeric:tabular-nums;
+  animation:seal-in .5s var(--ease) both;
+}
+.seal::after{content:"";position:absolute;inset:4px;border-radius:50%;border:1px solid rgba(178,58,37,.42)}
+.seal--line{width:40px;height:30px;border-radius:8px;border:1.5px solid var(--c);background:var(--c);color:#fff;font-size:.6rem;letter-spacing:.02em}
+.seal--line::after{display:none}
+.route__stop{grid-template-columns:40px minmax(0,1fr) auto}
+.route::before{left:20px}
+.route__stop:nth-child(1) .seal{animation-delay:.12s}
+.route__stop:nth-child(2) .seal{animation-delay:.2s}
+.route__stop:nth-child(3) .seal{animation-delay:.28s}
+@keyframes seal-in{from{opacity:0;transform:scale(1.25) rotate(-6deg)}to{opacity:1;transform:none}}
+.route__body b{display:block;font-size:.95rem;font-weight:600;letter-spacing:-.005em}
+.route__meta{display:block;margin-top:1px;font-family:var(--font-mono);font-size:.66rem;color:var(--muted);letter-spacing:.02em}
+.route__tag{font-family:var(--font-mono);font-size:.6rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-align:right}
+.routecard__foot{display:flex;justify-content:space-between;gap:12px;margin-top:18px;padding-top:12px;border-top:1px dashed var(--rule-strong);font-family:var(--font-mono);font-size:.66rem;color:var(--ink-2)}
+@media (max-width:960px){.routecard{margin-left:0;max-width:none}}
+@media (max-width:640px){
+  .routecard{padding:16px 16px 14px}
+  .route__stop{grid-template-columns:32px minmax(0,1fr);gap:10px}
+  .seal{width:32px;height:32px;font-size:.72rem}
+  .route::before{left:15px}
+  .route__tag{display:none}
+  .routecard__foot{font-size:.6rem}
+}
+@media print{.routecard{box-shadow:none;page-break-inside:avoid}}
+
+/* ---------- day / night split hero ---------- */
+.dn{
+  display:grid;grid-template-columns:1fr 1fr;width:100%;max-width:520px;margin-left:auto;
+  border:1px solid var(--rule-strong);border-radius:var(--radius);overflow:hidden;
+  background:var(--surface);box-shadow:0 1px 2px rgba(27,34,51,.05);
+}
+.dn__half{padding:18px 16px 14px;min-width:0;display:flex;flex-direction:column}
+.dn__half--night{background:var(--ink);color:#efe7d8}
+.dn__label{font-family:var(--font-mono);font-size:.56rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.dn__half--night .dn__label{color:#98a1b3}
+.dn__title{margin:7px 0 0;font-size:1rem;font-weight:600;letter-spacing:-.01em;line-height:1.25}
+.dn__time{display:block;margin-top:5px;font-family:var(--font-mono);font-size:.68rem;letter-spacing:.02em;color:var(--ink-2)}
+.dn__half--night .dn__time{color:#c3cad7}
+.dn__price{display:block;margin-top:6px;font-family:var(--font-mono);font-size:.72rem;font-weight:600;color:var(--accent-ink)}
+.dn__half--night .dn__price{color:#e5c48f}
+.dn__ico{display:block;width:44px;height:34px;margin-top:auto;padding-top:14px;color:var(--ink-2);stroke-width:1.5}
+.dn__lights{
+  margin-top:auto;height:26px;border-radius:4px;
+  background-image:radial-gradient(circle, rgba(240,220,170,.78) 1.1px, transparent 1.8px);
+  background-size:9px 9px;background-position:0 4px;
+}
+@media (max-width:960px){.dn{margin-left:0;max-width:none}}
+@media (max-width:420px){
+  .dn{grid-template-columns:1fr}
+  .dn__lights{height:20px}
+}
+@media print{.dn{box-shadow:none;page-break-inside:avoid}}
+
+/* ---------- hotel keycard hero ---------- */
+.keycard{
+  position:relative;width:100%;max-width:520px;margin-left:auto;
+  background:var(--ink);color:#efe7d8;border:1px solid #0f1522;border-radius:16px;
+  padding:20px 22px 16px;overflow:hidden;box-shadow:0 1px 2px rgba(27,34,51,.14);
+}
+.keycard::before{content:"";position:absolute;left:0;right:0;top:0;height:6px;background:linear-gradient(90deg,var(--accent),var(--ochre))}
+.keycard::after{content:"";position:absolute;left:22px;bottom:16px;width:9px;height:9px;border-radius:50%;background:var(--paper)}
+.keycard__top{display:flex;align-items:center;justify-content:space-between;gap:10px;padding-bottom:12px;border-bottom:1px solid rgba(239,231,216,.18)}
+.keycard__brand{font-size:.8rem;letter-spacing:.01em}
+.keycard__chip{font-family:var(--font-mono);font-size:.54rem;letter-spacing:.14em;text-transform:uppercase;color:#e5c48f;border:1px solid rgba(229,196,143,.48);border-radius:4px;padding:2px 6px}
+.keycard__room{margin:18px 0 0;font-family:var(--font-mono);font-size:1.46rem;letter-spacing:.1em;font-weight:600}
+.keycard__sub{margin:7px 0 0;font-size:.78rem;line-height:1.55;color:#c3cad7}
+.keycard__foot{display:flex;flex-wrap:wrap;gap:6px 16px;margin-top:18px;padding-top:12px;border-top:1px dashed rgba(239,231,216,.24);font-family:var(--font-mono);font-size:.6rem;letter-spacing:.08em;color:#a9b1c1}
+.keycard__foot b{color:#efe7d8;font-weight:600}
+@media (max-width:960px){.keycard{margin-left:0;max-width:none}}
+@media print{.keycard{box-shadow:none;page-break-inside:avoid}}
+
+
+
+/* ---------- day pager ---------- */
+.daypager{display:none;align-items:center;gap:2px;margin-left:auto;font-family:var(--font-mono);font-size:.72rem;color:var(--ink-2)}
+.daypager a{display:inline-grid;place-items:center;min-width:30px;height:30px;border-radius:6px;color:var(--ink-2);text-decoration:none}
+.daypager a:hover{background:var(--surface-2);color:var(--ink)}
+.daypager .is-off{display:inline-grid;place-items:center;min-width:30px;height:30px;color:var(--rule-strong)}
+.daypager span.now{padding:0 4px;color:var(--ink)}
+@media (max-width:640px){.daypager{display:inline-flex}}
+.pager{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:clamp(32px,4vw,56px);padding-top:18px;border-top:1px solid var(--rule)}
+.pager__btn{display:inline-flex;align-items:center;gap:6px;min-height:38px;padding:6px 14px;border:1px solid var(--rule-strong);border-radius:8px;background:var(--surface);color:var(--ink);font-size:.84rem;text-decoration:none}
+.pager__btn:hover{background:var(--surface-2);border-color:var(--ink-2)}
+.pager__btn.is-off{color:var(--rule-strong);border-style:dashed;cursor:not-allowed;background:transparent}
+.pager__btn.is-off:hover{background:transparent;border-color:var(--rule-strong)}
+.pager__label{font-family:var(--font-mono);font-size:.7rem;letter-spacing:.08em;color:var(--muted)}
+
+/* ---------- beat strip ---------- */
+.beats{
+  display:flex;flex-wrap:wrap;gap:0;
+  border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);
+  margin-top:clamp(24px,3vw,36px);
+}
+.beat{flex:1 1 180px;padding:14px 18px 14px 0;display:flex;gap:12px;align-items:baseline}
+.beat + .beat{padding-left:18px;border-left:1px solid var(--rule)}
+.beat time{font-family:var(--font-mono);font-size:.86rem;font-weight:600;font-variant-numeric:tabular-nums;color:var(--ink)}
+.beat span{font-size:.8rem;color:var(--ink-2)}
+.beat__th{display:block;font-family:var(--font-mono);font-size:.66rem;color:var(--muted);margin-top:2px;font-style:normal;letter-spacing:.01em}
+
+/* ---------- sections ---------- */
+.section{padding-top:clamp(44px,6vw,80px)}
+.section__head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:clamp(20px,3vw,32px)}
+.section__head h2{font-size:clamp(1.4rem,2.5vw,1.9rem);line-height:1.2;letter-spacing:-.015em;font-weight:600;margin-top:10px}
+.section__note{font-family:var(--font-mono);font-size:.7rem;letter-spacing:.05em;color:var(--muted);text-align:right;display:flex;flex-direction:column;align-items:flex-end;gap:2px}
+.note-legend{font-family:var(--font-ui);letter-spacing:0;font-size:.73rem;color:var(--ink-2)}
+.live{
+  display:none;align-items:center;gap:7px;padding:5px 10px;border-radius:6px;
+  background:rgba(178,58,37,.09);color:var(--accent-ink);font-size:.72rem;font-weight:600;
+}
+.live::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--accent);animation:pulse 2s infinite}
+.live.is-on{display:inline-flex}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+
+/* ---------- day grid ---------- */
+.daygrid{display:grid;grid-template-columns:minmax(0,1fr) 336px;gap:clamp(28px,4vw,52px);align-items:start}
+
+/* timeline */
+.steps{position:relative}
+.stop{display:grid;grid-template-columns:64px 26px minmax(0,1fr);column-gap:10px;padding-bottom:26px}
+.stop:last-child{padding-bottom:0}
+.stop__time{
+  font-family:var(--font-mono);font-size:.98rem;font-weight:600;font-variant-numeric:tabular-nums;
+  color:var(--ink);padding-top:2px;letter-spacing:-.01em;
+  display:flex;flex-direction:column;gap:1px;line-height:1.2;
+}
+.t-sub{font-size:.62rem;font-weight:500;color:var(--muted);letter-spacing:.02em;white-space:nowrap;font-variant-numeric:tabular-nums}
+.stop__rail{position:relative;display:flex;justify-content:center}
+.stop__rail::before{
+  content:"";position:absolute;top:12px;bottom:-26px;left:50%;width:1px;
+  background:var(--rule-strong);transform:translateX(-50%);
+}
+.stop:last-child .stop__rail::before{display:none}
+.stop__dot{
+  width:11px;height:11px;border-radius:50%;margin-top:5px;position:relative;z-index:1;
+  background:var(--surface);border:1.6px solid var(--rule-strong);
+}
+.stop.is-now .stop__dot{background:var(--accent);border-color:var(--accent);box-shadow:0 0 0 4px rgba(178,58,37,.14)}
+.stop.is-past .stop__dot{background:var(--rule-strong)}
+.stop__head{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.stop__head h3{font-size:1rem;font-weight:600;letter-spacing:-.008em;line-height:1.4}
+.stop__place{
+  font-family:var(--font-mono);font-size:.64rem;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--muted);white-space:nowrap;
+}
+.stop__body{color:var(--ink-2);font-size:.94rem;line-height:1.68;margin-top:5px;max-width:56ch}
+.facts{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.facts li{
+  font-family:var(--font-mono);font-size:.68rem;letter-spacing:.01em;
+  padding:3px 8px;border:1px solid var(--rule);border-radius:5px;
+  background:var(--surface);color:var(--ink-2);
+}
+.stop details{margin-top:10px}
+.stop summary{
+  display:inline-flex;align-items:center;gap:6px;min-height:28px;
+  cursor:pointer;list-style:none;
+  font-size:.78rem;color:var(--muted);
+  border-bottom:1px dashed transparent;transition:color .18s var(--ease),border-color .18s var(--ease);
+}
+.stop summary::-webkit-details-marker{display:none}
+.stop summary:hover{color:var(--ink-2);border-bottom-color:var(--rule-strong)}
+.stop summary svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;transition:transform .2s var(--ease)}
+.stop details[open] summary svg{transform:rotate(180deg)}
+.stop details[open] summary{color:var(--ink-2)}
+.detail-box{
+  margin-top:8px;padding:12px 14px;border-left:2px solid var(--rule-strong);
+  background:var(--surface-2);border-radius:0 8px 8px 0;
+  font-size:.85rem;line-height:1.7;color:var(--ink-2);max-width:58ch;
+}
+.maplink{
+  display:inline-flex;align-items:center;gap:7px;margin-top:10px;
+  min-height:36px;padding:5px 11px;
+  border:1px solid var(--rule-strong);border-radius:6px;
+  background:var(--surface);color:var(--ink);
+  font-size:.78rem;text-decoration:none;
+  transition:background .18s var(--ease),border-color .18s var(--ease);
+}
+.maplink:hover{background:var(--surface-2);border-color:var(--ink-2)}
+.maplink svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;color:var(--muted);flex-shrink:0}
+.maplink:hover svg{color:var(--ink-2)}
+.maplink .ext{width:11px;height:11px;margin-left:1px}
+/* ---------- transit strip ---------- */
+.transit{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;margin-top:10px;padding:8px 10px;border:1px solid var(--rule);border-radius:8px;background:var(--surface)}
+.transit__badge{display:inline-grid;place-items:center;min-width:34px;height:26px;padding:0 6px;border-radius:5px;background:var(--c,var(--ink));background-image:linear-gradient(rgba(0,0,0,.22),rgba(0,0,0,.22));color:#fff;font-family:var(--font-mono);font-size:.7rem;font-weight:600;letter-spacing:.02em;line-height:1}
+.transit__main{font-size:.82rem;color:var(--ink);line-height:1.4}
+.transit__main b{font-weight:600}
+.transit__meta{flex-basis:100%;font-family:var(--font-mono);font-size:.66rem;color:var(--muted);line-height:1.55}
+@media (min-width:700px){.transit__meta{flex-basis:auto}}
+.stop__links{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.stop__links .maplink{margin-top:0}
+.stop__links .maplink:first-child{border-color:var(--ink-2);background:var(--surface-2)}
+.detail-box ul{display:flex;flex-direction:column;gap:5px}
+.detail-box li{padding-left:13px;position:relative}
+.detail-box li::before{content:"";position:absolute;left:0;top:.62em;width:5px;height:1px;background:var(--muted)}
+.detail-box a{color:var(--accent-ink);text-decoration:underline;text-underline-offset:2px}
+.detail-box a:hover{color:var(--ink)}
+
+/* side rail */
+.rail{display:flex;flex-direction:column;gap:20px;position:sticky;top:82px}
+.card{
+  background:var(--surface);border:1px solid var(--rule);border-radius:var(--radius);
+  padding:18px 18px 16px;box-shadow:0 1px 2px rgba(27,34,51,.04);
+}
+.card__head{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-bottom:4px}
+.card h2,.card h3{font-size:.94rem;font-weight:600;letter-spacing:-.005em}
+.card__count{font-family:var(--font-mono);font-size:.7rem;color:var(--muted);font-variant-numeric:tabular-nums}
+.progress{height:3px;background:var(--rule);border-radius:99px;margin:10px 0 12px;overflow:hidden}
+.progress__bar{height:100%;width:0;background:var(--moss);border-radius:99px;transition:width .4s var(--ease)}
+.checks{display:flex;flex-direction:column;gap:1px}
+.check{display:flex;align-items:flex-start;gap:9px;padding:7px 2px;cursor:pointer;border-radius:5px;transition:background .15s var(--ease)}
+.check:hover{background:var(--surface-2)}
+.check input{appearance:none;-webkit-appearance:none;width:16px;height:16px;flex-shrink:0;margin:3px 0 0;border:1.5px solid var(--rule-strong);border-radius:4px;background:var(--surface);cursor:pointer;position:relative}
+.check input:checked{background:var(--moss);border-color:var(--moss)}
+.check input:checked::after{
+  content:"";position:absolute;left:4.5px;top:1.5px;width:4px;height:8px;
+  border:solid #fff;border-width:0 1.6px 1.6px 0;transform:rotate(42deg);
+}
+.check span{font-size:.81rem;line-height:1.5;color:var(--ink-2)}
+.check input:checked + span{color:var(--muted);text-decoration:line-through;text-decoration-color:var(--rule-strong)}
+.card__foot{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:10px;padding-top:10px;border-top:1px solid var(--rule)}
+.link-btn{
+  background:none;border:0;padding:4px 0;min-height:28px;cursor:pointer;
+  font-family:var(--font-ui);font-size:.74rem;color:var(--muted);text-decoration:underline;text-underline-offset:3px;
+}
+.link-btn:hover{color:var(--ink-2)}
+.card--plain{background:transparent;box-shadow:none;padding:0;border:0}
+.card--plain h3{font-size:.86rem}
+.costs{display:flex;flex-direction:column;gap:7px;margin-top:12px}
+.cost{display:flex;justify-content:space-between;align-items:baseline;gap:12px;font-size:.8rem;color:var(--ink-2);padding-bottom:7px;border-bottom:1px dotted var(--rule)}
+.cost:last-of-type{border-bottom:0}
+.cost b{font-family:var(--font-mono);font-weight:600;font-variant-numeric:tabular-nums;color:var(--ink);white-space:nowrap;font-size:.78rem}
+.cost-total{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-top:4px;padding-top:10px;border-top:1px solid var(--rule-strong)}
+.cost-total span{font-size:.8rem;font-weight:600}
+.cost-total b{font-family:var(--font-mono);font-size:.88rem;font-variant-numeric:tabular-nums}
+
+/* playbook */
+.playbook{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule);border-radius:var(--radius);overflow:hidden}
+.play{background:var(--surface);padding:22px 22px 24px}
+.play__ico{
+  width:30px;height:30px;border-radius:8px;border:1px solid var(--rule);background:var(--surface-2);
+  display:grid;place-items:center;margin-bottom:14px;color:var(--ink-2);
+}
+.play__ico svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.play h3{font-size:.95rem;font-weight:600;margin-bottom:8px}
+.play p{font-size:.85rem;line-height:1.7;color:var(--ink-2)}
+.play p + p{margin-top:9px}
+.play b{color:var(--ink);font-weight:600}
+
+/* tomorrow */
+.tomorrow{
+  margin-top:clamp(44px,6vw,76px);
+  border-top:1px solid var(--rule-strong);border-bottom:1px solid var(--rule);
+  padding:clamp(26px,3.5vw,38px) 0;
+  display:grid;grid-template-columns:minmax(0,1fr) auto;gap:24px;align-items:center;
+}
+.tomorrow h2{font-size:clamp(1.25rem,2.2vw,1.6rem);letter-spacing:-.015em;font-weight:600;margin-top:8px}
+.tomorrow p{color:var(--ink-2);font-size:.88rem;margin-top:8px;max-width:62ch}
+.tomorrow__list{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+.tomorrow__list li{font-family:var(--font-mono);font-size:.68rem;color:var(--ink-2);border:1px solid var(--rule);border-radius:5px;padding:3px 8px;background:var(--surface)}
+.tomorrow__note{font-family:var(--font-mono);font-size:.68rem;color:var(--muted);margin-top:10px}
+.tomorrow__num{font-family:var(--font-mono);font-size:clamp(2.4rem,5vw,3.4rem);font-weight:600;color:var(--rule-strong);line-height:1;letter-spacing:-.03em}
+
+/* footer */
+.foot{padding-top:28px;padding-bottom:44px;color:var(--muted);font-size:.76rem;line-height:1.7}
+.foot__grid{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:24px}
+.foot strong{color:var(--ink-2);font-weight:600}
+.foot a{text-decoration:underline;text-underline-offset:3px}
+.foot a:hover{color:var(--ink)}
+.toast{
+  position:fixed;left:50%;bottom:24px;transform:translate(-50%,16px);
+  background:var(--ink);color:var(--surface);font-size:.78rem;
+  padding:9px 16px;border-radius:8px;opacity:0;pointer-events:none;
+  transition:opacity .2s var(--ease),transform .2s var(--ease);z-index:60;
+}
+.toast.is-on{opacity:1;transform:translate(-50%,0)}
+
+/* reveal */
+.reveal{opacity:0;transform:translateY(14px);transition:opacity .6s var(--ease),transform .6s var(--ease)}
+.reveal.is-in{opacity:1;transform:none}
+
+/* ---------- responsive ---------- */
+@media (max-width:960px){
+  .hero__grid{grid-template-columns:1fr;gap:28px}
+  .ticket{margin-left:0;max-width:none}
+  .daygrid{grid-template-columns:1fr;gap:36px}
+  .rail{position:static;top:auto}
+  .playbook{grid-template-columns:1fr}
+  .tomorrow{grid-template-columns:1fr}
+  .tomorrow__num{display:none}
+  .foot__grid{grid-template-columns:1fr}
+}
+@media (max-width:640px){
+  body{font-size:15px}
+  .brand span{display:none}
+  .topbar__in{min-height:56px;gap:10px}
+  .days{display:none}
+  .daycount{display:inline-flex;margin-left:auto}
+  .hero{padding-top:28px}
+  .hero h1{font-size:clamp(1.85rem,8vw,2.4rem)}
+  .hero__lede{font-size:.92rem}
+  .ticket{padding:18px 16px 0}
+  .ticket__stub{margin-left:-16px;margin-right:-16px;padding-left:16px;padding-right:16px}
+  .ticket__route{grid-template-columns:1fr auto 1fr;gap:6px;padding:16px 0 14px}
+  .endpoint__time{font-size:1.75rem}
+  .endpoint__tz{font-size:.6rem;letter-spacing:.04em}
+  .leg{min-width:44px}
+  .leg__dur{display:none}
+  .leg__track{margin:9px 0 2px;height:10px}
+  .leg__track::before{background:repeating-linear-gradient(90deg,var(--rule-strong) 0 5px,transparent 5px 9px)}
+  .leg__plane{width:16px;height:16px}
+  .beat{flex-basis:100%;padding:10px 0}
+  .beat + .beat{padding-left:0;border-left:0;border-top:1px solid var(--rule)}
+  .stop{grid-template-columns:60px 20px minmax(0,1fr);column-gap:8px;padding-bottom:22px}
+  .stop__time{font-size:.86rem}
+  .t-sub{font-size:.6rem;letter-spacing:0}
+  .stop__rail::before{bottom:-22px}
+  .section__note{text-align:left;align-items:flex-start}
+  .tomorrow__num{display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation-duration:.001ms !important;animation-delay:0ms !important;transition-duration:.001ms !important}
+  .reveal{opacity:1;transform:none}
+}
+
+/* ---------- print ---------- */
+@page{size:A4;margin:14mm 12mm}
+@media print{
+  body{background:#fff;font-size:10.5pt}
+  .topbar,.tool,.beats,.tomorrow__num,.toast,.progress,.card__foot{display:none !important}
+  .hero{padding:0 0 8mm}
+  .maplink{display:none}
+  .wrap{padding-left:0;padding-right:0}
+  .hero__grid{grid-template-columns:1fr;gap:6mm}
+  .ticket{max-width:none;box-shadow:none;page-break-inside:avoid}
+  .daygrid{grid-template-columns:1fr}
+  .rail{position:static}
+  .card{page-break-inside:avoid;box-shadow:none}
+  .playbook{grid-template-columns:1fr 1fr 1fr;page-break-inside:avoid}
+  .stop{page-break-inside:avoid}
+  .detail-box{background:#fff;border-left:1px solid #999}
+  .reveal{opacity:1;transform:none}
+  a{text-decoration:none}
+}
+</style>
+</head>
+<body>
+
+<a class="skip" href="#main">ข้ามไปที่เนื้อหา</a>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <symbol id="i-plane" viewBox="0 0 24 24"><path d="M10.5 13.5 3 11l1.8-1.8 6.9 1L17.4 4l2.6 1-5.2 6.3 1 6.9L14 20l-2.4-7.4"/></symbol>
+    <symbol id="i-train" viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="14" rx="4"/><path d="M5 11h14M9 21l1.6-4M15 21l-1.6-4M8.5 7.5h.01M15.5 7.5h.01"/></symbol>
+    <symbol id="i-hotel" viewBox="0 0 24 24"><path d="M3 20V5a1 1 0 0 1 1-1h9a1 1 0 0 1 1 1v15M14 20V9h5a2 2 0 0 1 2 2v9M3 20h18"/><path d="M6.5 8h1M9.5 8h1M12 8h.01M6.5 11.5h1M9.5 11.5h1M12 11.5h.01M6.5 15h1M9.5 15h1M12 15h.01"/></symbol>
+    <symbol id="i-bowl" viewBox="0 0 24 24"><path d="M3 11h18a9 9 0 0 1-9 9 9 9 0 0 1-9-9ZM8 8c0-1.5 1-2 1-3.5M12 7.5c0-1.5 1-2 1-3.5M16 8c0-1.5 1-2 1-3.5"/></symbol>
+    <symbol id="i-doc" viewBox="0 0 24 24"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4M9 12h6M9 16h4"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m4.5 12.5 5 5 10-11"/></symbol>
+    <symbol id="i-warn" viewBox="0 0 24 24"><path d="M12 4 2.8 20h18.4L12 4Z"/><path d="M12 10v4M12 17h.01"/></symbol>
+    <symbol id="i-bag" viewBox="0 0 24 24"><rect x="4" y="7" width="16" height="13" rx="2.5"/><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2M10 11v6M14 11v6"/></symbol>
+    <symbol id="i-copy" viewBox="0 0 24 24"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M15 5.5A1.5 1.5 0 0 0 13.5 4H5.5A1.5 1.5 0 0 0 4 5.5v8A1.5 1.5 0 0 0 5.5 15"/></symbol>
+    <symbol id="i-chevron" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+    <symbol id="i-print" viewBox="0 0 24 24"><path d="M7 9V4h10v5M7 18H5a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2h-2"/><rect x="7" y="14" width="10" height="6" rx="1"/></symbol>
+    <symbol id="i-yen" viewBox="0 0 24 24"><path d="M7 4l5 7 5-7M12 11v9M8 13h8M8 16.5h8"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11Z"/><circle cx="12" cy="10" r="2.6"/></symbol>
+    <symbol id="i-ext" viewBox="0 0 24 24"><path d="M8 16 16 8M9.5 8H16v6.5"/></symbol>
+  </defs>
+</svg>
+
+<header class="topbar">
+  <div class="wrap topbar__in">
+    <a class="brand" href="index.html">
+      <b>OSAKA 2026</b>
+      <span>9 วัน 8 คืน</span>
+    </a>
+    <nav class="days" aria-label="เลื่อนดูวันของทริป">
+      <span class="days__label">วัน</span>
+      <a class="day" href="day-1-bangkok-kyoto.html">1</a>
+      <a class="day" href="day-2-kiyomizu-gion-nanzenji.html">2</a>
+      <a class="day" href="day-3-arashiyama-universal-city.html">3</a>
+      <a class="day" href="day-4-universal-studios.html">4</a>
+      <a class="day" href="day-5-kaiyukan-namba.html">5</a>
+      <a class="day" href="day-6-kuromon-nara.html">6</a>
+      <a class="day" href="day-7-osaka-castle-midosuji.html">7</a>
+      <span class="day is-active" aria-current="page">8</span>
+      <a class="day" href="day-9-return-bangkok.html">9</a>
+    </nav>
+    <div class="tool">
+      <nav class="daypager" aria-label="เลื่อนวัน">
+        <a href="day-7-osaka-castle-midosuji.html" aria-label="วันก่อนหน้า">‹</a><span class="now">8 / 9</span><a href="day-9-return-bangkok.html" aria-label="วันถัดไป">›</a>
+      </nav>
+      <button class="btn-quiet" type="button" id="printBtn">
+        <svg aria-hidden="true"><use href="#i-print"/></svg>
+        พิมพ์
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ============ HERO ============ -->
+  <section class="hero wrap" aria-labelledby="hero-title">
+    <div class="hero__grid">
+      <div>
+        <p class="eyebrow">วันที่ 8 · เสาร์ที่ 5 ธันวาคม 2026</p>
+        <h1 id="hero-title">น้ำตก <span class="arrow" aria-hidden="true">→</span> สนามบิน</h1>
+        <p class="hero__lede">
+          เช้าสุดท้ายในโอซาก้า ขึ้น Hankyu ไปเดินถนนเลียบลำธารที่ Minoo ดูใบเมเปิลแดงกับน้ำตก 33 เมตร —
+          บ่ายกลับมาเอาส่วนลดที่ Rinku Outlets ริมทะเลอีกฝั่ง แล้วนอนติดสนามบินให้เช้าวันกลับสบาย
+        </p>
+        <div class="hero__meta">
+          <span class="pill"><svg aria-hidden="true"><use href="#i-clock"/></svg><b id="countdown">—</b><span>ก่อนออกจาก Citadines</span></span>
+          <span class="pill"><svg aria-hidden="true"><use href="#i-train"/></svg><b>¥280</b><span>Hankyu ไป Minoo</span></span>
+        </div>
+      </div>
+
+      <article class="keycard" aria-labelledby="key-title">
+        <div class="keycard__top">
+          <span class="keycard__brand">OMO Kansai Airport</span>
+          <span class="keycard__chip">Last night</span>
+        </div>
+        <p id="key-title" class="keycard__room">RINKU&nbsp;TOWN</p>
+        <p class="keycard__sub">เดิน 1 นาทีจากสถานี Rinku Town · 1 สถานีถึง KIX</p>
+        <div class="keycard__foot">
+          <span>CHECK-IN <b>15:00</b></span>
+          <span>OUT <b>11:00</b></span>
+          <span>SHUTTLE <b>เช้า · จอง</b></span>
+        </div>
+      </article>
+    </div>
+
+    <div class="beats" aria-label="สี่จังหวะหลักของวัน">
+      <div class="beat"><time>08:15</time><span>Hankyu ไป Minoo<em class="beat__th">06:15 เวลาไทย</em></span></div>
+      <div class="beat"><time>10:15</time><span>น้ำตก Minoo<em class="beat__th">08:15 เวลาไทย</em></span></div>
+      <div class="beat"><time>14:00</time><span>Nankai ไป Rinku<em class="beat__th">12:00 เวลาไทย</em></span></div>
+      <div class="beat"><time>16:00</time><span>Rinku Outlets<em class="beat__th">14:00 เวลาไทย</em></span></div>
+    </div>
+  </section>
+
+  <!-- ============ DAY GRID ============ -->
+  <section class="section wrap" aria-labelledby="steps-title">
+    <div class="section__head">
+      <div>
+        <p class="eyebrow">ตารางวันนี้</p>
+        <h2 id="steps-title">ลำดับของวันนี้</h2>
+      </div>
+      <p class="section__note">
+        <span class="live" id="liveBadge">ตอนนี้อยู่ขั้นนี้</span>
+        <span>07:30–20:00 · 11 จุด</span>
+        <span class="note-legend">ทุกเวลาเป็นเวลาญี่ปุ่น (JST) · ตัวเลขเล็กใต้เวลา = เวลาไทย (ICT)</span>
+      </p>
+    </div>
+
+    <div class="daygrid">
+      <ol class="steps" id="steps">
+
+        <li class="stop" data-start="2026-12-05T07:20:00+09:00" data-end="2026-12-05T08:10:00+09:00">
+          <div class="stop__time">07:30<span class="t-sub">05:30 ICT</span></div>
+          <div class="stop__rail" aria-hidden="true"><span class="stop__dot"></span></div>
+          <div>
+            <div class="stop__head"><h3>เช็คเอาต์ + ฝากกระเป๋า</h3><span class="stop__place">Citadines Namba</span></div>
+            <p class="stop__body">เช็คเอาต์ที่ล็อบบี้ (กำหนด 11:00 แต่เราออกก่อน) ฝากกระเป๋า 2 ใบไว้ที่โรงแรม แล้วพกแค่กระเป๋าใบเล็กขึ้นไป Minoo — กลับมารับบ่ายโมง</p>
+            <ul class="facts">
+              <li>ฝากฟรี</li>
+              <li>กลับมารับ ~13:00</li>
+              <li>ใบเล็ก 1 ใบ</li>
+            </ul>
+            <details>
+              <summary>มื้อเช้าวันนี้ <svg aria-hidden="true"><use href="#i-chevron"/></svg></summary>
+              <div class="detail-box">
+                <ul>
+                  <li>กินที่คาเฟ่/ร้านสะดวกซื้อใต้โรงแรมให้เร็ว — วันนี้ต้องออกก่อน 08:10</li>
+                  <li>ซื้อข้าวปั้นติดไปกินเป็นมื้อกลางวันบนรถไฟได้ ประหยัดเวลา 30 นาที</li>
+                </ul>
+              </div>
+            </details>
+          </div>
+        </li>
+
+        <li class="stop" data-start="2026-12-05T08:10:00+09:00" data-end="2026-12-05T08:40:00+09:00">
+          <div class="stop__time">08:15<span class="t-sub">06:15 ICT</span></div>
+          <div class="stop__rail" aria-hidden="true"><span class="stop__dot"></span></div>
+          <div>
+            <div class="stop__head"><h3>Metro Namba → Umeda</h3><span class="stop__place">M20 → M16</span></div>
+            <p class="stop__body">เดิน ~7 นาทีจากโรงแรมไป Namba (M20) แล้ว Midosuji line ตรงไป Umeda (M16) 4 สถานี ~8 นาที — ขึ้นบันไดตามป้าย "Hankyu" ต่อได้เลย</p>
+            <ul class="facts">
+              <li>¥240</li>
+              <li>8 นาที</li>
+              <li>4 สถานี</li>
+            </ul>
+            <div class="transit" style="--c:#e5171f">
+              <span class="transit__badge">M</span>
+              <span class="transit__main"><b>Midosuji Line</b> · ไป Umeda</span>
+              <span class="transit__meta">ขึ้น Namba (M20) · ลง Umeda (M16) · 4 สถานี · ออกทางเชื่อมไป Hankyu Umeda ~5 นาที</span>
+            </div>
+            <a class="maplink" href="https://www.google.com/maps/dir/?api=1&amp;origin=Citadines%20Namba%20Osaka&amp;destination=Hankyu%20Umeda%20Station&amp;travelmode=transit" target="_blank" rel="noopener noreferrer">
+              <svg aria-hidden="true"><use href="#i-pin"/></svg>
+              เส้นทางไป Hankyu Umeda ใน Maps
+              <svg class="ext" aria-hidden="true"><use href="#i-ext"/></svg>
+              <span class="sr-only">(เปิดในแท็บใหม่)</span>
+            </a>
+          </div>
+        </li>
+
+        <li class="stop" data-start="2026-12-05T08:40:00+09:00" data-end="2026-12-05T09:15:00+09:00">
+          <div class="stop__time">08:40<span class="t-sub">06:40 ICT</span></div>
+          <div class="stop__rail" aria-hidden="true"><span class="stop__dot"></span></div>
+          <div>
+            <div class="stop__head"><h3>Hankyu → Minoo</h3><span class="stop__place">Umeda → Ishibashi → Minoo</span></div>
+            <p class="stop__body">ขึ้น Hankyu Takarazuka line (สีส้ม) จาก Osaka-Umeda → เปลี่ยนที่ Ishibashi handai-mae → Minoo line 2 สถานี → ลง Minoo รวม ~30 นาที ไม่มีขบวนตรง</p>
+            <ul class="facts">
+              <li>¥280</li>
+              <li>~30 นาที</li>
+              <li>เปลี่ยนที่ Ishibashi</li>
+            </ul>
+            <div class="transit" style="--c:#e8720c">
+              <span class="transit__badge">HK</span>
+              <span class="transit__main"><b>Hankyu Takarazuka Line</b> · ไป Ishibashi handai-mae</span>
+              <span class="transit__meta">ขึ้น Osaka-Umeda (HK-01) · ลง Ishibashi handai-mae · ~13 นาที Express · เปลี่ยนชานชาลา 1 → 5</span>
+            </div>
+            <div class="transit" style="--c:#e8720c">
+              <span class="transit__badge">HK</span>
+              <span class="transit__main"><b>Hankyu Minoo Line</b> · ไป Minoo</span>
+              <span class="transit__meta">ขึ้น Ishibashi handai-mae · ลง Minoo · 2 สถานี ~5 นาที</span>
+            </div>
+            <a class="maplink" href="https://www.google.com/maps/dir/?api=1&amp;origin=Hankyu%20Umeda%20Station&amp;destination=Minoo%20Station%20Osaka&amp;travelmode=transit" target="_blank" rel="noopener noreferrer">
+              <svg aria-hidden="true"><use href="#i-pin"/></svg>
+              เส้นทางไป Minoo ใน Maps
+              <svg class="ext" aria-hidden="true"><use href="#i-ext"/></svg>
+              <span class="sr-only">(เปิดในแท็บใหม่)</span>
+            </a>
+            <details>
+              <summary>เปลี่ยนขบวนที่ Ishibashi <svg aria-hidden="true"><use href="#i-chevron"/></svg></summary>
+              <div class="detail-box">
+                <ul>
+                  <li>ขบวน Takarazuka line มาจอดชานชาลา 1 — Minoo line อยู่อีกฟาก ต้องเดินขึ้น-ลงบันไดไปชานชาลา 5</li>
+                  <li>ป้ายบอกทางมีคำว่า Minoo — ใช้เวลาเดิน ~3 นาที</li>
+                  <li>ถ้าลง Express แล้วต่อไม่ทัน รอขบวนถัดไป ~10 นาที</li>
+                </ul>
+              </div>
+            </details>
+          </div>
+        </li>
+
+        <li class="stop" data-start="2026-12-05T09:15:00+09:00" data-end="2026-12-05T10:15:00+09:00">
+          <div class="stop__time">09:15<span class="t-sub">07:15 ICT</span></div>
+          <div class="stop__rail" aria-hidden="true"><span class="stop__dot"></span></div>
+          <div>
+            <div class="stop__head"><h3>เดิน Takimichi เลียบลำธาร</h3><span class="stop__place">Minoo Park</span></div>
+            <p class="stop__body">จากสถานีเดิน 5 นาทีถึงทางเข้าสวน (Ichinohashi) แล้วเริ่มถนนเลียบลำธาร 2.7 กม. ขึ้นเนินช้า ๆ ใต้ต้นเมเปิล — ผู้ใหญ่ 40–50 นาที กับเด็ก 5 ขวบเผื่อ 60 นาที</p>
+            <ul class="facts">
+              <li>2.7 กม.</li>
+              <li>ขึ้นเนินตลอด</li>
+              <li>มีห้องน้ำเป็นระยะ</li>
+            </ul>
+            <div class="transit" style="--c:#3d5b45">
+              <span class="transit__badge">WALK</span>
+              <span class="transit__main"><b>เดิน</b> · Minoo Station → Ichinohashi → น้ำตก</span>
+              <span class="transit__meta">ออกจากสถานีเลี้ยวซ้าย · ทางเข้าสวน 5 นาที · ถนนปูเรียบแต่ชันขึ้นเรื่อย ๆ</span>
+            </div>
+            <a class="maplink" href="https://www.google.com/maps/dir/?api=1&amp;origin=Minoo%20Station%20Osaka&amp;destination=Minoo%20Falls&amp;travelmode=walking" target="_blank" rel="noopener noreferrer">
+              <svg aria-hidden="true"><use href="#i-pin"/></svg>
+              เส้นทางเดินไปน้ำตกใน Maps
+              <svg class="ext" aria-hidden="true"><use href="#i-ext"/></svg>
+              <span class="sr-only">(เปิดในแท็บใหม่)</span>
+            </a>
+            <details>
+              <summary>เดินกับเด็ก 5 ขวบ <svg aria-hidden="true"><use href="#i-chevron"/></svg></summary>
+              <div class="detail-box">
+                <ul>
+                  <li>รถเข็นใช้ได้ถึงทางเข้า แต่ช่วงขึ้นเนินเข็นยาก — แนะนำอุ้ม/ให้เดินเอง</li>
+                  <li>จุดพัก: ร้านขนมและศาลาริมทางหลายจุด + ห้องน้ำเป็นระยะ</li>
+                  <li>วันเสาร์ช่วงใบไม้แดงคนเยอะ — ออกเช้าแบบนี้ดีที่สุดแล้ว</li>
+                </ul>
+              </div>
+            </details>
+          </div>
+        </li>
+
+        <li class="stop" data-start="2026-12-05T10:15:00+09:00" data-end="2026-12-05T11:00:00+09:00">
+          <div class="stop__time">10:15<span class="t-sub">08:15 ICT</span></div>
+          <div class="stop__rail" aria-hidden="true"><span class="stop__dot"></span></div>
+          <div>
+            <div class="stop__head"><h3>น้ำตก Minoo + ขนมโมมิจิ</h3><span class="stop__place">Minoo Otaki</span></div>
+            <p class="stop__body">น้ำตกสูง 33 เมตร ฐานกว้าง — จุดถ่ายรูปคลาสสิกของฤดูใบไม้แดง ขากลับแวะกิน “โมมิจิเทมปุระ” (ใบเมเปิลทอด) กับอาบูริอาเจะที่ร้านริมทาง</p>
+            <ul class="facts">
+              <li>ฟรี</li>
+              <li>ขนม ¥300–600</li>
+              <li>ถ่ายรูป 15–20 นาที</li>
+            </ul>
+            <a class="maplink" href="https://www.google.com/maps/search/?api=1&amp;query=Minoo%20Falls%20Osaka" target="_blank" rel="noopener noreferrer">
+              <svg aria-hidden="true"><use href="#i-pin"/></svg>
+              ตำแหน่งน้ำตกใน Maps
+              <svg class="ext" aria-hidden="true"><use href="#i-ext"/></svg>
+              <span class="sr-only">(เปิดในแท็บใหม่)</span>
+            </a>
+            <details>
+              <summary>ขนมขึ้นชื่อ <svg aria-hidden="true"><use href="#i-chevron"/></svg></summary>
+              <div class="detail-box">
+                <ul>
+                  <li>โมมิจิเทมปุระ — ใบเมเปิลชุบแป้งทอด หวานกรอบ ขายเป็นถุง</li>
+                  <li>อาบูริอาเจะ — โมจิปิ้งราดซีอิ๊วหวานห่อสาหร่าย</li>
+                  <li>กินเสร็จทิ้งขยะตามถังที่ร้าน — ในสวนมีถังน้อย</li>
+                </ul>
+              </div>
+            </details>
+          </div>
+        </li>
+
+        <li class="stop" data-start="2026-12-05T11:00:00+09:00" data-end="2026-12-05T12:10:00+09:00">
+          <div class="stop__time">11:00<span class="t-sub">09:00 ICT</span></div>
+          <div class="stop__rail" aria-hidden="true"><span class="stop__dot"></span></div>
+          <div>
+            <div class="stop__head"><h3>เดินลง + ทางเลือก Insectarium</h3><span class="stop__place">Minoo Park</span></div>
+            <p class="stop__body">เดินลงทางเดิม ~40 นาที ถ้าเด็กยังมีแรงแวะ Minoo Park Insectarium (พิพิธภัณฑ์แมลงเล็ก ๆ มีโรงผีเสื้อบินได้) อยู่ห่างสถานี ~15 นาที</p>
+            <ul class="facts">
+              <li>¥280 · เด็กฟรี</li>
+              <li>เดินลง 40 นาที</li>
+              <li>ตัวเลือกเสริม</li>
+            </ul>
+            <a class="maplink" href="https://www.google.com/maps/search/?api=1&amp;query=Minoo%20Park%20Insectarium" target="_blank" rel="noopener noreferrer">
+              <svg aria-hidden="true"><use href="#i-pin"/></svg>
+              ตำแหน่ง Insectarium ใน Maps
+              <svg class="ext" aria-hidden="true"><use href="#i-ext"/></svg>
+              <span class="sr-only">(เปิดในแท็บใหม่)</span>
+            </a>
+            <details>
+              <summary>ถ้าเด็กหมดแรงกลางทาง <svg aria-hidden="true"><use href="#i-chevron"/></svg></summary>
+              <div class="detail-box">
+                <ul>
+                  <li>เลี้ยวกลับได้ทุกจุด — ทางเดิม ไม่หลง</li>
+                  <li>ตัด Insectarium ออกได้เลย ไม่กระทบเวลา</li>
+                  <li>เป้าหมายคือกลับถึงสถานี ~12:00 ให้ทันรอบรถไฟ</li>
+                </ul>
+              </div>
+            </details>
+          </div>
+        </li>
+
+        <li class="stop" data-start="2026-12-05T12:10:00+09:00" data-end="2026-12-05T13:00:00+09:00">
+          <div class="stop__time">12:10<span class="t-sub">10:10 ICT</span></div>
+          <div class="stop__rail" aria-hidden="true"><span class="stop__dot"></span></div>
+          <div>
+            <div class="stop__head"><h3>Hankyu กลับ Umeda + Metro ไป Namba</h3><span class="stop__place">Minoo → Namba</span></div>
+            <p class="stop__body">ย้อนเส้นเดิม: Minoo line → Ishibashi handai-mae → Takarazuka line → Umeda ~30 นาที ¥280 แล้วต่อ Metro Midosuji ลง Namba ¥240</p>
+            <ul class="facts">
+              <li>¥520 รวม</li>
+              <li>~40 นาที</li>
+              <li>เปลี่ยน 2 ครั้ง</li>
+            </ul>
+            <div class="transit" style="--c:#e8720c">
+              <span class="transit__badge">HK</span>
+              <span class="transit__main"><b>Hankyu</b> · Minoo → Ishibashi → Umeda</span>
+              <span class="transit__meta">ขึ้น Minoo · เปลี่ยนที่ Ishibashi handai-mae · ลง Osaka-Umeda · ~30 นาที</span>
+            </div>
+            <div class="transit" style="--c:#e5171f">
+              <span class="transit__badge">M</span>
+              <span class="transit__main"><b>Midosuji Line</b> · Umeda → Namba</span>
+              <span class="transit__meta">ขึ้น Umeda (M16) · ลง Namba (M20) · 4 สถานี</span>
+            </div>
+            <a class="maplink" href="https://www.google.com/maps/dir/?api=1&amp;origin=Minoo%20Station%20Osaka&amp;destination=Namba%20Station%20Osaka&amp;travelmode=transit" target="_blank" rel="noopener noreferrer">
+              <svg aria-hidden="true"><use href="#i-pin"/></svg>
+              เส้นทางกลับ Namba ใน Maps
+              <svg class="ext" aria-hidden="true"><use href="#i-ext"/></svg>
+              <span class="sr-only">(เปิดในแท็บใหม่)</span>
+            </a>
+          </div>
+        </li>
+
+        <li class="stop" data-start="2026-12-05T13:00:00+09:00" data-end="2026-12-05T14:00:00+09:00">
+          <div class="stop__time">13:00<span class="t-sub">11:00 ICT</span></div>
+          <div class="stop__rail" aria-hidden="true"><span class="stop__dot"></span></div>
+          <div>
+            <div class="stop__head"><h3>มื้อกลางวันเร็ว + รับกระเป๋า</h3><span class="stop__place">Namba</span></div>
+            <p class="stop__body">กินมื้อกลางวันที่ Namba Walk หรือร้านใกล้อุโมงค์ แล้วกลับ Citadines รับกระเป๋า 2 ใบ — เผื่อเวลาเดินไป Nankai อีก 7 นาที</p>
+            <ul class="facts">
+              <li>¥2,500–3,500</li>
+              <li>รับกระเป๋า ~13:30</li>
+              <li>เดิน 7 นาทีไป Nankai</li>
+            </ul>
+            <a class="maplink" href="https://www.google.com/maps/search/?api=1&amp;query=Namba%20Walk%20Osaka" target="_blank" rel="noopener noreferrer">
+              <svg aria-hidden="true"><use href="#i-pin"/></svg>
+              ตำแหน่ง Namba Walk ใน Maps
+              <svg class="ext" aria-hidden="true"><use href="#i-ext"/></svg>
+              <span class="sr-only">(เปิดในแท็บใหม่)</span>
+            </a>
+          </div>
+        </li>
+
+        <li class="stop" data-start="2026-12-05T14:00:00+09:00" data-end="2026-12-05T14:45:00+09:00">
+          <div class="stop__time">14:00<span class="t-sub">12:00 ICT</span></div>
+          <div class="stop__rail" aria-hidden="true"><span class="stop__dot"></span></div>
+          <div>
+            <div class="stop__head"><h3>Nankai Namba → Rinku Town</h3><span class="stop__place">Nankai Namba 3F</span></div>
+            <p class="stop__body">ขึ้น Nankai Airport Express จาก Nankai Namba ตรงถึง Rinku Town ไม่ต้องเปลี่ยนขบวน ~40 นาที ¥820 — ขึ้นจากชานชาลาชั้น 3 ตามป้าย Airport</p>
+            <ul class="facts">
+              <li>¥820</li>
+              <li>~40 นาที</li>
+              <li>ไม่ต้องจอง</li>
+            </ul>
+            <div class="transit" style="--c:#0e7a3d">
+              <span class="transit__badge">NK</span>
+              <span class="transit__main"><b>Nankai Airport Express</b> · ไป Rinku Town</span>
+              <span class="transit__meta">ขึ้น Nankai Namba · ลง Rinku Town · 39 นาที · ไม่ต้องเปลี่ยนขบวน (Rapi:t แพงกว่า ~¥700 ไม่จำเป็น)</span>
+            </div>
+            <a class="maplink" href="https://www.google.com/maps/dir/?api=1&amp;origin=Nankai%20Namba%20Station&amp;destination=Rinku%20Town%20Station&amp;travelmode=transit" target="_blank" rel="noopener noreferrer">
+              <svg aria-hidden="true"><use href="#i-pin"/></svg>
+              เส้นทางไป Rinku Town ใน Maps
+              <svg class="ext" aria-hidden="true"><use href="#i-ext"/></svg>
+              <span class="sr-only">(เปิดในแท็บใหม่)</span>
+            </a>
+            <details>
+              <summary>เลือกขบวนไหน <svg aria-hidden="true"><use href="#i-chevron"/></svg></summary>
+              <div class="detail-box">
+                <ul>
+                  <li>Airport Express (Kuko Kyuko) — ฟรี ไม่ต้องจอง มีที่วางกระเป๋า</li>
+                  <li>Rapi:t — ที่นั่งระบุ เร็วขึ้นไม่มาก แต่บวก ¥700/คน ไม่คุ้มกับวันนี้</li>
+                  <li>ลง Rinku Town แล้วใช้ทางออก 5 — โรงแรมอยู่ห่าง 1 นาที</li>
+                </ul>
+              </div>
+            </details>
+          </div>
+        </li>
+
+        <li class="stop" data-start="2026-12-05T14:45:00+09:00" data-end="2026-12-05T16:00:00+09:00">
+          <div class="stop__time">14:45<span class="t-sub">12:45 ICT</span></div>
+          <div class="stop__rail" aria-hidden="true"><span class="stop__dot"></span></div>
+          <div>
+            <div class="stop__head"><h3>เช็คอิน OMO + แช่ออนเซ็น</h3><span class="stop__place">OMO Kansai Airport</span></div>
+            <p class="stop__body">ถึงสถานี Rinku Town ทางออก 5 เดิน 1 นาทีถึงโรงแรม เช็คอิน 15:00 — มีบาธขนาดใหญ่และลานดาดฟ้าดูเครื่องบิน เหมาะกับการพักขาหลังเดินขึ้นเขามาทั้งเช้า</p>
+            <ul class="facts">
+              <li>เช็คอิน 15:00</li>
+              <li>ออนเซ็นในโรงแรม</li>
+              <li>ร้านสะดวกซื้อ 24 ชม.</li>
+            </ul>
+            <a class="maplink" href="https://www.google.com/maps/search/?api=1&amp;query=OMO%20Kansai%20Airport%20by%20Hoshino%20Resorts" target="_blank" rel="noopener noreferrer">
+              <svg aria-hidden="true"><use href="#i-pin"/></svg>
+              ตำแหน่งโรงแรมใน Maps
+              <svg class="ext" aria-hidden="true"><use href="#i-ext"/></svg>
+              <span class="sr-only">(เปิดในแท็บใหม่)</span>
+            </a>
+            <details>
+              <summary>จองรถ shuttle เช้านี้ <svg aria-hidden="true"><use href="#i-chevron"/></svg></summary>
+              <div class="detail-box">
+                <ul>
+                  <li>Shuttle ไป KIX วิ่งช่วงเช้า ต้องจองล่วงหน้า — จองตอนเช็คอินเลย</li>
+                  <li>ถ้าเต็ม: Nankai/JR จาก Rinku Town ไป KIX 1 สถานี ~¥170 ทุก 10–15 นาที</li>
+                  <li>บอก reception เรื่องกระเป๋า 2 ใบสำหรับพรุ่งนี้เช้า</li>
+                </ul>
+              </div>
+            </details>
+          </div>
+        </li>
+
+        <li class="stop" data-start="2026-12-05T16:00:00+09:00" data-end="2026-12-05T20:00:00+09:00">
+          <div class="stop__time">16:00<span class="t-sub">14:00 ICT</span></div>
+          <div class="stop__rail" aria-hidden="true"><span class="stop__dot"></span></div>
+          <div>
+            <div class="stop__head"><h3>Rinku Premium Outlets + มื้อค่ำ</h3><span class="stop__place">Rinku Town</span></div>
+            <p class="stop__body">Outlet ริมทะเล ~250 ร้าน เดินจากโรงแรม ~7 นาที (จากสถานี 6 นาที) — ช้อปรอบสุดท้าย กินข้าวที่โซนร้านอาหาร ซึ่งเปิดถึง 21:00 แล้วกลับโรงแรมนอนเร็ว</p>
+            <ul class="facts">
+              <li>10:00–20:00</li>
+              <li>ร้านอาหารถึง 21:00</li>
+              <li>เดิน 7 นาที</li>
+            </ul>
+            <a class="maplink" href="https://www.google.com/maps/search/?api=1&amp;query=Rinku%20Premium%20Outlets" target="_blank" rel="noopener noreferrer">
+              <svg aria-hidden="true"><use href="#i-pin"/></svg>
+              ตำแหน่ง Outlet ใน Maps
+              <svg class="ext" aria-hidden="true"><use href="#i-ext"/></svg>
+              <span class="sr-only">(เปิดในแท็บใหม่)</span>
+            </a>
+            <details>
+              <summary>ซื้ออะไรวันสุดท้าย <svg aria-hidden="true"><use href="#i-chevron"/></svg></summary>
+              <div class="detail-box">
+                <ul>
+                  <li>ของฝากฝากเพื่อน: ขนม/ชา/ของใช้ — ที่นี่ลดราคากว่าตัวเมือง</li>
+                  <li>ของสด/ขนมสดซื้อพรุ่งนี้ที่ KIX แทน (ใกล้เวลาเครื่องออก)</li>
+                  <li>Marble Beach ใกล้ ๆ ดูเครื่องบินขึ้นลง — เด็กชอบ แต่ลมแรงต้องใส่เสื้อกันหนาว</li>
+                  <li>Outlet ปิดปีละ 1 วัน (พฤหัสที่ 3 ของ ก.พ.) — วันนี้เปิดปกติ</li>
+                </ul>
+              </div>
+            </details>
+          </div>
+        </li>
+
+      </ol>
+
+      <aside class="rail" aria-label="เช็กลิสต์และงบของวัน">
+
+        <section class="card" aria-labelledby="check-title">
+          <div class="card__head">
+            <h2 id="check-title">ต้องมีติดตัว</h2>
+            <span class="card__count" id="checkCount">0 / 10</span>
+          </div>
+          <div class="progress" role="presentation"><div class="progress__bar" id="progressBar"></div></div>
+          <div class="checks" id="checks">
+            <label class="check"><input type="checkbox" data-key="ic"><span>IC card (Metro + Hankyu + Nankai)</span></label>
+            <label class="check"><input type="checkbox" data-key="bags"><span>กระเป๋า 2 ใบติดป้ายชื่อ</span></label>
+            <label class="check"><input type="checkbox" data-key="daypack"><span>กระเป๋าใบเล็กสำหรับขึ้น Minoo</span></label>
+            <label class="check"><input type="checkbox" data-key="shoes"><span>รองเท้ากันลื่น (ทางชื้น/ใบไม้เปียก)</span></label>
+            <label class="check"><input type="checkbox" data-key="jacket"><span>เสื้อกันหนาว (เขากับริมทะเลลมแรง)</span></label>
+            <label class="check"><input type="checkbox" data-key="gloves"><span>ถุงมือ + หมวกเด็ก</span></label>
+            <label class="check"><input type="checkbox" data-key="water"><span>น้ำ + ขนมสำหรับเดิน 2.7 กม.</span></label>
+            <label class="check"><input type="checkbox" data-key="towel"><span>ผ้าเช็ดตัว/ชุดอาบน้ำ (ออนเซ็น)</span></label>
+            <label class="check"><input type="checkbox" data-key="power"><span>พาวเวอร์แบงก์</span></label>
+            <label class="check"><input type="checkbox" data-key="snack"><span>ถุงผ้า/กล่องสำหรับขนมไม่ให้แตก</span></label>
+          </div>
+          <div class="card__foot">
+            <span class="mono-label">บันทึกในเครื่องนี้</span>
+            <button class="link-btn" type="button" id="resetChecks">ล้างติ๊กทั้งหมด</button>
+          </div>
+        </section>
+
+        <section class="card card--plain" aria-labelledby="cost-title">
+          <h3 id="cost-title" class="mono-label" style="color:var(--ink-2)">ค่าใช้จ่ายวันที่แปด (ประมาณ)</h3>
+          <div class="costs">
+            <div class="cost"><span>มื้อเช้า</span><b>¥1,200–1,800</b></div>
+            <div class="cost"><span>Metro ไป-กลับ Umeda (2 คน)</span><b>¥960</b></div>
+            <div class="cost"><span>Hankyu ไป-กลับ Minoo (2 คน)</span><b>¥1,120</b></div>
+            <div class="cost"><span>ขนมโมมิจิ/อาบูริอาเจะ</span><b>¥500–800</b></div>
+            <div class="cost"><span>Insectarium (ถ้าเข้า)</span><b>¥560</b></div>
+            <div class="cost"><span>มื้อกลางวัน Namba</span><b>¥2,500–3,500</b></div>
+            <div class="cost"><span>Nankai ไป Rinku Town (2 คน)</span><b>¥1,640</b></div>
+            <div class="cost"><span>มื้อค่ำที่ Outlet</span><b>¥3,500–5,000</b></div>
+          </div>
+          <div class="cost-total">
+            <span>รวมโดยประมาณ</span>
+            <b>¥11,400–15,400</b>
+          </div>
+          <p style="margin-top:8px;font-size:.72rem;color:var(--muted);line-height:1.6">≈ ฿2,510–3,390 ที่เรต 0.22 · ไม่รวมของฝากและออนเซ็น (ถ้าโรงแรมคิดเพิ่ม)</p>
+        </section>
+
+      </aside>
+    </div>
+  </section>
+
+  <!-- ============ SIGN GUIDE ============ -->
+  <section class="section wrap" aria-labelledby="sign-title">
+    <div class="section__head">
+      <div>
+        <p class="eyebrow">อ่านป้ายให้ออก</p>
+        <h2 id="sign-title">สี · ต่อขบวน · ทางออก</h2>
+      </div>
+      <p class="section__note">วันนี้เปลี่ยน 3 บริษัท: Metro → Hankyu → Nankai</p>
+    </div>
+    <div class="playbook">
+      <article class="play">
+        <div class="play__ico"><svg aria-hidden="true"><use href="#i-train"/></svg></div>
+        <h3>Hankyu สีส้ม</h3>
+        <p><b>Takarazuka line = สีส้ม</b> (Kobe = น้ำเงิน, Kyoto = เขียว) · Osaka-Umeda = <b>HK-01</b></p>
+        <p>ไม่มีขบวนตรงไป Minoo — ต้องเปลี่ยนที่ <b>Ishibashi handai-mae</b> ไปชานชาลา 5 แล้วต่อ Minoo line 2 สถานี</p>
+      </article>
+      <article class="play">
+        <div class="play__ico"><svg aria-hidden="true"><use href="#i-doc"/></svg></div>
+        <h3>Nankai + ทางออก</h3>
+        <p>Nankai Namba ขึ้นชานชาลา <b>ชั้น 3</b> ตามป้าย Airport · เลือก <b>Airport Express</b> (ไม่ต้องจอง) ไม่ต้องจ่ายเพิ่ม Rapi:t</p>
+        <p>ลง Rinku Town ใช้ <b>ทางออก 5</b> — โรงแรมอยู่ 1 นาที, Outlet 6 นาที</p>
+      </article>
+      <article class="play">
+        <div class="play__ico"><svg aria-hidden="true"><use href="#i-clock"/></svg></div>
+        <h3>เวลาเผื่อ</h3>
+        <p>ขึ้นเนิน Minoo 40–50 นาที (เด็ก 60) + ถ่ายรูป 20 + ลง 40 = <b>ครึ่งวันเช้าพอดี</b></p>
+        <p>เผื่อกลับถึง Namba ~13:00 เพื่อรับกระเป๋าและทันขบวน 14:00</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ============ PLAYBOOK ============ -->
+  <section class="section wrap" aria-labelledby="planb-title">
+    <div class="section__head">
+      <div>
+        <p class="eyebrow">แผนสำรอง</p>
+        <h2 id="planb-title">ถ้าไม่เป็นไปตามแผน</h2>
+      </div>
+      <p class="section__note">วันย้ายโรงแรม — เลือกตัด “เดินเขา” ก่อนตัดอย่างอื่น</p>
+    </div>
+
+    <div class="playbook">
+      <article class="play">
+        <div class="play__ico"><svg aria-hidden="true"><use href="#i-warn"/></svg></div>
+        <h3>ฝนตก / ทางลื่น</h3>
+        <p>ถนนเลียบลำธารเปียกลื่นและไม่ร่ม — ตัด Minoo ออก ไป Umeda ในร่ม (Pokémon/Daimaru) แทน แล้วออกไป Rinku เร็วขึ้น 2 ชม.</p>
+        <p>ถ้าฝนปรอย: ขึ้นถึง Insectarium (15–20 นาที) แล้วกลับ ไม่ต้องถึงน้ำตก</p>
+      </article>
+
+      <article class="play">
+        <div class="play__ico"><svg aria-hidden="true"><use href="#i-clock"/></svg></div>
+        <h3>เด็กไม่ไหวกลางทาง</h3>
+        <p>เลี้ยวกลับได้ทุกจุด ทางเดิมไม่หลง — กลับถึงสถานีก่อน 11:00 แล้วไป Umeda กินกลางวันแทน</p>
+        <p>ยังได้ของฝากที่ Rinku Outlets ตามแผน ไม่เสียทั้งวัน</p>
+      </article>
+
+      <article class="play">
+        <div class="play__ico"><svg aria-hidden="true"><use href="#i-bag"/></svg></div>
+        <h3>กระเป๋า/เวลาตึง</h3>
+        <p>ถ้าออกจาก Citadines ช้ากว่า 09:00 ให้ตัด Minoo เหลือแค่เดินทางเข้า→Rinku ตรง ๆ ถึง Outlet ~15:00</p>
+        <p>หรือฝากกระเป๋าไว้ที่ล็อกเกอร์ Nankai Namba แทนกลับไปโรงแรม (ประหยัด 30 นาที)</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ============ TOMORROW ============ -->
+  <section class="wrap" aria-labelledby="tomorrow-title">
+    <div class="tomorrow">
+      <div>
+        <p class="eyebrow">ถัดไป</p>
+        <h2 id="tomorrow-title">Day 9 · อาทิตย์ 6 ธ.ค. — ขึ้นเครื่องกลับกรุงเทพ</h2>
+        <p>เที่ยวบิน XJ615 ออก 10:30 — ใช้ shuttle ของโรงแรมหรือ Nankai/JR 1 สถานีไป KIX ถึงสนามบินก่อน 08:30 เผื่อเวลาเช็คอินและคืนภาษี</p>
+        <ul class="tomorrow__list">
+          <li>06:30 ตื่น</li>
+          <li>07:15 ออกจากโรงแรม</li>
+          <li>08:30 ถึง KIX</li>
+          <li>10:30 บินกลับ</li>
+        </ul>
+        <p class="tomorrow__note">ทุกเวลาเป็นเวลาญี่ปุ่น (JST) — เร็วกว่าไทย 2 ชม.</p>
+        <a class="maplink" href="day-9-return-bangkok.html">
+          <svg aria-hidden="true"><use href="#i-doc"/></svg>
+          เปิดแผน Day 9
+        </a>
+      </div>
+      <div class="tomorrow__num" aria-hidden="true">D9</div>
+    </div>
+  </section>
+
+  <nav class="pager wrap" aria-label="ไปวันอื่นในทริป">
+    <a class="pager__btn" href="day-7-osaka-castle-midosuji.html">← Day 7</a>
+    <span class="pager__label">Day 8 / 9</span>
+    <a class="pager__btn" href="day-9-return-bangkok.html">Day 9 →</a>
+  </nav>
+
+</main>
+
+<footer class="foot wrap">
+  <div class="foot__grid">
+    <div>
+      <p><strong>ที่มาของตัวเลข:</strong> ทางเดิน Minoo Station → น้ำตก 2.7 กม. ใช้เวลา 40–50 นาที (อ้างเว็บทางการ Minoo Park) · Hankyu Umeda–Minoo ¥280 · Nankai Namba–Rinku Town ¥820 (~39 นาที) · ค่าเข้า Insectarium ¥280 เด็กฟรี · Outlet เปิด 10:00–20:00 (ร้านอาหารถึง 21:00) · OMO Kansai Airport เช็คอิน 15:00 / เช็คเอาต์ 11:00</p>
+      <p style="margin-top:8px">รถบัสวนรอบเส้นทาง Takimichi ที่เคยวิ่งช่วงใบไม้แดงได้สิ้นสุดการทดลองแล้ว — วันนี้จึงต้องเดินอย่างเดียว</p>
+    </div>
+    <div>
+      <p><strong>หน้านี้:</strong> Day 8 ของ 9 · <a href="day-7-osaka-castle-midosuji.html">ย้อนไป Day 7</a> · <a href="index.html">แผนรวม</a></p>
+      <p style="margin-top:8px">Day 9 (วันบินกลับ) พร้อมแล้ว — ครบ 9 วัน</p>
+    </div>
+  </div>
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ---------- countdown ---------- */
+  var DEP = new Date('2026-12-05T07:30:00+09:00');
+  var countdownEl = document.getElementById('countdown');
+
+  function pad(n) { return n < 10 ? '0' + n : String(n); }
+
+  function updateCountdown() {
+    var now = new Date();
+    var diff = DEP - now;
+    if (diff <= 0) {
+      var endOfDay = new Date('2026-12-05T23:59:00+09:00');
+      countdownEl.textContent = now < endOfDay ? 'วันนี้' : 'ผ่านไปแล้ว';
+      return;
+    }
+    var days = Math.floor(diff / 86400000);
+    var hours = Math.floor((diff % 86400000) / 3600000);
+    if (days >= 1) {
+      countdownEl.textContent = days + ' วัน ' + hours + ' ชม.';
+    } else {
+      var mins = Math.floor((diff % 3600000) / 60000);
+      countdownEl.textContent = hours + ' ชม. ' + pad(mins) + ' น.';
+    }
+  }
+  updateCountdown();
+  setInterval(updateCountdown, 60000);
+
+  /* ---------- live step highlighting ---------- */
+  var stops = Array.prototype.slice.call(document.querySelectorAll('.stop'));
+  var liveBadge = document.getElementById('liveBadge');
+
+  function markNow() {
+    var now = Date.now();
+    var active = null;
+    stops.forEach(function (el) {
+      var start = Date.parse(el.dataset.start);
+      var end = Date.parse(el.dataset.end);
+      el.classList.remove('is-now', 'is-past');
+      if (now >= start && now <= end) {
+        el.classList.add('is-now');
+        active = el;
+      } else if (now > end) {
+        el.classList.add('is-past');
+      }
+    });
+    if (active) {
+      liveBadge.classList.add('is-on');
+      if (!active.dataset.seen) {
+        active.dataset.seen = '1';
+        active.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    } else {
+      liveBadge.classList.remove('is-on');
+    }
+  }
+  markNow();
+  setInterval(markNow, 30000);
+
+  /* ---------- checklist ---------- */
+  var STORE = 'osaka2026.day8.check';
+  var boxes = Array.prototype.slice.call(document.querySelectorAll('#checks input'));
+  var countEl = document.getElementById('checkCount');
+  var barEl = document.getElementById('progressBar');
+
+  function readStore() {
+    try { return JSON.parse(localStorage.getItem(STORE) || '{}') || {}; }
+    catch (e) { return {}; }
+  }
+  function writeStore(obj) {
+    try { localStorage.setItem(STORE, JSON.stringify(obj)); } catch (e) {}
+  }
+  function paint() {
+    var done = boxes.filter(function (b) { return b.checked; }).length;
+    countEl.textContent = done + ' / ' + boxes.length;
+    barEl.style.width = Math.round((done / boxes.length) * 100) + '%';
+  }
+
+  var saved = readStore();
+  boxes.forEach(function (box) {
+    if (saved[box.dataset.key]) box.checked = true;
+    box.addEventListener('change', function () {
+      var store = readStore();
+      if (box.checked) { store[box.dataset.key] = 1; } else { delete store[box.dataset.key]; }
+      writeStore(store);
+      paint();
+    });
+  });
+  paint();
+
+  /* ---------- toast ---------- */
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  function showToast(msg) {
+    toast.textContent = msg;
+    toast.classList.add('is-on');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { toast.classList.remove('is-on'); }, 2200);
+  }
+
+  document.getElementById('resetChecks').addEventListener('click', function () {
+    boxes.forEach(function (b) { b.checked = false; });
+    writeStore({});
+    paint();
+    showToast('ล้างติ๊กทั้งหมดแล้ว');
+  });
+
+  /* ---------- print ---------- */
+  document.getElementById('printBtn').addEventListener('click', function () { window.print(); });
+
+  var openBeforePrint = [];
+  window.addEventListener('beforeprint', function () {
+    openBeforePrint = [];
+    Array.prototype.forEach.call(document.querySelectorAll('details'), function (d) {
+      shortState(d);
+    });
+    function shortState(el) {
+      if (!el.open) { openBeforePrint.push(el); el.open = true; }
+      Array.prototype.forEach.call(el.querySelectorAll('details'), shortState);
+    }
+  });
+  window.addEventListener('afterprint', function () {
+    openBeforePrint.forEach(function (el) { el.open = false; });
+    openBeforePrint = [];
+  });
+
+  /* ---------- reveal on scroll ---------- */
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var revealTargets = Array.prototype.slice.call(document.querySelectorAll('.stop, .play, .card, .tomorrow > div'));
+  if (!reduce && 'IntersectionObserver' in window) {
+    revealTargets.forEach(function (el) { el.classList.add('reveal'); });
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-in');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+    revealTargets.forEach(function (el) { io.observe(el); });
+  }
+})();
+</script>
+</body>
+</html>

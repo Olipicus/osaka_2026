@@ -1,0 +1,1284 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#f2ece0">
+<title>Day 2 · วัดน้ำใส → Gion → นันเซ็นจิ — ทริปโอซาก้า 2026</title>
+<meta name="description" content="แผนวันที่สองของทริปโอซาก้า 2026: บัส 206 ขึ้นวัดน้ำใสก่อนเก้าโมง เดิน Sannenzaka เข้า Gion ปิดท้ายที่วัดนันเซ็นจิ (29 พ.ย. 2026)">
+<style>
+/* ---------- tokens ---------- */
+:root{
+  --paper:#f2ece0;
+  --surface:#faf6ec;
+  --surface-2:#f6f0e3;
+  --ink:#1b2233;
+  --ink-2:#454d60;
+  --muted:#626877;
+  --rule:#d9cfb9;
+  --rule-strong:#c2b69a;
+  --accent:#b23a25;
+  --accent-ink:#8c2a17;
+  --ochre:#7f5c10;
+  --moss:#3d5b45;
+  --font-ui:'Sukhumvit Set','Thonburi','Noto Sans Thai','IBM Plex Sans Thai',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  --font-mono:ui-monospace,'SF Mono',SFMono-Regular,Menlo,Consolas,monospace;
+  --wrap:1140px;
+  --radius:14px;
+  --ease:cubic-bezier(.16,1,.3,1);
+}
+
+/* ---------- base ---------- */
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{
+  margin:0;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--font-ui);
+  font-size:16px;
+  line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,h4,p,dl,dd,figure{margin:0}
+ul,ol{margin:0;padding:0;list-style:none}
+a{color:inherit}
+svg{display:block}
+:focus-visible{outline:2px solid var(--ink);outline-offset:3px;border-radius:2px}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+.skip{
+  position:absolute;left:16px;top:-64px;z-index:99;background:var(--ink);color:var(--surface);
+  padding:10px 16px;border-radius:8px;font-size:.85rem;text-decoration:none;transition:top .2s var(--ease);
+}
+.skip:focus{top:12px}
+.wrap{width:100%;max-width:var(--wrap);margin:0 auto;padding:0 clamp(18px,4vw,40px)}
+.mono-label{
+  font-family:var(--font-mono);font-size:.68rem;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--muted);font-weight:500;
+}
+.eyebrow{
+  display:inline-flex;align-items:center;gap:10px;
+  font-family:var(--font-mono);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-2);
+}
+.eyebrow::before{content:"";width:22px;height:1px;background:var(--rule-strong);display:block}
+.nw{white-space:nowrap}
+
+/* ---------- top bar ---------- */
+.topbar{
+  position:sticky;top:0;z-index:40;
+  background:rgba(242,236,224,.94);
+  border-bottom:1px solid var(--rule);
+}
+@supports (backdrop-filter:blur(8px)){
+  .topbar{background:rgba(242,236,224,.82);backdrop-filter:blur(10px) saturate(120%)}
+}
+.topbar__in{
+  display:flex;align-items:center;gap:clamp(12px,2vw,28px);
+  min-height:62px;padding-top:8px;padding-bottom:8px;
+}
+.brand{display:flex;align-items:baseline;gap:10px;flex-shrink:0;text-decoration:none}
+.brand b{font-family:var(--font-mono);font-size:.78rem;letter-spacing:.14em;font-weight:600}
+.brand span{font-size:.78rem;color:var(--muted)}
+.days{display:flex;align-items:center;gap:4px;margin-left:auto;overflow-x:auto;scrollbar-width:none}
+.days::-webkit-scrollbar{display:none}
+.days__label{font-family:var(--font-mono);font-size:.66rem;letter-spacing:.1em;color:var(--muted);margin-right:6px;flex-shrink:0}
+.daycount{display:none;font-family:var(--font-mono);font-size:.74rem;color:var(--muted);font-variant-numeric:tabular-nums}
+.day{
+  display:inline-flex;align-items:center;justify-content:center;
+  min-width:32px;height:32px;border-radius:8px;
+  font-family:var(--font-mono);font-size:.78rem;font-variant-numeric:tabular-nums;
+  color:var(--muted);flex-shrink:0;
+}
+.day.is-active{background:var(--ink);color:var(--surface);font-weight:600}
+.day.is-next{color:var(--ink-2)}
+.tool{display:flex;align-items:center;gap:6px;flex-shrink:0}
+.btn-quiet{
+  display:inline-flex;align-items:center;gap:7px;
+  min-height:36px;padding:0 12px;border:1px solid var(--rule);border-radius:8px;
+  background:transparent;color:var(--ink-2);font-family:var(--font-ui);font-size:.78rem;
+  cursor:pointer;transition:background .18s var(--ease),border-color .18s var(--ease);
+}
+.btn-quiet:hover{background:var(--surface-2);border-color:var(--rule-strong)}
+.btn-quiet svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+
+/* ---------- hero ---------- */
+.hero{padding-top:clamp(36px,5vw,64px);padding-bottom:clamp(28px,4vw,44px)}
+.hero__grid{display:grid;grid-template-columns:minmax(0,1.02fr) minmax(0,.98fr);gap:clamp(28px,4vw,56px);align-items:center}
+.hero h1{
+  margin-top:16px;
+  font-size:clamp(2rem,4.6vw,3.35rem);
+  line-height:1.1;
+  letter-spacing:-.022em;
+  font-weight:600;
+}
+.hero h1 .arrow{color:var(--accent);padding:0 .12em;font-weight:400}
+.hero__lede{margin-top:16px;max-width:46ch;color:var(--ink-2);font-size:clamp(.95rem,1.2vw,1.02rem);line-height:1.7}
+.hero__meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
+.pill{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:7px 12px;border:1px solid var(--rule);border-radius:8px;background:var(--surface);
+  font-size:.8rem;color:var(--ink-2);
+}
+.pill b{font-family:var(--font-mono);font-variant-numeric:tabular-nums;color:var(--ink);font-weight:600}
+.pill svg{width:14px;height:14px;stroke:var(--muted);fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+
+/* ---------- boarding pass ---------- */
+.ticket{
+  position:relative;
+  background:var(--surface);
+  border:1px solid var(--rule);
+  border-radius:var(--radius);
+  box-shadow:0 1px 2px rgba(27,34,51,.05);
+  padding:22px 24px 0;
+  max-width:520px;
+  margin-left:auto;
+}
+.ticket__top{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-bottom:16px;border-bottom:1px solid var(--rule)}
+.ticket__airline{font-size:.76rem;color:var(--ink-2)}
+.ticket__route{display:grid;grid-template-columns:auto minmax(52px,1fr) auto;align-items:center;gap:10px;padding:20px 0 18px}
+.endpoint{min-width:0}
+.endpoint--end{text-align:right}
+.endpoint__code{display:block;font-family:var(--font-mono);font-size:.72rem;letter-spacing:.12em;color:var(--muted)}
+.endpoint__city{display:block;font-size:.8rem;color:var(--ink-2);margin-top:2px}
+.endpoint__time{
+  display:block;margin-top:4px;
+  font-family:var(--font-mono);font-weight:600;
+  font-size:clamp(1.9rem,3.6vw,2.5rem);line-height:1;
+  letter-spacing:-.02em;font-variant-numeric:tabular-nums;
+  color:var(--accent-ink);
+}
+.endpoint__tz{display:block;margin-top:4px;font-family:var(--font-mono);font-size:.64rem;letter-spacing:.08em;color:var(--muted)}
+.leg{position:relative;text-align:center;padding-bottom:2px;min-width:56px}
+.leg__dur{font-family:var(--font-mono);font-size:.64rem;letter-spacing:.06em;color:var(--muted);white-space:nowrap}
+.leg__track{position:relative;height:14px;margin:8px 0 6px}
+.leg__track::before{
+  content:"";position:absolute;left:0;right:0;top:50%;height:1px;
+  background:repeating-linear-gradient(90deg,var(--rule-strong) 0 4px,transparent 4px 8px);
+}
+.leg__track::after{
+  content:"";position:absolute;right:0;top:50%;width:5px;height:5px;border-radius:50%;
+  background:var(--rule-strong);transform:translateY(-50%);
+}
+.leg__plane{
+  position:absolute;left:50%;top:50%;transform:translate(-50%,-52%);
+  width:20px;height:20px;background:var(--surface);padding:2px;color:var(--ink-2);
+  stroke-width:1.6;
+}
+.leg__no{font-family:var(--font-mono);font-size:.66rem;letter-spacing:.08em;color:var(--ink-2);white-space:nowrap}
+.ticket__meta{
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;
+  background:var(--rule);border:1px solid var(--rule);border-radius:8px;overflow:hidden;
+}
+.ticket__meta > div{background:var(--surface);padding:9px 11px}
+.ticket__meta dt{font-family:var(--font-mono);font-size:.6rem;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+.ticket__meta dd{font-size:.82rem;color:var(--ink);margin-top:2px}
+.copy-row{display:flex;align-items:center;gap:6px}
+.copy-btn{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:26px;height:26px;border:1px solid var(--rule);border-radius:6px;background:var(--surface-2);
+  color:var(--ink-2);cursor:pointer;transition:background .18s var(--ease)
+}
+.copy-btn:hover{background:#efe7d6}
+.copy-btn svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.copy-ref{font-family:var(--font-mono);font-size:.86rem;letter-spacing:.04em;font-weight:600}
+.ticket__stub{
+  margin:18px -24px 0;padding:14px 24px 18px;
+  border-top:1px dashed var(--rule-strong);
+  font-size:.78rem;color:var(--ink-2);
+}
+.ticket__stub .mono-label{display:block;margin-bottom:4px}
+.ticket::before,.ticket::after{
+  content:"";position:absolute;width:16px;height:16px;border-radius:50%;
+  background:var(--paper);border:1px solid var(--rule);
+}
+.ticket::before{left:-9px;bottom:64px}
+.ticket::after{right:-9px;bottom:64px}
+.ticket__route,.ticket__meta,.ticket__top{animation:ticket-in .55s var(--ease) both}
+.ticket__meta{animation-delay:.08s}
+.ticket__stub{animation:ticket-in .55s var(--ease) .16s both}
+.endpoint__time{animation:time-in .6s var(--ease) .12s both}
+.endpoint--end .endpoint__time{animation-delay:.2s}
+@keyframes ticket-in{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@keyframes time-in{from{opacity:0;transform:translateY(12px);letter-spacing:.02em}to{opacity:1;transform:none}}
+
+/* ---------- route card (day 2) ---------- */
+a.day{text-decoration:none}
+a.day:hover{background:var(--surface-2);color:var(--ink)}
+.topback{display:none;align-items:center;gap:5px;min-height:32px;padding:0 4px;font-size:.76rem;color:var(--ink-2);text-decoration:none}
+.topback:hover{color:var(--ink);text-decoration:underline;text-underline-offset:3px}
+@media (max-width:640px){.topback{display:inline-flex}}
+.routecard{
+  position:relative;background:var(--surface);border:1px solid var(--rule);
+  border-radius:var(--radius);box-shadow:0 1px 2px rgba(27,34,51,.05);
+  padding:20px 22px 16px;max-width:520px;margin-left:auto;
+}
+.routecard__top{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-bottom:14px;border-bottom:1px solid var(--rule)}
+.routecard__hint{font-family:var(--font-mono);font-size:.64rem;letter-spacing:.09em;color:var(--muted)}
+.route{position:relative;display:flex;flex-direction:column;gap:15px;margin-top:18px}
+.route::before{content:"";position:absolute;left:17px;top:14px;bottom:14px;border-left:1px dashed var(--rule-strong)}
+.route__stop{position:relative;display:grid;grid-template-columns:36px minmax(0,1fr) auto;align-items:center;gap:12px}
+.seal{
+  position:relative;z-index:1;width:36px;height:36px;border-radius:50%;
+  display:grid;place-items:center;background:var(--surface);
+  border:1.6px solid var(--accent);color:var(--accent-ink);
+  font-family:var(--font-mono);font-size:.78rem;font-weight:600;font-variant-numeric:tabular-nums;
+  animation:seal-in .5s var(--ease) both;
+}
+.seal::after{content:"";position:absolute;inset:4px;border-radius:50%;border:1px solid rgba(178,58,37,.42)}
+.route__stop:nth-child(1) .seal{animation-delay:.12s}
+.route__stop:nth-child(2) .seal{animation-delay:.2s}
+.route__stop:nth-child(3) .seal{animation-delay:.28s}
+@keyframes seal-in{from{opacity:0;transform:scale(1.25) rotate(-6deg)}to{opacity:1;transform:none}}
+.route__body b{display:block;font-size:.95rem;font-weight:600;letter-spacing:-.005em}
+.route__meta{display:block;margin-top:1px;font-family:var(--font-mono);font-size:.66rem;color:var(--muted);letter-spacing:.02em}
+.route__tag{font-family:var(--font-mono);font-size:.6rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-align:right}
+.routecard__foot{display:flex;justify-content:space-between;gap:12px;margin-top:18px;padding-top:12px;border-top:1px dashed var(--rule-strong);font-family:var(--font-mono);font-size:.66rem;color:var(--ink-2)}
+@media (max-width:960px){.routecard{margin-left:0;max-width:none}}
+@media (max-width:640px){
+  .routecard{padding:16px 16px 14px}
+  .route__stop{grid-template-columns:32px minmax(0,1fr);gap:10px}
+  .seal{width:32px;height:32px;font-size:.72rem}
+  .route::before{left:15px}
+  .route__tag{display:none}
+  .routecard__foot{font-size:.6rem}
+}
+@media print{.routecard{box-shadow:none;page-break-inside:avoid}}
+
+/* ---------- day pager ---------- */
+.daypager{display:none;align-items:center;gap:2px;margin-left:auto;font-family:var(--font-mono);font-size:.72rem;color:var(--ink-2)}
+.daypager a{display:inline-grid;place-items:center;min-width:30px;height:30px;border-radius:6px;color:var(--ink-2);text-decoration:none}
+.daypager a:hover{background:var(--surface-2);color:var(--ink)}
+.daypager .is-off{display:inline-grid;place-items:center;min-width:30px;height:30px;color:var(--rule-strong)}
+.daypager span.now{padding:0 4px;color:var(--ink)}
+@media (max-width:640px){.daypager{display:inline-flex}}
+.pager{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:clamp(32px,4vw,56px);padding-top:18px;border-top:1px solid var(--rule)}
+.pager__btn{display:inline-flex;align-items:center;gap:6px;min-height:38px;padding:6px 14px;border:1px solid var(--rule-strong);border-radius:8px;background:var(--surface);color:var(--ink);font-size:.84rem;text-decoration:none}
+.pager__btn:hover{background:var(--surface-2);border-color:var(--ink-2)}
+.pager__label{font-family:var(--font-mono);font-size:.7rem;letter-spacing:.08em;color:var(--muted)}
+
+/* ---------- beat strip ---------- */
+.beats{
+  display:flex;flex-wrap:wrap;gap:0;
+  border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);
+  margin-top:clamp(24px,3vw,36px);
+}
+.beat{flex:1 1 180px;padding:14px 18px 14px 0;display:flex;gap:12px;align-items:baseline}
+.beat + .beat{padding-left:18px;border-left:1px solid var(--rule)}
+.beat time{font-family:var(--font-mono);font-size:.86rem;font-weight:600;font-variant-numeric:tabular-nums;color:var(--ink)}
+.beat span{font-size:.8rem;color:var(--ink-2)}
+.beat__th{display:block;font-family:var(--font-mono);font-size:.66rem;color:var(--muted);margin-top:2px;font-style:normal;letter-spacing:.01em}
+
+/* ---------- sections ---------- */
+.section{padding-top:clamp(44px,6vw,80px)}
+.section__head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:clamp(20px,3vw,32px)}
+.section__head h2{font-size:clamp(1.4rem,2.5vw,1.9rem);line-height:1.2;letter-spacing:-.015em;font-weight:600;margin-top:10px}
+.section__note{font-family:var(--font-mono);font-size:.7rem;letter-spacing:.05em;color:var(--muted);text-align:right;display:flex;flex-direction:column;align-items:flex-end;gap:2px}
+.note-legend{font-family:var(--font-ui);letter-spacing:0;font-size:.73rem;color:var(--ink-2)}
+.live{
+  display:none;align-items:center;gap:7px;padding:5px 10px;border-radius:6px;
+  background:rgba(178,58,37,.09);color:var(--accent-ink);font-size:.72rem;font-weight:600;
+}
+.live::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--accent);animation:pulse 2s infinite}
+.live.is-on{display:inline-flex}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+
+/* ---------- day grid ---------- */
+.daygrid{display:grid;grid-template-columns:minmax(0,1fr) 336px;gap:clamp(28px,4vw,52px);align-items:start}
+
+/* timeline */
+.steps{position:relative}
+.stop{display:grid;grid-template-columns:64px 26px minmax(0,1fr);column-gap:10px;padding-bottom:26px}
+.stop:last-child{padding-bottom:0}
+.stop__time{
+  font-family:var(--font-mono);font-size:.98rem;font-weight:600;font-variant-numeric:tabular-nums;
+  color:var(--ink);padding-top:2px;letter-spacing:-.01em;
+  display:flex;flex-direction:column;gap:1px;line-height:1.2;
+}
+.t-sub{font-size:.62rem;font-weight:500;color:var(--muted);letter-spacing:.02em;white-space:nowrap;font-variant-numeric:tabular-nums}
+.stop__rail{position:relative;display:flex;justify-content:center}
+.stop__rail::before{
+  content:"";position:absolute;top:12px;bottom:-26px;left:50%;width:1px;
+  background:var(--rule-strong);transform:translateX(-50%);
+}
+.stop:last-child .stop__rail::before{display:none}
+.stop__dot{
+  width:11px;height:11px;border-radius:50%;margin-top:5px;position:relative;z-index:1;
+  background:var(--surface);border:1.6px solid var(--rule-strong);
+}
+.stop.is-now .stop__dot{background:var(--accent);border-color:var(--accent);box-shadow:0 0 0 4px rgba(178,58,37,.14)}
+.stop.is-past .stop__dot{background:var(--rule-strong)}
+.stop__head{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.stop__head h3{font-size:1rem;font-weight:600;letter-spacing:-.008em;line-height:1.4}
+.stop__place{
+  font-family:var(--font-mono);font-size:.64rem;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--muted);white-space:nowrap;
+}
+.stop__body{color:var(--ink-2);font-size:.94rem;line-height:1.68;margin-top:5px;max-width:56ch}
+.facts{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.facts li{
+  font-family:var(--font-mono);font-size:.68rem;letter-spacing:.01em;
+  padding:3px 8px;border:1px solid var(--rule);border-radius:5px;
+  background:var(--surface);color:var(--ink-2);
+}
+.stop details{margin-top:10px}
+.stop summary{
+  display:inline-flex;align-items:center;gap:6px;min-height:28px;
+  cursor:pointer;list-style:none;
+  font-size:.78rem;color:var(--muted);
+  border-bottom:1px dashed transparent;transition:color .18s var(--ease),border-color .18s var(--ease);
+}
+.stop summary::-webkit-details-marker{display:none}
+.stop summary:hover{color:var(--ink-2);border-bottom-color:var(--rule-strong)}
+.stop summary svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;transition:transform .2s var(--ease)}
+.stop details[open] summary svg{transform:rotate(180deg)}
+.stop details[open] summary{color:var(--ink-2)}
+.detail-box{
+  margin-top:8px;padding:12px 14px;border-left:2px solid var(--rule-strong);
+  background:var(--surface-2);border-radius:0 8px 8px 0;
+  font-size:.85rem;line-height:1.7;color:var(--ink-2);max-width:58ch;
+}
+.maplink{
+  display:inline-flex;align-items:center;gap:7px;margin-top:10px;
+  min-height:36px;padding:5px 11px;
+  border:1px solid var(--rule-strong);border-radius:6px;
+  background:var(--surface);color:var(--ink);
+  font-size:.78rem;text-decoration:none;
+  transition:background .18s var(--ease),border-color .18s var(--ease);
+}
+.maplink:hover{background:var(--surface-2);border-color:var(--ink-2)}
+.maplink svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;color:var(--muted);flex-shrink:0}
+.maplink:hover svg{color:var(--ink-2)}
+.maplink .ext{width:11px;height:11px;margin-left:1px}
+/* ---------- transit strip ---------- */
+.transit{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;margin-top:10px;padding:8px 10px;border:1px solid var(--rule);border-radius:8px;background:var(--surface)}
+.transit__badge{display:inline-grid;place-items:center;min-width:34px;height:26px;padding:0 6px;border-radius:5px;background:var(--c,var(--ink));background-image:linear-gradient(rgba(0,0,0,.22),rgba(0,0,0,.22));color:#fff;font-family:var(--font-mono);font-size:.7rem;font-weight:600;letter-spacing:.02em;line-height:1}
+.transit__main{font-size:.82rem;color:var(--ink);line-height:1.4}
+.transit__main b{font-weight:600}
+.transit__meta{flex-basis:100%;font-family:var(--font-mono);font-size:.66rem;color:var(--muted);line-height:1.55}
+@media (min-width:700px){.transit__meta{flex-basis:auto}}
+.stop__links{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.stop__links .maplink{margin-top:0}
+.stop__links .maplink:first-child{border-color:var(--ink-2);background:var(--surface-2)}
+.detail-box ul{display:flex;flex-direction:column;gap:5px}
+.detail-box li{padding-left:13px;position:relative}
+.detail-box li::before{content:"";position:absolute;left:0;top:.62em;width:5px;height:1px;background:var(--muted)}
+.detail-box a{color:var(--accent-ink);text-decoration:underline;text-underline-offset:2px}
+.detail-box a:hover{color:var(--ink)}
+
+/* side rail */
+.rail{display:flex;flex-direction:column;gap:20px;position:sticky;top:82px}
+.card{
+  background:var(--surface);border:1px solid var(--rule);border-radius:var(--radius);
+  padding:18px 18px 16px;box-shadow:0 1px 2px rgba(27,34,51,.04);
+}
+.card__head{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-bottom:4px}
+.card h2,.card h3{font-size:.94rem;font-weight:600;letter-spacing:-.005em}
+.card__count{font-family:var(--font-mono);font-size:.7rem;color:var(--muted);font-variant-numeric:tabular-nums}
+.progress{height:3px;background:var(--rule);border-radius:99px;margin:10px 0 12px;overflow:hidden}
+.progress__bar{height:100%;width:0;background:var(--moss);border-radius:99px;transition:width .4s var(--ease)}
+.checks{display:flex;flex-direction:column;gap:1px}
+.check{display:flex;align-items:flex-start;gap:9px;padding:7px 2px;cursor:pointer;border-radius:5px;transition:background .15s var(--ease)}
+.check:hover{background:var(--surface-2)}
+.check input{appearance:none;-webkit-appearance:none;width:16px;height:16px;flex-shrink:0;margin:3px 0 0;border:1.5px solid var(--rule-strong);border-radius:4px;background:var(--surface);cursor:pointer;position:relative}
+.check input:checked{background:var(--moss);border-color:var(--moss)}
+.check input:checked::after{
+  content:"";position:absolute;left:4.5px;top:1.5px;width:4px;height:8px;
+  border:solid #fff;border-width:0 1.6px 1.6px 0;transform:rotate(42deg);
+}
+.check span{font-size:.81rem;line-height:1.5;color:var(--ink-2)}
+.check input:checked + span{color:var(--muted);text-decoration:line-through;text-decoration-color:var(--rule-strong)}
+.card__foot{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:10px;padding-top:10px;border-top:1px solid var(--rule)}
+.link-btn{
+  background:none;border:0;padding:4px 0;min-height:28px;cursor:pointer;
+  font-family:var(--font-ui);font-size:.74rem;color:var(--muted);text-decoration:underline;text-underline-offset:3px;
+}
+.link-btn:hover{color:var(--ink-2)}
+.card--plain{background:transparent;box-shadow:none;padding:0;border:0}
+.card--plain h3{font-size:.86rem}
+.costs{display:flex;flex-direction:column;gap:7px;margin-top:12px}
+.cost{display:flex;justify-content:space-between;align-items:baseline;gap:12px;font-size:.8rem;color:var(--ink-2);padding-bottom:7px;border-bottom:1px dotted var(--rule)}
+.cost:last-of-type{border-bottom:0}
+.cost b{font-family:var(--font-mono);font-weight:600;font-variant-numeric:tabular-nums;color:var(--ink);white-space:nowrap;font-size:.78rem}
+.cost-total{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-top:4px;padding-top:10px;border-top:1px solid var(--rule-strong)}
+.cost-total span{font-size:.8rem;font-weight:600}
+.cost-total b{font-family:var(--font-mono);font-size:.88rem;font-variant-numeric:tabular-nums}
+
+/* playbook */
+.playbook{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule);border-radius:var(--radius);overflow:hidden}
+.play{background:var(--surface);padding:22px 22px 24px}
+.play__ico{
+  width:30px;height:30px;border-radius:8px;border:1px solid var(--rule);background:var(--surface-2);
+  display:grid;place-items:center;margin-bottom:14px;color:var(--ink-2);
+}
+.play__ico svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.play h3{font-size:.95rem;font-weight:600;margin-bottom:8px}
+.play p{font-size:.85rem;line-height:1.7;color:var(--ink-2)}
+.play p + p{margin-top:9px}
+.play b{color:var(--ink);font-weight:600}
+
+/* tomorrow */
+.tomorrow{
+  margin-top:clamp(44px,6vw,76px);
+  border-top:1px solid var(--rule-strong);border-bottom:1px solid var(--rule);
+  padding:clamp(26px,3.5vw,38px) 0;
+  display:grid;grid-template-columns:minmax(0,1fr) auto;gap:24px;align-items:center;
+}
+.tomorrow h2{font-size:clamp(1.25rem,2.2vw,1.6rem);letter-spacing:-.015em;font-weight:600;margin-top:8px}
+.tomorrow p{color:var(--ink-2);font-size:.88rem;margin-top:8px;max-width:62ch}
+.tomorrow__list{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+.tomorrow__list li{font-family:var(--font-mono);font-size:.68rem;color:var(--ink-2);border:1px solid var(--rule);border-radius:5px;padding:3px 8px;background:var(--surface)}
+.tomorrow__note{font-family:var(--font-mono);font-size:.68rem;color:var(--muted);margin-top:10px}
+.tomorrow__num{font-family:var(--font-mono);font-size:clamp(2.4rem,5vw,3.4rem);font-weight:600;color:var(--rule-strong);line-height:1;letter-spacing:-.03em}
+
+/* footer */
+.foot{padding-top:28px;padding-bottom:44px;color:var(--muted);font-size:.76rem;line-height:1.7}
+.foot__grid{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:24px}
+.foot strong{color:var(--ink-2);font-weight:600}
+.foot a{text-decoration:underline;text-underline-offset:3px}
+.foot a:hover{color:var(--ink)}
+.toast{
+  position:fixed;left:50%;bottom:24px;transform:translate(-50%,16px);
+  background:var(--ink);color:var(--surface);font-size:.78rem;
+  padding:9px 16px;border-radius:8px;opacity:0;pointer-events:none;
+  transition:opacity .2s var(--ease),transform .2s var(--ease);z-index:60;
+}
+.toast.is-on{opacity:1;transform:translate(-50%,0)}
+
+/* reveal */
+.reveal{opacity:0;transform:translateY(14px);transition:opacity .6s var(--ease),transform .6s var(--ease)}
+.reveal.is-in{opacity:1;transform:none}
+
+/* ---------- responsive ---------- */
+@media (max-width:960px){
+  .hero__grid{grid-template-columns:1fr;gap:28px}
+  .ticket{margin-left:0;max-width:none}
+  .daygrid{grid-template-columns:1fr;gap:36px}
+  .rail{position:static;top:auto}
+  .playbook{grid-template-columns:1fr}
+  .tomorrow{grid-template-columns:1fr}
+  .tomorrow__num{display:none}
+  .foot__grid{grid-template-columns:1fr}
+}
+@media (max-width:640px){
+  body{font-size:15px}
+  .brand span{display:none}
+  .topbar__in{min-height:56px;gap:10px}
+  .days{display:none}
+  .daycount{display:inline-flex;margin-left:auto}
+  .hero{padding-top:28px}
+  .hero h1{font-size:clamp(1.85rem,8vw,2.4rem)}
+  .hero__lede{font-size:.92rem}
+  .ticket{padding:18px 16px 0}
+  .ticket__stub{margin-left:-16px;margin-right:-16px;padding-left:16px;padding-right:16px}
+  .ticket__route{grid-template-columns:1fr auto 1fr;gap:6px;padding:16px 0 14px}
+  .endpoint__time{font-size:1.75rem}
+  .endpoint__tz{font-size:.6rem;letter-spacing:.04em}
+  .leg{min-width:44px}
+  .leg__dur{display:none}
+  .leg__track{margin:9px 0 2px;height:10px}
+  .leg__track::before{background:repeating-linear-gradient(90deg,var(--rule-strong) 0 5px,transparent 5px 9px)}
+  .leg__plane{width:16px;height:16px}
+  .beat{flex-basis:100%;padding:10px 0}
+  .beat + .beat{padding-left:0;border-left:0;border-top:1px solid var(--rule)}
+  .stop{grid-template-columns:60px 20px minmax(0,1fr);column-gap:8px;padding-bottom:22px}
+  .stop__time{font-size:.86rem}
+  .t-sub{font-size:.6rem;letter-spacing:0}
+  .stop__rail::before{bottom:-22px}
+  .section__note{text-align:left;align-items:flex-start}
+  .tomorrow__num{display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation-duration:.001ms !important;animation-delay:0ms !important;transition-duration:.001ms !important}
+  .reveal{opacity:1;transform:none}
+}
+
+/* ---------- print ---------- */
+@page{size:A4;margin:14mm 12mm}
+@media print{
+  body{background:#fff;font-size:10.5pt}
+  .topbar,.tool,.beats,.tomorrow__num,.toast,.progress,.card__foot{display:none !important}
+  .hero{padding:0 0 8mm}
+  .maplink{display:none}
+  .wrap{padding-left:0;padding-right:0}
+  .hero__grid{grid-template-columns:1fr;gap:6mm}
+  .ticket{max-width:none;box-shadow:none;page-break-inside:avoid}
+  .daygrid{grid-template-columns:1fr}
+  .rail{position:static}
+  .card{page-break-inside:avoid;box-shadow:none}
+  .playbook{grid-template-columns:1fr 1fr 1fr;page-break-inside:avoid}
+  .stop{page-break-inside:avoid}
+  .detail-box{background:#fff;border-left:1px solid #999}
+  .reveal{opacity:1;transform:none}
+  a{text-decoration:none}
+}
+</style>
+</head>
+<body>
+
+<a class="skip" href="#main">ข้ามไปที่เนื้อหา</a>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <symbol id="i-plane" viewBox="0 0 24 24"><path d="M10.5 13.5 3 11l1.8-1.8 6.9 1L17.4 4l2.6 1-5.2 6.3 1 6.9L14 20l-2.4-7.4"/></symbol>
+    <symbol id="i-train" viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="14" rx="4"/><path d="M5 11h14M9 21l1.6-4M15 21l-1.6-4M8.5 7.5h.01M15.5 7.5h.01"/></symbol>
+    <symbol id="i-hotel" viewBox="0 0 24 24"><path d="M3 20V5a1 1 0 0 1 1-1h9a1 1 0 0 1 1 1v15M14 20V9h5a2 2 0 0 1 2 2v9M3 20h18"/><path d="M6.5 8h1M9.5 8h1M12 8h.01M6.5 11.5h1M9.5 11.5h1M12 11.5h.01M6.5 15h1M9.5 15h1M12 15h.01"/></symbol>
+    <symbol id="i-bowl" viewBox="0 0 24 24"><path d="M3 11h18a9 9 0 0 1-9 9 9 9 0 0 1-9-9ZM8 8c0-1.5 1-2 1-3.5M12 7.5c0-1.5 1-2 1-3.5M16 8c0-1.5 1-2 1-3.5"/></symbol>
+    <symbol id="i-doc" viewBox="0 0 24 24"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4M9 12h6M9 16h4"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m4.5 12.5 5 5 10-11"/></symbol>
+    <symbol id="i-warn" viewBox="0 0 24 24"><path d="M12 4 2.8 20h18.4L12 4Z"/><path d="M12 10v4M12 17h.01"/></symbol>
+    <symbol id="i-bag" viewBox="0 0 24 24"><rect x="4" y="7" width="16" height="13" rx="2.5"/><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2M10 11v6M14 11v6"/></symbol>
+    <symbol id="i-copy" viewBox="0 0 24 24"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M15 5.5A1.5 1.5 0 0 0 13.5 4H5.5A1.5 1.5 0 0 0 4 5.5v8A1.5 1.5 0 0 0 5.5 15"/></symbol>
+    <symbol id="i-chevron" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+    <symbol id="i-print" viewBox="0 0 24 24"><path d="M7 9V4h10v5M7 18H5a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2h-2"/><rect x="7" y="14" width="10" height="6" rx="1"/></symbol>
+    <symbol id="i-yen" viewBox="0 0 24 24"><path d="M7 4l5 7 5-7M12 11v9M8 13h8M8 16.5h8"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11Z"/><circle cx="12" cy="10" r="2.6"/></symbol>
+    <symbol id="i-ext" viewBox="0 0 24 24"><path d="M8 16 16 8M9.5 8H16v6.5"/></symbol>
+  </defs>
+</svg>
+
+<header class="topbar">
+  <div class="wrap topbar__in">
+    <a class="brand" href="index.html">
+      <b>OSAKA 2026</b>
+      <span>9 วัน 8 คืน</span>
+    </a>
+    <nav class="days" aria-label="เลื่อนดูวันของทริป">
+      <span class="days__label">วัน</span>
+      <a class="day" href="day-1-bangkok-kyoto.html">1</a>
+      <span class="day is-active" aria-current="page">2</span>
+      <a class="day" href="day-3-arashiyama-universal-city.html">3</a>
+      <a class="day" href="day-4-universal-studios.html">4</a>
+      <a class="day" href="day-5-kaiyukan-namba.html">5</a>
+      <a class="day" href="day-6-kuromon-nara.html">6</a>
+      <a class="day" href="day-7-osaka-castle-midosuji.html">7</a>
+      <a class="day" href="day-8-minoo-rinku.html">8</a>
+      <a class="day" href="day-9-return-bangkok.html">9</a>
+    </nav>
+    <div class="tool">
+      <nav class="daypager" aria-label="เลื่อนวัน">
+        <a href="day-1-bangkok-kyoto.html" aria-label="วันก่อนหน้า">‹</a><span class="now">2 / 9</span><a href="day-3-arashiyama-universal-city.html" aria-label="วันถัดไป">›</a>
+      </nav>
+      <button class="btn-quiet" type="button" id="printBtn">
+        <svg aria-hidden="true"><use href="#i-print"/></svg>
+        พิมพ์
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ============ HERO ============ -->
+  <section class="hero wrap" aria-labelledby="hero-title">
+    <div class="hero__grid">
+      <div>
+        <p class="eyebrow">วันที่ 2 · อาทิตย์ที่ 29 พฤศจิกายน 2026</p>
+        <h1 id="hero-title">วัดน้ำใส <span class="arrow" aria-hidden="true">→</span> นันเซ็นจิ</h1>
+        <p class="hero__lede">
+          ออก 07:30 ด้วยบัส 206 ขึ้นวัดน้ำใสก่อนเก้าโมง แล้วเดินลง Sannenzaka เข้า Gion ปิดท้ายที่เขตวัดนันเซ็นจิ
+          — วันนี้เดินเยอะที่สุดของทริป และไม่จำเป็นต้องขึ้นรถไฟเลย: บัสกับแท็กซี่พาไปได้ครบ
+        </p>
+        <div class="hero__meta">
+          <span class="pill"><svg aria-hidden="true"><use href="#i-clock"/></svg><b id="countdown">—</b><span>ก่อนออกจากโรงแรม</span></span>
+          <span class="pill"><svg aria-hidden="true"><use href="#i-pin"/></svg><b>3 จุดหลัก</b><span>วัดน้ำใส · Gion · นันเซ็นจิ</span></span>
+        </div>
+      </div>
+
+      <article class="routecard" aria-labelledby="route-title">
+        <div class="routecard__top">
+          <span class="mono-label">เส้นทางวันนี้</span>
+          <span class="routecard__hint">JST</span>
+        </div>
+        <h2 id="route-title" class="sr-only">เส้นทางวันนี้: วัดน้ำใส แล้ว Gion ปิดท้ายที่นันเซ็นจิ</h2>
+        <ol class="route">
+          <li class="route__stop">
+            <span class="seal" aria-hidden="true">1</span>
+            <span class="route__body"><b>วัดน้ำใส</b><span class="route__meta">08:00 · bus 206 จาก D2</span></span>
+            <span class="route__tag">Higashiyama</span>
+          </li>
+          <li class="route__stop">
+            <span class="seal" aria-hidden="true">2</span>
+            <span class="route__body"><b>Gion</b><span class="route__meta">10:45 · เดินลงเขา</span></span>
+            <span class="route__tag">Shijo</span>
+          </li>
+          <li class="route__stop">
+            <span class="seal" aria-hidden="true">3</span>
+            <span class="route__body"><b>นันเซ็นจิ</b><span class="route__meta">14:00 · แท็กซี่ ~10 น.</span></span>
+            <span class="route__tag">Nanzenji</span>
+          </li>
+        </ol>
+        <div class="routecard__foot">
+          <span>กลับโรงแรม ~16:30</span>
+          <span>มื้อเย็น 18:00</span>
+        </div>
+      </article>
+    </div>
+
+    <div class="beats" aria-label="สี่จังหวะหลักของวัน">
+      <div class="beat"><time>07:30</time><span>ขึ้นบัส 206<em class="beat__th">05:30 เวลาไทย</em></span></div>
+      <div class="beat"><time>08:00</time><span>ถึงวัดน้ำใส<em class="beat__th">06:00 เวลาไทย</em></span></div>
+      <div class="beat"><time>14:00</time><span>นันเซ็นจิ<em class="beat__th">12:00 เวลาไทย</em></span></div>
+      <div class="beat"><time>18:00</time><span>มื้อเย็นแถวสถานี<em class="beat__th">16:00 เวลาไทย</em></span></div>
+    </div>
+  </section>
+
+  <!-- ============ DAY GRID ============ -->
+  <section class="section wrap" aria-labelledby="steps-title">
+    <div class="section__head">
+      <div>
+        <p class="eyebrow">ตารางวันนี้</p>
+        <h2 id="steps-title">ลำดับของวันนี้</h2>
+      </div>
+      <p class="section__note">
+        <span class="live" id="liveBadge">ตอนนี้อยู่ขั้นนี้</span>
+        <span>07:00–19:30 · 11 จุด</span>
+        <span class="note-legend">ทุกเวลาเป็นเวลาเกียวโต (JST) · ตัวเลขเล็กใต้เวลา = เวลาไทย (ICT)</span>
+      </p>
+    </div>
+
+    <div class="daygrid">
+      <ol class="steps" id="steps">
+
+        <li class="stop" data-start="2026-11-29T06:45:00+09:00" data-end="2026-11-29T07:10:00+09:00">
+          <div class="stop__time">07:00<span class="t-sub">05:00 ICT</span></div>
+          <div class="stop__rail" aria-hidden="true"><span class="stop__dot"></span></div>
+          <div>
+            <div class="stop__head"><h3>มื้อเช้า + เตรียมตัว</h3><span class="stop__place">Kyoto Stn</span></div>
+            <p class="stop__body">กินเช้าที่โรงแรมหรือร้านสะดวกซื้อใต้สถานี แล้วออกจากห้อง 07:10 — วันนี้เดินเยอะ ใส่รองเท้าที่ถนัดที่สุด</p>
+            <ul class="facts">
+              <li>07:10 ออก</li>
+              <li>เช้า ~5–8°C</li>
+            </ul>
+            <details>
+              <summary>เช็กก่อนออกจากห้อง <svg aria-hidden="true"><use href="#i-chevron"/></svg></summary>
+              <div class="detail-box">
+                <ul>
+                  <li>Suica/ICOCA ใน Apple Wallet พร้อมใช้ หรือเตรียมเหรียญ ¥230</li>
+                  <li>เติมน้ำให้ครบ กระเป๋าเด็กใส่ขนม + ทิชชู่เปียก</li>
+                  <li>เข้าห้องน้ำก่อนออก — บนภูเขาห้องน้ำน้อยกว่าในเมือง</li>
+                </ul>
+              </div>
+            </details>
+          </div>
+        </li>
+
+        <li class="stop" data-start="2026-11-29T07:10:00+09:00" data-end="2026-11-29T07:30:00+09:00">
+          <div class="stop__time">07:15<span class="t-sub">05:15 ICT</span></div>
+          <div class="stop__rail" aria-hidden="true"><span class="stop__dot"></span></div>
+          <div>
+            <div class="stop__head"><h3>เดินจากโรงแรมไปป้าย D2</h3><span class="stop__place">Kyoto Stn · ฝั่งเหนือ</span></div>
+            <p class="stop__body">จาก Vischio เดิน 2 นาทีไปทางออก Hachijo แล้วขึ้นบันไดเลื่อนไปชั้น 2 ใช้ทางเดินเหนือราง (North–South Free Passage) ข้ามไปฝั่ง Karasuma — ป้ายบัสอยู่หน้าประตูกลาง (Central Exit) ใช้เวลารวม ~8–10 นาที</p>
+            <ul class="facts">
+              <li>8–10 นาที</li>
+              <li>เดินในสถานีเกือบทั้งหมด</li>
+            </ul>
+            <div class="transit" style="--c:#3d5b45">
+              <span class="transit__badge">WALK</span>
+              <span class="transit__main"><b>เดิน</b> · โรงแรม → ป้าย D2</span>
+              <span class="transit__meta">Hachijo → ชั้น 2 → ฝั่ง Karasuma → หน้า Central Exit · ไม่ต้องออกนอกอาคาร</span>
+            </div>
+            <a class="maplink" href="https://www.google.com/maps/dir/?api=1&amp;origin=Hotel%20Vischio%20Kyoto%20by%20GRANVIA&amp;destination=Kyoto%20Station%20Bus%20Terminal&amp;travelmode=walking" target="_blank" rel="noopener noreferrer">
+              <svg aria-hidden="true"><use href="#i-pin"/></svg>
+              เส้นทางเดินไปป้ายบัสใน Maps
+              <svg class="ext" aria-hidden="true"><use href="#i-ext"/></svg>
+              <span class="sr-only">(เปิดในแท็บใหม่)</span>
+            </a>
+            <details>
+              <summary>ถ้าไม่แน่ใจทาง <svg aria-hidden="true"><use href="#i-chevron"/></svg></summary>
+              <div class="detail-box">
+                <ul>
+                  <li>ป้าย D2 อยู่ฝั่ง Karasuma (เหนือ) — คนละฝั่งกับโรงแรม อย่าไปรอฝั่ง Hachijo</li>
+                  <li>ทางเดินชั้น 2 มีป้ายบอก Karasuma / Central Exit ตลอดทาง ~4 นาที</li>
+                  <li>ถึงก่อนเวลา ~10 นาที — บัส 206 ออกทุก ~10–15 นาที</li>
+                </ul>
+              </div>
+            </details>
+          </div>
+        </li>
+
+        <li class="stop" data-start="2026-11-29T07:30:00+09:00" data-end="2026-11-29T08:00:00+09:00">
+          <div class="stop__time">07:30<span class="t-sub">05:30 ICT</span></div>
+          <div class="stop__rail" aria-hidden="true"><span class="stop__dot"></span></div>
+          <div>
+            <div class="stop__head"><h3>บัส 206 → Kiyomizu-michi</h3><span class="stop__place">D2</span></div>
+            <p class="stop__body">ขึ้นบัสเทศบาลสาย 206 ที่ป้าย D2 (ฝั่ง Karasuma) ถึงป้าย Kiyomizu-michi ใน ~15–20 นาที ค่าโดยสารเที่ยวละ ¥230</p>
+            <ul class="facts">
+              <li>¥230 / คน</li>
+              <li>15–20 นาที</li>
+              <li>เด็ก &lt; 6 ขวบฟรี</li>
+            </ul>
+            <div class="transit" style="--c:#1b2233">
+              <span class="transit__badge">206</span>
+              <span class="transit__main"><b>บัสเทศบาลเกียวโต</b> · ไป Kitaoji ผ่าน Gion</span>
+              <span class="transit__meta">ป้าย D2 · ลง Kiyomizu-michi · ขึ้นประตูหน้า จ่ายตอนขึ้น ¥230</span>
+            </div>
+            <a class="maplink" href="https://www.google.com/maps/dir/?api=1&amp;origin=Kyoto%20Station&amp;destination=Kiyomizu-dera&amp;travelmode=transit" target="_blank" rel="noopener noreferrer">
+              <svg aria-hidden="true"><use href="#i-pin"/></svg>
+              เส้นทางบัสไปวัดน้ำใสใน Maps
+              <svg class="ext" aria-hidden="true"><use href="#i-ext"/></svg>
+              <span class="sr-only">(เปิดในแท็บใหม่)</span>
+            </a>
+            <details>
+              <summary>นั่งบัสเกียวโตให้ถูกทาง <svg aria-hidden="true"><use href="#i-chevron"/></svg></summary>
+              <div class="detail-box">
+                <ul>
+                  <li>ขึ้น<b>ประตูหน้า</b> จ่ายตอนขึ้น (IC แตะ หรือหยอดเหรียญ ¥230 · เด็กก่อนประถมฟรี) แล้วลงประตูหลัง</li>
+                  <li>วันอาทิตย์ช่วงใบไม้แดงคนแน่นมาก — เผื่อรอบรถหรือยอมยืน 15 นาที</li>
+                  <li>ป้ายบอกสถานีเป็นญี่ปุ่น+อังกฤษ มีจอแสดงป้ายถัดไปบนรถ</li>
+                </ul>
+              </div>
+            </details>
+          </div>
+        </li>
+
+        <li class="stop" data-start="2026-11-29T08:00:00+09:00" data-end="2026-11-29T09:30:00+09:00">
+          <div class="stop__time">08:00<span class="t-sub">06:00 ICT</span></div>
+          <div class="stop__rail" aria-hidden="true"><span class="stop__dot"></span></div>
+          <div>
+            <div class="stop__head"><h3>วัดน้ำใส คิโยมิซุ</h3><span class="stop__place">Kiyomizu-dera</span></div>
+            <p class="stop__body">ขึ้นเนินไปพระวิหารไม้ใหญ่ที่ยื่นระเบียงออกมาจากภูเขา — เข้าก่อน 09:00 คือจังหวะที่คนน้อยที่สุดของวัน วัดเปิดตั้งแต่ 06:00</p>
+            <ul class="facts">
+              <li>¥500 / เด็ก ¥200</li>
+              <li>เปิด 06:00</li>
+              <li>หลัง 09:00 คนแน่น</li>
+            </ul>
+            <details>
+              <summary>จุดที่ควรไปในวัด <svg aria-hidden="true"><use href="#i-chevron"/></svg></summary>
+              <div class="detail-box">
+                <ul>
+                  <li>ระเบียงใหญ่ (Butai) — มุมเห็นเมืองเกียวโตทั้งหุบเขา</li>
+                  <li>น้ำตก Otowa — เลือกดื่ม 1 ใน 3 สาย เชื่อกันว่าช่วยเรื่องสุขภาพ/การเรียน/ความรัก</li>
+                  <li>ทางขึ้นชันและพื้นหินลื่นตอนเช้า — จับมือเด็กไว้</li>
+                </ul>
+              </div>
+            </details>
+          </div>
+        </li>
+
+        <li class="stop" data-start="2026-11-29T09:30:00+09:00" data-end="2026-11-29T10:45:00+09:00">
+          <div class="stop__time">09:30<span class="t-sub">07:30 ICT</span></div>
+          <div class="stop__rail" aria-hidden="true"><span class="stop__dot"></span></div>
+          <div>
+            <div class="stop__head"><h3>เดินลงเขา → Gion</h3><span class="stop__place">Higashiyama</span></div>
+            <p class="stop__body">จากวัดน้ำใสเดินลงตามถนนหิน Sannenzaka ต่อ Ninenzaka ผ่าน Yasaka Pagoda ออกถนน Higashioji แล้วเลี้ยวขวาไปศาลเจ้ายาซากะ — ทางเดียวลงเขาตลอด ไม่ต้องขึ้นรถ</p>
+            <ul class="facts">
+              <li>~1.2 กม.</li>
+              <li>15–20 นาที (เด็ก ~25–30)</li>
+            </ul>
+            <div class="transit" style="--c:#3d5b45">
+              <span class="transit__badge">WALK</span>
+              <span class="transit__main"><b>เดิน</b> · วัดน้ำใส → Yasaka → Gion</span>
+              <span class="transit__meta">ลงเขาตลอด · รถเข็นไม่แนะนำบนถนนหิน · ห้องน้ำอยู่ริมศาลเจ้า</span>
+            </div>
+            <a class="maplink" href="https://www.google.com/maps/dir/?api=1&amp;origin=Kiyomizu-dera&amp;destination=Yasaka%20Shrine&amp;travelmode=walking" target="_blank" rel="noopener noreferrer">
+              <svg aria-hidden="true"><use href="#i-pin"/></svg>
+              เส้นทางเดินไป Gion ใน Maps
+              <svg class="ext" aria-hidden="true"><use href="#i-ext"/></svg>
+              <span class="sr-only">(เปิดในแท็บใหม่)</span>
+            </a>
+            <details>
+              <summary>พักตรงไหนดี <svg aria-hidden="true"><use href="#i-chevron"/></svg></summary>
+              <div class="detail-box">
+                <ul>
+                  <li>ถนนหินสูง–ต่ำไม่เท่ากัน ระวังลื่นตอนเช้าและระวังรถเข็น</li>
+                  <li>ร้านส่วนใหญ่เปิด 10:00 — ถ้าถึงเร็วจะได้ถนนโล่งสวยกว่า</li>
+                  <li>จุดถ่ายรูปยอดนิยม: Yasaka Pagoda กลางซอย</li>
+                  <li>ถ้าเด็กไม่ไหว: เดินลงถึงป้าย Kiyomizu-michi (~5 นาที) ขึ้นบัส 206 ไป Gion แค่ 1 ป้าย</li>
+                </ul>
+              </div>
+            </details>
+          </div>
+        </li>
+
+        <li class="stop" data-start="2026-11-29T10:45:00+09:00" data-end="2026-11-29T12:00:00+09:00">
+          <div class="stop__time">10:45<span class="t-sub">08:45 ICT</span></div>
+          <div class="stop__rail" aria-hidden="true"><span class="stop__dot"></span></div>
+          <div>
+            <div class="stop__head"><h3>Gion + ศาลเจ้ายาซากะ</h3><span class="stop__place">Gion</span></div>
+            <p class="stop__body">ศาลเจ้า Yasaka อยู่หัวถนน Shijo เข้าฟรี แล้วเดินต่อถนน Hanamikoji ที่บ้านไม้เก่าของเกย์ชายังใช้งานจริง</p>
+            <ul class="facts">
+              <li>เข้าศาลเจ้าฟรี</li>
+              <li>Hanamikoji ห้ามถ่ายรูปบางซอย</li>
+            </ul>
+            <details>
+              <summary>มารยาทในย่านเกย์ชา <svg aria-hidden="true"><use href="#i-chevron"/></svg></summary>
+              <div class="detail-box">
+                <ul>
+                  <li>ดูป้ายห้ามถ่ายรูปก่อนกดชัตเตอร์ — บางซอยเป็นที่พักส่วนตัว</li>
+                  <li>ไม่แตะชุดหรือขอถ่ายรูปกับไมโกะโดยไม่ได้รับอนุญาต</li>
+                  <li>ห้องน้ำอยู่ริมศาลเจ้า ใช้ก่อนเดินต่อ</li>
+                </ul>
+              </div>
+            </details>
+          </div>
+        </li>
+
+        <li class="stop" data-start="2026-11-29T12:00:00+09:00" data-end="2026-11-29T13:15:00+09:00">
+          <div class="stop__time">12:00<span class="t-sub">10:00 ICT</span></div>
+          <div class="stop__rail" aria-hidden="true"><span class="stop__dot"></span></div>
+          <div>
+            <div class="stop__head"><h3>มื้อกลางวันย่าน Gion / Shijo</h3><span class="stop__place">Gion</span></div>
+            <p class="stop__body">สามร้านที่เลือกได้จริงและเปิดวันอาทิตย์ — อุด้งเส้นสดพร้อมชุดเด็ก, ข้าวหน้าไก่ไข่แบบเกียวโต หรือซูชิซาบะหน้าโรงเจ ถ้าอยากเดินชิมมากกว่า นั่งกิน ตลาด Nishiki อยู่ห่าง ~10 นาที</p>
+            <ul class="facts">
+              <li>¥1,100–3,500 / คน</li>
+              <li>คิว 20–30 นาที</li>
+              <li>เปิดวันอาทิตย์ทั้ง 3 ร้าน</li>
+            </ul>
+            <details>
+              <summary>สามร้านที่แนะนำ + เวลาเปิด-ปิด <svg aria-hidden="true"><use href="#i-chevron"/></svg></summary>
+              <div class="detail-box">
+                <ul>
+                  <li><b>Omen Shijo</b> — อุด้งเส้นสด มีชุดเด็ก · ~¥1,200–1,800/คน · 11:00–16:00 (L.O. 15:00) · หยุดพฤหัสบางสัปดาห์ · เดิน ~10 นาทีไปทาง Kawaramachi · <a href="https://www.google.com/maps/search/?api=1&amp;query=Omen%20Shijo%20Kyoto" target="_blank" rel="noopener noreferrer">แผนที่</a></li>
+                  <li><b>Hisago</b> — ข้าวหน้าไก่ไข่ (oyakodon) เจ้าดังย่าน Shimogawara · ~¥1,100–1,400 · 11:30–16:00 (L.O. 15:40) · หยุดจันทร์และศุกร์ · เดิน ~8 นาทีจากศาลเจ้ายาซากะ · <a href="https://www.google.com/maps/search/?api=1&amp;query=Hisago%20Gion%20Kyoto" target="_blank" rel="noopener noreferrer">แผนที่</a></li>
+                  <li><b>Izuju</b> — ซูชิซาบะแบบเกียวโต หน้าเชิงบันไดศาลเจ้ายาซากะ · ~¥2,000–3,500 · 10:30–17:00 · หยุดพุธและพฤหัส · รสชาติผู้ใหญ่ เด็กอาจไม่ชอบ · <a href="https://www.google.com/maps/search/?api=1&amp;query=Izuju%20Gion%20Kyoto" target="_blank" rel="noopener noreferrer">แผนที่</a></li>
+                  <li>วันอาทิตย์ช่วงใบไม้แดงคิว 20–30 นาทีเป็นปกติ — มาก่อน 11:45 หรือเลี่ยงไปกิน 13:00</li>
+                  <li>Omen กับ Hisago มีโต๊ะนั่ง เหมาะกับเด็ก · Izuju เป็นร้านเล็ก โต๊ะน้อย</li>
+                </ul>
+              </div>
+            </details>
+          </div>
+        </li>
+
+        <li class="stop" data-start="2026-11-29T13:15:00+09:00" data-end="2026-11-29T14:00:00+09:00">
+          <div class="stop__time">13:15<span class="t-sub">11:15 ICT</span></div>
+          <div class="stop__rail" aria-hidden="true"><span class="stop__dot"></span></div>
+          <div>
+            <div class="stop__head"><h3>แท็กซี่ไปนันเซ็นจิ</h3><span class="stop__place">Taxi</span></div>
+            <p class="stop__body">จาก Gion ขึ้นแท็กซี่ไปนันเซ็นจิ ~10 นาที (~¥1,400–1,800) — อยู่ย่านเดียวกัน ไม่ต้องข้ามเมือง ถ้าอยากประหยัดใช้บัสเทศบาล ~15–20 นาที (¥230)</p>
+            <ul class="facts">
+              <li>แท็กซี่ ~10 น.</li>
+              <li>บัส 15–20 น.</li>
+              <li>~2 กม.</li>
+            </ul>
+            <div class="transit" style="--c:#1b2233">
+              <span class="transit__badge">TAXI</span>
+              <span class="transit__main"><b>แท็กซี่</b> · Gion → Nanzen-ji</span>
+              <span class="transit__meta">ขึ้นที่ถนน Higashioji · บอกคนขับ “Nanzen-ji” · ~¥1,500</span>
+            </div>
+            <a class="maplink" href="https://www.google.com/maps/dir/?api=1&amp;origin=Gion%2C%20Kyoto&amp;destination=Nanzen-ji&amp;travelmode=driving" target="_blank" rel="noopener noreferrer">
+              <svg aria-hidden="true"><use href="#i-pin"/></svg>
+              เส้นทางไปนันเซ็นจิใน Maps
+              <svg class="ext" aria-hidden="true"><use href="#i-ext"/></svg>
+              <span class="sr-only">(เปิดในแท็บใหม่)</span>
+            </a>
+            <details>
+              <summary>แท็กซี่หรือบัสดี <svg aria-hidden="true"><use href="#i-chevron"/></svg></summary>
+              <div class="detail-box">
+                <ul>
+                  <li>แท็กซี่นั่งได้ 3 คน + รถเข็นพับ และไม่ต้องต่อรถ</li>
+                  <li>บัสเทศบาลถูกกว่า (¥230) แต่ต้องเดินไปป้ายที่ถนนใหญ่ก่อน</li>
+                  <li>ทางเข้าเขตวัดเป็นพื้นเรียบ เดินง่ายกว่าเส้นทางวัดบนเขา</li>
+                </ul>
+              </div>
+            </details>
+          </div>
+        </li>
+
+        <li class="stop" data-start="2026-11-29T14:00:00+09:00" data-end="2026-11-29T15:30:00+09:00">
+          <div class="stop__time">14:00<span class="t-sub">12:00 ICT</span></div>
+          <div class="stop__rail" aria-hidden="true"><span class="stop__dot"></span></div>
+          <div>
+            <div class="stop__head"><h3>วัดนันเซ็นจิ</h3><span class="stop__place">Nanzen-ji</span></div>
+            <p class="stop__body">เขตวัดเซนขนาดใหญ่ที่เต็มไปด้วยต้นเมเปิล — เขตวัดเดินฟรี ทางระบายน้ำโบราณ Suirokaku คือจุดถ่ายรูปที่ดังที่สุด เปิด 08:40–17:00 (เข้าถึง 16:40)</p>
+            <ul class="facts">
+              <li>เขตวัดฟรี</li>
+              <li>Sanmon ¥600</li>
+              <li>Hojo ¥600</li>
+            </ul>
+            <details>
+              <summary>จุดที่ควรไปในเขตวัด <svg aria-hidden="true"><use href="#i-chevron"/></svg></summary>
+              <div class="detail-box">
+                <ul>
+                  <li><b>Suirokaku</b> — สะพานส่งน้ำอิฐโบราณ เดินผ่านฟรี ถ่ายรูปสวยที่สุดของที่นี่</li>
+                  <li><b>Sanmon</b> — ประตูใหญ่ขึ้นไปชมวิวได้ (¥600) บันไดชันและแคบ</li>
+                  <li><b>Hojo</b> — สวนหินสไตล์เซน (¥600) ต้องถอดรองเท้า</li>
+                  <li>Keage Incline (ทางรถไฟเก่า) อยู่เดิน ~10 นาที ฟรี — เด็กชอบเดินบนราง</li>
+                </ul>
+              </div>
+            </details>
+          </div>
+        </li>
+
+        <li class="stop" data-start="2026-11-29T15:30:00+09:00" data-end="2026-11-29T17:30:00+09:00">
+          <div class="stop__time">15:45<span class="t-sub">13:45 ICT</span></div>
+          <div class="stop__rail" aria-hidden="true"><span class="stop__dot"></span></div>
+          <div>
+            <div class="stop__head"><h3>กลับสถานี + พักที่โรงแรม</h3><span class="stop__place">Kyoto Stn</span></div>
+            <p class="stop__body">แท็กซี่กลับ Kyoto Station ~20–25 นาที (~¥2,500) หรือบัสเทศบาล ~25–30 นาที (¥230) — ถ้าเลี่ยงรถติดใช้รถไฟใต้ดิน ~35 นาที (รายละเอียดในแถบสี) ถึงโรงแรม ~16:20</p>
+            <ul class="facts">
+              <li>แท็กซี่ 20–25 น.</li>
+              <li>บัส 25–30 น.</li>
+              <li>รถไฟ ~35 น.</li>
+              <li>ถึงโรงแรม ~16:20</li>
+            </ul>
+            <div class="transit" style="--c:#1b2233">
+              <span class="transit__badge">BUS</span>
+              <span class="transit__main"><b>บัสเทศบาล</b> · ไป Kyoto Station</span>
+              <span class="transit__meta">ป้าย Nanzenji หน้าเขตวัด · ~25–30 นาที · หรือเรียกแท็กซี่หน้า Keage</span>
+            </div>
+            <div class="transit" style="--c:#e60012">
+              <span class="transit__badge">T</span>
+              <span class="transit__badge" style="--c:#009944">K</span>
+              <span class="transit__main"><b>รถไฟใต้ดิน</b> · Keage → Kyoto Station</span>
+              <span class="transit__meta">ขึ้น Keage (T09) สาย Tozai สีส้มแดง → เปลี่ยนที่ Karasuma Oike → ลง Kyoto (K11) สาย Karasuma สีเขียว · ~35 นาที รวมเดิน</span>
+            </div>
+            <a class="maplink" href="https://www.google.com/maps/dir/?api=1&amp;origin=Nanzen-ji&amp;destination=Kyoto%20Station&amp;travelmode=transit" target="_blank" rel="noopener noreferrer">
+              <svg aria-hidden="true"><use href="#i-pin"/></svg>
+              เส้นทางกลับ Kyoto Station ใน Maps
+              <svg class="ext" aria-hidden="true"><use href="#i-ext"/></svg>
+              <span class="sr-only">(เปิดในแท็บใหม่)</span>
+            </a>
+            <details>
+              <summary>ขากลับให้ไม่พลาด <svg aria-hidden="true"><use href="#i-chevron"/></svg></summary>
+              <div class="detail-box">
+                <ul>
+                  <li>ป้ายบัสอยู่หน้าเขตวัด ฝั่งที่มุ่งเข้าเมือง</li>
+                  <li>ถ้าเด็กหลับ แท็กซี่คุ้มกว่า — ถึงโรงแรมใน ~20 นาที</li>
+                  <li>รถไฟใต้ดิน: เดินไป Keage (T09) ~10 นาที → สาย Tozai (สีส้มแดง) → เปลี่ยนที่ Karasuma Oike → สาย Karasuma (สีเขียว) → ลง Kyoto (K11) แล้วเดินในสถานีไป Hachijo</li>
+                  <li>ถึงโรงแรมแล้วพักจริง ๆ: อาบน้ำเด็ก ให้ตื่นมาใหม่ตอนมื้อเย็น</li>
+                </ul>
+              </div>
+            </details>
+          </div>
+        </li>
+
+        <li class="stop" data-start="2026-11-29T18:00:00+09:00" data-end="2026-11-29T20:00:00+09:00">
+          <div class="stop__time">18:00<span class="t-sub">16:00 ICT</span></div>
+          <div class="stop__rail" aria-hidden="true"><span class="stop__dot"></span></div>
+          <div>
+            <div class="stop__head"><h3>มื้อเย็นแถวสถานี</h3><span class="stop__place">Kyoto Stn</span></div>
+            <p class="stop__body">สองร้านที่ชัวร์สุดสำหรับครอบครัว: <b>Ramen Koji</b> ชั้น 10 (ราเมน 10 ร้านในที่เดียว) กับ <b>Katsukura</b> ทงคัตสึที่ Porta ชั้น 11 — หรือซื้อเบนโตะกลับไปกินที่ห้องถ้าเด็กหมดแรง</p>
+            <ul class="facts">
+              <li>¥900–2,200 / คน</li>
+              <li>เดิน ~5 นาที</li>
+              <li>เปิดถึง 22:00</li>
+            </ul>
+            <details>
+              <summary>สามทางเลือก + เวลาเปิด-ปิด <svg aria-hidden="true"><use href="#i-chevron"/></svg></summary>
+              <div class="detail-box">
+                <ul>
+                  <li><b>Kyoto Ramen Koji</b> — ชั้น 10 อาคารสถานี (ลิฟต์ฝั่งใต้ Isetan) ราเมน 10 ร้านจากทั่วญี่ปุ่น · ~¥900–1,400/คน · 11:00–22:00 (L.O. 21:30) · บางร้านเป็นเคาน์เตอร์ เลือกร้านที่มีโต๊ะ · <a href="https://www.google.com/maps/search/?api=1&amp;query=Kyoto%20Ramen%20Koji" target="_blank" rel="noopener noreferrer">แผนที่</a></li>
+                  <li><b>Katsukura</b> — ทงคัตสึที่ Porta ชั้น 11 · ~¥1,500–2,200/คน · 11:00–22:00 (L.O. 21:30) · โต๊ะ 48 ที่ นั่งกับเด็กสบาย · <a href="https://www.google.com/maps/search/?api=1&amp;query=Katsukura%20Kyoto%20Porta" target="_blank" rel="noopener noreferrer">แผนที่</a></li>
+                  <li><b>Room dining</b> — ซื้อเบนโตะ/ข้าวปั้นที่ Isetan ชั้น B1 (ปิด ~20:00) หรือร้านสะดวกซื้อ กลับไปกินที่ห้อง (โรงแรมเดิน 2 นาที) · <a href="https://www.google.com/maps/search/?api=1&amp;query=JR%20Kyoto%20Isetan" target="_blank" rel="noopener noreferrer">แผนที่</a></li>
+                  <li>ราเมน Koji ใช้ตู้ขายตั๋วหน้าร้าน: หยอดเงิน → กดเมนู → ยื่นตั๋วให้พนักงาน</li>
+                  <li>คิวเกิน 20 นาที → เปลี่ยนร้านได้เลย ไม่ต้องรอ</li>
+                </ul>
+              </div>
+            </details>
+          </div>
+        </li>
+
+      </ol>
+
+      <aside class="rail" aria-label="เช็กลิสต์และงบของวัน">
+
+        <section class="card" aria-labelledby="check-title">
+          <div class="card__head">
+            <h2 id="check-title">ต้องมีติดตัว</h2>
+            <span class="card__count" id="checkCount">0 / 10</span>
+          </div>
+          <div class="progress" role="presentation"><div class="progress__bar" id="progressBar"></div></div>
+          <div class="checks" id="checks">
+            <label class="check"><input type="checkbox" data-key="ic"><span>Suica/ICOCA ใน Apple Wallet พร้อมใช้</span></label>
+            <label class="check"><input type="checkbox" data-key="coins"><span>เหรียญ ¥230 สำรอง (ถ้าไม่ใช้ IC)</span></label>
+            <label class="check"><input type="checkbox" data-key="stroller"><span>รถเข็นพับ (วัดน้ำใสขึ้นเนิน)</span></label>
+            <label class="check"><input type="checkbox" data-key="water"><span>น้ำ + ขนมเด็ก</span></label>
+            <label class="check"><input type="checkbox" data-key="umbrella"><span>ร่มพับ / เสื้อกันฝน</span></label>
+            <label class="check"><input type="checkbox" data-key="gloves"><span>ถุงมือ + หมวกไหมพรม</span></label>
+            <label class="check"><input type="checkbox" data-key="socks"><span>ถุงเท้าสำรอง (ถอดรองเท้าหลายที่)</span></label>
+            <label class="check"><input type="checkbox" data-key="cash"><span>เงินสดค่าเข้าวัด</span></label>
+            <label class="check"><input type="checkbox" data-key="power"><span>พาวเวอร์แบงก์</span></label>
+            <label class="check"><input type="checkbox" data-key="bag"><span>ถุงผ้าใส่รองเท้า/ขยะ</span></label>
+          </div>
+          <div class="card__foot">
+            <span class="mono-label">บันทึกในเครื่องนี้</span>
+            <button class="link-btn" type="button" id="resetChecks">ล้างติ๊กทั้งหมด</button>
+          </div>
+        </section>
+
+        <section class="card card--plain" aria-labelledby="cost-title">
+          <h3 id="cost-title" class="mono-label" style="color:var(--ink-2)">ค่าใช้จ่ายวันที่สอง (ประมาณ)</h3>
+          <div class="costs">
+            <div class="cost"><span>บัส 206 (ผู้ใหญ่ × 2)</span><b>¥460</b></div>
+            <div class="cost"><span>วัดน้ำใส</span><b>¥1,200</b></div>
+            <div class="cost"><span>มื้อกลางวัน</span><b>¥2,400–3,600</b></div>
+            <div class="cost"><span>แท็กซี่ Gion → นันเซ็นจิ</span><b>¥1,400–1,800</b></div>
+            <div class="cost"><span>นันเซ็นจิ (Sanmon + Hojo × 2)</span><b>¥2,400</b></div>
+            <div class="cost"><span>กลับสถานี (บัส/แท็กซี่/รถไฟ)</span><b>¥460–2,500</b></div>
+            <div class="cost"><span>มื้อเย็น</span><b>¥2,500–4,500</b></div>
+          </div>
+          <div class="cost-total">
+            <span>รวมโดยประมาณ</span>
+            <b>¥10,800–16,500</b>
+          </div>
+          <p style="margin-top:8px;font-size:.72rem;color:var(--muted);line-height:1.6">≈ ฿2,380–3,630 ที่เรต 0.22 · ไม่รวมของฝาก</p>
+        </section>
+
+      </aside>
+    </div>
+  </section>
+
+  <!-- ============ SIGN GUIDE ============ -->
+  <section class="section wrap" aria-labelledby="sign-title">
+    <div class="section__head">
+      <div>
+        <p class="eyebrow">อ่านป้ายให้ออก</p>
+        <h2 id="sign-title">สี · ชานชาลา · ทางออก</h2>
+      </div>
+      <p class="section__note">ใช้ได้ทุกวันตลอดทริป</p>
+    </div>
+    <div class="playbook">
+      <article class="play">
+        <div class="play__ico"><svg aria-hidden="true"><use href="#i-train"/></svg></div>
+        <h3>สี + ตัวอักษร = สาย</h3>
+        <p>JR West ใส่สีและตัวอักษรประจำสายบนป้าย: <b>A</b> น้ำเงิน (Kyoto Line) · <b>D</b> น้ำตาล (Nara Line) · <b>E</b> ม่วงน้ำเงิน (Sagano Line) · <b>O</b> แดง (Osaka Loop) · <b>S</b> น้ำเงิน (Kansai Airport Line)</p>
+        <p>ดูสีให้ตรงสายก่อนขึ้นขบวน</p>
+      </article>
+      <article class="play">
+        <div class="play__ico"><svg aria-hidden="true"><use href="#i-doc"/></svg></div>
+        <h3>ชานชาลา + ป้ายบัส</h3>
+        <p>Kyoto: Nara <b>8–10</b> · Haruka <b>30</b> · Sagano <b>31–33</b> · KIX: JR <b>3–4</b> (Nankai 1–2) · บัสเมือง: ป้าย <b>D2</b> หน้า Kyoto Station</p>
+        <p>บัสขึ้นประตูหน้า จ่ายตอนขึ้น — เตรียมเหรียญหรือแตะ IC</p>
+      </article>
+      <article class="play">
+        <div class="play__ico"><svg aria-hidden="true"><use href="#i-pin"/></svg></div>
+        <h3>รหัสสถานี = นับให้ถูก</h3>
+        <p>ทุกสถานีมีรหัสตัวอักษร+เลขสองหลัก เช่น <b>JR-D01</b> คือ Kyoto Station ของสาย Nara</p>
+        <p>ใช้รหัสนับสถานีแทนการฟังชื่อ — กันลงผิดป้าย</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ============ PLAYBOOK ============ -->
+  <section class="section wrap" aria-labelledby="planb-title">
+    <div class="section__head">
+      <div>
+        <p class="eyebrow">แผนสำรอง</p>
+        <h2 id="planb-title">ถ้าไม่เป็นไปตามแผน</h2>
+      </div>
+      <p class="section__note">สามสถานการณ์ที่เจอบ่อยในวันเที่ยวเกียวโต</p>
+    </div>
+
+    <div class="playbook">
+      <article class="play">
+        <div class="play__ico"><svg aria-hidden="true"><use href="#i-clock"/></svg></div>
+        <h3>ฝนตกตั้งแต่เช้า</h3>
+        <p>สลับเป็นเส้นทางในร่มทั้งหมด: <b>Sanjusangendo</b> (ใกล้สถานี) → <b>Kyoto Aquarium</b> หรือ <b>Kyoto Railway Museum</b> ที่เดินทางง่ายจาก Kyoto Station</p>
+        <p>ตัดนันเซ็นจิกับ Keage Incline ออกได้เลย — ทั้งคู่เป็นทางเดินกลางแจ้ง</p>
+        <p>ถ้าฝนปรอย วัดน้ำใสยังไปได้ แต่พกร่มและรองเท้ากันลื่น</p>
+      </article>
+
+      <article class="play">
+        <div class="play__ico"><svg aria-hidden="true"><use href="#i-warn"/></svg></div>
+        <h3>วัดน้ำใสคนแน่นมาก</h3>
+        <p>วันอาทิตย์ช่วงใบไม้แดงคือพีคสุด — ถ้าถึงหลัง 09:00 ให้เลื่อนแผน: เดิน Sannenzaka ก่อน แล้วค่อยขึ้นวัดตอนคนบางลงช่วงเที่ยง</p>
+        <p><b>อีกทาง:</b> สลับไป <b>Fushimi Inari</b> เช้ามืด — JR Nara Line (สาย <b>D</b> สีน้ำตาล) ชานชาลา <b>8–10</b> ที่ Kyoto Station ลง Inari 2 สถานี (~5 นาที) แล้วค่อยไปนันเซ็นจิตอนบ่าย</p>
+        <p>ทางเลือกนี้ต้องแลกกับ Gion — เลือกอย่างใดอย่างหนึ่ง</p>
+      </article>
+
+      <article class="play">
+        <div class="play__ico"><svg aria-hidden="true"><use href="#i-bag"/></svg></div>
+        <h3>เด็กหมดแรงตอนบ่าย</h3>
+        <p>ตัดช่วง Keage Incline ออก เหลือแค่เดินเขตวัดนันเซ็นจิ แล้วกลับโรงแรมด้วยแท็กซี่ ~20 นาที (~¥2,500)</p>
+        <p>ถ้ายังมีแรงตอนเย็น เพิ่ม <b>Kyoto Railway Museum</b> (ใกล้สถานี เด็ก 5 ขวบชอบ) แทนมื้อเย็นยาว ๆ</p>
+        <p>ค่าเสียโอกาสน้อย เพราะนันเซ็นจิอยู่ใกล้ Gion — แวะแค่เขตวัดหลักก็คุ้มแล้ว</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ============ TOMORROW ============ -->
+  <section class="wrap" aria-labelledby="tomorrow-title">
+    <div class="tomorrow">
+      <div>
+        <p class="eyebrow">ถัดไป</p>
+        <h2 id="tomorrow-title">Day 3 · จันทร์ 30 พ.ย. — Arashiyama แล้วย้ายเข้า Universal City</h2>
+        <p>เช็คเอาต์แต่เช้า ฝากกระเป๋าไว้ที่โรงแรม นั่ง JR สาย Sagano 17 นาทีไป Arashiyama ลุ้นตั๋ว Torokko หน้างาน แล้วล่องเรือ Hozugawa ท่ามกลางหุบเขาใบแดง บ่ายเดินป่าไผ่ก่อนกลับมาเก็บกระเป๋าเข้ายูนิเวอร์แซล</p>
+        <ul class="tomorrow__list">
+          <li>07:15 เช็คเอาต์</li>
+          <li>07:50 คิว Torokko</li>
+          <li>11:30 เรือ Hozugawa</li>
+          <li>15:45 ป่าไผ่</li>
+          <li>18:25 Universal Port</li>
+        </ul>
+        <p class="tomorrow__note">ทุกเวลาเป็นเวลาเกียวโต (JST) — เร็วกว่าไทย 2 ชม.</p>
+        <a class="maplink" href="day-3-arashiyama-universal-city.html">
+          <svg aria-hidden="true"><use href="#i-doc"/></svg>
+          เปิดแผน Day 3
+        </a>
+      </div>
+      <div class="tomorrow__num" aria-hidden="true">D3</div>
+    </div>
+  </section>
+
+  <nav class="pager wrap" aria-label="ไปวันอื่นในทริป">
+    <a class="pager__btn" href="day-1-bangkok-kyoto.html">← Day 1</a>
+    <span class="pager__label">Day 2 / 9</span>
+    <a class="pager__btn" href="day-3-arashiyama-universal-city.html">Day 3 →</a>
+  </nav>
+
+</main>
+
+<footer class="foot wrap">
+  <div class="foot__grid">
+    <div>
+      <p><strong>ที่มาของตัวเลข:</strong> ค่าโดยสารบัส ¥230 ค่าเข้าวัด และเวลาเปิด-ปิด อ้างจากแผนทริปที่อัปเดต 14 พ.ย. 2026 (itinerary.md · transport.md) — ตัวเลขที่กำกับว่า “ประมาณ” คือการกะจากแผนเดิม ไม่ใช่ราคาที่จองแล้ว</p>
+      <p style="margin-top:8px">วันอาทิตย์ช่วงใบไม้เปลี่ยนสีคนเยอะเป็นพิเศษ — เวลาเปิด-ปิดวัดควรเช็กอีกครั้งก่อนออกจากโรงแรม</p>
+    </div>
+    <div>
+      <p><strong>หน้านี้:</strong> Day 2 ของ 9 · <a href="day-1-bangkok-kyoto.html">ย้อนไป Day 1</a> · <a href="index.html">แผนรวมแบบ interactive</a></p>
+      <p style="margin-top:8px">Day 6–9 จะทำเป็นหน้าแยกในชุดเดียวกัน</p>
+    </div>
+  </div>
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ---------- countdown ---------- */
+  var DEP = new Date('2026-11-29T07:30:00+09:00');
+  var countdownEl = document.getElementById('countdown');
+
+  function pad(n) { return n < 10 ? '0' + n : String(n); }
+
+  function updateCountdown() {
+    var now = new Date();
+    var diff = DEP - now;
+    if (diff <= 0) {
+      var endOfDay = new Date('2026-11-29T23:59:00+09:00');
+      countdownEl.textContent = now < endOfDay ? 'วันนี้' : 'ผ่านไปแล้ว';
+      return;
+    }
+    var days = Math.floor(diff / 86400000);
+    var hours = Math.floor((diff % 86400000) / 3600000);
+    if (days >= 1) {
+      countdownEl.textContent = days + ' วัน ' + hours + ' ชม.';
+    } else {
+      var mins = Math.floor((diff % 3600000) / 60000);
+      countdownEl.textContent = hours + ' ชม. ' + pad(mins) + ' น.';
+    }
+  }
+  updateCountdown();
+  setInterval(updateCountdown, 60000);
+
+  /* ---------- live step highlighting ---------- */
+  var stops = Array.prototype.slice.call(document.querySelectorAll('.stop'));
+  var liveBadge = document.getElementById('liveBadge');
+
+  function markNow() {
+    var now = Date.now();
+    var active = null;
+    stops.forEach(function (el) {
+      var start = Date.parse(el.dataset.start);
+      var end = Date.parse(el.dataset.end);
+      el.classList.remove('is-now', 'is-past');
+      if (now >= start && now <= end) {
+        el.classList.add('is-now');
+        active = el;
+      } else if (now > end) {
+        el.classList.add('is-past');
+      }
+    });
+    if (active) {
+      liveBadge.classList.add('is-on');
+      if (!active.dataset.seen) {
+        active.dataset.seen = '1';
+        active.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    } else {
+      liveBadge.classList.remove('is-on');
+    }
+  }
+  markNow();
+  setInterval(markNow, 30000);
+
+  /* ---------- checklist ---------- */
+  var STORE = 'osaka2026.day2.check';
+  var boxes = Array.prototype.slice.call(document.querySelectorAll('#checks input'));
+  var countEl = document.getElementById('checkCount');
+  var barEl = document.getElementById('progressBar');
+
+  function readStore() {
+    try { return JSON.parse(localStorage.getItem(STORE) || '{}') || {}; }
+    catch (e) { return {}; }
+  }
+  function writeStore(obj) {
+    try { localStorage.setItem(STORE, JSON.stringify(obj)); } catch (e) {}
+  }
+  function paint() {
+    var done = boxes.filter(function (b) { return b.checked; }).length;
+    countEl.textContent = done + ' / ' + boxes.length;
+    barEl.style.width = Math.round((done / boxes.length) * 100) + '%';
+  }
+
+  var saved = readStore();
+  boxes.forEach(function (box) {
+    if (saved[box.dataset.key]) box.checked = true;
+    box.addEventListener('change', function () {
+      var store = readStore();
+      if (box.checked) { store[box.dataset.key] = 1; } else { delete store[box.dataset.key]; }
+      writeStore(store);
+      paint();
+    });
+  });
+  paint();
+
+  /* ---------- toast ---------- */
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  function showToast(msg) {
+    toast.textContent = msg;
+    toast.classList.add('is-on');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { toast.classList.remove('is-on'); }, 2200);
+  }
+
+  document.getElementById('resetChecks').addEventListener('click', function () {
+    boxes.forEach(function (b) { b.checked = false; });
+    writeStore({});
+    paint();
+    showToast('ล้างติ๊กทั้งหมดแล้ว');
+  });
+
+  /* ---------- print ---------- */
+  document.getElementById('printBtn').addEventListener('click', function () { window.print(); });
+
+  var openBeforePrint = [];
+  window.addEventListener('beforeprint', function () {
+    openBeforePrint = [];
+    Array.prototype.forEach.call(document.querySelectorAll('details'), function (d) {
+      shortState(d);
+    });
+    function shortState(el) {
+      if (!el.open) { openBeforePrint.push(el); el.open = true; }
+      Array.prototype.forEach.call(el.querySelectorAll('details'), shortState);
+    }
+  });
+  window.addEventListener('afterprint', function () {
+    openBeforePrint.forEach(function (el) { el.open = false; });
+    openBeforePrint = [];
+  });
+
+  /* ---------- reveal on scroll ---------- */
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var revealTargets = Array.prototype.slice.call(document.querySelectorAll('.stop, .play, .card, .tomorrow > div'));
+  if (!reduce && 'IntersectionObserver' in window) {
+    revealTargets.forEach(function (el) { el.classList.add('reveal'); });
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-in');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+    revealTargets.forEach(function (el) { io.observe(el); });
+  }
+})();
+</script>
+</body>
+</html>
