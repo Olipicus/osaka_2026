@@ -8,6 +8,7 @@
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="manifest" href="manifest.json">
 <meta name="description" content="แผนวันที่เก้าของทริปโอซาก้า 2026: เช็คเอาต์ OMO Kansai Airport ขึ้นรถไฟ 1 สถานีถึง KIX เช็คอิน Thai AirAsia X XJ615 กลับถึงดอนเมือง 15:05 (6 ธ.ค. 2026)">
 <style>
 /* ---------- tokens ---------- */
@@ -1402,6 +1403,13 @@ a.day:hover{background:var(--surface-2);color:var(--ink)}
   paint(m0);
   if (m0 === 'baht') setMode('baht', true);
 })();
+<script>
+/* ---------- offline (PWA): ลงทะเบียน service worker — เปิดซ้ำได้แม้ไม่มีเน็ต ---------- */
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function () {
+    navigator.serviceWorker.register('sw.js').catch(function () {});
+  });
+}
 </script>
 </body>
 </html>

@@ -3,10 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#f2ece0">
 <title>โอซาก้า เกียวโต 2026 — หน้าหลักทริป 9 วัน 8 คืน</title>
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="manifest" href="manifest.json">
 <meta name="description" content="หน้าหลักสรุปทริปโอซาก้า–เกียวโต 2026 (28 พ.ย. – 6 ธ.ค. 2026): เส้นทาง 9 วัน 4 โรงแรม งบประมาณ และลิงก์ไปแผนรายวันทั้ง 9 วัน">
 <meta name="color-scheme" content="light">
 <style>
@@ -83,6 +85,10 @@ p{margin:0}
 }
 .pill b{font-family:var(--font-mono);font-size:.8rem;color:var(--ink);font-weight:600}
 .pill svg{width:13px;height:13px;stroke:var(--muted);fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.pill--today{background:var(--accent);border-color:var(--accent);color:#fff;text-decoration:none;cursor:pointer}
+.pill--today:hover{background:var(--accent-ink);border-color:var(--accent-ink)}
+.pill--today b{color:#fff}
+.pill--today svg{stroke:#fff}
 
 /* ---------- route strip ---------- */
 .routecard{
@@ -179,6 +185,18 @@ p{margin:0}
 .day__go{display:inline-flex;align-items:center;gap:4px;color:var(--tint)}
 .day__go svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;transition:transform .24s var(--ease)}
 .day:hover .day__go svg{transform:translateX(3px)}
+
+/* ---------- "วันนี้" — การ์ดวันปัจจุบันระหว่างทริป (JS ใส่ให้ตามวันที่เวลาญี่ปุ่น) ---------- */
+.day--today{border-color:var(--tint);box-shadow:0 0 0 1px var(--tint),0 12px 24px -18px rgba(27,34,51,.5)}
+.day--today .day__band{transform:scaleX(1)}
+.day__today{
+  position:absolute;top:14px;right:12px;z-index:2;
+  display:inline-flex;align-items:center;gap:5px;
+  padding:4px 10px;border-radius:999px;
+  background:var(--tint);color:#fff;
+  font-size:.64rem;font-weight:600;letter-spacing:.05em;
+}
+.day__today::before{content:"";width:6px;height:6px;border-radius:50%;background:#fff;animation:pulse 1.6s ease-in-out infinite}
 
 /* stagger the scroll reveal inside the grid */
 .days .day:nth-child(1){transition-delay:0ms}
@@ -482,6 +500,9 @@ tfoot td:last-child{color:var(--accent-ink)}
           แล้วย้ายเข้า Namba ไปนารา ปราสาทโอซาก้า น้ำตกมิโนโอ ปิดท้ายที่ Rinku ก่อนกลับบ้าน
         </p>
         <div class="hero__meta">
+          <a class="pill pill--today" id="todayLink" href="#days" hidden>
+            <svg aria-hidden="true"><use href="#i-pin"/></svg><b id="todayLabel">วันนี้</b><span id="todayTitle"></span>
+          </a>
           <span class="pill"><svg aria-hidden="true"><use href="#i-clock"/></svg><b id="countdown">—</b><span>ก่อนถึงวันออกเดินทาง</span></span>
           <span class="pill"><svg aria-hidden="true"><use href="#i-train"/></svg><b>4 ฐานที่พัก</b><span>เกียวโต → ยูนิเวอร์แซล → นัมบะ → รินคุ</span></span>
           <span class="pill"><svg aria-hidden="true"><use href="#i-plane"/></svg><b>XJ614 / XJ615</b><span>Thai AirAsia X</span></span>
@@ -1282,6 +1303,61 @@ tfoot td:last-child{color:var(--accent-ink)}
   paint(m0);
   if (m0 === 'baht') setMode('baht', true);
 })();
+</script>
+<script>
+/* ---------- "วันนี้": ไฮไลต์การ์ดวันปัจจุบันระหว่างทริป (นับตามเวลาญี่ปุ่น UTC+9) ---------- */
+(function () {
+  'use strict';
+  var TRIP = [
+    ['2026-11-28', 'day-1-bangkok-kyoto.html'],
+    ['2026-11-29', 'day-2-kiyomizu-gion-nanzenji.html'],
+    ['2026-11-30', 'day-3-arashiyama-universal-city.html'],
+    ['2026-12-01', 'day-4-universal-studios.html'],
+    ['2026-12-02', 'day-5-kaiyukan-namba.html'],
+    ['2026-12-03', 'day-6-kuromon-nara.html'],
+    ['2026-12-04', 'day-7-osaka-castle-midosuji.html'],
+    ['2026-12-05', 'day-8-minoo-rinku.html'],
+    ['2026-12-06', 'day-9-return-bangkok.html']
+  ];
+
+  /* วันที่ปัจจุบันเป็นเวลาญี่ปุ่น — ทริปเดินตาม JST แม้เครื่องตั้งเวลาไทยอยู่ */
+  var now = new Date();
+  var jst = new Date(now.getTime() + 9 * 3600000);
+  function p2(n) { return n < 10 ? '0' + n : String(n); }
+  var today = jst.getUTCFullYear() + '-' + p2(jst.getUTCMonth() + 1) + '-' + p2(jst.getUTCDate());
+
+  var hit = null;
+  for (var i = 0; i < TRIP.length; i++) {
+    if (TRIP[i][0] === today) { hit = TRIP[i]; break; }
+  }
+  if (!hit) return;
+
+  var card = document.querySelector('.days a.day[href="' + hit[1] + '"]');
+  if (!card) return;
+
+  card.classList.add('day--today');
+  var badge = document.createElement('span');
+  badge.className = 'day__today';
+  badge.textContent = 'วันนี้';
+  card.appendChild(badge);
+
+  var link = document.getElementById('todayLink');
+  if (link) {
+    var num = card.querySelector('.day__num b');
+    var title = card.querySelector('h3');
+    link.href = hit[1];
+    document.getElementById('todayLabel').textContent = 'Day ' + (num ? num.textContent : '?');
+    document.getElementById('todayTitle').textContent = title ? title.textContent : '';
+    link.hidden = false;
+  }
+})();
+
+/* ---------- offline (PWA): ลงทะเบียน service worker — เปิดซ้ำได้แม้ไม่มีเน็ต ---------- */
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function () {
+    navigator.serviceWorker.register('sw.js').catch(function () {});
+  });
+}
 </script>
 </body>
 </html>

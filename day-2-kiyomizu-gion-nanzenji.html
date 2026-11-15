@@ -8,6 +8,7 @@
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="manifest" href="manifest.json">
 <meta name="description" content="แผนวันที่สองของทริปโอซาก้า 2026: บัส 206 ขึ้นวัดน้ำใสก่อนเก้าโมง เดิน Sannenzaka เข้า Gion ปิดท้ายที่วัดนันเซ็นจิ (29 พ.ย. 2026)">
 <style>
 /* ---------- tokens ---------- */
@@ -1436,6 +1437,13 @@ a.day:hover{background:var(--surface-2);color:var(--ink)}
   paint(m0);
   if (m0 === 'baht') setMode('baht', true);
 })();
+<script>
+/* ---------- offline (PWA): ลงทะเบียน service worker — เปิดซ้ำได้แม้ไม่มีเน็ต ---------- */
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function () {
+    navigator.serviceWorker.register('sw.js').catch(function () {});
+  });
+}
 </script>
 </body>
 </html>
