@@ -46,6 +46,13 @@ p{margin:0}
   padding:6px 10px;border-radius:7px;text-decoration:none;font-size:.8rem;color:var(--ink-2);
 }
 .topnav a:hover{background:var(--surface-2);color:var(--ink)}
+.topnav__fx{
+  display:inline-flex;align-items:center;gap:5px;padding:6px 10px;border-radius:7px;
+  border:0;background:none;font-family:inherit;font-size:.8rem;font-weight:600;
+  color:var(--accent-ink);cursor:pointer;
+}
+.topnav__fx:hover{background:var(--surface-2);color:var(--accent-ink)}
+.topnav__fx svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
 .btn-quiet{
   display:inline-flex;align-items:center;gap:6px;min-height:34px;padding:4px 12px;
   border:1px solid var(--rule-strong);border-radius:8px;background:var(--surface);
@@ -53,7 +60,10 @@ p{margin:0}
 }
 .btn-quiet:hover{background:var(--surface-2);color:var(--ink)}
 .btn-quiet svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
-@media (max-width:720px){.topnav{display:none}}
+@media (max-width:720px){
+  .topnav a{display:none}
+}
+@media (max-width:358px){.topnav__fx span{display:none}}
 
 /* ---------- hero ---------- */
 .hero{padding:clamp(34px,5vw,64px) 0 clamp(22px,3vw,34px)}
@@ -297,6 +307,64 @@ tfoot td:last-child{color:var(--accent-ink)}
 .checks__count{font-family:var(--font-mono);font-size:.68rem;color:var(--ink-2)}
 .link-btn{border:0;background:none;padding:0;font:inherit;font-size:.74rem;color:var(--accent-ink);text-decoration:underline;cursor:pointer}
 
+/* ---------- fx converter modal ---------- */
+.fx-modal{
+  position:fixed;inset:0;z-index:60;display:grid;place-items:center;padding:18px;
+  visibility:hidden;opacity:0;
+  transition:opacity .25s var(--ease),visibility 0s linear .25s;
+}
+.fx-modal.is-open{visibility:visible;opacity:1;transition:opacity .25s var(--ease)}
+.fx-backdrop{position:absolute;inset:0;background:rgba(27,34,51,.5);backdrop-filter:blur(3px);cursor:pointer}
+.fx-panel{
+  position:relative;width:min(430px,100%);max-height:calc(100vh - 36px);overflow:auto;
+  background:var(--surface);border:1px solid var(--rule-strong);border-radius:var(--radius);
+  padding:20px 20px 16px;box-shadow:0 24px 60px -24px rgba(27,34,51,.55);
+  transform:translateY(16px) scale(.97);transition:transform .3s var(--ease);
+}
+.fx-modal.is-open .fx-panel{transform:none}
+.fx-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:14px}
+.fx-head h2{font-size:1.15rem;font-weight:600;margin-top:4px}
+.fx-close{flex:none;min-width:34px;justify-content:center}
+.fx-fields{display:grid;gap:9px}
+.fx-field{
+  display:grid;grid-template-columns:auto 1fr;align-items:center;gap:10px;
+  border:1px solid var(--rule);border-radius:10px;background:var(--paper);
+  padding:10px 14px;
+}
+.fx-field:focus-within{border-color:var(--accent)}
+.fx-cur{font-family:var(--font-mono);font-size:.7rem;letter-spacing:.08em;color:var(--muted);white-space:nowrap}
+.fx-field input{
+  width:100%;border:0;background:none;padding:0;text-align:right;appearance:textfield;-moz-appearance:textfield;
+  font-family:var(--font-mono);font-size:1.3rem;font-weight:600;color:var(--ink);
+  font-variant-numeric:tabular-nums;
+}
+.fx-field input:focus{outline:none}
+.fx-field input::placeholder{color:rgba(27,34,51,.25);font-weight:400}
+.fx-field input::-webkit-outer-spin-button,.fx-field input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+.fx-field--baht{background:var(--ink);border-color:var(--ink)}
+.fx-field--baht .fx-cur{color:#98a1b3}
+.fx-field--baht input{color:#efe7d8}
+.fx-field--baht input::placeholder{color:rgba(239,231,216,.3)}
+.fx-rate{display:flex;align-items:center;flex-wrap:wrap;gap:7px;padding:0 4px;font-size:.76rem;color:var(--muted)}
+.fx-rate input{
+  width:72px;border:1px solid var(--rule);border-radius:8px;background:var(--paper);
+  font-family:var(--font-mono);font-size:1rem;color:var(--ink);padding:3px 8px;text-align:right;
+  font-variant-numeric:tabular-nums;appearance:textfield;-moz-appearance:textfield;
+}
+.fx-rate input::-webkit-outer-spin-button,.fx-rate input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+.fx-rate input:focus{outline:none;border-color:var(--accent)}
+.fx-chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:13px}
+.fx-chips button{
+  border:1px dashed var(--rule-strong);border-radius:999px;background:var(--paper);
+  padding:5px 11px;font-family:var(--font-mono);font-size:.72rem;color:var(--ink-2);cursor:pointer;
+}
+.fx-chips button:hover{border-color:var(--accent);color:var(--accent-ink)}
+.fx-hint{
+  margin:13px 0 0;padding-top:11px;border-top:1px dashed var(--rule-strong);
+  font-size:.72rem;color:var(--muted);line-height:1.7;
+}
+.fx-hint b{font-family:var(--font-mono);font-weight:600;color:var(--ink-2)}
+
 /* ---------- footer ---------- */
 .foot{margin-top:clamp(34px,5vw,60px);border-top:1px solid var(--rule);padding:22px 0 40px}
 .foot__grid{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,.6fr);gap:24px;font-size:.78rem;color:var(--ink-2)}
@@ -319,7 +387,7 @@ tfoot td:last-child{color:var(--accent-ink)}
   .reveal{opacity:1;transform:none}
 }
 @media print{
-  .topbar,.toast,.btn-quiet{display:none !important}
+  .topbar,.toast,.btn-quiet,.fx-modal{display:none !important}
   body{background:#fff}
   .day,.flight,.hotel,.routecard,.tablewrap,.totalcard{box-shadow:none;break-inside:avoid}
   .reveal{opacity:1;transform:none}
@@ -340,6 +408,8 @@ tfoot td:last-child{color:var(--accent-ink)}
   <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h13M13 7l5 5-5 5"/></symbol>
   <symbol id="i-bag" viewBox="0 0 24 24"><path d="M5 8h14l-1.2 12H6.2z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></symbol>
   <symbol id="i-leaf" viewBox="0 0 24 24"><path d="M12 1.4 13.8 5.4 17.6 4.2 16.3 8.2 20.8 9.4 17.3 12.2 20.5 16.2 15.6 15.3 15.2 20.2 12 17.4 8.8 20.2 8.4 15.3 3.5 16.2 6.7 12.2 3.2 9.4 7.7 8.2 6.4 4.2 10.2 5.4Z"/><path d="M12 17.6v5.2" stroke="currentColor" stroke-width="1.2" fill="none"/></symbol>
+  <symbol id="i-fx" viewBox="0 0 24 24"><path d="M4 8h14"/><path d="m14 4 4 4-4 4"/><path d="M20 16H6"/><path d="m10 12-4 4 4 4"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></symbol>
 </svg>
 
 <header class="topbar">
@@ -354,6 +424,10 @@ tfoot td:last-child{color:var(--accent-ink)}
       <a href="#budget">งบประมาณ</a>
       <a href="#checks">เช็กลิสต์</a>
       <a href="index-original.html">แผนเดิม</a>
+      <button type="button" class="topnav__fx" id="fxOpen" aria-haspopup="dialog">
+        <svg aria-hidden="true"><use href="#i-fx"/></svg>
+        <span>แปลงเงิน</span>
+      </button>
     </nav>
     <button class="btn-quiet" type="button" id="printBtn">
       <svg aria-hidden="true"><use href="#i-print"/></svg>
@@ -694,7 +768,7 @@ tfoot td:last-child{color:var(--accent-ink)}
         <p class="eyebrow">งบประมาณ</p>
         <h2 id="budget-title">ค่าใช้จ่ายหน้างานทั้งทริป</h2>
       </div>
-      <p class="section__note">ตัวเลขจากท้ายหน้าของแต่ละวัน — 3 คน (เด็ก 5 ขวบฟรีค่าโดยสารและค่าเข้าส่วนใหญ่)</p>
+      <p class="section__note">ตัวเลขจากท้ายหน้าของแต่ละวัน — 3 คน (เด็ก 5 ขวบฟรีค่าโดยสารและค่าเข้าส่วนใหญ่) · อยากลองเลขอื่น เปิดปุ่ม "แปลงเงิน" บนแถบด้านบนได้</p>
     </div>
 
     <div class="budget">
@@ -776,6 +850,49 @@ tfoot td:last-child{color:var(--accent-ink)}
     </div>
   </div>
 </footer>
+
+<!-- ============ FX CONVERTER ============ -->
+<div class="fx-modal" id="fxModal" role="dialog" aria-modal="true" aria-labelledby="fxTitle" aria-describedby="fxHint">
+  <div class="fx-backdrop" data-fx-close aria-hidden="true"></div>
+  <div class="fx-panel">
+    <div class="fx-head">
+      <div>
+        <p class="mono-label">ตัวช่วยตอนเที่ยว</p>
+        <h2 id="fxTitle">แปลงเงิน เยน ⇄ บาท</h2>
+      </div>
+      <button class="btn-quiet fx-close" type="button" data-fx-close aria-label="ปิดหน้าต่างแปลงเงิน">
+        <svg aria-hidden="true"><use href="#i-x"/></svg>
+      </button>
+    </div>
+
+    <div class="fx-fields">
+      <label class="fx-field">
+        <span class="fx-cur">¥ เยน</span>
+        <input type="number" inputmode="decimal" min="0" step="any" id="fxYen" placeholder="0" aria-label="จำนวนเงินเยน">
+      </label>
+      <div class="fx-rate">
+        <span>อัตรา 1 ¥ =</span>
+        <input type="number" inputmode="decimal" min="0.01" step="0.01" id="fxRate" value="0.22" aria-label="อัตราแลกเปลี่ยน บาทต่อเยน">
+        <span>฿</span>
+        <button type="button" class="link-btn" id="fxRateReset">เรตมาตรฐาน</button>
+      </div>
+      <label class="fx-field fx-field--baht">
+        <span class="fx-cur">฿ บาท</span>
+        <input type="number" inputmode="decimal" min="0" step="any" id="fxBaht" placeholder="0" aria-label="จำนวนเงินบาท">
+      </label>
+    </div>
+
+    <div class="fx-chips" role="group" aria-label="ใส่จำนวนเงินด่วน">
+      <button type="button" data-fx-amt="100">¥100</button>
+      <button type="button" data-fx-amt="500">¥500</button>
+      <button type="button" data-fx-amt="1000">¥1,000</button>
+      <button type="button" data-fx-amt="5000">¥5,000</button>
+      <button type="button" data-fx-amt="10000">¥10,000</button>
+    </div>
+
+    <p class="fx-hint" id="fxHint"></p>
+  </div>
+</div>
 
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
@@ -871,6 +988,102 @@ tfoot td:last-child{color:var(--accent-ink)}
 
   /* ---------- print ---------- */
   document.getElementById('printBtn').addEventListener('click', function () { window.print(); });
+
+  /* ---------- yen ⇄ baht converter ---------- */
+  var FX_KEY = 'osaka2026.fx.rate';
+  var FX_DEFAULT = 0.22;
+  var fxModal = document.getElementById('fxModal');
+  var fxOpenBtn = document.getElementById('fxOpen');
+  var fxYen = document.getElementById('fxYen');
+  var fxBaht = document.getElementById('fxBaht');
+  var fxRate = document.getElementById('fxRate');
+  var fxHint = document.getElementById('fxHint');
+  var fxLast = 'yen';
+  var fxReturnFocus = null;
+
+  function fxRateValue() {
+    var r = parseFloat(fxRate.value);
+    return (isFinite(r) && r > 0) ? r : FX_DEFAULT;
+  }
+  function fmtNum(n, dec) {
+    var parts = n.toFixed(dec).split('.');
+    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    return parts.join('.');
+  }
+  function fxHintUpdate() {
+    var r = fxRateValue();
+    fxHint.innerHTML =
+      'อ้างอิงที่เรต <b>1 ¥ = ' + r + ' ฿</b> — ' +
+      '¥100 = <b>฿' + fmtNum(100 * r, 2) + '</b> · ' +
+      '¥1,000 = <b>฿' + fmtNum(1000 * r, 2) + '</b> · ' +
+      '¥10,000 = <b>฿' + fmtNum(10000 * r, 2) + '</b>';
+  }
+  function fxFromYen() {
+    var yen = parseFloat(fxYen.value);
+    fxBaht.value = (isFinite(yen) && yen >= 0) ? (yen * fxRateValue()).toFixed(2) : '';
+    fxHintUpdate();
+  }
+  function fxFromBaht() {
+    var baht = parseFloat(fxBaht.value);
+    fxYen.value = (isFinite(baht) && baht >= 0) ? String(Math.round(baht / fxRateValue())) : '';
+    fxHintUpdate();
+  }
+  function fxRecompute() { if (fxLast === 'baht') fxFromBaht(); else fxFromYen(); }
+
+  (function fxLoadRate() {
+    var raw = null;
+    try { raw = localStorage.getItem(FX_KEY); } catch (e) {}
+    if (raw) {
+      var r = parseFloat(raw);
+      if (isFinite(r) && r > 0) fxRate.value = r;
+    }
+    fxHintUpdate();
+  })();
+
+  function openFx() {
+    fxReturnFocus = document.activeElement;
+    if (!fxYen.value && !fxBaht.value) { fxLast = 'yen'; fxYen.value = '1000'; fxFromYen(); }
+    fxModal.classList.add('is-open');
+    document.body.style.overflow = 'hidden';
+    setTimeout(function () { fxYen.focus(); if (fxYen.select) fxYen.select(); }, 60);
+  }
+  function closeFx() {
+    fxModal.classList.remove('is-open');
+    document.body.style.overflow = '';
+    if (fxReturnFocus && fxReturnFocus.focus) fxReturnFocus.focus();
+  }
+
+  fxOpenBtn.addEventListener('click', openFx);
+  fxModal.addEventListener('click', function (e) {
+    if (e.target && e.target.closest && e.target.closest('[data-fx-close]')) closeFx();
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && fxModal.classList.contains('is-open')) closeFx();
+  });
+
+  fxYen.addEventListener('input', function () { fxLast = 'yen'; fxFromYen(); });
+  fxBaht.addEventListener('input', function () { fxLast = 'baht'; fxFromBaht(); });
+  fxRate.addEventListener('input', function () {
+    var r = parseFloat(fxRate.value);
+    if (isFinite(r) && r > 0) {
+      try { localStorage.setItem(FX_KEY, String(r)); } catch (e) {}
+    }
+    fxRecompute();
+  });
+  document.getElementById('fxRateReset').addEventListener('click', function () {
+    fxRate.value = FX_DEFAULT;
+    try { localStorage.setItem(FX_KEY, String(FX_DEFAULT)); } catch (e) {}
+    fxRecompute();
+    showToast('กลับเป็นเรตมาตรฐาน 0.22 บาท/เยน');
+  });
+  Array.prototype.slice.call(document.querySelectorAll('[data-fx-amt]')).forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      fxYen.value = btn.getAttribute('data-fx-amt');
+      fxLast = 'yen';
+      fxFromYen();
+      fxYen.focus();
+    });
+  });
 
   /* ---------- reveal on scroll ---------- */
   var items = Array.prototype.slice.call(document.querySelectorAll('.reveal'));
