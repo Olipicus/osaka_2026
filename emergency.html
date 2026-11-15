@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#f2ece0">
+<title>ฉุกเฉิน + วลีจำเป็น — ทริปโอซาก้า 2026</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="manifest" href="manifest.json">
+<meta name="description" content="หน้าฉุกเฉินทริปโอซาก้า–เกียวโต 2026: เบอร์ 110/119 + สถานทูตไทยกดโทรได้ · โรงพยาบาลใกล้ที่พักทั้ง 4 แห่ง · วิธีตามหาของหาย · วลีภาษาญี่ปุ่นฉุกเฉิน 20 วลีพร้อมปุ่มออกเสียง">
+<meta name="color-scheme" content="light">
+<style>
+:root{
+  --paper:#f2ece0; --surface:#faf6ec; --surface-2:#f6f0e3;
+  --ink:#1b2233; --ink-2:#454d60; --muted:#626877;
+  --rule:#d9cfb9; --rule-strong:#c2b69a;
+  --accent:#b23a25; --accent-ink:#8c2a17;
+  --radius:14px;
+  --font-sans:'Sukhumvit Set','Thonburi','Noto Sans Thai','IBM Plex Sans Thai',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  --font-mono:ui-monospace,'SF Mono','JetBrains Mono','Roboto Mono',Menlo,monospace;
+  --ease:cubic-bezier(.2,.7,.25,1);
+}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--font-sans);font-size:16px;line-height:1.65;-webkit-font-smoothing:antialiased}
+.wrap{width:min(1120px,calc(100% - 40px));margin-inline:auto}
+@media (max-width:640px){.wrap{width:calc(100% - 28px)}}
+a{color:inherit}
+h1,h2{margin:0;line-height:1.25;letter-spacing:-.015em}
+p{margin:0}
+ul{margin:0}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+.eyebrow{margin:0 0 10px;font-family:var(--font-mono);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-ink)}
+
+/* ---------- skip + topbar (เหมือนหน้าอื่น) ---------- */
+.skip{position:absolute;left:-9999px;top:0;padding:10px 14px;background:var(--ink);color:var(--paper);z-index:50}
+.skip:focus{left:12px;top:12px}
+.topbar{position:sticky;top:0;z-index:1000;background:rgba(242,236,224,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--rule)}
+.topbar__in{display:flex;align-items:center;gap:16px;min-height:58px;padding-block:8px}
+.brand{display:flex;flex-direction:column;gap:1px;text-decoration:none;line-height:1.15}
+.brand b{font-size:.86rem;letter-spacing:.12em}
+.brand span{font-family:var(--font-mono);font-size:.6rem;letter-spacing:.1em;color:var(--muted)}
+.topnav{display:flex;gap:2px;margin-left:auto;flex-wrap:wrap}
+.topnav a{padding:6px 10px;border-radius:7px;text-decoration:none;font-size:.8rem;color:var(--ink-2)}
+.topnav a:hover{background:var(--surface-2);color:var(--ink)}
+@media (max-width:720px){.topnav a{display:none}}
+
+/* ---------- head ---------- */
+.pagehead{padding:clamp(28px,4.2vw,50px) 0 4px;animation:rise .6s var(--ease) both}
+.pagehead h1{font-size:clamp(1.7rem,3.8vw,2.5rem);font-weight:600;letter-spacing:-.03em}
+.pagehead h1 .dot{color:var(--accent)}
+.pagehead__lede{margin-top:10px;max-width:62ch;font-size:.92rem;color:var(--ink-2)}
+.qn{display:flex;flex-wrap:wrap;gap:7px;margin-top:16px}
+.qn a{padding:5px 12px;border-radius:999px;border:1px solid var(--rule-strong);background:var(--surface);font-size:.74rem;color:var(--ink-2);text-decoration:none}
+.qn a:hover{border-color:var(--accent);color:var(--accent-ink)}
+@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+
+/* ---------- section ---------- */
+.section{padding:clamp(30px,4.4vw,50px) 0 0;scroll-margin-top:76px}
+.section__head{margin-bottom:16px}
+.section__head h2{font-size:clamp(1.3rem,2.6vw,1.65rem);font-weight:600}
+.section__note{margin-top:6px;font-size:.8rem;color:var(--muted);max-width:58ch}
+
+/* ---------- เบอร์ฉุกเฉิน: การ์ดใหญ่กดโทร ---------- */
+.callgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+@media (max-width:760px){.callgrid{grid-template-columns:1fr}}
+.call{background:var(--surface);border:1px solid var(--rule);border-top:4px solid var(--accent);border-radius:var(--radius);padding:16px 18px 14px;display:flex;flex-direction:column;gap:7px}
+.call__label{font-family:var(--font-mono);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.call__num{display:block;font-family:var(--font-mono);font-size:clamp(2.1rem,4.5vw,2.8rem);font-weight:700;color:var(--accent);text-decoration:none;line-height:1.05;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.call__num:hover{color:var(--accent-ink)}
+.call__num:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px}
+.call__desc{font-size:.8rem;color:var(--ink-2)}
+.call__desc b{color:var(--ink)}
+.call__say{margin-top:2px;padding-top:8px;border-top:1px dashed var(--rule-strong);font-size:.74rem;color:var(--ink-2);display:grid;gap:4px}
+.call__say .jp{font-weight:700;color:var(--ink)}
+.call__say .ro{font-family:var(--font-mono);font-size:.64rem;color:var(--muted)}
+.note{display:flex;gap:10px;align-items:flex-start;margin-top:14px;padding:12px 14px;border:1px dashed var(--rule-strong);border-radius:12px;background:var(--surface-2);font-size:.78rem;color:var(--ink-2)}
+.note b{color:var(--ink)}
+
+/* ---------- สถานทูต ---------- */
+.embgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:14px}
+@media (max-width:760px){.embgrid{grid-template-columns:1fr}}
+.emb{background:var(--surface);border:1px solid var(--rule);border-radius:var(--radius);padding:15px 18px;display:flex;flex-direction:column;gap:5px}
+.emb__tag{align-self:flex-start;padding:2px 9px;border-radius:999px;background:var(--accent);color:#fff;font-family:var(--font-mono);font-size:.56rem;letter-spacing:.07em}
+.emb b{font-size:.92rem;line-height:1.4}
+.emb__meta{font-size:.76rem;color:var(--ink-2)}
+.emb__meta .mono{font-family:var(--font-mono);font-size:.68rem}
+.acts{display:flex;flex-wrap:wrap;gap:7px;margin-top:8px}
+.acts a{display:inline-flex;align-items:center;gap:5px;padding:6px 11px;border:1px solid var(--rule-strong);border-radius:8px;background:var(--paper);color:var(--ink-2);text-decoration:none;font-size:.76rem;font-weight:600;white-space:nowrap}
+.acts a:hover{border-color:var(--ink-2);color:var(--ink)}
+.acts a.act--tel{background:var(--accent);border-color:var(--accent);color:#fff}
+.acts a.act--tel:hover{background:var(--accent-ink);border-color:var(--accent-ink);color:#fff}
+.acts a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.acts svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+/* ---------- โรงพยาบาล ---------- */
+.hgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+@media (max-width:860px){.hgrid{grid-template-columns:1fr}}
+.hosp{background:var(--surface);border:1px solid var(--rule);border-top:3px solid var(--accent);border-radius:var(--radius);padding:15px 18px 14px;display:flex;flex-direction:column;gap:7px}
+.hosp__tag{align-self:flex-start;padding:2px 9px;border-radius:999px;border:1px solid currentColor;color:var(--accent-ink);font-family:var(--font-mono);font-size:.56rem;letter-spacing:.07em}
+.hosp b.nm{font-size:.95rem;line-height:1.4}
+.hosp .jp{font-size:.78rem;color:var(--muted)}
+.hosp ul{list-style:none;padding:0;font-size:.78rem;color:var(--ink-2);display:grid;gap:4px}
+.hosp li{padding-left:14px;position:relative}
+.hosp li::before{content:"";position:absolute;left:2px;top:.6em;width:5px;height:5px;border-radius:50%;background:var(--muted)}
+.hosp .hosp__sub{padding-top:9px;border-top:1px dashed var(--rule-strong);font-size:.76rem;color:var(--ink-2)}
+.hosp .hosp__sub .jpname{font-weight:700;color:var(--ink)}
+.hosp .acts{margin-top:auto}
+.hosp .acts a.act--maps{background:var(--accent);border-color:var(--accent);color:#fff}
+.hosp .acts a.act--maps:hover{background:var(--accent-ink);border-color:var(--accent-ink);color:#fff}
+
+/* ---------- ของหาย ---------- */
+.losteps{display:grid;gap:10px}
+.lostep{display:grid;grid-template-columns:30px minmax(0,1fr);gap:12px;background:var(--surface);border:1px solid var(--rule);border-radius:var(--radius);padding:14px 16px}
+.lostep__n{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;border:1.5px solid var(--accent);color:var(--accent-ink);font-family:var(--font-mono);font-size:.72rem;font-weight:700}
+.lostep b{display:block;font-size:.86rem;margin-bottom:2px}
+.lostep p{font-size:.78rem;color:var(--ink-2)}
+.lolinks{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:9px}
+@media (max-width:760px){.lolinks{grid-template-columns:1fr}}
+.lolink{display:block;border:1px solid var(--rule-strong);border-radius:10px;padding:9px 11px;background:var(--paper);text-decoration:none;font-size:.72rem;color:var(--ink-2);line-height:1.5}
+.lolink b{display:flex;align-items:center;gap:5px;color:var(--ink);font-size:.78rem;margin-bottom:2px}
+.lolink svg{width:11px;height:11px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.lolink:hover{border-color:var(--accent);color:var(--ink)}
+
+/* ---------- วลีญี่ปุ่น ---------- */
+.pcat{margin-top:24px}
+.pcat:first-of-type{margin-top:0}
+.pcat__title{display:flex;align-items:baseline;gap:10px;margin-bottom:10px}
+.pcat__title b{font-size:.92rem;font-weight:600}
+.pcat__title span{font-family:var(--font-mono);font-size:.62rem;letter-spacing:.08em;color:var(--muted)}
+.pgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+@media (max-width:860px){.pgrid{grid-template-columns:1fr}}
+.phrase{background:var(--surface);border:1px solid var(--rule);border-radius:12px;padding:12px 14px;display:flex;align-items:center;gap:12px}
+.phrase__t{min-width:0;flex:1}
+.phrase__jp{font-size:1.05rem;font-weight:700;line-height:1.5}
+.phrase__ro{display:block;font-family:var(--font-mono);font-size:.66rem;color:var(--muted);margin-top:2px;letter-spacing:.02em}
+.phrase__th{display:block;font-size:.76rem;color:var(--ink-2);margin-top:4px}
+.speak{flex:none;display:inline-flex;flex-direction:column;align-items:center;gap:2px;padding:8px 10px;border:1px solid var(--rule-strong);border-radius:10px;background:var(--paper);color:var(--accent-ink);cursor:pointer;font-family:inherit;font-size:.58rem;min-width:50px}
+.speak:hover{background:var(--accent);border-color:var(--accent);color:#fff}
+.speak:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.speak svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.no-tts .speak{display:none}
+
+/* ---------- เคล็ดลับ + การ์ดโรงแรม ---------- */
+.tipgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+@media (max-width:860px){.tipgrid{grid-template-columns:1fr}}
+.tip{background:var(--surface);border:1px solid var(--rule);border-radius:var(--radius);padding:13px 16px;font-size:.8rem;color:var(--ink-2)}
+.tip b{display:block;color:var(--ink);font-size:.85rem;margin-bottom:3px}
+.hotels{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:16px}
+@media (max-width:760px){.hotels{grid-template-columns:1fr}}
+.htel{background:var(--surface);border:1px solid var(--rule);border-left:4px solid var(--accent);border-radius:var(--radius);padding:13px 15px;display:flex;flex-direction:column;gap:3px}
+.htel b{font-size:.86rem;line-height:1.4}
+.htel .stay{font-family:var(--font-mono);font-size:.6rem;letter-spacing:.06em;color:var(--muted)}
+.htel .addr{font-size:.72rem;color:var(--muted)}
+.htel a.hpn{font-family:var(--font-mono);font-weight:600;font-size:.95rem;color:var(--accent-ink);text-decoration:none;margin-top:3px}
+.htel a.hpn:hover{color:var(--accent)}
+.htel a.hpn:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:3px}
+
+/* ---------- footer ---------- */
+.foot{margin-top:clamp(34px,5vw,56px);border-top:1px solid var(--rule);padding:20px 0 38px;font-size:.76rem;color:var(--muted)}
+.foot__in{display:flex;flex-wrap:wrap;gap:8px 18px;justify-content:space-between}
+.foot a{color:var(--accent-ink)}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none !important;transition:none !important}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">ข้ามไปที่เนื้อหา</a>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <symbol id="i-tel" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92Z"/></symbol>
+    <symbol id="i-ext" viewBox="0 0 24 24"><path d="M8 16 16 8M9.5 8H16v6.5"/></symbol>
+    <symbol id="i-spk" viewBox="0 0 24 24"><path d="M11 5 6 9H2v6h4l5 4V5Z"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07M19.07 4.93a10 10 0 0 1 0 14.14"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11Z"/><circle cx="12" cy="10" r="2.6"/></symbol>
+  </defs>
+</svg>
+
+<header class="topbar">
+  <div class="wrap topbar__in">
+    <a class="brand" href="index.html">
+      <b>OSAKA 2026</b>
+      <span>ฉุกเฉิน</span>
+    </a>
+    <nav class="topnav" aria-label="เมนูฉุกเฉิน">
+      <a href="index.html">หน้าหลัก</a>
+      <a href="map.html">แผนที่</a>
+      <a href="live-info.html">ข้อมูลสด</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <div class="wrap">
+
+    <header class="pagehead">
+      <p class="eyebrow">Emergency · ฉุกเฉิน</p>
+      <h1>ฉุกเฉิน + <span class="dot">วลีจำเป็น</span></h1>
+      <p class="pagehead__lede">หน้าสำหรับเปิดทันทีตอนเกิดเหตุ: เบอร์โทรฉุกเฉิน โรงพยาบาลใกล้ที่พักทั้ง 4 แห่ง วิธีตามหาของหาย และวลีญี่ปุ่นพร้อมปุ่มออกเสียง — เปิดได้แม้ไม่มีเน็ต</p>
+      <nav class="qn" aria-label="ไปยังหัวข้อ">
+        <a href="#call">เบอร์ฉุกเฉิน</a>
+        <a href="#hospital">โรงพยาบาล</a>
+        <a href="#lost">ของหาย</a>
+        <a href="#phrases">วลีจำเป็น</a>
+        <a href="#tips">เคล็ดลับ</a>
+      </nav>
+    </header>
+
+    <!-- ============ 1. เบอร์ฉุกเฉิน ============ -->
+    <section class="section" id="call" aria-labelledby="call-title">
+      <header class="section__head">
+        <p class="eyebrow">Emergency Calls · เบอร์ฉุกเฉิน</p>
+        <h2 id="call-title">โทรทันทีถ้าเกิดเหตุ</h2>
+        <p class="section__note">กดตัวเลขใหญ่เพื่อโทรออกทันที · โทรจากซิมญี่ปุ่น/ตู้โทรศัพท์ได้ทุกเบอร์ด้านล่างนี้ (ฟรีในกรณีฉุกเฉิน)</p>
+      </header>
+      <div class="callgrid">
+        <div class="call">
+          <span class="call__label">Police · ตำรวจ</span>
+          <a class="call__num" href="tel:110">110</a>
+          <p class="call__desc"><b>ตำรวจญี่ปุ่น</b> — อุบัติเหตุ ของหาย โจรกรรม เด็กหาย ทะเลาะวิวาท</p>
+        </div>
+        <div class="call">
+          <span class="call__label">Ambulance / Fire · รถพยาบาล–ดับเพลิง</span>
+          <a class="call__num" href="tel:119">119</a>
+          <p class="call__desc"><b>เจ้าหน้าที่โอซาก้ารับสายอังกฤษได้ 24 ชม.</b> — จะถามว่า "ไฟไหม้ หรือ คนป่วย?" ตอบตามนี้</p>
+          <div class="call__say">
+            <span><span class="jp">かじです</span> · <span class="ro">kaji desu</span> = ไฟไหม้</span>
+            <span><span class="jp">きゅうきゅうです</span> · <span class="ro">kyūkyū desu</span> = เรียกรถพยาบาล</span>
+          </div>
+        </div>
+        <div class="call">
+          <span class="call__label">JNTO Japan Visitor Hotline</span>
+          <a class="call__num" href="tel:+815038162787">050-3816-2787</a>
+          <p class="call__desc"><b>สายช่วยเหลือนักท่องเที่ยว 24 ชม.</b> มีอังกฤษ/จีน/เกาหลี — ช่วยโทรต่อหาโรงพยาบาล ตอบคำถามการเดินทาง</p>
+        </div>
+      </div>
+      <div class="note">
+        <span aria-hidden="true">☎</span>
+        <p><b>โทรฉุกเฉินญี่ปุ่น (110/119) ฟรีจากตู้โทรศัพท์สาธารณะ</b> — ยังมีติดตั้งอยู่ตามสถานีรถไฟ/สนามบิน/อาคารใหญ่ ๆ ไม่ต้องหยอดเหรียญ บางตู้กดปุ่มแดง Emergency ก่อน แล้วโทร 110 หรือ 119 ได้ทันที</p>
+      </div>
+
+      <div class="embgrid">
+        <article class="emb">
+          <span class="emb__tag">ใกล้ทริป — OSAKA</span>
+          <b>สถานกงสุลใหญ่ไทย ณ นครโอซาก้า<br><span style="font-weight:500;font-size:.8rem;color:var(--muted)">Royal Thai Consulate-General, Osaka</span></b>
+          <p class="emb__meta">Bangkok Bank Building, 4th Fl., 1-9-16 Kyutaro-machi, Chuo-ku, Osaka 541-0056</p>
+          <p class="emb__meta">เปิด จ–ศ 09:30–12:30 / 13:30–17:30 · สอบถามทางโทรศัพท์ 15:30–17:30</p>
+          <p class="emb__meta">สายด่วนคนไทย (กรณีฉุกเฉินนอกเวลาทำการ): <span class="mono">090-1895-0987</span></p>
+          <div class="acts">
+            <a class="act--tel" href="tel:+81662629226"><svg aria-hidden="true"><use href="#i-tel"/></svg>06-6262-9226</a>
+            <a class="act--tel" href="tel:+81662629227"><svg aria-hidden="true"><use href="#i-tel"/></svg>06-6262-9227</a>
+            <a href="https://osaka.thaiembassy.org" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-ext"/></svg>osaka.thaiembassy.org</a>
+          </div>
+        </article>
+        <article class="emb">
+          <span class="emb__tag">TOKYO</span>
+          <b>สถานเอกอัครราชทูตไทย ณ กรุงโตเกียว<br><span style="font-weight:500;font-size:.8rem;color:var(--muted)">Royal Thai Embassy, Tokyo</span></b>
+          <p class="emb__meta">3-14-6 Kami-Osaki, Shinagawa-ku, Tokyo 141-0021</p>
+          <p class="emb__meta">เปิด จ–ศ 09:00–12:00 / 13:30–17:30 · สายด่วนคนไทย (ฉุกเฉินตลอด 24 ชม.): <span class="mono">090-4435-7812</span></p>
+          <div class="acts">
+            <a class="act--tel" href="tel:+81357892433"><svg aria-hidden="true"><use href="#i-tel"/></svg>03-5789-2433</a>
+            <a class="act--tel" href="tel:+819044357812"><svg aria-hidden="true"><use href="#i-tel"/></svg>สายด่วน 24 ชม.</a>
+            <a href="https://www.thaiembassy.jp" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-ext"/></svg>www.thaiembassy.jp</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- ============ 2. โรงพยาบาล ============ -->
+    <section class="section" id="hospital" aria-labelledby="hospital-title">
+      <header class="section__head">
+        <p class="eyebrow">Hospitals · โรงพยาบาล</p>
+        <h2 id="hospital-title">โรงพยาบาลใกล้ที่พักทั้ง 4 แห่ง</h2>
+        <p class="section__note">โรงพยาบาลทั่วไปขนาดใหญ่ที่รองรับคนต่างชาติ/อังกฤษ เรียงตามที่พักแต่ละย่าน · ไม่ต้องรถพยาบาลแต่ต้องการหาโรงพยาบาล: Osaka Emergency Medical Information Center <a href="tel:+81666931199">06-6693-1199</a> (24 ชม.)</p>
+      </header>
+      <div class="hgrid">
+
+        <article class="hosp">
+          <span class="hosp__tag">แถว KYOTO STN — พักที่ Vischio (28–30 พ.ย.)</span>
+          <b class="nm">Kyoto City Hospital</b>
+          <span class="jp">京都市立病院</span>
+          <ul>
+            <li>โรงพยาบาลหลักของเทศบาลเมืองเกียวโต ย่าน Nakagyo-ku — จาก Kyoto Stn นั่ง Metro Karasuma ไม่กี่สถานี หรือแท็กซี่จากที่พักระยะสั้น</li>
+            <li>มีกุมารเวชกรรม — <b>แพทย์เด็กประจำการทุกวัน</b> รับเด็กฉุกเฉิน</li>
+            <li>รองรับต่างชาติ: เว็บไซต์อังกฤษ + โปรแกรมล่ามการแพทย์ของเมืองเกียวโต (อังกฤษ จีน เกาหลี สเปน โปรตุเกส ไทย)</li>
+          </ul>
+          <div class="acts">
+            <a class="act--tel" href="tel:+81753115311"><svg aria-hidden="true"><use href="#i-tel"/></svg>075-311-5311</a>
+            <a class="act--maps" href="https://www.google.com/maps/search/?api=1&amp;query=Kyoto+City+Hospital" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-pin"/></svg>Google Maps</a>
+            <a href="https://www.kyoto-city-hospital.jp/english/" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-ext"/></svg>เว็บอังกฤษ</a>
+          </div>
+        </article>
+
+        <article class="hosp">
+          <span class="hosp__tag">แถว UNIVERSAL CITY — พักที่ Universal Port (30 พ.ย.–2 ธ.ค.)</span>
+          <b class="nm">Osaka Gyomeikan Hospital</b>
+          <span class="jp">大阪暁明館病院</span>
+          <ul>
+            <li>โรงพยาบาลทั่วไป 462 เตียง ที่ Nishikujo (此花区西九条) — ฝั่งตรงข้ามแม่น้ำจากย่าน Universal City แท็กซี่ ~10–15 นาที</li>
+            <li>มีศูนย์รับคนป่วยฉุกเฉิน — ควรโทรถามก่อนมาทุกครั้ง</li>
+            <li>รองรับต่างชาติ: มีหน้าเว็บภาษาอังกฤษ</li>
+          </ul>
+          <div class="hosp__sub">ทางเลือกใกล้เคียง: <span class="jpname">Chibune General Hospital (千船総合病院)</span> — ศูนย์ฉุกเฉิน 24 ชม. (โทรก่อน) <a href="tel:+81664719541">06-6471-9541</a> · เว็บอังกฤษ chibune-hsp.jp/en · ~20 นาทีจาก USJ</div>
+          <div class="acts">
+            <a class="act--tel" href="tel:+81664620261"><svg aria-hidden="true"><use href="#i-tel"/></svg>06-6462-0261</a>
+            <a class="act--maps" href="https://www.google.com/maps/search/?api=1&amp;query=Osaka+Gyomeikan+Hospital" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-pin"/></svg>Google Maps</a>
+            <a href="https://www.gyoumeikan.or.jp/english-page/" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-ext"/></svg>เว็บอังกฤษ</a>
+          </div>
+        </article>
+
+        <article class="hosp">
+          <span class="hosp__tag">แถว NAMBA / NIPPONBASHI — พักที่ Citadines (2–5 ธ.ค.)</span>
+          <b class="nm">Osaka Red Cross Hospital</b>
+          <span class="jp">大阪赤十字病院</span>
+          <ul>
+            <li>ศูนย์เวชภัยฉุกเฉินขนาดใหญ่ (~964 เตียง) ที่ Tennoji-ku — เดินทางจากย่าน Namba ~15–20 นาที: Kintetsu Namba → Osaka Uehonmachi (1 สถานี) + เดิน ~10 นาที หรือ Metro → Tsuruhashi + เดิน ~7 นาที</li>
+            <li>มีกุมารเวชกรรม + ทีมประสานงานผู้ป่วยต่างชาติ/ล่ามอังกฤษ จ–ศ 8:30–17:00</li>
+            <li>(Osaka City General Hospital อยู่ฝั่งเหนือเมือง — ไกลกว่าจากย่าน Namba)</li>
+          </ul>
+          <div class="acts">
+            <a class="act--tel" href="tel:+81667745111"><svg aria-hidden="true"><use href="#i-tel"/></svg>06-6774-5111</a>
+            <a class="act--maps" href="https://www.google.com/maps/search/?api=1&amp;query=Osaka+Red+Cross+Hospital" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-pin"/></svg>Google Maps</a>
+            <a href="https://www.osaka-med.jrc.or.jp/english" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-ext"/></svg>เว็บอังกฤษ</a>
+          </div>
+        </article>
+
+        <article class="hosp">
+          <span class="hosp__tag">แถว RINKU TOWN — พักที่ OMO Kansai Airport (5–6 ธ.ค.)</span>
+          <b class="nm">Rinku General Medical Center</b>
+          <span class="jp">りんくう総合医療センター</span>
+          <ul>
+            <li>โรงพยาบาลหลักของพื้นที่ทางใต้โอซาก้า (Izumisano) — มีศูนย์เวชภัยฉุกเฉินขนาดใหญ่ (救命救急センター) โดยตรง</li>
+            <li>จากย่าน Rinku Town: แท็กซี่ระยะสั้น หรือรถไฟ Nankai/JR 1 สถานีถึง Izumisano แล้วเดินต่อ</li>
+            <li>รองรับหลายภาษา: เว็บมีหน้าอังกฤษ/จีน/โปรตุเกส/สเปน มีล่ามอังกฤษ–จีนบางวัน (เช็ควันในเว็บ)</li>
+          </ul>
+          <div class="acts">
+            <a class="act--tel" href="tel:+81724693111"><svg aria-hidden="true"><use href="#i-tel"/></svg>072-469-3111</a>
+            <a class="act--maps" href="https://www.google.com/maps/search/?api=1&amp;query=Rinku+General+Medical+Center" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-pin"/></svg>Google Maps</a>
+            <a href="https://www.rgmc.izumisano.osaka.jp/10_E" target="_blank" rel="noopener"><svg aria-hidden="true"><use href="#i-ext"/></svg>เว็บอังกฤษ</a>
+          </div>
+        </article>
+      </div>
+      <div class="note">
+        <span aria-hidden="true">⚠</span>
+        <p><b>เช็คเวลาเปิดก่อนไปทุกครั้ง</b> (โรงพยาบาลญี่ปุ่นคนไข้นอกบางที่รับเฉพาะช่วงเช้า) · กรณีเด็กป่วยหนัก/บาดเจ็บรุนแรง <b>โทร 119 ดีกว่าเดินทางเอง</b> · เด็กมีไข้กลางคืนไม่แน่ใจ โทรสายด่วนกุมารเวช <b>#8000</b> (จากมือถือญี่ปุ่น; ย่านเกียวโตถ้า #8000 ไม่ติดโทร 075-661-5596)</p>
+      </div>
+    </section>
+
+    <!-- ============ 3. ของหาย ============ -->
+    <section class="section" id="lost" aria-labelledby="lost-title">
+      <header class="section__head">
+        <p class="eyebrow">Lost &amp; Found · ของหาย</p>
+        <h2 id="lost-title">ทำของหาย — ทำอย่างไร</h2>
+        <p class="section__note">ญี่ปุ่นของหายถูกส่งต่อเป็นระบบ — เกือบทุกชิ้นมาถึงโพลิซ/คลังของหาย แค่รู้ว่าต้องไปถามที่ไหน</p>
+      </header>
+      <div class="losteps">
+        <div class="lostep">
+          <span class="lostep__n">1</span>
+          <div>
+            <b>ไปโพลิซ (交番) ใกล้สถานีที่คิดว่าของหาย</b>
+            <p>โพลิซคือจุดตำรวจเล็ก ๆ ตรงทางออกสถานีรถไฟเกือบทุกแห่ง — แจ้งของ ชื่อ เวลา สถานที่ (ใช้วลี <span style="font-weight:700">わすれものをしました</span> ด้านล่าง) · ได้ของคืนจะมีใบแจ้ง เก็บไว้เป็นหลักฐานไปรับของภายหลังได้</p>
+          </div>
+        </div>
+        <div class="lostep">
+          <span class="lostep__n">2</span>
+          <div>
+            <b>เช็คระบบของหายของผู้ให้บริการที่ใช้</b>
+            <p>ขึ้นอยู่กับว่าหายตอนอยู่ที่ไหน:</p>
+            <div class="lolinks">
+              <a class="lolink" href="https://www.jr-odekake.net/railroad/service/left.html" target="_blank" rel="noopener"><b><svg aria-hidden="true"><use href="#i-ext"/></svg>JR West</b>ของลืมในสถานี/ขบวน JR — รวม Haruka, JR Osaka Loop, Sagano</a>
+              <a class="lolink" href="https://subway.osakametro.co.jp/lostfounditems_tel.php" target="_blank" rel="noopener"><b><svg aria-hidden="true"><use href="#i-ext"/></svg>Osaka Metro</b>หน้าตามของหาย · โทร 050-3355-8208 (กด 1, 8:30–20:00 ทุกวัน) · ศูนย์ของหายอยู่ที่สถานี Namba (สาย Yotsubashi) — ใกล้ Citadines</a>
+              <a class="lolink" href="https://www.kansai-airport.or.jp/en/contact/lost-notes" target="_blank" rel="noopener"><b><svg aria-hidden="true"><use href="#i-ext"/></svg>Kansai Airport (KIX)</b>ฟอร์มแจ้งของหายออนไลน์ — เบอร์ติดต่อต่างกันตามจุดที่หาย</a>
+            </div>
+          </div>
+        </div>
+        <div class="lostep">
+          <span class="lostep__n">3</span>
+          <div>
+            <b>หายในที่พัก/ร้าน — โทรหาที่นั่นก่อน</b>
+            <p>โรงแรมญี่ปุ่นเก็บของลืมไว้ดีมาก โทรหา (การ์ดโรงแรมด้านล่าง) แล้วให้โรงแรมโทรต่อหาร้าน/รถแท็กซี่ก็ได้ — พนักงานช่วยแปลให้</p>
+          </div>
+        </div>
+        <div class="lostep">
+          <span class="lostep__n">4</span>
+          <div>
+            <b>พาสปอร์ต/กระเป๋าเงิน/บัตรหาย — ทำอีกทางคู่ขนาน</b>
+            <p>แจ้งโพลิซให้ได้เลขรับแจ้ง (受理番号) ก่อน แล้วติดต่อสถานกงสุลโอซาก้าเพื่อทำหนังสือเดินทางเล่มใหม่ (เอกสารพร้อมรูปถ่าย) · เงิน/บัตร: โทรยกเลิกบัตรผ่านแอป/สายเร็วของธนาคาร</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 4. วลีญี่ปุ่นฉุกเฉิน ============ -->
+    <section class="section" id="phrases" aria-labelledby="phrases-title">
+      <header class="section__head">
+        <p class="eyebrow">Japanese Phrases · วลีจำเป็น</p>
+        <h2 id="phrases-title">วลีภาษาญี่ปุ่นฉุกเฉิน 20 วลี</h2>
+        <p class="section__note">กดปุ่ม "ออกเสียง" ให้เครื่องอ่านพูดให้ฟัง แล้วเลียนแบบ หรือยื่นโทรศัพท์ให้คนญี่ปุ่นฟังเลย · ใช้ได้ตอนออฟไลน์ (เสียงสังเคราะห์มาจากเครื่องเอง)</p>
+      </header>
+
+      <div class="pcat">
+        <div class="pcat__title"><b>เรียกช่วยเหลือ</b><span>Help · 6 วลี</span></div>
+        <div class="pgrid">
+          <div class="phrase">
+            <div class="phrase__t"><span class="phrase__jp">たすけて！</span><span class="phrase__ro">Tasukete!</span><span class="phrase__th">ช่วยด้วย!</span></div>
+            <button class="speak" type="button" data-say="たすけて！" aria-label="ออกเสียงวลี たすけて"><svg aria-hidden="true"><use href="#i-spk"/></svg>ออกเสียง</button>
+          </div>
+          <div class="phrase">
+            <div class="phrase__t"><span class="phrase__jp">きゅうきゅうしゃをよんでください</span><span class="phrase__ro">Kyūkyūsha o yonde kudasai</span><span class="phrase__th">กรุณาเรียกรถพยาบาลให้หน่อย</span></div>
+            <button class="speak" type="button" data-say="きゅうきゅうしゃをよんでください" aria-label="ออกเสียงวลี きゅうきゅうしゃをよんでください"><svg aria-hidden="true"><use href="#i-spk"/></svg>ออกเสียง</button>
+          </div>
+          <div class="phrase">
+            <div class="phrase__t"><span class="phrase__jp">けいさつをよんでください</span><span class="phrase__ro">Keisatsu o yonde kudasai</span><span class="phrase__th">กรุณาเรียกตำรวจให้หน่อย</span></div>
+            <button class="speak" type="button" data-say="けいさつをよんでください" aria-label="ออกเสียงวลี けいさつをよんでください"><svg aria-hidden="true"><use href="#i-spk"/></svg>ออกเสียง</button>
+          </div>
+          <div class="phrase">
+            <div class="phrase__t"><span class="phrase__jp">こどもがいなくなりました</span><span class="phrase__ro">Kodomo ga inaku narimashita</span><span class="phrase__th">เด็กหายแล้ว! (โปรดช่วยหน่อย)</span></div>
+            <button class="speak" type="button" data-say="こどもがいなくなりました" aria-label="ออกเสียงวลี こどもがいなくなりました"><svg aria-hidden="true"><use href="#i-spk"/></svg>ออกเสียง</button>
+          </div>
+          <div class="phrase">
+            <div class="phrase__t"><span class="phrase__jp">にほんごがはなせません</span><span class="phrase__ro">Nihongo ga hanasemasen</span><span class="phrase__th">พูดภาษาญี่ปุ่นไม่ได้</span></div>
+            <button class="speak" type="button" data-say="にほんごがはなせません" aria-label="ออกเสียงวลี にほんごがはなせません"><svg aria-hidden="true"><use href="#i-spk"/></svg>ออกเสียง</button>
+          </div>
+          <div class="phrase">
+            <div class="phrase__t"><span class="phrase__jp">えいごがはなせるひとはいますか</span><span class="phrase__ro">Eigo ga hanaseru hito wa imasu ka</span><span class="phrase__th">มีใครพูดภาษาอังกฤษไหมครับ/คะ</span></div>
+            <button class="speak" type="button" data-say="えいごがはなせるひとはいますか" aria-label="ออกเสียงวลี えいごがはなせるひとはいますか"><svg aria-hidden="true"><use href="#i-spk"/></svg>ออกเสียง</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="pcat">
+        <div class="pcat__title"><b>เด็กป่วย – โรงพยาบาล</b><span>Hospital · 6 วลี</span></div>
+        <div class="pgrid">
+          <div class="phrase">
+            <div class="phrase__t"><span class="phrase__jp">こどもがねつがあります</span><span class="phrase__ro">Kodomo ga netsu ga arimasu</span><span class="phrase__th">เด็กมีไข้</span></div>
+            <button class="speak" type="button" data-say="こどもがねつがあります" aria-label="ออกเสียงวลี こどもがねつがあります"><svg aria-hidden="true"><use href="#i-spk"/></svg>ออกเสียง</button>
+          </div>
+          <div class="phrase">
+            <div class="phrase__t"><span class="phrase__jp">ねつがあります</span><span class="phrase__ro">Netsu ga arimasu</span><span class="phrase__th">มีไข้ครับ/ค่ะ</span></div>
+            <button class="speak" type="button" data-say="ねつがあります" aria-label="ออกเสียงวลี ねつがあります"><svg aria-hidden="true"><use href="#i-spk"/></svg>ออกเสียง</button>
+          </div>
+          <div class="phrase">
+            <div class="phrase__t"><span class="phrase__jp">おなかがいたいです</span><span class="phrase__ro">Onaka ga itai desu</span><span class="phrase__th">ปวดท้อง</span></div>
+            <button class="speak" type="button" data-say="おなかがいたいです" aria-label="ออกเสียงวลี おなかがいたいです"><svg aria-hidden="true"><use href="#i-spk"/></svg>ออกเสียง</button>
+          </div>
+          <div class="phrase">
+            <div class="phrase__t"><span class="phrase__jp">けがをしました</span><span class="phrase__ro">Kega o shimashita</span><span class="phrase__th">ได้รับบาดเจ็บ / เจ็บตัว</span></div>
+            <button class="speak" type="button" data-say="けがをしました" aria-label="ออกเสียงวลี けがをしました"><svg aria-hidden="true"><use href="#i-spk"/></svg>ออกเสียง</button>
+          </div>
+          <div class="phrase">
+            <div class="phrase__t"><span class="phrase__jp">アレルギーがあります</span><span class="phrase__ro">Arerugī ga arimasu</span><span class="phrase__th">มีอาการแพ้ (ยา/อาหาร)</span></div>
+            <button class="speak" type="button" data-say="アレルギーがあります" aria-label="ออกเสียงวลี アレルギーがあります"><svg aria-hidden="true"><use href="#i-spk"/></svg>ออกเสียง</button>
+          </div>
+          <div class="phrase">
+            <div class="phrase__t"><span class="phrase__jp">びょういんはどこですか</span><span class="phrase__ro">Byōin wa doko desu ka</span><span class="phrase__th">โรงพยาบาลอยู่ที่ไหน</span></div>
+            <button class="speak" type="button" data-say="びょういんはどこですか" aria-label="ออกเสียงวลี びょういんはどこですか"><svg aria-hidden="true"><use href="#i-spk"/></svg>ออกเสียง</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="pcat">
+        <div class="pcat__title"><b>ของหาย</b><span>Lost items · 4 วลี</span></div>
+        <div class="pgrid">
+          <div class="phrase">
+            <div class="phrase__t"><span class="phrase__jp">わすれものをしました</span><span class="phrase__ro">Wasuremono o shimashita</span><span class="phrase__th">ทำของตกหล่น / ลืมของไว้</span></div>
+            <button class="speak" type="button" data-say="わすれものをしました" aria-label="ออกเสียงวลี わすれものをしました"><svg aria-hidden="true"><use href="#i-spk"/></svg>ออกเสียง</button>
+          </div>
+          <div class="phrase">
+            <div class="phrase__t"><span class="phrase__jp">さいふをなくしました</span><span class="phrase__ro">Saifu o nakushimashita</span><span class="phrase__th">กระเป๋าสตางค์หาย</span></div>
+            <button class="speak" type="button" data-say="さいふをなくしました" aria-label="ออกเสียงวลี さいふをなくしました"><svg aria-hidden="true"><use href="#i-spk"/></svg>ออกเสียง</button>
+          </div>
+          <div class="phrase">
+            <div class="phrase__t"><span class="phrase__jp">けいたいでんわをなくしました</span><span class="phrase__ro">Keitaidenwa o nakushimashita</span><span class="phrase__th">โทรศัพท์มือถือหาย</span></div>
+            <button class="speak" type="button" data-say="けいたいでんわをなくしました" aria-label="ออกเสียงวลี けいたいでんわをなくしました"><svg aria-hidden="true"><use href="#i-spk"/></svg>ออกเสียง</button>
+          </div>
+          <div class="phrase">
+            <div class="phrase__t"><span class="phrase__jp">パスポートをなくしました</span><span class="phrase__ro">Pasupōto o nakushimashita</span><span class="phrase__th">พาสปอร์ตหาย</span></div>
+            <button class="speak" type="button" data-say="パスポートをなくしました" aria-label="ออกเสียงวลี パスポートをなくしました"><svg aria-hidden="true"><use href="#i-spk"/></svg>ออกเสียง</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="pcat">
+        <div class="pcat__title"><b>หลงทาง – รถไฟ</b><span>Directions · 3 วลี</span></div>
+        <div class="pgrid">
+          <div class="phrase">
+            <div class="phrase__t"><span class="phrase__jp">みちにまよいました</span><span class="phrase__ro">Michi ni mayaimashita</span><span class="phrase__th">หลงทางแล้ว</span></div>
+            <button class="speak" type="button" data-say="みちにまよいました" aria-label="ออกเสียงวลี みちにまよいました"><svg aria-hidden="true"><use href="#i-spk"/></svg>ออกเสียง</button>
+          </div>
+          <div class="phrase">
+            <div class="phrase__t"><span class="phrase__jp">えきはどこですか</span><span class="phrase__ro">Eki wa doko desu ka</span><span class="phrase__th">สถานีรถไฟอยู่ที่ไหน</span></div>
+            <button class="speak" type="button" data-say="えきはどこですか" aria-label="ออกเสียงวลี えきはどこですか"><svg aria-hidden="true"><use href="#i-spk"/></svg>ออกเสียง</button>
+          </div>
+          <div class="phrase">
+            <div class="phrase__t"><span class="phrase__jp">トイレはどこですか</span><span class="phrase__ro">Toire wa doko desu ka</span><span class="phrase__th">ห้องน้ำอยู่ที่ไหน</span></div>
+            <button class="speak" type="button" data-say="トイレはどこですか" aria-label="ออกเสียงวลี トイレはどこですか"><svg aria-hidden="true"><use href="#i-spk"/></svg>ออกเสียง</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="pcat">
+        <div class="pcat__title"><b>เรียกแท็กซี่ – ทั่วไป</b><span>Taxi &amp; misc · 1 วลี</span></div>
+        <div class="pgrid">
+          <div class="phrase">
+            <div class="phrase__t"><span class="phrase__jp">タクシーをよんでください</span><span class="phrase__ro">Takushī o yonde kudasai</span><span class="phrase__th">กรุณาเรียกแท็กซี่ให้หน่อย</span></div>
+            <button class="speak" type="button" data-say="タクシーをよんでください" aria-label="ออกเสียงวลี タクシーをよんでください"><svg aria-hidden="true"><use href="#i-spk"/></svg>ออกเสียง</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ 5. เคล็ดลับกันเหนียว ============ -->
+    <section class="section" id="tips" aria-labelledby="tips-title">
+      <header class="section__head">
+        <p class="eyebrow">Be Prepared · เคล็ดลับ</p>
+        <h2 id="tips-title">เคล็ดลับกันเหนียว — ทำก่อนถึงวันเดินทาง</h2>
+      </header>
+      <div class="tipgrid">
+        <div class="tip"><b>เบอร์สำคัญให้เด็กติดตัว</b>เขียนชื่อโรงแรม + เบอร์โทร (การ์ดด้านล่าง) ใส่กระเป๋าเด็ก/เย็บสร้อยเสียชื่อ — สอนเด็กว่าถ้าหลงให้ให้ยื่นกระเป๋าให้พนักงานสถานีหรือพนักงานร้าน แล้วเขาจะโทรหาพ่อแม่ให้</div>
+        <div class="tip"><b>ยาลดไข้เด็กพาจากไทย</b>ร้านยาญี่ปุ่นไม่ขายยาเด็กตามชอบใจ และการขอซื้อยาต้องคุยกับคุณหมอ/เภสัชกร — พายาลดไข้ ยาดม น้ำเกลือแร่ พลาสเตอร์ อย่างน้อย 1 ชุดติดกระเป๋า</div>
+        <div class="tip"><b>Google Translate conversation mode</b>ตั้งคู่ภาษา ไทย↔ญี่ปุ่น แล้วกดไมค์คุยกันสองทาง · ดาวน์โหลดแพ็กภาษาญี่ปุ่นไว้ใช้ตอนออฟไลน์ด้วย</div>
+        <div class="tip"><b>แอป GO เรียกแท็กซี่</b>ใช้ง่าย จ่ายด้วยบัตร — ทางเลือกสำรอง: ขอพนักงานโรงแรม/ร้านเรียกแท็กซี่ให้ (วลี タクシーをよんでください)</div>
+        <div class="tip"><b>พาสปอร์ตถ่ายรูปเก็บในโทรศัพท์ทุกเล่ม</b>+ พิมพ์สำเนาแยกกระเป๋า 1 ชุด · เวลาหายจะทำเล่มใหม่ที่สถานกงสุลได้เร็วขึ้นมาก</div>
+        <div class="tip"><b>จุดนัดพบประจำสถานี</b>ตกลงจุดรอกันหน้าโพลิซ/คอนบินีใกล้ทางออกที่ใช้ประจำ — ตู้โทรศัพท์สาธารณะในสถานีใช้โทรฟรีกรณีฉุกเฉิน</div>
+      </div>
+
+      <div class="hotels">
+        <article class="htel">
+          <span class="stay">คืน 28–30 พ.ย. · KYOTO</span>
+          <b>Hotel Vischio Kyoto by GRANVIA</b>
+          <span class="addr">44-1 Kamitonoda-cho, Higashikujo, Minami-ku, Kyoto — ตรงข้าม Kyoto Stn ทางออก Hachijo</span>
+          <a class="hpn" href="tel:+81752801111">+81 75-280-1111</a>
+        </article>
+        <article class="htel">
+          <span class="stay">คืน 30 พ.ย.–2 ธ.ค. · OSAKA</span>
+          <b>Hotel Universal Port</b>
+          <span class="addr">1-1-111 Sakurajima, Konohana-ku, Osaka — ย่าน Universal City</span>
+          <a class="hpn" href="tel:+81664635000">+81 6-6463-5000</a>
+        </article>
+        <article class="htel">
+          <span class="stay">คืน 2–5 ธ.ค. · OSAKA</span>
+          <b>Citadines Namba Osaka</b>
+          <span class="addr">3-5-25 Nipponbashi, Naniwa-ku, Osaka — ย่าน Nipponbashi</span>
+          <a class="hpn" href="tel:+81666957150">+81 6-6695-7150</a>
+        </article>
+        <article class="htel">
+          <span class="stay">คืน 5–6 ธ.ค. · RINKU TOWN</span>
+          <b>OMO Kansai Airport by Hoshino Resorts</b>
+          <span class="addr">1-833 Rinku Ourai Kita, Izumisano, Osaka — เดิน 1 นาทีจากสถานี Rinku Town</span>
+          <a class="hpn" href="tel:+815031348095">+81 50-3134-8095</a>
+        </article>
+      </div>
+    </section>
+  </div>
+</main>
+
+<footer class="foot">
+  <div class="wrap foot__in">
+    <span>เบอร์/ลิงก์ตรวจสอบเมื่อ 16 พ.ย. 2026 · หน้านี้เปิดได้แม้ออฟไลน์ (ปุ่มออกเสียงใช้เสียงจากเครื่อง)</span>
+    <a href="index.html">← กลับหน้าหลักทริป</a>
+  </div>
+</footer>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ---------- ปุ่มออกเสียง (Web Speech API): อ่านวลีญี่ปุ่น — ถ้าเบราว์เซอร์ไม่รองรับ ซ่อนปุ่มทั้งหมด ---------- */
+  if (!('speechSynthesis' in window)) {
+    document.documentElement.classList.add('no-tts');
+    return;
+  }
+  var btns = document.querySelectorAll('.speak');
+  Array.prototype.forEach.call(btns, function (b) {
+    b.addEventListener('click', function () {
+      try { window.speechSynthesis.cancel(); } catch (e) { /* ข้ามถ้ายกเลิกไม่ได้ */ }
+      var u = new SpeechSynthesisUtterance(b.getAttribute('data-say'));
+      u.lang = 'ja-JP';
+      u.rate = 0.8;
+      window.speechSynthesis.speak(u);
+    });
+  });
+})();
+</script>
+<script>
+/* ---------- offline (PWA): ลงทะเบียน service worker — เปิดซ้ำได้แม้ไม่มีเน็ต ---------- */
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function () {
+    navigator.serviceWorker.register('sw.js').catch(function () {});
+  });
+}
+</script>
+</body>
+</html>
