@@ -260,6 +260,10 @@ p{margin:0}
 .hotel__when{font-family:var(--font-mono);font-size:.6rem;letter-spacing:.08em;color:var(--accent-ink)}
 .hotel b{font-size:.9rem;font-weight:600;line-height:1.35}
 .hotel span{font-size:.74rem;color:var(--muted);line-height:1.5}
+.hotel__contact{border-top:1px dashed var(--rule-strong);padding-top:9px;margin-top:2px;display:grid;gap:3px}
+.hotel__contact a{color:var(--accent-ink);text-decoration:none;font-weight:600}
+.hotel__contact a:hover{text-decoration:underline}
+.hotel__contact a.hotel__tel{font-family:var(--font-mono);font-size:.76rem;letter-spacing:.03em}
 
 /* ---------- budget ---------- */
 .budget{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,.75fr);gap:16px;align-items:start}
@@ -644,21 +648,41 @@ tfoot td:last-child{color:var(--accent-ink)}
         <span class="hotel__when">28–30 พ.ย. · 2 คืน</span>
         <b>Hotel Vischio Kyoto by GRANVIA</b>
         <span>ติดสถานีเกียวโต ทางออก Hachijo · เดิน 2 นาที</span>
+        <div class="hotel__contact">
+          <a class="hotel__tel" href="tel:+81752801111">+81 75-280-1111</a>
+          <span>601-8002 · 44-1 Kamitonoda-cho, Higashikujo, Minami-ku, Kyoto</span>
+          <a href="https://www.vischio-kyoto.com" target="_blank" rel="noopener">vischio-kyoto.com</a>
+        </div>
       </article>
       <article class="hotel">
         <span class="hotel__when">30 พ.ย.–2 ธ.ค. · 2 คืน</span>
         <b>Hotel Universal Port</b>
         <span>ติด Universal City · เดินถึง USJ ~5 นาที</span>
+        <div class="hotel__contact">
+          <a class="hotel__tel" href="tel:+81664635000">+81 6-6463-5000</a>
+          <span>554-0031 · 1-1-111 Sakurajima, Konohana-ku, Osaka</span>
+          <a href="https://www.hoteluniversalport.jp/" target="_blank" rel="noopener">hoteluniversalport.jp</a>
+        </div>
       </article>
       <article class="hotel">
         <span class="hotel__when">2–5 ธ.ค. · 3 คืน</span>
         <b>Citadines Namba Osaka</b>
         <span>Nipponbashi · ตลาด Kuromon 8 นาที · Nankai Namba 7 นาที</span>
+        <div class="hotel__contact">
+          <a class="hotel__tel" href="tel:+81666957150">+81 6-6695-7150</a>
+          <span>556-0005 · 3-5-25 Nipponbashi, Naniwa-ku, Osaka</span>
+          <a href="https://www.discoverasr.com/en/citadines/japan/citadines-namba-osaka" target="_blank" rel="noopener">discoverasr.com</a>
+        </div>
       </article>
       <article class="hotel">
         <span class="hotel__when">5–6 ธ.ค. · 1 คืน</span>
         <b>OMO Kansai Airport by Hoshino</b>
         <span>Rinku Town ทางออก 5 · 1 สถานีถึง KIX + shuttle เช้า</span>
+        <div class="hotel__contact">
+          <a class="hotel__tel" href="tel:+815031348095">+81 50-3134-8095</a>
+          <span>598-0048 · 1-833 Rinku Ourai Kita, Izumisano, Osaka</span>
+          <a href="https://hoshinoresorts.com/en/hotels/omokansaiairport/" target="_blank" rel="noopener">hoshinoresorts.com</a>
+        </div>
       </article>
     </div>
   </section>
