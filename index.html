@@ -392,6 +392,18 @@ tfoot td:last-child{color:var(--accent-ink)}
   .day,.flight,.hotel,.routecard,.tablewrap,.totalcard{box-shadow:none;break-inside:avoid}
   .reveal{opacity:1;transform:none}
 }
+/* ---------- toggle หน่วยเงิน (เยน ⇄ บาท) ---------- */
+.cur-toggle{display:inline-flex;align-items:stretch;border:1px solid var(--rule);border-radius:8px;overflow:hidden;flex-shrink:0}
+.cur-toggle button{
+  min-width:36px;height:34px;padding:0 9px;border:0;background:transparent;cursor:pointer;
+  font-family:var(--font-mono);font-size:.8rem;font-weight:600;color:var(--muted);
+  font-variant-numeric:tabular-nums;
+  transition:background .18s var(--ease),color .18s var(--ease);
+}
+.cur-toggle button + button{border-left:1px solid var(--rule)}
+.cur-toggle button:hover{background:var(--surface-2);color:var(--ink)}
+.cur-toggle button[aria-pressed="true"]{background:var(--ink);color:var(--surface)}
+.cur-toggle button:focus-visible{outline-offset:-2px}
 </style>
 </head>
 <body>
@@ -428,6 +440,10 @@ tfoot td:last-child{color:var(--accent-ink)}
         <svg aria-hidden="true"><use href="#i-fx"/></svg>
         <span>แปลงเงิน</span>
       </button>
+      <div class="cur-toggle" role="group" aria-label="หน่วยเงินที่แสดง">
+        <button type="button" data-cur="yen" title="แสดงราคาเป็นเยน">¥</button>
+        <button type="button" data-cur="baht" title="แสดงราคาเป็นบาท">฿</button>
+      </div>
     </nav>
     <button class="btn-quiet" type="button" id="printBtn">
       <svg aria-hidden="true"><use href="#i-print"/></svg>
@@ -635,13 +651,13 @@ tfoot td:last-child{color:var(--accent-ink)}
         <span class="day__theme">พิพิธภัณฑ์สัตว์น้ำ</span>
         <div class="day__num"><b>05</b><span>พ. 2 ธ.ค.</span></div>
         <h3>คายูคัง → นัมบะ</h3>
-        <p class="day__date">08:30–20:00 · 10 จุด</p>
+        <p class="day__date">08:30–20:30 · 12 จุด</p>
         <ul>
           <li>Kaiyukan ฉลามวาฬ</li>
           <li>Legoland / ชิงช้า Tempozan</li>
-          <li>ย้ายเข้า Citadines + Dotonbori</li>
+          <li>ย้ายเข้า Citadines + ตลาดคริสต์มาส Tennoji</li>
         </ul>
-        <div class="day__foot"><span>¥22,600–25,100</span><span class="day__go">เปิดแผน <svg aria-hidden="true"><use href="#i-arrow"/></svg></span></div>
+        <div class="day__foot"><span>¥23,480–26,480</span><span class="day__go">เปิดแผน <svg aria-hidden="true"><use href="#i-arrow"/></svg></span></div>
       </a>
 
       <a class="day reveal" href="day-6-kuromon-nara.html" style="--tint:#8a5a3b;--wash:rgba(138,90,59,.12)">
@@ -783,24 +799,24 @@ tfoot td:last-child{color:var(--accent-ink)}
             <tr><td>2</td><td>วัดน้ำใส + นันเซ็นจิ + มื้ออาหาร</td><td>¥10,800–16,500</td></tr>
             <tr><td>3</td><td>อาราชิยามะ + Torokko + เรือ + ย้ายโรงแรม</td><td>¥15,200–17,200</td></tr>
             <tr><td>4</td><td>Universal Studios (ตั๋ว + อาหาร)</td><td>¥33,500–47,500</td></tr>
-            <tr><td>5</td><td>Kaiyukan + Legoland + แท็กซี่ + Dotonbori</td><td>¥22,600–25,100</td></tr>
+            <tr><td>5</td><td>Kaiyukan + Legoland + แท็กซี่ + ตลาดคริสต์มาส</td><td>¥23,480–26,480</td></tr>
             <tr><td>6</td><td>Kuromon + Kintetsu + Todai-ji + Naramachi</td><td>¥10,000–12,700</td></tr>
             <tr><td>7</td><td>ปราสาท + Metro + Pokémon + ไฟ Midosuji</td><td>¥12,800–16,400</td></tr>
             <tr><td>8</td><td>Minoo + Hankyu + Nankai + Outlets</td><td>¥11,400–15,400</td></tr>
             <tr><td>9</td><td>รถไฟไป KIX + มื้อเช้า</td><td>¥600–1,740</td></tr>
           </tbody>
           <tfoot>
-            <tr><td colspan="2">รวมทั้งทริป</td><td>¥124,800–163,140</td></tr>
+            <tr><td colspan="2">รวมทั้งทริป</td><td>¥125,680–164,520</td></tr>
           </tfoot>
         </table>
       </div>
 
       <div class="totalcard">
         <span class="mono-label">สรุปตัวเลข</span>
-        <b>≈ ฿27,500–35,900</b>
+        <b>≈ ฿27,600–36,200</b>
         <small>ที่เรต 0.22 บาท/เยน · สำหรับ 3 คน 9 วัน</small>
         <ul>
-          <li><span>เฉลี่ยต่อวัน</span><span>≈ ฿3,050–3,990</span></li>
+          <li><span>เฉลี่ยต่อวัน</span><span>≈ ฿3,070–4,020</span></li>
           <li><span>ค่าตั๋วเครื่องบิน</span><span>แยกต่างหาก</span></li>
           <li><span>โรงแรม 8 คืน</span><span>แยกต่างหาก</span></li>
           <li><span>ของฝาก/ช้อป</span><span>ไม่รวม</span></li>
@@ -1067,12 +1083,14 @@ tfoot td:last-child{color:var(--accent-ink)}
     var r = parseFloat(fxRate.value);
     if (isFinite(r) && r > 0) {
       try { localStorage.setItem(FX_KEY, String(r)); } catch (e) {}
+      window.dispatchEvent(new Event('osaka2026:fx-rate'));
     }
     fxRecompute();
   });
   document.getElementById('fxRateReset').addEventListener('click', function () {
     fxRate.value = FX_DEFAULT;
     try { localStorage.setItem(FX_KEY, String(FX_DEFAULT)); } catch (e) {}
+    window.dispatchEvent(new Event('osaka2026:fx-rate'));
     fxRecompute();
     showToast('กลับเป็นเรตมาตรฐาน 0.22 บาท/เยน');
   });
@@ -1134,6 +1152,133 @@ tfoot td:last-child{color:var(--accent-ink)}
   window.addEventListener('scroll', function () {
     if (nothingRevealed()) revealAll();
   }, { passive: true, once: true });
+})();
+</script>
+<script>
+/* ---------- toggle หน่วยเงิน: เยน ⇄ บาท (โค้ดเดียวกันทุกหน้า) ---------- */
+(function () {
+  'use strict';
+  var FX_KEY = 'osaka2026.fx.rate';    /* เรตเดียวกับปุ่ม "แปลงเงิน" บนหน้าแรก */
+  var MODE_KEY = 'osaka2026.fx.mode';  /* หน่วยที่เลือกไว้ จำทั้งเว็บ */
+  var FX_DEFAULT = 0.22;
+  var SKIP = 'script,style,noscript,template,.fx-modal,.cur-toggle,[data-fx-skip]';
+  var RE_YEN = /¥\s?(\d[\d,]*(?:\.\d+)?)(?:\s?[–—-]\s?(\d[\d,]*(?:\.\d+)?))?/g;
+  var RE_TH = /(\d[\d,]*(?:\s?[–—-]\s?\d[\d,]*)?)\s?เยน/g; /* เช่น "300–800 เยน" */
+  var converted = [];
+
+  function getRate() {
+    var r = NaN;
+    try { r = parseFloat(localStorage.getItem(FX_KEY)); } catch (e) {}
+    return (isFinite(r) && r > 0) ? r : FX_DEFAULT;
+  }
+  function getMode() {
+    try { return localStorage.getItem(MODE_KEY) === 'baht' ? 'baht' : 'yen'; }
+    catch (e) { return 'yen'; }
+  }
+  function fmtBaht(yen) {
+    var b = Math.round(yen * getRate());
+    return '฿' + String(b).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  }
+  function amountToBaht(a) {
+    return String(a).split(/\s?[–—-]\s?/).map(function (p) {
+      return fmtBaht(parseFloat(p.replace(/,/g, '')) || 0);
+    }).join('–');
+  }
+  function convert(text) {
+    if (text.indexOf('ประมาณ (เยน)') !== -1) text = text.replace('ประมาณ (เยน)', 'ประมาณ (บาท)');
+    return text
+      .replace(RE_YEN, function (m, a, b) {
+        return b ? amountToBaht(a) + '–' + amountToBaht(b) : amountToBaht(a);
+      })
+      .replace(RE_TH, function (m, a) { return amountToBaht(a); });
+  }
+  function isSkipped(node) {
+    var p = node.parentElement;
+    return !!(p && p.closest && p.closest(SKIP));
+  }
+  function walkAll(fn) {
+    var walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
+      acceptNode: function (node) {
+        var v = node.nodeValue || '';
+        if (v.indexOf('¥') === -1 && v.indexOf('เยน') === -1) return NodeFilter.FILTER_REJECT;
+        if (isSkipped(node)) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    var list = [];
+    while (walker.nextNode()) list.push(walker.currentNode);
+    list.forEach(fn);
+  }
+  function applyBaht() {
+    walkAll(function (node) {
+      var out = convert(node.nodeValue);
+      if (out === node.nodeValue) return;
+      converted.push({ node: node, orig: node.nodeValue });
+      node.nodeValue = out;
+    });
+  }
+  function restoreYen() {
+    converted.forEach(function (it) { it.node.nodeValue = it.orig; });
+    converted = [];
+  }
+
+  /* ---------- toast (ใช้ของเดิมถ้าหน้านั้นมี) ---------- */
+  var toast = document.getElementById('toast');
+  if (!toast) {
+    toast = document.createElement('div');
+    toast.className = 'toast';
+    toast.setAttribute('role', 'status');
+    toast.setAttribute('aria-live', 'polite');
+    document.body.appendChild(toast);
+  }
+  var toastTimer = null;
+  function showToast(msg) {
+    toast.textContent = msg;
+    toast.classList.add('is-on');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { toast.classList.remove('is-on'); }, 2400);
+  }
+
+  /* ---------- ปุ่ม toggle ---------- */
+  var btns = Array.prototype.slice.call(document.querySelectorAll('.cur-toggle [data-cur]'));
+  function paint(m) {
+    btns.forEach(function (b) {
+      b.setAttribute('aria-pressed', b.getAttribute('data-cur') === m ? 'true' : 'false');
+    });
+  }
+  function setMode(m, silent) {
+    if (m === 'baht') {
+      applyBaht();
+      if (!silent) showToast('แสดงราคาเป็นบาท · 1 ¥ ≈ ' + getRate() + ' ฿ (แก้เรตได้ที่ปุ่ม "แปลงเงิน" หน้าแรก)');
+    } else {
+      restoreYen();
+      if (!silent) showToast('แสดงราคาเป็นเยน');
+    }
+    paint(m);
+    try { localStorage.setItem(MODE_KEY, m); } catch (e) {}
+  }
+
+  btns.forEach(function (b) {
+    b.addEventListener('click', function () {
+      var m = b.getAttribute('data-cur');
+      if (m !== getMode()) setMode(m);
+    });
+  });
+
+  /* เรตเปลี่ยน (popup หน้าแรก / แท็บอื่น) → แปลงซ้ำด้วยเรตใหม่ */
+  function reapply() {
+    if (getMode() === 'baht') { restoreYen(); applyBaht(); }
+  }
+  window.addEventListener('osaka2026:fx-rate', reapply);
+  window.addEventListener('storage', function (e) {
+    if (e.key === FX_KEY) reapply();
+    else if (e.key === MODE_KEY) { restoreYen(); if (getMode() === 'baht') applyBaht(); paint(getMode()); }
+  });
+
+  /* เริ่มต้นด้วยหน่วยที่จำไว้ */
+  var m0 = getMode();
+  paint(m0);
+  if (m0 === 'baht') setMode('baht', true);
 })();
 </script>
 </body>
