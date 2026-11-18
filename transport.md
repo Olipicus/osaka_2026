@@ -100,6 +100,10 @@
 
 | ตั๋ว | ราคา 2026 | ทำไมไม่คุ้มกับแผนนี้ |
 |---|---|---|
+| **JR Pass ทั่วประเทศ 7 วัน** | **¥53,000** (ผู้ใหญ่ — ราคาใหม่ตั้งแต่ 1 ต.ค. 2026 · Green ¥74,000) | ค่า JR ที่ใช้จริงทั้งทริป รวม Haruka แค่ **~¥4,900/ผู้ใหญ่** (Day 1 + 3 + 5 + 7 + 9) — Pass แพงกว่า ~10 เท่า · ครึ่งทริปใช้ Kintetsu/Hankyu/Nankai/Metro/บัส/Torokko ซึ่ง JR Pass **ไม่ครอบ** · ครอบคลุม 7 วันจากทริป 9 วัน · ไม่มี Shinkansen · pass ภูมิภาค Kansai Wide Area 5 วัน (~¥12,000) ก็ยังแพงกว่า JR ที่ใช้ได้จริง (~¥4,400) — **ใช้ IC แตะรายครั้งถูกสุด** |
+| Kansai Wide Area Pass 5 วัน | ¥12,000 (ผู้ใหญ่) | วัน JR ในทริปกระจาย Day 1/3/5/7/9 (ห่างกันวันเลย) — เลือกช่วงไหนก็ครอบได้สูงสุด ~¥5,300 (ช่วง Day 1–5 รวม Haruka) → ขาด ~¥6,700 · แผนไป Kobe/Himeji ด้วยสาย Hanshin/Hankyu ที่ pass ไม่ครอบ |
+| Kansai Mini Pass 3 วัน | ¥3,000 (ผู้ใหญ่) | ไม่รวมรถด่วนพิเศษ (Haruka ใช้ไม่ได้) · ครอบเฉพาะ Day 3–5 = ~¥1,700 → ขาด ~¥1,300 · Day 7, 9 (JR ¥540) อยู่นอกช่วง 3 วัน |
+| Kansai Area Pass 1–4 วัน (¥2,800–7,000) | — | **ยกเลิกขายแล้วตั้งแต่ 30 ก.ย. 2026** — ทริป พ.ย.–ธ.ค. 2026 ซื้อไม่ได้อยู่แล้ว |
 | Osaka Amazing Pass | ¥3,500 (1 วัน) / ¥5,000 (2 วัน) | แผนใช้ Metro น้อย (เดินเท้า + JR เป็นหลัก) · ของฟรีที่ไปจริงมีแค่ Osaka Castle (~¥600×2) — เผื่อวันที่เพิ่ม 3+ จุดในเมืองค่อยพิจารณา |
 | Kintetsu Rail Pass / Kansai Thru Pass | ~¥1,600+ | ไป Nara รอบเดียว ¥680×2 = ¥1,360 — pass แพงกว่า |
 | Kyoto Subway–Bus 1-day | ¥1,100 | Day 3 ออกจากเกียวโตตอนเที่ยง ใช้คุ้มยาก |
@@ -268,6 +272,9 @@
 ## Sources
 
 - [JR West — HARUKA One-way Ticket (ตารางราคา Adult/Child + ประกาศเปลี่ยนราคาตั้งแต่ 1 พ.ย. 2026)](https://www.westjr.co.jp/travel-information/en/tickets-passes/oneway/haruka)
+- [Japan Specialist — JR Pass ราคาใหม่ 7 วัน ¥53,000 / Green ¥74,000 ตั้งแต่ 1 ต.ค. 2026 (14 วัน ¥80,000)](https://japanspecialist.com)
+- [JR West — Kansai Wide Area Pass 5 วัน ¥12,000 / Kansai Mini Pass 3 วัน ¥3,000 (เงื่อนไขครอบคลุม)](https://www.westjr.co.jp/travel-information/en/tickets-passes/jrwest-rail-pass/kansai_wide)
+- [japan-guide — Kansai Area Pass ยกเลิกขาย 30 ก.ย. 2026](https://www.japan-guide.com)
 - [Osaka Amazing Pass เว็บทางการ](https://osaka-amazing-pass.com/) — 1 วัน ¥3,500 / 2 วัน ¥5,000 (ปี 2026)
 - [Kintetsu — เครื่องมือค้นหาค่าโดยสาร](https://www.ticket.kintetsu.co.jp/kwssearchstation) — Osaka-Namba↔Kintetsu-Nara ¥680 (ปรับตั้งแต่ ต.ค. 2023)
 - ข่าวปรับค่าโดยสาร特急 Nankai (Rapi:t ¥520→¥700) เผยแพร่ ม.ค. 2026

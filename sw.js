@@ -1,7 +1,7 @@
 /* Osaka 2026 — service worker: แคชทั้งเว็บไว้เปิดออฟไลน์ (ใช้ตอนสัญญาณตกในรถไฟ/ใต้ดิน)
    กลยุทธ์: stale-while-revalidate — ตอบจากแคชทันที แล้วดึงของใหม่อัปเดตเบื้องหลังเมื่อออนไลน์
    แก้ไฟล์หน้าเว็บครั้งใหญ่แล้วอยากบังคับรีเฟรช: เปลี่ยนเลข VERSION ด้านล่าง */
-var VERSION = 'v4';
+var VERSION = 'v6';
 var CACHE = 'osaka2026-' + VERSION;
 var PRECACHE = [
   './',
@@ -18,6 +18,7 @@ var PRECACHE = [
   './map.html',
   './emergency.html',
   './live-info.html',
+  './fx-converter.js',
   './leaflet/leaflet.css',
   './leaflet/leaflet.js',
   './manifest.json',

@@ -1457,7 +1457,7 @@ a.day:hover{background:var(--surface-2);color:var(--ink)}
   function setMode(m, silent) {
     if (m === 'baht') {
       applyBaht();
-      if (!silent) showToast('แสดงราคาเป็นบาท · 1 ¥ ≈ ' + getRate() + ' ฿ (แก้เรตได้ที่ปุ่ม "แปลงเงิน" หน้าแรก)');
+      if (!silent) showToast('แสดงราคาเป็นบาท · 1 ¥ ≈ ' + getRate() + ' ฿ (แก้เรตได้ที่ปุ่ม "แปลงเงิน" ด้านบน)');
     } else {
       restoreYen();
       if (!silent) showToast('แสดงราคาเป็นเยน');
@@ -1488,6 +1488,8 @@ a.day:hover{background:var(--surface-2);color:var(--ink)}
   paint(m0);
   if (m0 === 'baht') setMode('baht', true);
 })();
+</script>
+<script src="fx-converter.js" defer></script>
 <script>
 /* ---------- offline (PWA): ลงทะเบียน service worker — เปิดซ้ำได้แม้ไม่มีเน็ต ---------- */
 if ('serviceWorker' in navigator) {
